@@ -1,0 +1,21 @@
+\begin{tikzpicture}[semithick, auto, node distance = 2cm]
+    %\tikzclass{reference}{style options}{top}{middle}{bottom}
+    %\node[class](client){\textbf{Client}}
+    \tikzclass{client}{}{Client}{}{}
+    \tikzclass{visitor}{below right=of client}{<<Interface>>\\\textbf{IVisitor}}{}{VisitA(e:ConcreteElementA)\\VisitB(e:ConcreteElementB)}
+    \tikzclass{cvisitor}{below=of visitor}{ConcreteVisitor}{}{VisitA(e:ConcreteElementA)\\VisitB(e:ConcreteElementB)}
+    \tikzclass{element}{below left=of client}{\textit{Element}}{}{\textit{Accept(v:Visitor)}}
+    \tikzclass{celementa}{below left=1cm and -0.5cm of element}{ConcreteElementA}{}{Accept(v:Visitor)}
+    \tikzclass{celementb}{below right=1cm and -0.5cm of element}{ConcreteElementB}{}{Accept(v:Visitor)}
+        
+    \node[note, below of=celementa] (celementanote) {\scriptsize void Accept(Visitor v)\{\\\hspace{0.2cm}\scriptsize v.VisitA(this);\\\scriptsize\}};
+    \node[note, below of=celementb] (celementbnote) {\scriptsize void Accept(Visitor v)\{\\\hspace{0.2cm}\scriptsize v.VisitB(this);\\\scriptsize\}};
+        
+    \draw[line, dashed] (celementanote)--(celementa);
+    \draw[line, dashed] (celementbnote)--(celementb);
+    \draw[aggregation] (client.east) node[label=45:1..*]{} -| (visitor.north);
+    \draw[aggregation] (client.west) node[label=135:0..*]{}-| (element.north);
+    \draw[generalization] (celementa.north) -- +(0,0.5cm) -| (element);
+    \draw[generalization] (celementb.north) -- +(0,0.5cm) -| (element);
+    \draw[generalization, dashed] (cvisitor) -- node {<<realize>>} (visitor);
+\end{tikzpicture}

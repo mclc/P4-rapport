@@ -1,0 +1,10 @@
+\lstdefinelanguage{CSharp} {
+    language=[Sharp]C,
+    morekeywords={var},
+    morekeywords={from,where,orderby,descending,select}, % LINQ
+    morekeywords={get,set}
+}
+
+\newcommand{\CSharp}[3]{
+    \kodeprintstyle{#1}{#2}{#3}{CSharp}
+}

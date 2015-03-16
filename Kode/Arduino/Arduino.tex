@@ -1,0 +1,77 @@
+% Gadeberg 13-feb-15
+% Omskrevet Søren 16-02-15
+
+% Noter
+% https://learn.adafruit.com/multi-tasking-the-arduino-part-2/external-interrupts
+% http://blog.oscarliang.net/arduino-timer-and-interrupt-tutorial/
+% http://gammon.com.au/interrupts
+% Skriv evt. omkring volatile variabler
+
+% Is C a subset of C++
+% http://www.stroustrup.com/bs_faq.html#C-is-subset
+
+\section{Arduino}
+Arduino er en open source elektronik platform baseret på microcontrollere, som er særligt velegnet til at lave prototyper. Arduino er også navnet på firmaet bag platformen, og firmaet producerer mange forskellige Arduino korts, herunder er en af de mest populære til begyndere Arduino Uno.
+
+Arduino henvender sig til hobbybrug, her er den typiske anvendelse at lære/lege med elektronik eller styre hardware som for eksempel lys, motorer eller måske en hjemmebygget robot. Arduino programmeres i Arduino eget udviklingsmiljø som består af et simpelt IDE. Arduino's udviklingsmiljø benytter C++, som kompilerer C++ koden om til assembler kode som er eksekverbar af processoren på Arduino kortet.\sfix{Fortæl evt hvilke forskelle der er mellem C og C++, brug nedstående kilde (kommentar)}
+
+Arduino har typisk en 8 bit mikroprocessor, mens nogle nyere Arduino kort har en processor der arbejder med 32 bit. Arduino arbejder desuden med lave clock frekvenser i forhold til almindelig computere. Ydermere har Arduino-microcontrolleren, typisk ikke noget operativsystem. Microcontrolleren indeholder derfor som standard ikke nogen scheduler der kan håndtere multiple processer. Derudover skal programmet skrives således det aldrig terminerer. Dette giver dog problemer i forhold til blokerende operationer såsom læsning og skrivning til I/O porte (eksempelvis seriel kommunikation på Arduino), der er dermed ingen funktionalitet til at udnytte CPU'en til andre ting når den nuværende operation blokerer eksekveringen. Dermed kan mange clock cyklusser potentielt gå tabt.
+
+\subsection{Hardware}
+Arduino kort fås i mange forskellige udgaver. De varierer i processorkraft samt mængden og typerne af porte.
+
+Arduino UNO R3 er en af de mest udbredte kort. Dette skyldes måske simpliciteten, hvorved kortet oftest anbefales til begyndere. Kortet har en ATmega328 microcontroller på 16MHz. Arduino UNO R3 desuden har 14 digitale I/O porte, hvor 6 af dem kan bruges som PWM outputs\sfix{Skriv om PWM outputs}. Derudover har kortet 6 analoge input pins. ATmega har 2KB SRAM, 32KB lagerplads (hvoraf 0,5KB bliver brugt til bootloaderen) samt 1 KB EEPROM.
+
+ATmega328 understøtter 26 interrupts, nogle af disse interrupts er 3 timere/countere (1x 16 bit og 2x 8 bit) samt 2 eksterne interrupts bundet til 2 I/O porte (port 2 og 3 på Arduino UNO R3). ATmega328 understøtter desuden også seriel kommunikation vha. USART\fn{USART}{Universal asynchronous receiver/transmitter} chippen. USART chippen notificerer mikroprocessoren gennem 3 interrupts henholdsvis når USART chippen har overført data, modtaget data eller data registreret er tomt. USART chippen bliver brugt af Arduino til at kommunikere vha. seriel kommunikation.
+
+Microcontrolleren ATmega328 har derudover 32 8-bit registre (R0-R31). Her kan register R26-R31 benyttes som 16-bit registre ved at kombinere 2 registre efterfulgt af hinanden (X-register = R26 -> low byte og R27 -> high byte). Ud over dette har ATmega328 en stack pointer (SP) og en program counter (PC). ATmega328 har desuden 23 I/O linjer, her bliver de 20 brugt til de 14 digitale og de 6 analoge input pins. Derudover bliver 2 af I/O linjerne brugt til clock input vha. en "Crystal oscillator". Den sidste I/O linje bliver brugt til at nulstille processoren (Reset). \cite{ATmega328}\cite{ArduinoUno}
+
+\jfix{Opgave 1: Beskriv kompatibilitet mellem Arduioner}
+
+\subsection{Software}
+Arduino kodes typisk i Wiring, der er baseret på C/C++. For at øge Arduinoens brugervenlighed og funktionalitet, har udviklerne tilføjet en række biblioteker, såsom I/O-styring. Kodeeksemplet \ref{code:arduino_blink} viser hvordan PIN-13 på Arduino-boardet, bliver anvendt til at styre en LED-diode. Arduino programmer indeholder altid en \textit{setup()} og en \textit{loop()} funktion, som det ligeledes kan ses på kodeeksmpel \ref{code:arduino_blink}. Derudover genererer Arduino IDE'en automatisk en \textit{main()} funktion for at gøre dette til et gyldigt C++ program. Main funktionen kalder dermed setup funktionen en gang, mens loop funktionen bliver kaldt efterfølgende i en uendelig løkke\newfootnote{Main funktionen kan findes i hardware\textbackslash arduino\textbackslash avr\textbackslash cores\textbackslash arduino\textbackslash main.cpp \cite{ArduinoMain}}.
+
+\CSharp{Kode/Arduino/Blink.ino}{Tænder og slukker for en LED i ét sekund af gangen \cite{ArduinoBlink}}{arduino_blink}
+
+\noindent Setup funktionen bliver som navnet antyder, typisk brugt til at sætte PINs til enten I/O og erklæring af variabler. Loop funktionen bruges til at køre selve programmet som mikrocontrolleren skal udføre. Denne funktion skal derfor blive kaldt indtil at mikrocontrolleren bliver slukket.
+
+Arduino definerer en række funktioner gennem Arduino.h headerfilen, som er automatisk inkluderet i alle Arduino programmer. Headerfilen indeholder en række prototyper, såsom \textit{pinMode} og \textit{digitalWrite}. Disse bliver brugt til henholdsvis at sætte en PIN i I/O-mode, og tænde/slukke en output PIN.
+
+\jfix{Opgave 2: Argumenter for, hvorfor kodeeksemplet er uhensigtmæssig, besværligt, dårligt, ikke til at forstå. Muligvis skal vi tage/lave et kodeeksempel mere med, som kan underbygge i højere grad, at Wiring er dårligt.}
+
+
+
+
+
+
+
+%Arduino er et firma der har specialiseret sig i at lave små microcontrollere til at bygge små til mellemstore fysiske systemer. Arduino henvender sig til Hobbyfolket der gerne vil lære/lege med elektronik eller styre hardware som for eksempel lys, garageport eller måske en hjemmebygget robot. En Arduino kan programmeres med Arduinos eget udviklingsmiljø som består af et simpelt IDE.
+
+%Arduino adskiller sig fra en almindelig computer på en række punkter, både hardware som software. Den væsentligste forskel ligger i at en Arduino ikke har noget styresystem. Den software der skal skrives skal derfor lave sit eget runtime environment. Det vil sige at programmet skal kodes så det bliver ved med at køre til man slukker for Arduinoen - På samme måde som et styresystem kører til man slukker for maskinen.
+
+%\subsection{Hardware}
+%Arduino kort fås i mange forskellige størrelser til forskellige formål. De varierer i processorkraft samt mængden og typerne af porte.
+
+%Arduino UNO R3 er en af de mest udbredte og også en af de simpleste, som anbefales til begyndere. Kortet har en ATmega328 microcontroller på 16MHz, 2KB SRAM og 32KB lagerplads. Den har 14 digitale I/O pins hvor af 6 af dem kan bruges som PWM outputs. Yderligere har den 6 Analoge input pins.
+
+%Sproget som en Arduino skrives i er C/C++ med nogle ekstra biblioteker til håndtering af I/O. For at kunne få en Arduino op og køre, skal koden indeholde En setup() og en run() funktion. Setup funktionen er hvad navnet antyder, til setup af forskellige ting som pins, variabler og andre ting. Run funktionen er en funktion der køres hele tiden som den var inde i en uendelig løkke. Det er sådan Arduino laver sit runtime environment.
+
+%\subsection{Brugen af Arduino}
+%Edelskjold d. 17/02/2015 - 10:28
+%Arduino var oprindeligt udviklet til designere hobbyister, samt personer som generelt havde en interesse indenfor elektronik, og dets skabelse.
+%Herunder især hobbyister, som gerne vil gøre tingene selv og prøve at skabe nogle systemer, ved hjælp af let kodning, samt hardware som kan sættes forholdsvis let til.
+%Heraf er emner som hjemmeautomatisering i højsædet og meget omdiskuteret på Arduino’ forums, hvor der generelt bliver spurgt ind til kodningseksempler, samt hjælp til kodningsfejl.
+%Niveauet på løsninger udviklet i Arduino er vidt forskellige, grundet kompetence niveauet for den enkelte bruger. Derfor er det utroligt mange guides, til hvordan man kommer i gang uden kendskab til Arduino, som ligger på forummet, hvor alle kan søge, og spørge ind til guidesne.
+%Dette giver derfor også mulighed for at opbygge sine kompetencer hurtigere, hvorefter man kan gå i gang med avanceret systemet, som f.eks. er hus styret fuldt ud af Arduino og Raspberry Pi \mefix{Indsæt kilde: http://www.instructables.com/id/Uber-Home-Automation-w-Arduino-Pi/}.
+%Projekter af denne størrelse, er ikke noget som den almindelige hobbyist kan sætte sig i gang med, som et første gangs projekt, men dette er noget som tiltrækker hobbyisten, og derfor ønsker hobbyisten at lave ligende systemer, eller måske sin egen version af det.
+%Derved har hobbyisten en motivation til at komme i gang, og kan se et konkret brug, hvilket leder videre til at der indkøbes et hobbyset, for at komme i gang med et.
+%Problemet for de nye aktivister indenfor Arduino, er at de ikke har prøvet at programmere før, hvilket det kræver for at udnytte Arduino til dens fulde, samt sammenkoble flere komponenter. Derfor har Arduino skrevet nogle kodeeksempler som viser kodningen på de mest almindelige brugseksempler, med standard komponenter. 
+%Dette er f.eks. hvordan man får en lampe til at blinke, hvilket kan ses på figur \ref{fig:arduino_blink} 
+
+%\figur{Figurer/arduino_blink.png}{Arduino Blink eksempel}{arduino_blink}{1}
+%\mfix{Lav til et rigtigt kodeeksempel i stedet for screenshot}
+
+
+%\noindent Eksemplet viser let, hvordan man får en lampe til at blinke, hvilket er utroligt simpelt. Dette er en god start, men lige så snart hobbyisten skal ud i mere komplekse ting, som at sætte en stepper motor til, skal personen søge information omkring lige præcis den model. Hertil er der mange af de fabrikerede modeller, som har forskellige software drivers, hvilket betyder at der er forskellige kommandoer til hvilken type man har. 
+%Dette betyder at en ny Arduino hobbyist, skal til at læse en stor mængde data, og tilpasse sig selv, til at kunne kode op imod den model, som man har indkøbt. Dette er ikke er særligt effektivt, i forhold til at der finde mange forskellige komponenter og modeller heraf, og derfor også skal lære dem at kende før man kan programmere til dem.
+%Derfor er der meget indlæring, som skal finde sted, for at man kan komme i gang, med de indkøbte moduler, hvilket ikke er helt let, i forhold til at man skal finde dataene først, som ikke ligger centraliseret på nettet.

@@ -1,0 +1,19 @@
+% Typen af dokumentklassen
+\documentclass[a4paper,11pt,twoside]{report}
+
+\input{Preamble/Preamble.tex}
+
+\begin{document}
+
+\ifdefined\draft
+    \input{Laesevejledning_til_vejleder.tex}
+\fi
+
+\listoffixmes
+
+%\includepdf[pages={1}]{forside_15122014.pdf},
+
+
+\input{Kapitler/Index.tex}
+
+\end{document}

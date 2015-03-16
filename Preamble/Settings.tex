@@ -1,0 +1,23 @@
+% Settings - udkommenter for at slå fra
+\newcommand*{\draft}{} % Skal der compiles som draft
+\newcommand*{\CMDCode}{} % Kode kommandoer
+\newcommand*{\CMDFixMe}{} % Aktiver fixme
+\newcommand*{\CMDTikZ}{} % Aktiver TikZ
+
+% Sæt dokumentinformationerne
+\newcommand{\rapportnavn}{-RAPPORTNAVN-}
+\newcommand{\gruppenummer}{SW402f15}
+\newcommand{\afldate}{Maj 2015}
+\newcommand{\sprognavn}{-SPROGNAVN-}
+
+% Ekstra kommandoer
+\newcommand{\figuregroup}{}
+\newcommand{\tabelgroup}{}
+\newcommand{\codegroup}{}
+\newcommand{\screenshotgroup}{}
+\newcommand{\lastseen}[1]{Sidst set d. #1}
+
+% Definer forkortelser
+\let\newfootnote\footnote % Kopier footnote
+\newcommand{\fn}[2]{\newfootnote{#1: #2}}
+\renewcommand{\footnote}{\errmessage{Brug fn i stedet for footnote}}

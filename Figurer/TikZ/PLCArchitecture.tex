@@ -1,0 +1,26 @@
+\begin{tikzpicture}[
+        largebox/.style={box, minimum width=7cm, minimum height=1cm},
+        bigline/.style={draw, line width=2mm},
+        bigarrow/.style args={#1}{bigline, draw=#1, shorten >=1mm, preaction={thick, -triangle 90,draw=#1,shorten >=0.0mm}},
+        bigdarrow/.style={bigline, draw=#1, shorten >=1mm, shorten <=1mm, preaction={thick, <->, >=triangle 90,draw=#1,shorten >=0.0mm, shorten <=0.0mm}}]]
+    
+    \node[box](M){Memory};
+    \node[box, right=of M](IO){I/O};
+    \path(M)--node[largebox, yshift=-3cm](CPU){CPU}(IO);
+    
+    \node[above=of M]{Program} edge[arrow] (M);
+    \node[above=of IO]{Real World} edge[arrow, <->] (IO);
+    
+    \draw[bigarrow=green] ($(CPU.north)+(-3,0)$) -- node[yshift=0.5cm](adrmid){} +(0,2);
+    \draw[bigarrow=green] (adrmid.center) -| ($(IO.south)+(-1cm,0)$);
+    \draw[bigdarrow=blue] (CPU) -- +(0,1.5) node(datamid){} -| (M);
+    \draw[bigarrow=blue] (datamid.center) -| (IO);
+    \draw[bigdarrow=red] ($(CPU.north)+(3,0)$) -- node[yshift=-0.5cm](ctrlmid){} +(0,2);
+    \draw[bigarrow=red] (ctrlmid.center) -| ($(M.south)+(1cm,0)$);
+    
+    \begin{scope}[node distance=0.2cm]
+        \node[right= 1cm of ctrlmid, circle=0.5cm, fill=red,label=right:Control](red){};
+        \node[above=of red, circle=0.5cm, fill=blue,label=right:Data](blue){};
+        \node[above=of blue, circle=0.5cm, fill=green, label=right:Address](green){};
+    \end{scope}
+\end{tikzpicture}

@@ -1,0 +1,17 @@
+\begin{tikzpicture}[auto, node distance=2cm]
+    \node [box] (generation) {Code Generation};
+    \node [box, above of=generation] (cAnalysis) {Contextual Analysis} 
+            edge[arrow] node{Decorated Abstract Syntax Tree}(generation);
+    \node [box, above of=cAnalysis] (sAnalysis) {Syntax Analysis} 
+            edge[arrow] node{Abstract Syntax Tree}(cAnalysis);
+    
+    \node [right of =sAnalysis, xshift=3cm] {Error Reports} 
+            edge [arrow, <-] (sAnalysis);
+    \node [right of =cAnalysis, xshift=3cm] {Error Reports} 
+            edge [arrow, <-] (cAnalysis);
+    
+    \node [above of =sAnalysis] {Source Program}    
+            edge[arrow] (sAnalysis);
+    \node [below of=generation] {Object Code}       
+            edge[arrow, <-] (generation);
+\end{tikzpicture}
