@@ -39,9 +39,7 @@ Som nævnt er opgaven nu at få bygget et abstrakt syntakstræ. Fordelene ved at
 
 \noindent På figur \ref{fig:MTAST} ses et sådant træ for koden vist i eksempel \ref{code:minitriangleforscanner}. For at forstå hvordan træet er bygget op, er det dog nødvendigt også at kende til CFG\fn{CFG}{Context-Free Grammar / Kontekstfri Grammatik}. Denne forklares i dybden i afsnit x.x\mfix{Mangler ref}, men den konkrete CFG for Mini Triangle kan ses i bilag \ref{bil:minitriangle}. Eksempelvis ses det øverste i den øverste del af træet at \textit{single-Command} består af "\textit{let} Declaration \textit{in} single-Command"\mbox{}, hvilket passer med grammatikken.
 
-
-
-
 \subsection{Contextual Analysis}
+Hvis der tages et kig tilbage på figur \ref{fig:Compiler-opbygning} ses det at det abstrakte syntakstræ nu skal "dekoreres"\mbox{}. Det vil altså sige at hver enkel token/knude skal have tilknyttet mere information - dette inkluderer blandt andet oplysninger om typer.\wip{}
 
 \subsection{Code Generation}

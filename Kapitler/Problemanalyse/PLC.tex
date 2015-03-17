@@ -35,16 +35,18 @@ I året 1993 blev det første udkast til IEC (International Electrical Commissio
 \noindent IEC 61131-3 standarden, definerer fire forskellige programmeringssprog til en PLC. To grafiske og to tekstrepræsenteret sprog. Alle sprog deler de samme objekter, hvilket gør det nemt at oversætte fra det ene sprog til det andet. Ligeledes giver det programmører mulighed for at manøvrerer frit mellem alle sprog. Herved har den enkelte programmør mulighed for at benytte sig af egne programmeringspræferencer.
 
 \subsubsection{Ladder Programmering (Relay Ladder Logic)}
-Ladder Programmering er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som symboliserer en stige. Ladder Programmering skrives i et IDE, hvor man ved hjælp af Drag \& Drop-funktionalitet, kan indsætte kontaktsæt, timere og meget mere. På figur \ref{fig:Ladder} kan et eksempel på et meget simpelt Ladder-program ses. Normalt-lukket og normalt-åbent kontaktsymboler kunne eventuelt repræsenterer et almindeligt relæ, som sætter en indgang på PLC'en. På første linje, bliver udgangen Q10.00 høj, når kontaktsæt \textit{( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 )} er høj.
+RLL \enquote*{Relay Ladder Logic} er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som symboliserer en stige. RLL skrives i et IDE, hvor man ved hjælp af Drag \& Drop-funktionalitet, kan indsætte kontaktsæt, timere og meget mere. På figur \ref{fig:Ladder} kan et eksempel på et meget simpelt Ladder-program ses. Normalt-lukket og normalt-åbent kontaktsymboler kunne eventuelt repræsenterer et almindeligt relæ, som sætter en indgang på PLC'en. På første linje, bliver udgangen Q10.00 høj, når kontaktsæt \textit{( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 )} er høj.
 
 \figur{Figurer/Billeder/Ladder.png}{Grafisk repræsentation af ladder programmering}{Ladder}{0.4}
 
+RLL egner sig bedst til simple programmer, hvor der kun anvendes binære variabler. Til mere komplekse programmer, vil der 
+
 \subsubsection{Function Block Diagram}
-Function Block Diagram er den anden grafiske måde at programmere en plc. FBD er programmet ved hjælp af logiske AND og OR blokke. Man kan på samme måde som i Ladder programmering bruge mere avancerede blokke som timere og tællere. På figur \ref{fig:FBD} ses et eksempel på Et simpelt Function Block Diagram.
+FFD \enquote*{Function Block Diagram} er den anden grafiske måde at programmere en plc. FBD er programmet ved hjælp af logiske AND og OR blokke. Man kan på samme måde som i Ladder programmering bruge mere avancerede blokke som timere og tællere. På figur \ref{fig:FBD} ses et eksempel på Et simpelt Function Block Diagram.
 
 \figur{Figurer/Billeder/FBD.png}{Grafisk repræsentation af et Function Block Diagram}{FBD}{0.6}
 
-
+FFD egner sig i 
 
 \subsubsection{Instruction List}
 IL er en af de tekstrepræsenterede måder man kan programmere en plc på. IL fungerer på nøjagtig samme måde som ladder og FBD. Ved hjælp af de samme komponenter kan man programmere den samme logiske struktur eller udtryk. På figur \ref{fig:plc-all} ses alle de forskellige programmeringssprog udføre den samme logik med de samme komponenter.
