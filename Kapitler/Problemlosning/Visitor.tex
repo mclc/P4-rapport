@@ -9,7 +9,7 @@ Så det arbejde der bliver udført er afhænging af to ting; typen af noden der 
 
 \tikzfigure{Figurer/TikZ/VisitorPattern.tex}{Den gennerelle model af Visitor-mønstret. \cite{Oliveira_2008}}{visitor}
 
-For at imødekomme denne situration er visitor mønsteret, som set på figur \ref{fig:visitor}, blevet udviklet. Mønsteret forsøger at samle koden for forskellige typer af arbejde i hver sin klasse afhængig af hvad type arbejde der skal udføres i figuren er dette IVisitor interfacet, hvor ConcreteVisitor klassen er en type af arbejde. Ud over dette så bliver elementerne, eller i tilfældet med en kompiler noderne, ansvarlige for at kalde den korrekte metode hos visitoren.
+\noindent For at imødekomme denne situration er visitor mønsteret, som set på figur \ref{fig:visitor}, blevet udviklet. Mønsteret forsøger at samle koden for forskellige typer af arbejde i hver sin klasse afhængig af hvad type arbejde der skal udføres i figuren er dette IVisitor interfacet, hvor ConcreteVisitor klassen er en type af arbejde. Ud over dette så bliver elementerne, eller i tilfældet med en kompiler noderne, ansvarlige for at kalde den korrekte metode hos visitoren.
 
 Ulemperne ved at bruge visitor mønsteret er at hvis man tilføjer en ny type element skal man ændre det i IVisitor interfacet, og som følge af det i alle visitor klasser, så derfor kan det være en fordel at implementere mønsteret senere i udviklings processen af programmet.
 

@@ -1,56 +1,69 @@
-\section{PLC}
-\textit{Hvad er PLC? - introducer læseren for PLC'en}
+\section{PLC (Programmable Logic Controller)}
+En PLC kan betegnes som en en digital computer, som primært anvendes i industrien 
 
-\tikzfigure{Figurer/TikZ/PLCArchitecture.tex}{PLC arkitektur. http://www.d.umn.edu/~snorr/ece4951s7/Lect4.pdf}{plcarch}
 
 \subsection{Hardware}
-\textit{Hvem laver PLC'er?}
-\textit{PLC-hardware, transisterer, relæer m.v.}
-\textit{Forklar formål}
-\begin{itemize}
-    \item PLC-producenter (skal omskrives)
-    \item Sammenlign med andre control-systems (hvorfor er PLC'er smarte?)
-\end{itemize}
+
+Den største forskel mellem hardwaren på en PLC og andre computere er at PLC'erne udviklet til at være beskyttet imod støv, temperatur, luft fugtighed og ligende. Dette stiller krav til indpakningen som PLC'en er i, og de komponenter der kan sidde i PLC'en.
+
+PLC'er er derfor generelt mere aflukket, så meget af det interne design er producentens beslutning og kan ikke ændres ved. Dette gør så at producenter ofte har deres egne standarder og derfor ikke fungere så godt med andre PLC'er fra andre producenter.
+
+For industrien er PLC'er derfor en attraktivt enhed da de giver en fleksibel løsning der holder til lidt af hvert og ofte er billigere end en speciel lavet alternativer. 
+
+\subsubsection{Producenter}
+Fordi der kan være så meget forskel på de interne systemer i PLC'erne er det relevant at undersøge hvor spredt markedet er, hvem der står for at bestemme standarderne, og hvad deres filosofier er.
+
+\paragraph{Siemens}
+er klart de største på PLC markedet, og med fire generationer af PLC´er har Siemens erfaring med produceringen af softwaren og hardware til PLC´en. Den fjerde generation, \enquote*{Simatic s7} som er den nuværende, bliver brugt i mange aspekter i industrien, heriblandt specielt automatisering af handlinger på fabrikker. Det er en semi modulær PLC da der kan tilføjes moduler til, hvilket gør den fleksibel, men den har stadig nogle forbindelser på hovedelen.
+
+\paragraph{Omron}
+har eksisteret siden 1972, hvor Omron begyndte at producere små enheder til f.eks. lommeregnere. Nogle af disse komponenter som blandt andet blev leveret til Harvard University, blev betegnet for at være en form for PLC, dog blev den aldrig masseproduceret, og blev derfor kun specielt produceret. Det var først i 1977 hvor Omron producerede deres standardlinje af PLC´er kaldet SYSMAC PLC, som blev masseproduceret. Her blev Omrons tidligere erfaringer med små enheder - microcontrollere samlet til at konstruere en PLC, som var starten på Omrons PLC marked. I dag har omron ca. 40 procent af markedet på PLCér i Japan og operere i mere end 80 lande i Europa, Nord Amerika og Asien.
+
+\paragraph{CODESYS}
+er udviklet af det Tyske softwarefirma 3S-Smart Software Solutions som i 1994 var klar med første udgave af CODESYS V 1.0 hvilket var tiden hvor automatisering af handlinger virkelig begynde at blive udnyttet. Det som gør CODESYS’en speciel er at de har implementeret et objektorienteret  programmeringssprog i version 3, som gør at man lettere kan adskille forskellige arbejdsopgaver, og dermed muligheden for at outsource dele af programmet.
 
 
 
+%\subsection{Siemens}
+%Siemens er klart de største på PLC markedet, og med fire generationer af PLC´er har Siemens erfaring med produceringen af softwaren og hardware til PLC´en.
 
-\subsection{Siemens}
-Siemens er klart de største på PLC markedet, og med 4 generationer af PLC´er har Siemens erfaring med produceringen af softwaren og hardware til PLC´en.\\
-Den 4 generation Sematic 7 som er den nuværende, bliver brugt i mange aspekter i industrien, heriblandt specielt automatisering af handlinger på fabrikker.
-Dette kunne f.eks. være en slagter, som laver flere tons hakket kød. Her har man før i tiden, skulle have en medarbejder, til at finde ud af hvornår der skulle mere kød i maskinen, hvor man nu har en PLC til med tilhørende sensorer som styrer hvornår der kan komme mere kød i.
-Siemens benytter hertil 3 forskellige programmeringssprogs, hvor det ene er  Ladderprogramming som indeholder en editor, compiler samt en debugger. 
-Editoren gør det muligt at skrive eller ændre i filer herunder kan man også benytte blokke. blokke kan man betegne lidt som en slags modul, hvor man let kan indsætte flere funktioner med en enkelt blok eller flere blokke.
-Dernæst bruger man dets kompiler, som kompilere koden, sammen med blokkene som man har brugt.
-Dette bliver dernæst omdannet til maskinkode som dernæst bliver kørt igennem debuggeren.
-Debuggeren kigger maskinkoden igennem efter logiske fejl, som kunne være opstået. 
-Til får man en compileret udgave af programmet som er tjekket for logiske fejl, som dernæst kan overføres til PLC´en.\\
-Ideen med denne type af programmeringssprog, er at det skulle være let, for en ikke programmør at komme i gang med programmering, uden yderligere oplæring. Dermed er ideen om drag-and-drop kodning, ganske simpel for en medarbejder at komme i gang med.
+%Den fjerde generation Sematic 7 som er den nuværende, bliver brugt i mange aspekter i industrien, heriblandt specielt automatisering af handlinger på fabrikker.
+%Dette kunne f.eks. være en slagter, som laver flere tons hakket kød. Her har man før i tiden, skulle have en medarbejder, til at finde ud af hvornår der skulle mere kød i maskinen, hvor man nu har en PLC til med tilhørende sensorer som styrer hvornår der kan komme mere kød i.
+%Siemens benytter hertil 3 forskellige programmeringssprogs, hvor det ene er  Ladderprogramming som indeholder en editor, compiler samt en debugger. 
+%Editoren gør det muligt at skrive eller ændre i filer herunder kan man også benytte blokke. blokke kan man betegne lidt som en slags modul, hvor man let kan indsætte flere funktioner med en enkelt blok eller flere blokke.
+%Dernæst bruger man dets kompiler, som kompilere koden, sammen med blokkene som man har brugt.
+%Dette bliver dernæst omdannet til maskinkode som dernæst bliver kørt igennem debuggeren.
+%Debuggeren kigger maskinkoden igennem efter logiske fejl, som kunne være opstået. 
+%Til får man en compileret udgave af programmet som er tjekket for logiske fejl, som dernæst kan overføres til PLC´en.
 
-\subsubsection{Interface for Ladderprogrammering}
-Interfacet til Ladderprogrammering på Siemens PLC´er, er meget simpelt og er opbygget som vist på Figur \ref{fig:SiemensLadder} 
+%Ideen med denne type af programmeringssprog, er at det skulle være let, for en ikke programmør at komme i gang med programmering, uden yderligere oplæring. Dermed er ideen om drag-and-drop kodning, ganske simpel for en medarbejder at komme i gang med.
 
-\figur{Figurer/SiemensLadder.png}{Siemens programmerings interfacel}{SiemensLadder}{1}
+% \subsubsection{Interface for Ladderprogrammering}
+% Interfacet til Ladderprogrammering på Siemens PLC´er, er meget simpelt og er opbygget som vist på Figur \ref{fig:SiemensLadder}.
 
-\noindent Programmet har en menu i venstre side, hvor programmøren kan vælge kodeblocke og indsætte direkte i koden som et modul.
-Programmøren har ligeledes mulighed for finde instruktioner som f.eks. hvordan man inverter en værdi, eller simpelt bit logik, i venstre side af programmet.
-I højre side af programmet har man sit hovedvindue, hvor alt det grafiske bliver repræsenteret.
+% \figur{Figurer/SiemensLadder.png}{Siemens programmerings interfacel}{SiemensLadder}{1}
 
-\subsection{Omron}
-Omron har eksisteret siden 1972, hvor Omron begyndte at producere små enheder til f.eks. lommeregnere. Nogle af disse komponenter som blandt andet blev leveret til Harvard University, blev betegnet for at være en form for PLC, dog blev den aldrig masseproduceret, og blev derfor kun specielt produceret.
-Det var først i 1977 hvor Omron producerede deres standardlinje af PLC´er kaldet SYSMAC PLC, som blev masseproduceret. Her blev Omrons tidligere erfaringer med små enheder - microcontrollere samlet til at konstruere en PLC, som var starten på Omrons PLC marked.
-Næsten 10 år efter producerede Omron C200H PLC, som bliver brugt endnu den dag, i dag. Dog havde Omron svært ved at sælge den, mest af alt pga. at Siemens havde 4 år forinden lanceret deres Simatic S5, som var banebrydende på det givende tidspunkt.
-I dag har omron ca. 40 procent af markede på PLCér i Japan og operere i mere end 80 lande, herunder i Europa, Nord America, Kina og Asien.
-\mefix{indsæt http://www.omron.com/about/corporate/business/domain/iab/index.html}
+% \noindent Programmet har en menu i venstre side, hvor programmøren kan vælge kodeblocke og indsætte direkte i koden som et modul.
+% Programmøren har ligeledes mulighed for finde instruktioner som f.eks. hvordan man inverter en værdi, eller simpelt bit logik, i venstre side af programmet.
+% I højre side af programmet har man sit hovedvindue, hvor alt det grafiske bliver repræsenteret.
 
-\subsection{CODESYS}
-CODESYS er udviklet af det Tyske softwarefirma 3S-Smart Software Solutions som i 1994 var klar med første udgave af CODESYS V 1.0 hvilket var tiden hvor automatisering af handlinger virkelig begynde at blive udnyttet.\\
-I modsætning til flere af CODESYS’ konkurrenter valgte de at udgive deres produkt med en gratis licens. Dette gjorde at de blev meget attraktive på marked, da man ikke længere skulle investere store midler i licenser, når man kunne få det gratis med produktet.
-Det som gør CODESYS’en speciel er at de har implementeret et objektorienteret  programmeringssprog i version 3, som gør at man lettere kan adskille forskellige arbejdsopgaver, og dermed muligheden for at outsource dele af programmet.
-Den objektorienteret tilgang introducere metoder, interfaces, klasser og polymorfi samt try/catch.\\
-Dette er dog først blevet implementeret i CODESYS V3, hvor der førhen ikke har været den objektorienteret tilgang, hvilket gjorde det usikkert i forhold til exception handling.
-Exception handlingen har gjort det væsentligt mere sikkert, i forhold til at medarbejderen som planlægger hvad PLC´en skal gøre, har mulighed for at tage sikkerhedsforanstaltninger med hensyn til hvad maskinen skal gøre hvis den oplever en fejl.
-Ved at forudse og behandle eventuelle fejl, kan man på den måde altid få maskinen til at lukke helt ned, med en finally-block i try/catch.
+% \subsection{Omron}
+% Omron har eksisteret siden 1972, hvor Omron begyndte at producere små enheder til f.eks. lommeregnere. Nogle af disse komponenter som blandt andet blev leveret til Harvard University, blev betegnet for at være en form for PLC, dog blev den aldrig masseproduceret, og blev derfor kun specielt produceret.
+% Det var først i 1977 hvor Omron producerede deres standardlinje af PLC´er kaldet SYSMAC PLC, som blev masseproduceret. Her blev Omrons tidligere erfaringer med små enheder - microcontrollere samlet til at konstruere en PLC, som var starten på Omrons PLC marked.
+% Næsten 10 år efter producerede Omron C200H PLC, som bliver brugt endnu den dag, i dag. Dog havde Omron svært ved at sælge den, mest af alt pga. at Siemens havde 4 år forinden lanceret deres Simatic S5, som var banebrydende på det givende tidspunkt.
+% I dag har omron ca. 40 procent af markede på PLCér i Japan og operere i mere end 80 lande, herunder i Europa, Nord America, Kina og Asien.
+% \mefix{indsæt http://www.omron.com/about/corporate/business/domain/iab/index.html}
+
+% \subsection{CODESYS}
+% CODESYS er udviklet af det Tyske softwarefirma 3S-Smart Software Solutions som i 1994 var klar med første udgave af CODESYS V 1.0 hvilket var tiden hvor automatisering af handlinger virkelig begynde at blive udnyttet.
+
+% I modsætning til flere af CODESYS’ konkurrenter valgte de at udgive deres produkt med en gratis licens. Dette gjorde at de blev meget attraktive på marked, da man ikke længere skulle investere store midler i licenser, når man kunne få det gratis med produktet.
+% Det som gør CODESYS’en speciel er at de har implementeret et objektorienteret  programmeringssprog i version 3, som gør at man lettere kan adskille forskellige arbejdsopgaver, og dermed muligheden for at outsource dele af programmet.
+% Den objektorienteret tilgang introducere metoder, interfaces, klasser og polymorfi samt try/catch.
+
+% Dette er dog først blevet implementeret i CODESYS V3, hvor der førhen ikke har været den objektorienteret tilgang, hvilket gjorde det usikkert i forhold til exception handling.
+% Exception handlingen har gjort det væsentligt mere sikkert, i forhold til at medarbejderen som planlægger hvad PLC´en skal gøre, har mulighed for at tage sikkerhedsforanstaltninger med hensyn til hvad maskinen skal gøre hvis den oplever en fejl.
+% Ved at forudse og behandle eventuelle fejl, kan man på den måde altid få maskinen til at lukke helt ned, med en finally-block i try/catch.
 
 
 
@@ -84,7 +97,7 @@ I 1993 blev det første udkast til IEC (International Electrical Commission) 611
 \jfix{Gennemgå alle 4}
 
 \subsubsection{Ladder Programmering (Relay Ladder Logic)}
-Ladder Programmering er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som der kan ligne en stige. Ladder Programmering skrives i et IDE, hvor man ved hjælp af Drag \& Drop-funktionalitet, kan indsætte kontaktsymboler, timere og meget mere. På figur \ref{fig:Ladder} kan et eksempel på et meget simpelt Ladder-program ses. Normalt-lukket og normalt-åbent kontaktsymboler kunne eventuelt repræsenterer et almindeligt relæ, som sætter en indgang på PLC'en. På første linje, bliver udgangen Q10.00 høj, når både kontaktsæt ( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 ) er høj.
+Ladder Programmering er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som symboliserer en stige. Ladder Programmering skrives i et IDE, hvor man ved hjælp af Drag \& Drop-funktionalitet, kan indsætte kontaktsymboler, timere og meget mere. På figur \ref{fig:Ladder} kan et eksempel på et meget simpelt Ladder-program ses. Normalt-lukket og normalt-åbent kontaktsymboler kunne eventuelt repræsenterer et almindeligt relæ, som sætter en indgang på PLC'en. På første linje, bliver udgangen Q10.00 høj, når både kontaktsæt ( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 ) er høj.
 
 \figur{Figurer/Billeder/Ladder.png}{Grafisk repræsentation af ladder programmering}{Ladder}{0.4}
 

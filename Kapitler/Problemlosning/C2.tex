@@ -1,20 +1,21 @@
 % Gadeberg 16-03
-\section{Løsningsforslag - C2}
-Ud fra problemformuleringen er der blevet lagt vægt på en løsning der tilgodeser et højere abstraktionsniveau samt en højere effektivitet ved udvikling af programmer. 
+\section{Løsningsforslag - PLC++}
+Ud fra problemformuleringen er der blevet lagt vægt på en løsning der tilgodeser et højere abstraktionsniveau samt en højere effektivitet ved udvikling af programmer.
 
-Løsningen der er blevet valgt er et imperativt sprog der lægger sig tæt op ad C. Motivationen for at vælge C som grundpille er C's udbredelse samt at mange sprog ligner C i deres syntax. Derfor vil sproget have en højere read og write-ability for en stor del af målgruppen.
+Løsningen der er blevet valgt er et imperativt sprog der er inspireret af C. Motivationen for at vælge C som grundpille er C's udbredelse samt at mange sprog ligner C i deres syntax. Derfor vil sproget have en højere read og write-ability for en stor del af målgruppen.
 
-Løsningsforslaget vil i rapporten blive omtalt som C2.
+Løsningsforslaget vil i rapporten blive omtalt som PLC++.
 
 \subsection{Kravspecifikation}
-Kravene til C2 der er blevet valgt er C med en række ændringer for at højne abstraktionsniveauet samt øge effektiviteten.
+Kravene til PLC++ tager udgangspunkt i C med en del ændringer. C bidrager til kravet om abstraktionsniveauet med dets mulighed for at benytte funktioner. Ligeledes har C datatypen \textit{struct} som kan imitere objekter i den virkelige verden.
 
-C bidrager til kravet om abstraktionsniveauet med dets mulighed for at benytte funktioner. Ligeledes har C datatypen \textit{struct} som kan imitere objekter i den virkelige verden. 
+De største krav til PLC++ vil blive gennemgået og forklaret. Den fulde syntax specifikation kan findes i bilag \mgfix{Nilag til syntax specifikation}
+
 
 \subsubsection{Pointeraritmetik}
 En af de vigtigste ting der blev valgt som afgørende for at mere effektivt programmeringssprog var afskaffelse af pointeraritmetik. I sproget skal pointeraritmetik fjernes så programmøren ikke eksplicit skal erklære hvad han/hun vil. Pointeraritmetik er kilde til mange potentielle fejlkilder og kan være en hindring for selv øvede programmører.
 
-
 \subsubsection{Boolsk datatype}
 En anden ting der blev lagt vægt på var at tilføje datatypen \textit{boolean}. Den boolske datatype tilføjer en højere abstraktion af virkeligheden. Som ved pointeraritmetik giver brugen af integers til boolsk udtryk også anledning til potentielle fejlkilder, samt et mindre korrekt sprog.
 
+\subsubsection{Port}
