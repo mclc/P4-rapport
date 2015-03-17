@@ -1,3 +1,3 @@
 let var y: Integer 
 in !new year
-   y := y+1
+   y := y + 1

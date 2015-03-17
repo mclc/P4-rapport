@@ -1,0 +1,53 @@
+\begin{grammar}
+
+%<statement> ::= <ident> `=' <expr> 
+%\alt `for' <ident> `=' <expr> `to' <expr> `do' <statement> 
+%\alt `{' <stat-list> `}' 
+%\alt <empty> 
+
+%<stat-list> ::= <statement> `;' <stat-list> | <statement> 
+
+
+<Program> ::= single-command
+
+<Command> ::= single-command
+\alt Command ; single-command
+
+<single-Command> ::= V-name `:=' Expression
+\alt Identifier ( Expression )
+\alt if Expression
+\alt then single-Command
+\alt else single-Command
+\alt while Expression do single-Command
+\alt let Declaration in single-Command
+\alt begin Command end
+
+<Expression> ::= primary-Expression
+\alt Expression Operator primary-Expression
+
+<primary-Expression> ::= Integer-Literal
+\alt V-name
+\alt Operator primary-Expression
+\alt ( Expression )
+
+<V-name> ::= Identifier
+
+<Declaration> ::= single-Declaration
+\alt Declaration ; single-Declaration
+
+<single-Declaration> ::= const Identifier ~ Expression
+\alt var Identifier : Type-denoter
+
+<Type-denoter> ::= Identifier
+
+<Identifier> ::= Letter
+\alt Identifier Letter
+\alt Identifier Digit
+
+<Integer-Literal> ::= Digit
+\alt Integer-Literal Digit
+
+<Comment> ::= ! Graphic\textsuperscript{*} eol
+
+\end{grammar}
+

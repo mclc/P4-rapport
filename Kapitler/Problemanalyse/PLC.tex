@@ -1,27 +1,61 @@
 \section{PLC (Programmable Logic Controller)}
-En PLC kan betegnes som en en digital computer, som primært anvendes i industrien 
-
+En PLC kan betegnes som en en digital computer, designet til at håndterer multiple analog/digitale I/O. PLC'en anvendes primært til elektromekaniske anlæg, hvor de samme handlinger skal udføres sekventielt, med en lav fejlrate, og med en høj sekventiel udføringshastighed. PLC'en er et reeltids-system, hvoraf outputs' tilstande er et direkte resultat af indgangenes tilstand. I nedenstående afsnit, vil PLC'ens hardware og software blive fremført, med formålet at kunne synliggøre PLC'ens fordele og ulemper. Ulemperne vil eventuelt kunne benyttes til problembeskrivelsen\cite{PLC_hardware_desc}. 
 
 \subsection{Hardware}
+Den største forskel mellem hardwaren på en PLC og andre digitale computere, er at PLC'er har en konstruktion, som egner sig specifikt til belastende arbejdsmiljøer. PLC'en er dermed ekstra beskyttet imod støv, temperatursvigninger og luftfugtighed. Figur \ref{fig:omron-plc} viser en af Omrons mest populære PLC'er, \enquote*{SYSMAC CP1H}. PLC'en har 24 indgange og 17 udgange, hvor COM-porten på indgangsmodulet, giver mulighed for at bestemme den fælles polaritet. Hertil kan der tilsluttes DC 24V eller DC 0V, afhængig af kundens præferencer. I Europa anvendes DC 0V som fælles polaritet, hvor i USA anvendes der DC 24V. 
 
-Den største forskel mellem hardwaren på en PLC og andre computere er at PLC'erne udviklet til at være beskyttet imod støv, temperatur, luft fugtighed og ligende. Dette stiller krav til indpakningen som PLC'en er i, og de komponenter der kan sidde i PLC'en.
+\figur{Figurer/Billeder/plc-omron-hardware.jpg}{PLC Omron SYSMAC CP1H}{omron-plc}{0.6}
 
-PLC'er er derfor generelt mere aflukket, så meget af det interne design er producentens beslutning og kan ikke ændres ved. Dette gør så at producenter ofte har deres egne standarder og derfor ikke fungere så godt med andre PLC'er fra andre producenter.
+\noindent PLC'er mekaniske konstruktion, er meget varierende fra producent til producent, og fra model til model. Nogle producenter har adskillige modeller, som hver især er blevet konstrueret til et specifikt arbejdsmæssigt formål. Nogle modeller er således konstrueret med udvidelsesmoduler, hvor andre - mere simple PLC'er - er konstrueret med få indgange/udgange. 
+Den store konstruktionsmæssige variation mellem PLC-fabrikanterne, begrænsninger den enkelte virksomheds fleksibilitet. Der er således ikke mulighed for at sammenkoble et udvidelsesmodul af producenten, Omron, på en PLC produceret af Allen Bradly\cite{PLC-comb}. På figur \ref{fig:omron-plc} kan der ses en låge, som er markeret med EXP, hvilket giver mulighed for at udvide PLC'en med flere moduler.
 
-For industrien er PLC'er derfor en attraktivt enhed da de giver en fleksibel løsning der holder til lidt af hvert og ofte er billigere end en speciel lavet alternativer. 
+I dag bliver de fleste automatiserede anlæg konstrueret med en PLC. Det giver den pågældende virksomhed mulighed for at konstruerer anlægget generisk. Hermed skal der færre tilpasninger til, før at anlægget kan benyttes i flere forskellige arbejdsmiljøer. Det medvirker til forøget fleksibilitet ved slutkunden, da reguleringer kan foretages hurtigt og uden større mekaniske indgreb.\\
 
-\subsubsection{Producenter}
-Fordi der kan være så meget forskel på de interne systemer i PLC'erne er det relevant at undersøge hvor spredt markedet er, hvem der står for at bestemme standarderne, og hvad deres filosofier er.
+\noindent I nedenstående afsnit vil tre PLC-producenter kortfattet blive introduceret. Indledningsvist vil Siemens blive introduceret, som er de største PLC-producenter på markedet. Omron er på lige fod med Siemens et udbredt fabrikat, som benyttes i rigtig mange automatiserede anlæg. Omron's PLC-model, \enquote*{SYSMAC CP1H}, er ligeledes tilgængelig for gruppen. CODESYS er de ledende udviklere af softwareapplikation til controller-systemets, og har udviklet CODESYS SP6, som bygger på det objekt-orienteret programmeringsparadigme.
 
-\paragraph{Siemens}
-er klart de største på PLC markedet, og med fire generationer af PLC´er har Siemens erfaring med produceringen af softwaren og hardware til PLC´en. Den fjerde generation, \enquote*{Simatic s7} som er den nuværende, bliver brugt i mange aspekter i industrien, heriblandt specielt automatisering af handlinger på fabrikker. Det er en semi modulær PLC da der kan tilføjes moduler til, hvilket gør den fleksibel, men den har stadig nogle forbindelser på hovedelen.
+\subsubsection{PLC-producenter}
 
-\paragraph{Omron}
-har eksisteret siden 1972, hvor Omron begyndte at producere små enheder til f.eks. lommeregnere. Nogle af disse komponenter som blandt andet blev leveret til Harvard University, blev betegnet for at være en form for PLC, dog blev den aldrig masseproduceret, og blev derfor kun specielt produceret. Det var først i 1977 hvor Omron producerede deres standardlinje af PLC´er kaldet SYSMAC PLC, som blev masseproduceret. Her blev Omrons tidligere erfaringer med små enheder - microcontrollere samlet til at konstruere en PLC, som var starten på Omrons PLC marked. I dag har omron ca. 40 procent af markedet på PLCér i Japan og operere i mere end 80 lande i Europa, Nord Amerika og Asien.
+\noindent\textbf{Siemens} er klart de største på PLC markedet, og igennem fire generationer af PLC'er, er Siemens definitivt én af de mest kompetente PLC-producenter på markedet - både på det hardware- såvel som det softwaremæssige plan. Den fjerde generation, \enquote*{Simatic s7} som er Siemens seneste udgave, bliver brugt i mange aspekter i industrien. Specielt Siemens evne til at konstruerer PLC'er med høj ydeevne, og til en lav omkostningspris, er Siemens force. I året 2012, lancerede Siemens et nyt IDE \enquote*{Integrated development environment}, som til stadighed benytter sig af den traditionelle RLL-programmeringsform, \enquote*{Relay Ladder Logic}. De har trods den massive softwaremæssige udvikling - med implementationen af det objekt-orienterede programmeringsparadigme, valgt at holde fast i den gamle programmeringsform. \\
 
-\paragraph{CODESYS}
-er udviklet af det Tyske softwarefirma 3S-Smart Software Solutions som i 1994 var klar med første udgave af CODESYS V 1.0 hvilket var tiden hvor automatisering af handlinger virkelig begynde at blive udnyttet. Det som gør CODESYS’en speciel er at de har implementeret et objektorienteret  programmeringssprog i version 3, som gør at man lettere kan adskille forskellige arbejdsopgaver, og dermed muligheden for at outsource dele af programmet.
+\noindent\textbf{Omron} har eksisteret siden 1972, hvor Omron begyndte at producerer små enheder til f.eks. lommeregnere. Nogle af disse komponenter blev blandt andet distribueret til Harvard University. Det var først i året 1977, at Omron påbegyndte deres PLC-standardlinje, kaldet SYSMAC PLC, at PLC deres førende produktionsserie. I dag har Omron ca. 40\% af markedet på PLC'er i Japan og operere i mere end 80 lande i Europa, Nordamerika og Asien. Omron benytter sig stadig af RLL.\\
 
+\noindent\textbf{CODESYS} er udviklet af det Tyske softwarefirma 3S-Smart Software Solutions, som i året 1994 var klar med første udgave af CODESYS V 1.0. Det som gør CODESYS unik, er at de har implementeret et objektorienteret programmeringssprog i version 3, som gør at man lettere kan adskille forskellige arbejdsopgaver, og dermed muligheden for at outsource dele af programmet. \\
+
+\noindent Hvordan PLC-programmering har udviklet sig igennem årene, samt RLL's fordele og ulemper, vil det næste afsnit belyse nærmere.
+
+\subsection{Software}
+%% Gennemgang af plc programmering
+%%Forklar om sproget med fokus på paradigme
+PLC-programmeringssproget har ikke udviklet sig meget siden indtoget i 1960’erne. Mange af PLC-producenterne holder fast i den oprindelige opfattelse (IEC 61131-3); at PLC’er hovedsagligt anvendes til mindre programmeringsopgaver. De mest udbredte PLC’er til dato, programmeres stadig i paradigmet, RLL. Programmeringssproget er ret primitivt, og det er meget besværligt at være produktiv – især ved større projekter. Dette skyldes blandt andet, at flere PLC-programmører ikke benytter sig af subrutiner, og ved større projekter, mister den enkelte programmør simpelthen overblikket. 
+
+I året 1993 blev det første udkast til IEC (International Electrical Commission) 61131-3 standarden publiceret\cite{iecStandard}. Standarden havde til formål at sikre en generalisering af hvordan software til PLC'er skrives og forstås. Igennem årene er det blevet mere og mere normalt, at både slutkunden, leverandøren og PLC-producenten følger, og efterspørger denne standard. Mange slutkunder, står selvstændigt for vedligeholdelsen og reprogrammering af deres automatiserede anlæg, og har ikke den fornødne kapacitet til at få indopereret en ny standard i deres travle arbejdsmiljø. \\
+
+\noindent Flere programmeringsfirmaer har dog forsøgt at indfase det OOP (Object-Oriented Programming) programmeringsparadigme i PLC-universet. For mange almindelige industriteknikere, som også fungerer som PLC-programmører i industrien, bliver OOP dog for omstændelig. Mange PLC-programmører holder derfor fast i de gamle og velkendte programmeringsrutiner. Dette kan i visse tilfælde, som tidligere nævnt, ligeledes skyldes arbejdspladsens konservative indgangsvinkel\cite{PLC_Siemens_OOP}.  \\
+
+\noindent IEC 61131-3 standarden, definerer fire forskellige programmeringssprog til en PLC. To grafiske og to tekstrepræsenteret sprog. Alle sprog deler de samme objekter, hvilket gør det nemt at oversætte fra det ene sprog til det andet. Ligeledes giver det programmører mulighed for at manøvrerer frit mellem alle sprog. Herved har den enkelte programmør mulighed for at benytte sig af egne programmeringspræferencer.
+
+\subsubsection{Ladder Programmering (Relay Ladder Logic)}
+Ladder Programmering er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som symboliserer en stige. Ladder Programmering skrives i et IDE, hvor man ved hjælp af Drag \& Drop-funktionalitet, kan indsætte kontaktsæt, timere og meget mere. På figur \ref{fig:Ladder} kan et eksempel på et meget simpelt Ladder-program ses. Normalt-lukket og normalt-åbent kontaktsymboler kunne eventuelt repræsenterer et almindeligt relæ, som sætter en indgang på PLC'en. På første linje, bliver udgangen Q10.00 høj, når kontaktsæt \textit{( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 )} er høj.
+
+\figur{Figurer/Billeder/Ladder.png}{Grafisk repræsentation af ladder programmering}{Ladder}{0.4}
+
+\subsubsection{Function Block Diagram}
+Function Block Diagram er den anden grafiske måde at programmere en plc. FBD er programmet ved hjælp af logiske AND og OR blokke. Man kan på samme måde som i Ladder programmering bruge mere avancerede blokke som timere og tællere. På figur \ref{fig:FBD} ses et eksempel på Et simpelt Function Block Diagram.
+
+\figur{Figurer/Billeder/FBD.png}{Grafisk repræsentation af et Function Block Diagram}{FBD}{0.6}
+
+
+
+\subsubsection{Instruction List}
+IL er en af de tekstrepræsenterede måder man kan programmere en plc på. IL fungerer på nøjagtig samme måde som ladder og FBD. Ved hjælp af de samme komponenter kan man programmere den samme logiske struktur eller udtryk. På figur \ref{fig:plc-all} ses alle de forskellige programmeringssprog udføre den samme logik med de samme komponenter.
+
+\figur{Figurer/Billeder/plc-all.png}{Figuren viser alle 4 programmeringssprog som er omfattet af IEC 61131-3 standarden, udføre det den samme logik.}{plc-all}{0.6}
+
+%% PROS
+\noindent Nu har vi set eksempler for hvordan en plc kan programmeres ved hjælp af den tidligere omtalt IEC standard. fælles for dem alle er at de benytter de samme komponenter. Det er en fordel da man kan benytte forskellige sprog til samme program. Ligeledes kan den enkelte programmør vælge det sprog de mener passer bedst til dem. Ladder programmering henvender sig specielt til elektrikeree da symbolikken der bruges ligner mekaniske kontaktorer. Function Block Diagram henvender sig til elektronikteknikere da symbolikken minder meget om logiske AND og OR gates.
+
+%%CONS
+Fælles for alle de omtalte sprog, er at de som tidligere nævnt benytter sig af de samme objekter. Det sætter en række begrænsninger i hvordan man kan designe sin kodearkitektur. Ved store systemer opdeler man ofte programmet i forskellige abstraktioner. Ligeledes indkapsler man forskellige dele, for at øge læsbarheden samt bidrage til simpliciteten. Disse udfordringer er specielt gældende for overstående IEC standard, da sproget er designet fra et perspektiv om at forskellige typer programmører skal kunne skrive plc kode. Typer som f.eks. Elektrikere, elektronikteknikere og computerprogrammører.
 
 
 %\subsection{Siemens}
@@ -64,55 +98,3 @@ er udviklet af det Tyske softwarefirma 3S-Smart Software Solutions som i 1994 va
 % Dette er dog først blevet implementeret i CODESYS V3, hvor der førhen ikke har været den objektorienteret tilgang, hvilket gjorde det usikkert i forhold til exception handling.
 % Exception handlingen har gjort det væsentligt mere sikkert, i forhold til at medarbejderen som planlægger hvad PLC´en skal gøre, har mulighed for at tage sikkerhedsforanstaltninger med hensyn til hvad maskinen skal gøre hvis den oplever en fejl.
 % Ved at forudse og behandle eventuelle fejl, kan man på den måde altid få maskinen til at lukke helt ned, med en finally-block i try/catch.
-
-
-
-\subsection{Software}
-\textit{Hvordan programmers PLC'er?}
-\textit{Forklar formål}
-\begin{itemize}
-    \item PLC-programmering (sprog)
-    \begin{itemize}
-        \item Function Block-diagram
-        \item Function Block-diagram
-        \item Instruction List
-    \end{itemize}
-    \item Scan-time (run-through)
-\end{itemize}
-
-
-
-
-\subsection{PLC-Programmering}
-%% Gennemgang af plc programmering
-%%Forklar om sproget med fokus på paradigme
-PLC-programmeringssproget har ikke udviklet sig meget siden indtoget i 1960’erne. Mange af PLC-producenterne holder fast i den oprindelige opfattelse (IEC 61131-3); at PLC’er hovedsagligt anvendes til mindre programmeringsopgaver. De mest udbredte PLC’er til dato, programmeres stadig i paradigmet, RLL (Relay Ladder Logic). Programmeringssproget er ret primitivt, og det er meget besværligt at være produktiv – især ved større projekter. Dette skyldes blandt andet, at flere PLC-programmører ikke benytter sig af subrutiner, og ved større projekter, mister den enkelte programmør simpelthen overblikket. 
-
-I 1993 blev det første udkast til IEC (International Electrical Commission) 61131-3 standarden publiceret\cite{iecStandard}. Standarden havde til formål at sikre en generalisering af hvordan software til PLC'er skrives og forstås. Igennem årene er det blevet mere og mere normalt, at både slutkunden, leverandøren og PLC-producenten følger, og efterspørger denne standard. Mange slutkunder, står selvstændigt for vedligeholdelsen og om-programmering af deres automatiserede anlæg, har ikke den fornødne kapacitet til at få indopereret en ny standard i deres travle arbejdsmiljø. \\
-
-\noindent Flere programmeringsfirmaer har dog forsøgt at indfase det OOP (Object-Oriented Programming) programmeringsparadigme i PLC-universet. For mange almindelige industriteknikere, som også fungerer som PLC-programmører i industrien, bliver OOP dog for omstændelig. Mange PLC-programmører holder derfor fast i de gamle og velkendte programmeringsrutiner. Dette kan i visse tilfælde, som nævnt tidligere, ligeledes skyldes arbejdspladsens konservative indgangsvinkel. \cite{PLC_Siemens_OOP} \\
-
-\noindent IEC 61131-3 standarden, definerer 4 forskellige programmeringssprog til en PLC. To grafiske og to tekstrepræsenteret sprog. Alle sprog deler de samme objekter, hvilket gør det nemt at oversætte fra det ene sprog til det andet. Ligeledes giver det programmører mulighed for at manøvrerer frit mellem alle sprog, hvilket giver den enkelte programmør mulighed for at tilpasse sine egne programmeringsmæssige fremgangsmetoder. 
-
-\jfix{Gennemgå alle 4}
-
-\subsubsection{Ladder Programmering (Relay Ladder Logic)}
-Ladder Programmering er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som symboliserer en stige. Ladder Programmering skrives i et IDE, hvor man ved hjælp af Drag \& Drop-funktionalitet, kan indsætte kontaktsymboler, timere og meget mere. På figur \ref{fig:Ladder} kan et eksempel på et meget simpelt Ladder-program ses. Normalt-lukket og normalt-åbent kontaktsymboler kunne eventuelt repræsenterer et almindeligt relæ, som sætter en indgang på PLC'en. På første linje, bliver udgangen Q10.00 høj, når både kontaktsæt ( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 ) er høj.
-
-\figur{Figurer/Billeder/Ladder.png}{Grafisk repræsentation af ladder programmering}{Ladder}{0.4}
-
-\subsubsection{Function Block Diagram}
-Function Block Diagram er den anden grafiske måde at programmere en plc. FBD er programmet ved hjælp af logiske AND og OR blokke. Man kan på samme måde som i Ladder programmering bruge mere avancerede blokke som timere og tællere. På figur \ref{fig:FBD} ses et eksempel på Et simpelt Function Block Diagram.
-
-\figur{Figurer/Billeder/FBD.png}{Grafisk repræsentation af et Function Block Diagram}{FBD}{0.6}
-
-\subsubsection{Instruction List}
-IL er en af de tekstrepræsenterede måder man kan programmere en plc på. IL fungerer på nøjagtig samme måde som ladder og FBD. Ved hjælp af de samme komponenter kan man programmere den samme logiske struktur eller udtryk. På figur \ref{fig:plc-all} ses alle de forskellige programmeringssprog udføre den samme logik med de samme komponenter.
-
-\figur{Figurer/Billeder/plc-all.png}{Figuren viser alle 4 programmeringssprog som er omfattet af IEC 61131-3 standarden, udføre det den samme logik.}{plc-all}{0.6}
-
-%% PROS
-\noindent Nu har vi set eksempler for hvordan en plc kan programmeres ved hjælp af den tidligere omtalt IEC standard. fælles for dem alle er at de benytter de samme komponenter. Det er en fordel da man kan benytte forskellige sprog til samme program. Ligeledes kan den enkelte programmør vælge det sprog de mener passer bedst til dem. Ladder programmering henvender sig specielt til elektrikeree da symbolikken der bruges ligner mekaniske kontaktorer. Function Block Diagram henvender sig til elektronikteknikere da symbolikken minder meget om logiske AND og OR gates.
-
-%%CONS
-Fælles for alle de omtalte sprog, er at de som tidligere nævnt benytter sig af de samme objekter. Det sætter en række begrænsninger i hvordan man kan designe sin kodearkitektur. Ved store systemer opdeler man ofte programmet i forskellige abstraktioner. Ligeledes indkapsler man forskellige dele, for at øge læsbarheden samt bidrage til simpliciteten. Disse udfordringer er specielt gældende for overstående IEC standard, da sproget er designet fra et perspektiv om at forskellige typer programmører skal kunne skrive plc kode. Typer som f.eks. Elektrikere, elektronikteknikere og computerprogrammører.
