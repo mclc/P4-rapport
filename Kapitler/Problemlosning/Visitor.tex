@@ -3,7 +3,7 @@
 \cfix{Jeg antager at vi allerede er klar over at vi vil lave en compiler og at vi har redegjort lidt for hvordan vi vil bruge abstract systax trees til at gøre dette. Derfor forslår jeg at dette afsnit bliver rykket ned under Compilere-afsnittet}
 \mfix{Dette var en diskussion vi havde til et gruppemøde. Men lad os se på det når afsnittet er færdigt.}
 
-Når man laver et AST\fn{AST}{Abstract Syntax Tree} under kompileringen af noget kilde kode, så vil treet have mange forskellige noder som skal opføre sig forskelligt. Dette er almindeligt objekt oritenteret design, med en abstrakt super klasse der definere metoderne som sub klasserne så overskriver. Det AST vil vi så gerne kunne gå igennem af flere grunde, fx for at analysere koden eller generere objekt koden. 
+Når man laver et \gls{ast} under kompileringen af noget kilde kode, så vil treet have mange forskellige noder som skal opføre sig forskelligt. Dette er almindeligt objekt oritenteret design, med en abstrakt super klasse der definere metoderne som sub klasserne så overskriver. Det \gls{ast} vil vi så gerne kunne gå igennem af flere grunde, fx for at analysere koden eller generere objekt koden. 
 
 Så det arbejde der bliver udført er afhænging af to ting; typen af noden der bliver udført og hvad type arbejde der er brug for (analyse, generering o.lign.). Dette kan gøres ved at kalde forskellige metoder på noderne afhængig af type af arbejde der skal udføres, det betyder bare at koden bliver spredt hvilket gør vedligeholdelse af programmet besværligt.
 

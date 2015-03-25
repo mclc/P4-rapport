@@ -1,24 +1,65 @@
-% Gadeberg 16-03
+% Gadeberg 16-03: HEJ MADS
 \section{Løsningsforslag - PLC++}
 Ud fra problemformuleringen er der blevet lagt vægt på en løsning der tilgodeser et højere abstraktionsniveau samt en højere effektivitet ved udvikling af programmer.
 
-Løsningen der er blevet valgt er et imperativt sprog der er inspireret af C. Motivationen for at vælge C som grundpille er C's udbredelse samt at mange sprog ligner C i deres syntax. Derfor vil sproget have en højere read og write-ability for en stor del af målgruppen.
+Løsningen der er blevet valgt er et imperativt sprog der er inspireret af C. Motivationen for at vælge C som grundpille er C's udbredelse samt at mange sprog ligner C i deres syntax. Derfor vil sproget have en højere read- og writeability for en stor del af målgruppen.
 
 Løsningsforslaget vil i rapporten blive omtalt som PLC++.
 
 \subsection{Kravspecifikation}
 Kravene til PLC++ tager udgangspunkt i C med en del ændringer. C bidrager til kravet om abstraktionsniveauet med dets mulighed for at benytte funktioner. Ligeledes har C datatypen \textit{struct} som kan imitere objekter i den virkelige verden.
 
-De vigitgste krav til PLC++ vil blive gennemgået og forklaret. Den fulde syntax specifikation kan findes i bilag \mgfix{Bilag til syntax specifikation}
+De vigitgste krav til PLC++ vil blive gennemgået, forklaret og prioriteret i en MosCOW. Den fulde syntax specifikation kan findes i bilag \ref{bil:cfg}
 
-\subsubsection{Pointeraritmetik}
+\subsubsection{MoSCoW}
+\gls{moscow}-analysen har til formål at belyse kravspecifikationens funktioner, samt opnåelse af disse.
+Disse funktioner kan ved hjælpe af \gls{moscow}-analyse opstilles med prioritet, for hvert individuelle funktion.
+Prioteringen for den individuelle funktion er nødvendig, i forhold til det tidsmæssige aspekt, og giver ydermere en arbejdsstruktur for implementationen af funktionen.
+
+\begin{table}[H]
+\begin{tabular}{|m{12em}|m{11em}|m{9em}|m{7em}|}
+\hline
+\textbf{Must have} & \textbf{Should have} & \textbf{Could have} & \textbf{Want to have} \\ \hline
+ If & For & Do-While & Betingetudtryk   \\ \hline
+ int & Decrement & Const & Unsigned int  \\ \hline
+ 
+ 
+ Structs & Increment & Optimizer &    \\ \hline
+ Expressions & Compound assignments &  &   \\ \hline
+ While & Switch &  &    \\ \hline
+ 
+ char & String &  & Unsigned char  \\ \hline
+ long &  &  & Unsigned long  \\ \hline
+ float &  &  &   \\ \hline
+ double &  &  &   \\ \hline
+ timer &  &  &   \\ \hline
+ port &  &  &   \\ \hline
+ bool &  &  &   \\ \hline
+ Funktioner &  &  &    \\ \hline
+ Arrays &  &  &    \\ \hline
+ Kommentarer &  &  &   \\ \hline
+ Operatorere &  &  &   \\ \hline
+
+ Assignments &  &  &    \\ \hline
+ Declaration  &  &  &   \\ \hline
+\end{tabular}
+\caption{MoSCoW-tabel}
+\label{tab:moscow}
+\end{table}
+
+Fravalg:
+Pointeraritmetik
+
+\subsubsection{Fravalg}
+
+\subsubsection*{Pointeraritmetik}
 En af de vigtigste ting der blev valgt som afgørende for at mere effektivt programmeringssprog var afskaffelse af pointeraritmetik. I sproget skal pointeraritmetik fjernes så programmøren ikke eksplicit skal erklære hvad han/hun vil. Pointeraritmetik er kilde til potentielle fejlkilder og kan være en hindring for selv øvede programmører.
 
-\subsubsection{Boolsk datatype}
+\subsubsection*{Boolsk datatype}
 Et andet krav er datatypen boolean \textit{boolean}. Den boolske datatype tilføjer en højere abstraktion af virkeligheden og som ved pointeraritmetik giver brugen af integers til boolsk udtryk også anledning til potentielle fejlkilder, samt et mindre korrekt sprog.
 
-\subsubsection{Port}
+\subsubsection*{Port}
 Port er en datatype der bruges til digital og analogt in og output. Ligesom i ladderprogrammering bruges der bestemte tokens til in og output og dette er en ækvivalent til det.
 
-\subsubsection{Timer}
+\subsubsection*{Timer}
 En anden ting der er vurderet som et krav er lettere benyttelse af timere. Derfor er en timer en del af syntaksspecifikationen. Dette forhøjer read og writability.

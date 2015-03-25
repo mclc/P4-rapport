@@ -1,29 +1,16 @@
 \subsection{Værktøjer til generering af compilere}
+\label{ssec:toolsforcc}
 
 Eftersom det at udvikle compilere er en [] der ofte er den del af datalogiens verden er der udviklet værktøjer til at hjælpe med dette. Disse compiler-compilere findes i mange udgaver der hver har sine fordele og ulemper, derfor vil dette afsnit handle om et udvalg af disse programmer.
 
-\begin{table}[H]
-\centering
-\footnotesize
-\begin{tabular}{l l l}
-\toprule
-\textbf{Compiler-compiler}  &\textbf{Output languages}              &\textbf{Input format}  \\\midrule
-ANTLR                       & C, C++, C\#, Java, Phyton og flere    & EBNF                  \\
-Coco/R                      & C, C++, C\#, F\#, Java og flere       & ?                     \\
-JavaCUP                     & Java                                  & BNF                   \\
-JavaCC                      & Java                                  & EBNF                  \\
-SableCC                     & C, C++, C\#, Java, Phyton             & EBNF                  \\\bottomrule
-\end{tabular}
-\caption{Outputsprog fra forskellige compiler-compilere}
-\label{tab:compileroutput}
-\end{table}
+\subsubsection{JavaCC}
+JavaCC er et værktøj der generer en parser i Java. JavaCC kan håndtere sprog der er LL(k) hvilket står for leftmost derivation. Her er k antallet af lookaheads. 
 
-JFlex
-
-FLex
-
-GLA
-
-re2c
-
-Alex, Lexgen
+\subsubsection{SableCC}
+SableCC er et værktøj der generere en parser der har objekt orienteret interface for videre konstruktion af compliere. Som standard generere den parseren i Java, men der findes også versioner for C\# og C++. 
+    
+%Den lexical analyse er baseret på deterministic finite automata (DFA), som gør at 
+    
+Parseren er en \gls{lalr} parser. Hvis man bryder det ned betyder det at parseren kan kigge på næste symbol inden den beslutter sig for en fortolkningn af den givne kode, den læser fra venstre mod højre, og dens resultat vil være den udledning af \gls{ast} der har flest udledninger til venstre.
+    
+I forhold til andre parsere som JLex har SableCC en streng opdeling mellem [Actions] og den specificeret grammatikken, dette gør det lettere at debugge problemer om det er med grammatikken eller [Actions].

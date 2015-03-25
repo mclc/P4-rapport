@@ -1,0 +1,18 @@
+while_statement =
+  {while} while_keyword l_par expr r_par scope;
+  
+while_keyword = 'while';
+
+l_par = '(';
+r_par = ')';
+
+expr = 
+  {compare_and} expr and_operator expr2 |
+  {compare_or} expr or_operator expr2 |
+  {term} expr2;
+  
+scope = 
+  l_brc statements? r_brc;
+  
+and_operator = '&&';
+or_operator = '||';

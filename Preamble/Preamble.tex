@@ -26,7 +26,7 @@
 \usepackage{multirow}                   % Multirows i tabel
 \usepackage{threeparttable}             % Til fodnoter i tabeller
 \usepackage{csquotes}                   % Udvidelser til quotations (brugt af biblatex)
-%\usepackage{natbib}                     % Udvidelse af kilder
+%\usepackage{natbib}                    % Udvidelse af kilder
 \usepackage[toc,page]{appendix}         % Til bilag
 \usepackage{enumitem}                   % Til lister
 \usepackage[boxruled,linesnumbered,noend]{algorithm2e} % Til algoritmer
@@ -36,8 +36,13 @@
 \usepackage{soulutf8}                   % Til highlight
 \usepackage{multicol}                   % Til itemize med colums
 \usepackage{tikz}                       % Til figurer og lign.
-\usepackage[nounderscore]{syntax}       % Bruger til CFG
+\usepackage[nounderscore]{syntax}       % Bruges til CFG
 \usepackage{booktabs}
+\usepackage[toc]{glossaries}            % Til forkortelser
+\usepackage{newfloat}                   % Til nye float environments
+
+
+\makeglossaries                         % Til forkortelser
 \ifdefined\draft\usepackage{Preamble/Packages/currfile}\fi% Til indsættelse af filnavn - kun hvis draft er til
 \ifdefined\draft\usepackage[inline]{showlabels}\fi % Til at vise label name - kun hvis draft er til
 
@@ -71,6 +76,12 @@
     % Left / Right - Even / Odd
     \fancyhead[LE]{\rapportnavn}        % Lige sider
     \fancyhead[RO]{\pagetitle}          % Ulige sider
+    
+    % Skriv rapport-udkast. Kun hvis draft
+    \ifdefined\draft
+        \fancyhead[RE]{\textbf{Dette er \textit{ikke} en færdig rapport}}
+        \fancyhead[LO]{\textbf{Dette er \textit{ikke} en færdig rapport}}
+    \fi
 
     % Sæt footer op
     \fancyfoot[LE]{\sidetal}            % Lige sider
