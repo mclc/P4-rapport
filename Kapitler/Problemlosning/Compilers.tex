@@ -13,7 +13,7 @@ Scanneren sørger for at opdele kildekoden i såkaldte "tokens"\mbox{}, som er d
 
 \MT{Kode/MiniTriangleForScanner.mt}{Lille program i Mini Triangle}{minitriangleforscanner}
 
-\noindent Hvis der tager udgangspunkt i linje 1 fra kode \ref{code:minitriangleforscanner} ses det at der er nogle forskellige "ord"\mbox{}. Det er disse ord der skal forstås som tokens. Disse er inddelt i forskellige kategorier - typisk én kategori til hvert \gls{keyword}, for eksempel \textit{let} og \textit{var}, samt identifiers. Opdelingen i tokens ses i tabel \ref{tab:tokensMT}
+\noindent Hvis der tager udgangspunkt i linje 1 fra kode \ref{code:minitriangleforscanner} ses det at der er nogle forskellige "ord"\mbox{}. Det er disse ord der skal forstås som tokens. Disse er inddelt i forskellige kategorier - typisk én kategori til hvert keyword\fn{Keyword}{Et bestemt ord i et programmeringssprog, som er reserveret til et bestemt formål.}, for eksempel \textit{let} og \textit{var}, samt identifiers. Opdelingen i tokens ses i tabel \ref{tab:tokensMT}
 
 \begin{table}[H]
 \centering
@@ -71,21 +71,15 @@ Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjæl
     
     \tikzfigure{Figurer/TikZ/TypeChecking.tex}{Et eksempel på kontrol af typer for udtrykket: bool flag = 1 <= f}{typecheck}
     
-    Fra figuren kan vi se hvordan at et declaration med en initializations værdi bliver udført bliver type checket. Først findes den forventet type som kommer fra erklæringen af variablen \enquote*{flag}. Bagefter finder vi den aktuelle type assignmentet ved at finde resultatet af udtrykket, som i dette tilfælde er et binær operator, som sammenligner to tal; en integer og en float. Denne kompiler køre under generaliserings princippet, hvilket vil sige at hvis tilfælde som dette opstår, vil den type der er mindst blive implicit omformet til den anden type, som set i figuren under BinaryOperation's noden.
-    
-    \begin{table}[h]
-    \centering
-    \begin{tabular}{l l}
-        \textbf{Identifier} & \textbf{Attributes}\\\midrule
-        main    & int Func(int, char**)\\
-        f       & float\\
-        flag    & bool
-    \end{tabular}
-    \caption{Eksempel på en symbol tabel}
-    \label{tab:symtabel}
-    \end{table}
+    Fra figuren kan vi se hvordan at et declaration med en initializations værdi bliver udført bliver type checket. Først findes den forventet type som kommer fra erklæringen af variablen \enquote*{flag}. Bagefter finder vi den aktuelle type assignmentet ved at finde resultatet af udtrykket, som i dette tilfælde er et binær operator, som sammenligner to tal; en integer og en float. Denne kompiler køre under generaliserings princippet, hvilket vil sige at hvis tilfælde som dette opstår, vil den type der er mindst blive implicit omformet til den anden type, som set i figuren under BinaryOperation's noden. I noden bliver resultatet så evalueret til at være \enquote*{bool} som returneres til assignment noden som den aktuelle type.
     
 \subsubsection{Scope Checking}
+
+    Et scope er en grupperet mængde kode som kan 
+    
+    \paragraph{Dynamic scope} noget klogt er skrevet her omkring scopes
+    
+    \paragraph{Static scope} noget klogt er skrevet her omkring scopes
 
    % Det vil sige at en variable der er defineret i et scope bør være tilgængelig fra under scopes, men ikke de større scopes. Dette er selfølgeligt afhængigt af designet af sproget.
     
