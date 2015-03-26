@@ -1,4 +1,5 @@
 % Gadeberg 16-03: HEJ MADS
+% Edelskjold -> 25-03 22:30
 \section{Løsningsforslag - PLC++}
 Ud fra problemformuleringen er der blevet lagt vægt på en løsning der tilgodeser et højere abstraktionsniveau samt en højere effektivitet ved udvikling af programmer.
 
@@ -20,23 +21,23 @@ Prioteringen for den individuelle funktion er nødvendig, i forhold til det tids
 \begin{tabular}{|m{12em}|m{11em}|m{9em}|m{7em}|}
 \hline
 \textbf{Must have} & \textbf{Should have} & \textbf{Could have} & \textbf{Want to have} \\ \hline
- If & For & Do-While & Betingetudtryk   \\ \hline
- int & Decrement & Const & Unsigned int  \\ \hline
+ if & for & do-While & Betingede udtryk   \\ \hline
+ int & decrement & const & unsigned int  \\ \hline
  
  
- Structs & Increment & Optimizer &    \\ \hline
+ structs & increment & Optimizer &    \\ \hline
  Expressions & Compound assignments &  &   \\ \hline
- While & Switch &  &    \\ \hline
+ while & switch &  &    \\ \hline
  
- char & String &  & Unsigned char  \\ \hline
- long &  &  & Unsigned long  \\ \hline
+ char & string &  & unsigned char  \\ \hline
+ long &  &  & unsigned long  \\ \hline
  float &  &  &   \\ \hline
  double &  &  &   \\ \hline
  timer &  &  &   \\ \hline
  port &  &  &   \\ \hline
  bool &  &  &   \\ \hline
- Funktioner &  &  &    \\ \hline
- Arrays &  &  &    \\ \hline
+ funktioner &  &  &    \\ \hline
+ array &  &  &    \\ \hline
  Kommentarer &  &  &   \\ \hline
  Operatorere &  &  &   \\ \hline
 
@@ -47,19 +48,62 @@ Prioteringen for den individuelle funktion er nødvendig, i forhold til det tids
 \label{tab:moscow}
 \end{table}
 
-Fravalg:
-Pointeraritmetik
+Som en forklaring på disse funktioner beskrives de i kategorier herunder.
+\paragraph{Structs}
+\mefix{Søren den her tager vi lige sammen}
 
-\subsubsection{Fravalg}
 
-\subsubsection*{Pointeraritmetik}
-En af de vigtigste ting der blev valgt som afgørende for at mere effektivt programmeringssprog var afskaffelse af pointeraritmetik. I sproget skal pointeraritmetik fjernes så programmøren ikke eksplicit skal erklære hvad han/hun vil. Pointeraritmetik er kilde til potentielle fejlkilder og kan være en hindring for selv øvede programmører.
+\paragraph{Arrays}
+er en let og overskuelig måde at opbevarer et dataset, og er derfor på listen over Must have. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}.
 
-\subsubsection*{Boolsk datatype}
-Et andet krav er datatypen boolean \textit{boolean}. Den boolske datatype tilføjer en højere abstraktion af virkeligheden og som ved pointeraritmetik giver brugen af integers til boolsk udtryk også anledning til potentielle fejlkilder, samt et mindre korrekt sprog.
+Men for at øge abstraktions niveauet og dermed gøre det mere overskueligt for programmøren ville en implementation af denne funktion være ideel.
 
-\subsubsection*{Port}
-Port er en datatype der bruges til digital og analogt in og output. Ligesom i ladderprogrammering bruges der bestemte tokens til in og output og dette er en ækvivalent til det.
+\paragraph{Const}
+giver mulighed for at vibeholde dataene i den pågældende variable, og derved giver den en form for skrivebeskyttelse, således at man ikke kan overskrive denne.
 
-\subsubsection*{Timer}
-En anden ting der er vurderet som et krav er lettere benyttelse af timere. Derfor er en timer en del af syntaksspecifikationen. Dette forhøjer read og writability.
+Funktionen er placeret under could have, da den ikke er essentiel for at programmet kan kører, eller gør det lettere for programmøren. 
+Dog kan den i flere tilfælde være rar at benytte, og tilføjes derfor som en mulig implementation.
+
+\paragraph{Datatyper og unsigned}
+Integrationen af datatyper er valgt meget sammenligning med C med et par få tilføjelser, disse tilføjelser er timer, port, string samt bool.\\
+Timer er en datatype, som kan indeholde en tid i form af \textit{hh:mm:ss} hvor værdien begynder på 00:00:00 og ender ved 23:59:59, denne timer er beregnet til at kunne udfører tidsbestemte handlinger i programmet.\\
+Port er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne integration er en nødvendighed, i forhold til at man skal kunne styrer portene på \gls{plc}´en, hvilket derfor giver anledning til en ny datatype.
+
+String har man valgt at sætte, som et højrankeret funktionalitetskrav i \gls{moscow}-analysen, da dette giver mulighed for at let håndtering af strenge baseret på text, tal og karaktere. \mefix{Vend tilbage, når string er implementeret, og skriv hvordan}
+
+Til sidst er \textit{boolean} implementeret, hvilket kan læses under afsnit \ref{sec:forskelfrac}\\
+Unsigned er blevet nedprioriteret og derved placeret i Could have, da denne funktionalitet ikke er yderst nødvendig, eller særlig brugt indenfor \gls{plc} sproget.\mefix{Måske lidt en bred påstand}
+
+\paragraph{Kontrolstruktur}
+er placeret under must have, af den grund at det foruden denne funktion ville være et meget begrænset sprog, med begrænset funktionalitet.
+Derfor vælges der at implementere \textit{if} og \textit{while}, med hendblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}.
+
+Dette er grundet at man med \textit{if} og \textit{while} kan konstruere de andre, men ikke omvendt.
+
+\textit{switch} er placeret under should have, og har en væsentlig betydning for hvordan programmøren strukturere sin kodning, og udformer programmer i sproget.
+Hertil er det ikke nødvendigt, da programmøren kan konstruere en switch ligende situration ved hjælp \textit{if} og \textit{else} løkker. 
+
+\textit{do-while} er placeret under could have, siden det ikke bliver brugt særlig meget i \gls{plc} programmering, og derfor vurderes som irrelevant på en hvis front.
+
+\paragraph{Funktioner}
+er med til at opdele programmet i flere dele, dette gør det mere læsbart og isolere koden i små scoops.
+
+Dette er med til at øge abstraktionsniveauet og giver mulighed for at genbruge kode i andre handlinger.
+Funktioner er en af byggestenene for programmeringssproget og er derved kategoriseret som must have.
+
+\paragraph{Betingede udtryk}
+\mefix{Søren den her tager vi lige sammen}
+
+\paragraph{Generelt} er der integreret flere funktioner som hovedsageligt er mere globale og kan bruges generelt i flere sammenhænge. En af disse funktioner er kommentarer som er essentielt for et programmeringssprog at indeholde, og derfor er funktionen placeret under Must have. Kommentarer giver mulighed for at strukturere kode, og skriv en kommentar til det, hvilket kan gøre det mere overskueligt i store såvel som små programmer.//
+Udover kommentarer er der implementeret flere operatorer, som gør det muligt at lave matematiske operationer, dette er nemt at implementerer og en basal funktion som skal være til stede ved \gls{plc} programmering.
+
+Til sidst er det muligt at lave assignments og declerations som er essentielt for at kunne tildele variabler eller udtryk en værdi.
+
+\subsubsection{Forskel fra C}
+\label{sec:forskelfrac}
+I projektet er der blevet taget udgangspunkt i C, hvor man har valgt at tage sin egen erfaring med C kombineret med andres, og taget det bedste fra sproget samt tilføjet eventuelle mangler eller ønsker.
+Nogle af disse tilføjelser er blandt andet den boolske datatype, som giver et højere abstraktion, hvilket gør det  lettere for programmøren at associere det med virkelige hændelser.
+
+Hertil giver det anledning til at programmøren ikke laver lige så mange fejl, baseret på at datatypen \textit{boolean} kun acceptere true/false, hvorimod en \textit{int} som agere som en \textit{boolean} men kan acceptere flere værdier.
+
+Ligeledes er det valgt ikke at implementere pointeraritmetik af den grund, at det skaber potentielle fejlkilder, som kan være en hindring for selv den øvede programmør. Hertil er det tænkt at det skal være et effektivt programmeringsprog, hvor programmøren ikke eksplicit skal erklærer hvad han/hun vil.

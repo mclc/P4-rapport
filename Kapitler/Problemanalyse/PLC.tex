@@ -19,6 +19,7 @@ I dag bliver de fleste automatiserede anlæg konstrueret med en \gls{plc}. Det g
 
 \noindent\textbf{Omron} har eksisteret siden 1972, hvor Omron begyndte at producere små enheder til f.eks. lommeregnere. Nogle af disse komponenter blev blandt andet distribueret til Harvard University. Det var først i året 1977, da Omron påbegyndte deres \gls{plc}-standardlinje, kaldet SYSMAC PLC, at \gls{plc} blev deres førende produktionsserie. I dag har Omron ca. 40\% af markedet på \gls{plc}'er i Japan og opererer i mere end 80 lande i Europa, Nordamerika og Asien. Omron benytter sig stadig af \gls{rll}.\\
 
+\label{subsec:codesys}
 \noindent\textbf{CODESYS} er udviklet af det Tyske softwarefirma, 3S-Smart Software Solutions, som i år 1994 var klar med første udgave af CODESYS. Det som gør CODESYS unik, er at de har implementeret et objektorienteret programmeringssprog i version 3, som gør at man lettere kan adskille forskellige arbejdsopgaver, og dermed muligheden for at outsource dele af programmet. Konkrete eksempler på hvordan CODESYS har implementeret \gls{oop} i PLC-universet kan læses i afsnit \ref{subsec:software_codesys}. \\
 
 \noindent \gls{plc}'ens hardware og de førende \gls{plc}-producenter er nu blevet gennemgået; hvor det blev belyst at \gls{plc} mekaniske konstruktion er modstanddygtige overfor hårde arbejdsmiljøer. Ydermere blev der fremført, at verdens førende \gls{plc}-producenter, Siemens og Omron, stadig kun understøtter det funktionelle programmeringsparadigme. 
@@ -63,11 +64,18 @@ Mange \gls{plc}-programmører holder derfor fast i de gamle og velkendte program
 \subsubsection{Objektorienteret Programmering}
 \label{subsec:software_codesys}
 
+CODESYS blev tidligere gennemgået (se afsnit \ref{subsec:codesys} for en kort gennemgang af CODESYS), hvor det blev belyst at CODESYS har forsøgt at implementere \gls{oop}-programmeringsparadigmet i \gls{plc}-universet. Figur \ref{fig:plc-codesys-sample} viser CODESYS's IDE, hvor det både et muligt at kode i \gls{lad}-programmering, og samtidig få skrevet det tilhørende kode i \gls{oop}. Det giver dermed programmøren mulighed for selektivt, om hvorvidt han ønsker at benytte \gls{oop} eller \gls{lad} til den specifikke arbejdsopgave. Vinduerne responderer med det samme, hvorved det er muligt at se konkrete kodeeksempler, udfra den logik, der bliver sammensat i \gls{lad}-vinduet. 
 
+\figur{Figurer/Billeder/codesys_sample.png}{Screendump af CODESYS's IDE (Viser henholdsvist \gls{oop} og \gls{lad} i samme IDE)}{plc-codesys-sample}{1}
 
+CODESYS beskriver deres \gls{oop}-implementation med følgende fordele\cite{codesys-oop-benefits}:
+\begin{itemize}
+\item Eksisterende programmer kan nemmere blive ændret, eller udbygget - samtidig med at de er nemmere at vedligeholde
+\item Kodegenbrug er muligt, hvorved indkapsulering er blevet forbedret radikalt
+\item Performance er blevet forbedret, dog ikke for mindre programmer
+\end{itemize}
 
-
-
+\noindent\gls{oop}-programmeringsparadigmet kan - såfremt at programmøren besidder den nødvendige programmeringserfaring - medvirke til ét mere struktureret program. Foruden CODESYS, er der også en række andre producenter, som har forsøgt at implementerer \gls{oop} - her kan der bl.a. nævnes Beckhoff, som har en kraftig tilvækst igennem det sidste årti. I året 1999 solgte Beckhoff for \$50 millioner, som i året 2010 er steget til \$346 millioner. Dette indikerer at flere vælger at migrerer over til \gls{oop}, fremfor det traditionelle \gls{lad}, og \gls{oop} kan dermed anses for at være i et gunstigt indtog i det mangfoldige \gls{plc}-univers\cite{beckhoff-sold}.
 
 
 

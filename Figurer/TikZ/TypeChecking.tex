@@ -1,0 +1,30 @@
+\begin{tikzpicture}[align=center, minimum height=2em, every node/.style={draw, fill=blue!10}]
+        %\node{$bool flag = 1 >= f;$};
+        \node (A) [minimum width=3cm] {Assignment};
+        \node (B) [anchor=north west,minimum width=1.5cm] at (A.south west) {Var};
+        \node (C) [anchor=north east,minimum width=1.5cm] at (A.south east) {Expr};
+        
+        \node (E) [minimum width=3cm] at ($(B) + (-2,-1)$) {Declaration};
+        \node (F) [anchor=north west,minimum width=1.5cm] at (E.south west) {Type} 
+            child {node{bool}};
+        \node (G) [anchor=north east,minimum width=1.5cm] at (E.south east) {Id} 
+            child{node{flag}};
+        
+        \node (H) [minimum width=3cm] at ($(C) + (2,-1)$) {BinaryOperation};
+        \node (I) [anchor=north west,minimum width=1cm] at (H.south west) {Expr} 
+            child{node[rectangle split, rectangle split parts=2](N){Literal\nodepart{two}1}};
+        \node (J) [anchor=north east,minimum width=1cm] (L) at (H.south east) {Expr}             
+            child{node[rectangle split, rectangle split parts=2](M){Variable\nodepart{two}f}};
+        \node (K) [anchor=north,minimum width=1cm] at (H.south) {<=};
+        
+        \draw(B)--(E) (C)--(H);
+        
+        \begin{scope}[every node/.style={draw, fill=white!98!black, drop shadow}, minimum height =0]
+            \scriptsize
+            \node at ($(E)+(1,0.2)$) {$bool$};
+            \node at ($(H)+(-1,0.2)$) {$bool$};
+            \node at ($(H)+(0.1,-1)$) {$(int\rightarrow float)\leq  float\rightarrow bool$};
+            \node at ($(M)+(0.2,0.5)$) {$float$};
+            \node at ($(N)+(-0.2,0.5)$) {$Integer$};
+        \end{scope}
+    \end{tikzpicture}
