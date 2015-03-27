@@ -6,10 +6,13 @@ Compilere er grundstenen i alt programmering, og store dele af datalogien, som v
 \noindent Som nævnt har en compiler den funktion at omdanne et højniveau-sprog til maskinkode. Kigger man på figur \ref{fig:Compiler-opbygning} ses det dog at der flere andre ting undervejs.
 
 \subsection{Syntax Analysis}\label{ssec:syntaxanalysis}
-Den første del af en compiler, syntaksanalysen, har til ansvar at læse kildekoden som rent tekst og omdanne det til et abstrakt syntakstræ, som efterfølgende kan bruges i det videre arbejde mod maskinkoden. Denne analyse er typisk opdelt i to underdele: Scanneren og parseren. 
+Den første del af en compiler, syntaksanalysen, har til ansvar at læse kildekoden som ren tekst og omdanne det til et abstrakt syntakstræ, som efterfølgende kan bruges i det videre arbejde mod maskinkoden. Denne analyse er typisk opdelt i to underdele: Scanneren og parseren. 
 
 \subsubsection{Scanner}
-Scanneren sørger for at opdele kildekoden i såkaldte "tokens"\mbox{}, som er de mindste dele af et sprog. For at illustrere dette, ses et lille kodestykke i sproget Mini Triangle i kodeeksempel \ref{code:minitriangleforscanner}.
+Scanneren som er den første del af compileren der bliver kørt har til opgave at læse kildekoden og dele den op i tokens, som er de mindste dele af et sprog. Keywords i et sprog er et eksempel på tokens som skal læses.
+
+
+For at illustrere dette, ses et lille kodestykke i sproget Mini Triangle i kodeeksempel \ref{code:minitriangleforscanner}.
 
 \MT{Kode/MiniTriangleForScanner.mt}{Lille program i Mini Triangle}{minitriangleforscanner}
 
@@ -85,6 +88,8 @@ Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjæl
    % Det vil sige at en variable der er defineret i et scope bør være tilgængelig fra under scopes, men ikke de større scopes. Dette er selfølgeligt afhængigt af designet af sproget.
     
     \tikzfigure{Figurer/TikZ/SymbolTable.tex}{Symbol tabeller som de fungere i compileren til \sprognavn}{symtab}
+    
+    %\tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{}{}
 
 
 \subsection{Code Generation}
