@@ -1,0 +1,41 @@
+\subsubsection{Parser}\wip
+Parserens opgave er at få opbygget et abstrakt syntakstræ ud fra de tokens som scanneren har fundet frem til. Det er dermed også parserens opgave at tjekket at reglerne i forhold til rækkefølgen af keywords, identifiers osv. er overholdt. En sådan regel kunne være hvordan man udtrykker et assignment. For at forstå hvordan parseren fungerer er der først et kort afsnit omkring abstrakte syntakstræer.
+
+\subsubsubsection{Abstrakt syntakstræ}
+Et abstrakt syntakstræ også forkortet AST er en træstruktur der er en repræsentation at kildekoden. Noderne i træet er forskellige dele af sproget såsom iterative kontrolstrukturer, eller selektive kontrolstrukturer. Et eksempel på en node i træet kunne være et if-statement. Et if-else statement har 2 branches som koden kan udføres. Disse vil blive repræsenteret som 2 seperate nodes, derudover vil betingelsen der skal testes også blive repræsenteres som 1 seperat node.
+
+Et eksempel på et abstract syntax tree kan ses i figur
+\sfix{Eksempel på træ}
+
+Det er muligt at gennemløbe det træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sec:visitor}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode\sfix{Dobbelttjek}. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
+
+\subsubsubsection{Top down/buttom up}
+Konstruktionen af det abstrakte syntakstræ bliver udført af parseren. Der findes overordnet 2 forskellige metoder til at konstruere et abstrakt syntakstræ. Den ene metode er top down parsing, som konstruerer det abstrakte syntakstræ fra toppen af. Den anden metode er bottom up parsing der konstruerer fra bunden.
+
+For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav at kigge på flere tokens af gangen for at fælge den korrekte del af sproget. Dette kaldes også lookaheads. Hierarkiet på de forskellige typer af sprog kan ses i figur \sfix{Indsæt figur SPO-5 53}. Forskellen på de forskellige sprog er hvor mange lookaheads de benytter og om de benytter top down eller buttom up parsing.
+
+
+\sfix{Vi skal tjekke vores sprog om det er LR, LL, eller hvad det end er}
+
+\subsubsubsection{Unambigius grammar}
+En gramatik for et sprog kan også være unambigius hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en kildekode. Et eksempel på en unambigius gramatik kunne være følgende:
+
+\sfix{Indsæt kode: expr = expr plus expr | number}
+
+Gramatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om gramatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer:
+
+
+For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \sfix{Indsæt}
+
+\sfix{expr = expr plus factor | factor; factor = expr | number;}
+
+Dette tvinger altså parseren til at generere det abstrakte syntax træ på følgende måde:
+
+
+
+
+
+%\figur{Figurer/MTAST.png}{Abstrakt syntakstræ baseret på kodeeksempel \ref{code:minitriangleforscanner}}{MTAST}{1.0}
+
+
+%\noindent På figur \ref{fig:MTAST} ses et sådant træ for koden vist i eksempel \ref{code:minitriangleforscanner}. For at forstå hvordan træet er bygget op, er det dog nødvendigt også at kende til \gls{cfg}. Denne forklares i dybden i afsnit x.x\mfix{Mangler ref}, men den konkrete \gls{cfg} for Mini Triangle kan ses i bilag \ref{bil:minitriangle}. Eksempelvis ses det øverste i den øverste del af træet at \textit{single-Command} består af "\textit{let} Declaration \textit{in} single-Command"\mbox{}, hvilket passer med grammatikken.

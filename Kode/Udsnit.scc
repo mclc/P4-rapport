@@ -16,3 +16,5 @@ scope =
   
 and_operator = '&&';
 or_operator = '||';
+
+port_identifier = ('I' | 'Q' | 'M' | 'AI' | 'AQ') '#';

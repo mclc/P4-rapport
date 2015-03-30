@@ -1,0 +1,50 @@
+\subsubsection{Type Checking}
+    
+    Type checking er øvelsen hvor man kontrollere at man ikke prøver at udføre operation der ikke er lovlige ifølge grammatikken. I mange programmerings sprog kan man fx ikke gange strings med integers i de fleste programmerings sprog. Dette er en ren kontekstuel del af grammatikken og er derfor ikke en del af \gls{cfg}.
+    
+    Måden at gøre dette på er ved at visitoren besøger noderne i \gls{ast}'et depth first, hvor den samler information om en nodes eventuelle børn som den så bruger til at verificere at den forventede type stemmer overens med den aktuelle type. Dette kan ses i figur \ref{fig:typecheck}.
+    
+    \tikzfigure{Figurer/TikZ/TypeChecking.tex}{Et eksempel på kontrol af typer for udtrykket: bool flag = 1 <= f}{typecheck}
+    
+    Fra figuren kan vi se hvordan at et declaration med en initializations værdi bliver udført bliver type checket. Først findes den forventet type som kommer fra erklæringen af variablen \enquote*{flag}. Bagefter finder vi den aktuelle type assignmentet ved at finde resultatet af udtrykket, som i dette tilfælde er et binær operator, som sammenligner to tal; en integer og en float. Denne kompiler køre under generaliserings princippet, hvilket vil sige at hvis tilfælde som dette opstår, vil den type der er mindst blive implicit omformet til den anden type, som set i figuren under BinaryOperation's noden. I noden bliver resultatet så evalueret til at være \enquote*{bool} som returneres til assignment noden som den aktuelle type.
+    
+\subsubsection{Scope Checking}
+
+    At scope checke betyder at kontrollere for at et stykke kode ikke forsøger at få fat i variabler som ikke er tilgængelig for den, dette kan for eksempel være lokale variabler i en anden metode. De præcise regler for et sprog kan variere med designet af sproget, men der er hovedsageligt to grund principper til hvordan scopet fungere; dynamisk og statisk
+    
+    \paragraph{Dynamisk scope} En gammel og ikke så velset metode for at dele scopes ind var at man dynamisk satte referencen til sidste gang variablen blev brugt, dette betød at noget kode kunne blive uoverskueligt eftersom at deklarationen af variabler kan bliver gemt inden i funktioner, og man ender meget nemt i situationer hvor en funktion kommer til at overskrive en variable som dermed giver uventede resultater. 
+    
+    \paragraph{Statisk scope} Statisk scope betyder derimod at man indeler sin kode i blokke hvor man altid vil tilgå den nærmeste variable med et givet navn. Normale regler for denne type scope giver den lov til at hente data fra det scope dette scope blev dannet i, men ikke den anden vej. Dette giver en træ ligende struktur hvor bladene kan søge mod roden for at finde metoder og variabler.
+
+
+   % Det vil sige at en variable der er defineret i et scope bør være tilgængelig fra under scopes, men ikke de større scopes. Dette er selfølgeligt afhængigt af designet af sproget.
+    
+    %\tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{}{}
+    
+\subsubsection{Symbol tabel}
+    Som nævnt flere gange i de forrige vil mange af kontrollerne der bliver udført i løbet af context analysen ikke fungere uden en symbol tabel, dette kapilel vil prøve at redegøre for hvad der et. Når man udvikler en kompiler til et sprog med brugerdefineret variabler, er det en fordel at kompileren har et fast sted hvor den kan slå op for at finde ud af om variablen er defineret, hvad type den har, og eventuelt hvad scope den er defineret i, på tværs af scopes. Dette kan gøres med en datastruktur som en symbol tabel, som set i tabel \ref{tab:symboltabel}.
+    
+\AnsiC{Kode/SymTableExample.c}{Program brugt til at danne følgende symbol tabel}{tableprog}
+
+    \begin{table}[h]
+    \centering\footnotesize
+    \begin{tabular}{l l l}
+    Id & Type & Scope \\\midrule
+    foo & function, double & global\\
+    count & integer & function parameter\\
+    sum & double & local block\\
+    i & integer & for-loop statement
+    \end{tabular}
+    \caption{Eksempel på en symbol tabel for et simpelt program.}
+    \label{tab:symboltabel}
+    \end{table}
+    
+    I denne tabel kan man se hvordan man kan finde viden om hvad type og scope et symbol. Dette er én måde at implementere symbol tabellen; en usorteret liste der indeholder nogle informationer om hvert enkelt element. Den er forholdsvis ineffektiv løsning eftersom at det vil tage $O(n)$ for at finde et symbol, hvor $n$ er antallet af elementer i listen. En bedre løsning vil være at implementere strukturen som et balanceret træ eller et bibliotek.
+    
+    Man kunne også ofre lidt effektivitet og i stedet dele tabellerne op i flere efter hvad scope man befinder sig i. Dette betyder at vi naturligt får et statisk scope, hvor man kun kan få adgang til elementer i scopeet, og det er let at implementere så man også kan søge i den ydre blok hvis man har en reference til den.
+    
+    \tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungere i compileren til \sprognavn}{symtab}
+    
+    Ulempen ved at gøre det på denne måde er at fordi vi har flere tabeller bliver vi måske nød til at søge gennem flere for at finde et givet element hvis det ikke er erklæret i samme scope. 
+    
+    %Tabellen bliver hovedsageligt brugt i forbindelse med type checking af et \gls{ast}, men bliver også brugt i andre faser af kompileringsprocessen til at skrive, læse og dele information til/fra tabellen omkring variabler, funktioner og andet. For eksempel kan man vælge at udvide et \gls{ast} med information der bliver brugt til optimering af objekt koden.

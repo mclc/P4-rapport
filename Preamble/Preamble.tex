@@ -36,11 +36,14 @@
 \usepackage{soulutf8}                   % Til highlight
 \usepackage{multicol}                   % Til itemize med colums
 \usepackage{tikz}                       % Til figurer og lign.
+\usepackage{tikz-qtree}                 % Til figurer og lign.
 \usepackage[nounderscore]{syntax}       % Bruges til CFG
 \usepackage{booktabs}
 \usepackage[toc]{glossaries}            % Til forkortelser
 \usepackage{newfloat}                   % Til nye float environments
 
+%\usepackage[pagewise]{lineno}
+%\linenumbers
 
 \makeglossaries                         % Til forkortelser
 \ifdefined\draft\usepackage{Preamble/Packages/currfile}\fi% Til indsættelse af filnavn - kun hvis draft er til
@@ -190,6 +193,8 @@
     \caption{#2}\label{fig:#3}
 \end{figure}
 }
+
+\newcommand{\textunderscript}[1]{$_{\text{#1}}$}
 
 % Inkluder ikke i ToC, men behold section number
 \newcommand{\nocontentsline}[3]{}

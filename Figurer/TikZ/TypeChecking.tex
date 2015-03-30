@@ -14,7 +14,7 @@
         \node (I) [anchor=north west,minimum width=1cm] at (H.south west) {Expr} 
             child{node[rectangle split, rectangle split parts=2](N){Literal\nodepart{two}1}};
         \node (J) [anchor=north east,minimum width=1cm] (L) at (H.south east) {Expr}             
-            child{node[rectangle split, rectangle split parts=2](M){Variable\nodepart{two}f}};
+            child{node[rectangle split, rectangle split parts=2](M){Variable\nodepart{two}i}};
         \node (K) [anchor=north,minimum width=1cm] at (H.south) {<=};
         
         \draw(B)--(E) (C)--(H);
@@ -23,8 +23,8 @@
             \scriptsize
             \node at ($(E)+(1,0.2)$) {$bool$};
             \node at ($(H)+(-1,0.2)$) {$bool$};
-            \node at ($(H)+(0.1,-1)$) {$(int\rightarrow float)\leq  float\rightarrow bool$};
-            \node at ($(M)+(0.2,0.5)$) {$float$};
-            \node at ($(N)+(-0.2,0.5)$) {$Integer$};
+            \node at ($(H)+(0.1,-1)$) {$int\leq  int\rightarrow bool$};
+            \node at ($(M)+(0.2,0.4)$) {$int$};
+            \node at ($(N)+(-0.2,0.4)$) {$int$};
         \end{scope}
     \end{tikzpicture}

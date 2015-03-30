@@ -1,0 +1,61 @@
+\subsubsection{Implementation}
+\wip{}
+
+\mfix{Tjek ref når alt er flyttet}
+I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser og derudover genereres SableCC et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sec:visitor}). 
+
+SableCC sørger altså for at generere både en scanner samt parser. For at kunne gøre dette, er SableCC afhængig af en konfigurationsfil som indeholder den kontekst-fri grammatik samt forskellige indstillinger af SableCC. Et udsnit af grammatikken anvendt til at generere parser/scanner til PLC++, ses på kode \ref{code:cfgudsnit}
+
+\SCC{Kode/Udsnit.scc}{Udsnit af CFG i SableCC-syntax}{cfgudsnit}
+
+\noindent Det er værd at bemærke at rækkefølgen ikke er bevaret i kodeeksemplet, men er opsat efter forklaringen.
+
+På linje 1-2 ses definitionen for et \textit{while\_statement} - altså en løkke af typen while. Teksten i tuborgklammerne angiver navnet, som kan bruges til intern brug i programmet. Herefter fortæller grammatikken hvad et \textit{while\_statement} består af. Det første, \textit{while\_keyword}, er defineret på linje 4 som værende teksten "while"\mbox{}. Da det ikke er muligt at skrive keywords på samme måde som i \gls{bnf}, er det nødvendigt at definere alle i starten af konfigurationsfilen.
+
+Et eksempel på dette kommer også til udtryk ved \textit{l\_par} og \textit{r\_par} som henholdsvis dækker og venstre og højre parentes - disse er defineret på linje 6-7 i kodeeksemplet. Imellem de to parenteser findes \textit{expr}, en expression. Definitionen på denne ses i linje 9-12, som fortæller at det kan være to expressions sammenlignet ved hjælp af \textit{and\_operator} eller \textit{or\_operator}. Produktionen til \textit{expr2} er udeladt i dette kodeeksempel, men kan findes i den fulde udgave af SableCC-konfigurationen i bilag \ref{bil:sablecc}.
+
+Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjælp af nul eller en \textit{statements} omgivet af tuborgklammer.\\
+
+\noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
+
+\tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{En NFA genereret af SableCC}{sableccnfa}
+
+\noindent \textbf{Formel definition af NFA i figur \ref{fig:sableccnfa}}\\
+\noindent $Q$ = \{$s$, $q_1$, $q_2$, $q_3$, $q_4$, $q_5$, $q_6$, $q_7$, $q_8$, $q_9$, $q_{10}$, $q_{11}$, $q_{12}$, $q_{13}$, $f$\}\\
+\noindent $\Sigma$ = \{$\epsilon$, $I$, $Q$, $M$, $A$, $\#$\}\\
+\noindent $\delta$ = Se tabel \ref{tab:nfadelta}\\
+\noindent $q_0$ = $s$\\
+\noindent $F$= \{$f$\}\\
+
+\mfix{Tabellen går lidt udover - grimt!}
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+           & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $q_{12}$ & $q_{13}$ & $f$ \\ \hline
+$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{7}$ ,$q_{10}$\} &   & $q_{13}$ &   & $q_{13}$ &   & $q_{13}$ &   &   & $q_{13}$ &    &    & $q_{13}$ &    &   \\ \hline
+$I$          &                & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ \hline
+$Q$          &                &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ \hline
+$M$          &                &   &    &   &    & $q_{6}$ &    &   &   &    &    &    &    &    &   \\ \hline
+$A$          &                &   &    &   &    &   &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ \hline
+\#         &                &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\ \hline
+\end{tabular}
+	\caption{\textit{Transitionsfunktion til NFA (alle tommer celler angiver den tomme mængde)}}
+    \label{tab:nfadelta}
+\end{table}
+
+\noindent På figur \ref{fig:sableccnfa} ses hvordan en \textit{port\_identifier} (defineret på linje 20 i kode \ref{code:cfgudsnit}) genkendes. Hvis der i programmet angives AQ\#7 arbejdes der med analoge output-port 7. I \gls{nfa}'en starter man i state \textit{s}, hvorefter der foretages et ikke-deterministisk valg om at gå videre til state  \textit{q\textunderscript{10}}. Derefter læses bogstavet A, som får maskinen til at gå til \textit{q\textunderscript{11}}. Efter et Q bliver state \textit{q\textunderscript{12}} sprunget over, da $\epsilon$ (den tomme streng) lader den gå videre til state \textit{q\textunderscript{13}}. Efter at have læst \# kommer den i det sidste state, \textit{f}, som er en accept state - og ordet er derved accepteret. \\
+
+\noindent Som tidligere nævnt, er dette ikke den konkrete grammatik, men opsætningen af denne i SableCC. Den korrekte grammatik, skrevet i \gls{ebnf} ses på grammatik \ref{gra:udsnit}. Den fulde kontekstfri grammatik findes i bilag \ref{bil:cfg}
+
+\input{Kode/CFG/Udsnit.tex}
+
+\noindent Ud fra grammatikken kan SableCC generere et \gls{ast}. Der vil her blive givet et eksempel ved hjælp af dette udtrykket, som ses i kode \ref{code:exprforast}
+
+\AnsiC{Kode/ExprForAST.c}{Udtryk der bruges til at bygge AST}{exprforast}
+
+\noindent Der bruges left-most derivation til at bygge træet. Dette vil sige at reglerne (også kaldet produktioner) udvides fra venstre mod højre. Ved at bygge træet, kan det også give mulighed for at opdage tvetydig grammatik - dette ses ved at det er muligt at lave to forskellige \gls{ast}'er ud fra samme regler og sætning.
+
+\mfix{De sidste tokens skulle gerne alignes i bunden}
+\tikzfigure{Figurer/TikZ/AST.tex}{AST fra PLC++}{astexample}
+
+\noindent Træet er nu bygget, og alt er klar til at gå videre til næste trin - at dekorere træet med typer i Context Analysis.

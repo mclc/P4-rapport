@@ -9,12 +9,38 @@ Compilere er grundstenen i alt programmering, og store dele af datalogien, som v
 Den første del af en compiler, syntaksanalysen, har til ansvar at læse kildekoden som ren tekst og omdanne det til et abstrakt syntakstræ, som efterfølgende kan bruges i det videre arbejde mod maskinkoden. Denne analyse er typisk opdelt i to underdele: Scanneren og parseren. 
 
 \subsubsection{Scanner}
-Scanneren som er den første del af compileren der bliver kørt har til opgave at læse kildekoden og dele den op i tokens, som er de mindste dele af et sprog. Keywords i et sprog er et eksempel på tokens som skal læses.
+Scanneren som er den første del af compileren der bliver kørt har til opgave at læse kildekoden og dele den op i tokens, som er de mindste dele af et sprog. Keywords i et sprog er et eksempel på tokens som skal læses. Til at illustrere dette ses her et kodestykke fra sproget Port der bygger på PLC++.
+
+% Q#0.0 = I#0.1  == I#0.2 && I#0.3 != true;
+\sfix{Indsæt kode}
+
+Alle tokens er defineret på følgende måde:
+\sfix{Skal indsættes}
+%semi = ';';
+%equal_operator = '==';
+%not_equal_operator = '!=';
+%and_operator = '\&\&';
+%or_operator = '||';
+%assignment_operator = '=';
+
+%true_keyword = 'true';
+%false_keyword = 'false';
+
+%decimal_literal = (digit)+ '.' (digit)+;
+%port_identifier = ('I' | 'Q' | 'M') '\#';
+
+%white_space = (sp | ht | ff | line_terminator)+;
+
+white\_space skal dog ignoreres af scanneren.
+
+En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens som parseren senere kan bruge. Et eksempel på en meget simpel scanner i Java kunne være:
+
+
 
 
 For at illustrere dette, ses et lille kodestykke i sproget Mini Triangle i kodeeksempel \ref{code:minitriangleforscanner}.
 
-\MT{Kode/MiniTriangleForScanner.mt}{Lille program i Mini Triangle}{minitriangleforscanner}
+%\MT{Kode/MiniTriangleForScanner.mt}{Lille program i Mini Triangle}{minitriangleforscanner}
 
 \noindent Hvis der tager udgangspunkt i linje 1 fra kode \ref{code:minitriangleforscanner} ses det at der er nogle forskellige "ord"\mbox{}. Det er disse ord der skal forstås som tokens. Disse er inddelt i forskellige kategorier - typisk én kategori til hvert keyword\fn{Keyword}{Et bestemt ord i et programmeringssprog, som er reserveret til et bestemt formål.}, for eksempel \textit{let} og \textit{var}, samt identifiers. Opdelingen i tokens ses i tabel \ref{tab:tokensMT}
 
@@ -55,41 +81,50 @@ På linje 1-2 ses definitionen for et \textit{while\_statement} - altså en løk
 
 Et eksempel på dette kommer også til udtryk ved \textit{l\_par} og \textit{r\_par} som henholdsvis dækker og venstre og højre parentes - disse er defineret på linje 6-7 i kodeeksemplet. Imellem de to parenteser findes \textit{expr}, en expression. Definitionen på denne ses i linje 9-12, som fortæller at det kan være to expressions sammenlignet ved hjælp af \textit{and\_operator} eller \textit{or\_operator}. Produktionen til \textit{expr2} er udeladt i dette kodeeksempel, men kan findes i den fulde udgave af SableCC-konfigurationen i bilag \ref{bil:sablecc}.
 
-Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjælp af et eller flere \textit{statements} omgivet af tuborgklammer.\\
+Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjælp af nul eller en \textit{statements} omgivet af tuborgklammer.\\
+
+\noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
+
+\tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{En NFA genereret af SableCC}{sableccnfa}
+
+\noindent \textbf{Formel definition af NFA i figur \ref{fig:sableccnfa}}\\
+\noindent $Q$ = \{$s$, $q_1$, $q_2$, $q_3$, $q_4$, $q_5$, $q_6$, $q_7$, $q_8$, $q_9$, $q_{10}$, $q_{11}$, $q_{12}$, $q_{13}$, $f$\}\\
+\noindent $\Sigma$ = \{$\epsilon$, $I$, $Q$, $M$, $A$, $\#$\}\\
+\noindent $\delta$ = Se tabel \ref{tab:nfadelta}\\
+\noindent $q_0$ = $s$\\
+\noindent $F$= \{$f$\}\\
+
+\begin{table}[H]
+\begin{tabular}{|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\hline
+           & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $q_{12}$ & $q_{13}$ & $f$ \\ \hline
+$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{7}$ ,$q_{10}$\} &   & $q_{13}$ &   & $q_{13}$ &   & $q_{13}$ &   &   & $q_{13}$ &    &    & $q_{13}$ &    &   \\ \hline
+$I$          &                & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ \hline
+$Q$          &                &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ \hline
+$M$          &                &   &    &   &    & $q_{6}$ &    &   &   &    &    &    &    &    &   \\ \hline
+$A$          &                &   &    &   &    &   &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ \hline
+\#         &                &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\ \hline
+\end{tabular}
+	\caption{\textit{Transitionsfunktion til NFA (alle tommer celler angiver den tomme mængde)}}
+    \label{tab:nfadelta}
+\end{table}
+
+\noindent På figur \ref{fig:sableccnfa} ses hvordan en \textit{port\_identifier} (defineret på linje 20 i kode \ref{code:cfgudsnit}) genkendes. Hvis der i programmet angives AQ\#7 arbejdes der med analoge output-port 7. I \gls{nfa}'en starter man i state \textit{s}, hvorefter der foretages et ikke-deterministisk valg om at gå videre til state  \textit{q\textunderscript{10}}. Derefter læses bogstavet A, som får maskinen til at gå til \textit{q\textunderscript{11}}. Efter et Q bliver state \textit{q\textunderscript{12}} sprunget over, da $\epsilon$ (den tomme streng) lader den gå videre til state \textit{q\textunderscript{13}}. Efter at have læst \# kommer den i det sidste state, \textit{f}, som er en accept state - og ordet er derved accepteret. \\
 
 \noindent Som tidligere nævnt, er dette ikke den konkrete grammatik, men opsætningen af denne i SableCC. Den korrekte grammatik, skrevet i \gls{ebnf} ses på grammatik \ref{gra:udsnit}. Den fulde kontekstfri grammatik findes i bilag \ref{bil:cfg}
 
 \input{Kode/CFG/Udsnit.tex}
 
+\noindent Ud fra grammatikken kan SableCC generere et \gls{ast}. Der vil her blive givet et eksempel ved hjælp af dette udtrykket, som ses i kode \ref{code:exprforast}
 
-\subsection{Contextual Analysis}\wip
-    Den kontekstuelle analyses består af to dele; scope checking og type checking, og resultere i fejlrapporter der fortæller om type inkonsistensitet, og et \gls{ast} som er blevet \enquote*{dekoreret} med værdier der fortæller forskellige ting om noden, fx hvad type noden er, hvad variable der er referere til fra symbol tabellen og ligende. % Til dette bruges symbol tabellen i høj grad da den kan fortælle om hvad type bruger defineret variabler og funktioner er.
-    
-    Metoden til at gøre det er ved at iterere gennem \gls{ast}'et som blev gjort i syntax analyse afsnittet \ref{ssec:syntaxanalysis}. Der blev brugt et visitor mønster til at iterere gennem et \gls{ast}, det er så her double dispatch idéen som mønsteret løser kommer tilgode, for nu kan man meget let tilføje en ny handling der skal ske under interationen ved at tilføje en ny implementation af visitor interfacet.
-    
-\subsubsection{Type Checking}
-    
-    Type checking er øvelsen hvor man kontrollere at man ikke prøver at udføre operation der ikke er lovlige ifølge grammatikken. I mange programmerings sprog kan man fx ikke gange strings med integers i de fleste programmerings sprog. Dette er en ren kontekstuel del af grammatikken og er derfor ikke en del af \gls{cfg}.
-    
-    Måden at gøre dette på er ved at visitoren besøger noderne i \gls{ast}'et depth first, hvor den samler information om en nodes eventuelle børn som den så bruger til at verificere at den forventede type stemmer overens med den aktuelle type. Dette kan ses i figur \ref{fig:typecheck}.
-    
-    \tikzfigure{Figurer/TikZ/TypeChecking.tex}{Et eksempel på kontrol af typer for udtrykket: bool flag = 1 <= f}{typecheck}
-    
-    Fra figuren kan vi se hvordan at et declaration med en initializations værdi bliver udført bliver type checket. Først findes den forventet type som kommer fra erklæringen af variablen \enquote*{flag}. Bagefter finder vi den aktuelle type assignmentet ved at finde resultatet af udtrykket, som i dette tilfælde er et binær operator, som sammenligner to tal; en integer og en float. Denne kompiler køre under generaliserings princippet, hvilket vil sige at hvis tilfælde som dette opstår, vil den type der er mindst blive implicit omformet til den anden type, som set i figuren under BinaryOperation's noden. I noden bliver resultatet så evalueret til at være \enquote*{bool} som returneres til assignment noden som den aktuelle type.
-    
-\subsubsection{Scope Checking}
+\AnsiC{Kode/ExprForAST.c}{Udtryk der bruges til at bygge AST}{exprforast}
 
-    Et scope er en grupperet mængde kode som kan 
-    
-    \paragraph{Dynamic scope} noget klogt er skrevet her omkring scopes
-    
-    \paragraph{Static scope} noget klogt er skrevet her omkring scopes
+\noindent Der bruges left-most derivation til at bygge træet. Dette vil sige at reglerne (også kaldet produktioner) udvides fra venstre mod højre. Ved at bygge træet, kan det også give mulighed for at opdage tvetydig grammatik - dette ses ved at det er muligt at lave to forskellige \gls{ast}'er ud fra samme regler og sætning.
 
-   % Det vil sige at en variable der er defineret i et scope bør være tilgængelig fra under scopes, men ikke de større scopes. Dette er selfølgeligt afhængigt af designet af sproget.
-    
-    \tikzfigure{Figurer/TikZ/SymbolTable.tex}{Symbol tabeller som de fungere i compileren til \sprognavn}{symtab}
-    
-    %\tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{}{}
+\tikzfigure{Figurer/TikZ/AST.tex}{AST fra PLC++}{astexample}
 
+\noindent Træet er nu bygget, og alt er klar til at gå videre til næste trin - at dekorere træet med typer i Context Analysis.
+
+%\input{Kapitler/Problemlosning/ContextAnalysis.tex}
 
 \subsection{Code Generation}

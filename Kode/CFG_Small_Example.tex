@@ -1,0 +1,9 @@
+program     =   statements;
+
+statements  =   statement statements |
+                statement;
+                
+statement   =   declaration_stmt |
+                assignment_stmt |
+                function_call |
+                function_def;
