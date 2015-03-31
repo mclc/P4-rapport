@@ -1,45 +1,29 @@
-\begin{tikzpicture}[tree layout,level distance=10mm,text depth=.1em,text height=.8em]
-    \node{<Program>}
-        child{node{<Statement>}
-            child{node{<IterativeStatement>}
-                child{node{<WhileStatement>}
-                    child{node{while}}
-                    child{node{(}}
-                    child{node{<Expression>}
-                        child{node{<ExpressionValue>}
-                            child{node{<Value>}
-                                child{node{<Identifier>}
-                                    child{node{i}}
-                                }
-                            }
-                        }
-                        child{node{==}}
-                        child{node{<ExpressionValue>}
-                            child{node{<Value>}
-                                child{node{<IntegerLiteral>}
-                                    child{node{1}}
-                                }
-                            }
-                        }
-                    }
-                    child{node{)}}
-                    child{node{<Scope>}
-                        child{node{\{}}
-                        child{node{<Statement>}
-                            child{node{<UnaryAssignment>}
-                                child{node{<UnaryExpression>}
-                                    child{node{<Identifier>}
-                                        child{node{j}}
-                                    }
-                                    child{node{++}}
-                                }
-                            }
-                            child{node{;}}
-                        }
-                        child{node{\}}}
-                    }
-                }
-            }
-        };
-
+\begin{tikzpicture}[sibling distance=0.1cm]
+    \Tree   [.<Program> 
+                [.<Statement> 
+                    [.<IterativeStatement> 
+                        [[[[[while ]]]]] 
+                        [[[[[( ]]]]] 
+                        [.<Expression> 
+                            [.<ExpressionValue> [.<Value> [.<Identifier> [i ]]]]
+                            [[[[== ]]]]
+                            [.<ExpressionValue> [.<Value> [.<IntegerLiteral> [1 ]]]]
+                        ] 
+                        [[[[[) ]]]]]
+                        [.<Scope>
+                            [[[[\{ ]]]]
+                            [.<Statement>
+                                [.<UnaryAssignment> 
+                                    [.<UnaryExpression>
+                                        [.<Identifier> j ]
+                                        [++ ]
+                                    ]
+                                ]
+                                [[[; ]]]
+                            ]
+                            [[[[\} ]]]]
+                        ]
+                    ]
+                ]
+            ]
 \end{tikzpicture}
