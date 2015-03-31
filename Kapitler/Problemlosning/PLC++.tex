@@ -10,7 +10,7 @@ Løsningsforslaget vil i rapporten blive omtalt som PLC++.
 \subsection{Kravspecifikation}
 Kravene til PLC++ tager udgangspunkt i C med en del ændringer. C bidrager til kravet om abstraktionsniveauet med dets mulighed for at benytte funktioner. Ligeledes har C datatypen \textit{struct} som kan imitere objekter i den virkelige verden.
 
-De vigitgste krav til PLC++ vil blive gennemgået, forklaret og prioriteret i en MosCOW. Den fulde syntax specifikation kan findes i bilag \ref{bil:cfg}
+De vigtigste krav til PLC++ vil blive gennemgået, forklaret og prioriteret i en MosCOW. Den fulde syntax specifikation kan findes i bilag \ref{bil:cfg}
 
 \subsubsection{MoSCoW}
 \gls{moscow}-analysen har til formål at belyse kravspecifikationens funktioner, samt opnåelse af disse.
@@ -136,6 +136,22 @@ Følgende sektioner udspecificere kriterierne individuelt og deres prioritet i e
 
 \noindent\textbf{Learnability} er\\
 
-\noindent\textbf{Dependability} er\\
-
 \noindent\textbf{Orthogonality} er\\
+
+\noindent\textbf{Reliability} er\\
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Kriterium} & \multicolumn{1}{l|}{\textbf{Meget vigtigt}} & \multicolumn{1}{l|}{\textbf{Vigtigt}} & \multicolumn{1}{l|}{\textbf{Mindre vigtigt}} & \multicolumn{1}{l|}{\textbf{Irrelevant}}  \\ \hline
+Readability        &   & X &   &    \\ \hline
+Writeability       & X &   &   &    \\ \hline
+Adaptability       &   & X &   &    \\ \hline
+Learnability       &   &   & X &    \\ \hline
+Orthogonality      &   & X &   &    \\ \hline
+Reliability        & X &   &   &    \\ \hline
+\end{tabular}
+\caption{Endelige kriterier som løsningen skal opfylde.}
+\label{table:kriterier}
+\end{table}

@@ -21,6 +21,7 @@ For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav a
 En gramatik for et sprog kan også være unambigius hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en kildekode. Et eksempel på en unambigius gramatik kunne være følgende:
 
 \sfix{Indsæt kode: expr = expr plus expr | number}
+\tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{}{}
 
 Gramatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om gramatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3:
 \sfix{Indsæt abstract syntax tree}

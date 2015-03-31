@@ -29,7 +29,7 @@
     \begin{table}[H]
     \centering\footnotesize
     \begin{tabular}{l|l|l}
-    Id & Type & Scope \\\midrule
+    \textbf{Id} & \textbf{Type} & \textbf{Scope} \\\midrule
     foo & function, double & global\\
     count & integer & function parameter\\
     sum & double & local block\\
@@ -39,11 +39,11 @@
     \label{tab:symboltabel}
     \end{table}
     
-    I denne tabel kan man se hvordan man kan finde viden om hvad type og scope et symbol. Dette er én måde at implementere symbol tabellen; en usorteret liste der indeholder nogle informationer om hvert enkelt element. Den er forholdsvis ineffektiv løsning eftersom at det vil tage $O(n)$ for at finde et symbol, hvor $n$ er antallet af elementer i listen. En bedre løsning vil være at implementere strukturen som et balanceret træ eller et bibliotek.
+\noindent I denne tabel kan man se hvordan man kan finde viden om hvad type og scope et symbol. Dette er én måde at implementere symbol tabellen; en usorteret liste der indeholder nogle informationer om hvert enkelt element. Den er forholdsvis ineffektiv løsning eftersom at det vil tage $O(n)$ for at finde et symbol, hvor $n$ er antallet af elementer i listen. En bedre løsning vil være at implementere strukturen som et balanceret træ eller et bibliotek.
     
-    Man kunne også ofre lidt effektivitet og i stedet dele tabellerne op i flere efter hvad scope man befinder sig i. Dette betyder at vi naturligt får et statisk scope, hvor man kun kan få adgang til elementer i scopeet, og det er let at implementere så man også kan søge i den ydre blok hvis man har en reference til den.
+    Man kunne også ofre lidt effektivitet og i stedet dele tabellerne op i flere efter hvad scope man befinder sig i. Dette betyder at vi naturligt får et statisk scope, hvor man kun kan få adgang til elementer i scopet, og det er let at implementere så man også kan søge i den ydre blok hvis man har en reference til den.
     
-    \tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungere i compileren til \sprognavn}{symtab}
+    \tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungerer i compileren til \sprognavn}{symtab}
     
     Ulempen ved at gøre det på denne måde er at fordi vi har flere tabeller bliver vi måske nød til at søge gennem flere for at finde et givet element hvis det ikke er erklæret i samme scope. 
     
