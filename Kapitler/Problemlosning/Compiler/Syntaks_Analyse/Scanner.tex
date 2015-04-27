@@ -3,20 +3,19 @@ Scanneren som er den første del af compileren der bliver kørt har til opgave a
 
 % Q#0.0 = I#0.1  == I#0.2 && I#0.3 != true;
 \AnsiC{Kode/Port/Port.tex}{Eksempel på kodestykke på port}{port_sample}
-\sfix{Indsæt kode}
 
 \noindent Alle tokens er defineret på følgende måde:
-\SCC{Kode/Port/Tokens.tex}{Tokens i Port}{port_tokens}
+\SCC{Kode/Port/Tokens.tex}{Tokens i Port (SableCC style)}{port_tokens}
 
 \noindent white\_space skal dog ignoreres af scanneren.
 
-\noindent En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens som parseren senere kan bruge. Et eksempel på en scanner til følgende tokens implementeret i Java kan ses i bilag \sfix{Bilag med scanner}.
+\noindent En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens som parseren senere kan bruge. Et eksempel på en scanner til følgende tokens implementeret i Java kan ses i bilag \sfix{Bilag med scanner} eller i et udsnit i kode \ref{scanner_java}.
 
 \Java{Kode/Port/Scanner.java}{Scanneren lavet i java}{scanner_java}
 
-Som det kan ses er scanneren meget ens kode. Dette gør det muligt at automatisere scanner generationen. Afsnit \sfix{Afsnit til tools} vil komme nærmere ind på hvilke værktøjer der kan bruges til at lave en scanner.
+Som det kan ses er scanneren meget ens kode. Dette gør det attraktivt at automatisere udviklingen af scanneren. Afsnit \ref{ssec:toolsforcc} vil komme nærmere ind på hvilke værktøjer der kan bruges til at lave en scanner.
 
-For at illustrere et eksempel på en kørsel af scanneren på kodestykke \sfix{Kodestykke} er denne her tabel, der viser typen af den token og det konkrete indhold.
+For at illustrere et eksempel på en kørsel af scanneren på kodestykke \ref{port_simple} er denne her tabel, der viser typen af den token og det konkrete indhold.
 
 % Q#0.0 = true;
 \AnsiC{Kode/Port/SimplePort.tex}{Eksempel på kodestykke på port}{port_simple}

@@ -1,5 +1,4 @@
 \subsubsection{Implementation}
-\wip{}
 
 \mfix{Tjek ref når alt er flyttet}
 I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser og derudover genereres SableCC et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sec:visitor}). 
@@ -29,16 +28,18 @@ Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjæl
 
 
 \begin{table}[H]
-\begin{tabular}{|l|m{5em}|l|l|l|l|l|l|l|l|l|l|l|l|l|l|}
+\centering
+\footnotesize
+\rowcolors{2}{blue!10}{white}
+\begin{tabular}{l@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}m{5em}|l|l|l|l|l|l|l|l|l|l|l|l|l|l}
 
-\hline
-           & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $q_{12}$ & $q_{13}$ & $f$ \\ \hline
-$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{7}$ ,$q_{10}$\} &   & $q_{13}$ &   & $q_{13}$ &   & $q_{13}$ &   &   & $q_{13}$ &    &    & $q_{13}$ &    &   \\ \hline
-$I$          &                & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ \hline
-$Q$          &                &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ \hline
-$M$          &                &   &    &   &    & $q_{6}$ &    &   &   &    &    &    &    &    &   \\ \hline
-$A$          &                &   &    &   &    &   &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ \hline
-\#         &                &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\ \hline
+$\delta$         & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $q_{12}$ & $q_{13}$ & $f$ \\ \bottomrule
+$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{7}$ ,$q_{10}$\} &   & $q_{13}$ &   & $q_{13}$ &   & $q_{13}$ &   &   & $q_{13}$ &    &    & $q_{13}$ &    &   \\ 
+$I$          &                & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ 
+$Q$          &                &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ 
+$M$          &                &   &    &   &    & $q_{6}$ &    &   &   &    &    &    &    &    &   \\
+$A$          &                &   &    &   &    &   &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ 
+\#         &                &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\
 \end{tabular}
 	\caption{\textit{Transitionsfunktion til NFA (alle tommer celler angiver den tomme mængde)}}
     \label{tab:nfadelta}

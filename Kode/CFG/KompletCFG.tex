@@ -1,0 +1,174 @@
+\begin{grammar}
+ 
+ %<while\_statement> ::= "while" "(" <expr> ")" "{" <statement>? "}"
+ 
+ %<expr> ::= <expr> "&&" <expr2>
+ %\alt <expr> "||" <expr2>
+ %\alt <expr2>
+ 
+ 
+ <program> ::= <root\_declation>*
+ 
+ <type\_specifier> ::= "char"
+ \alt "bool"
+ \alt "int"
+ \alt "long"
+ \alt "float"
+ \alt "double"
+ \alt "timer"
+ \alt "port"
+ \alt "enum" <identifier>
+ \alt "struct" <identifier>
+ 
+ <root\_declaration> ::= <declaration>
+ \alt <function\_definition>
+ \alt <struct\_definition>
+ \alt <enum\_definition>
+ 
+ <function\_definition> ::= <type\_specifier> <identifier> "(" <formal\_parameter>? ")" "{" <statement>* "}"
+ \alt "void" <identifier> "(" <formal\_parameter>? ")" "{" <statement>* "}"
+ 
+ <formal\_parameters> ::= <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>?
+ \alt <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? "," <formal\_parameter>
+ 
+ <struct\_definition> ::= "struct" <identifier> "{" <struct\_declaration>* "}"
+ 
+ <struct\_declaration> ::= <declaration>
+ \alt <function\_declaration>
+ %% Yaaay, det betyder at vi har funktioner i structs
+ 
+ <enum\_definition> ::= "enum" <identifier> "{" <enum\_flags> "}"
+ 
+ <enum\_flags> ::= <enum\_flag>
+ \alt <enum\_flag> "," <enum\_flags>
+ 
+ <enum\_flag> ::= <identifier> <integer\_literal>?
+ 
+ <type\_qualifier> ::= <const>
+ 
+ <declaration> ::= <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>?
+ \alt <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? <expr>?
+ 
+ <array\_definition> ::= "{" <interger\_literal>? "}"
+ 
+ <statement> ::= <declaration>
+ \alt <expr> ";"
+ \alt <if\_statement>
+ \alt <switch\_statement>
+ \alt "while" "(" <expr> ")" <statement>
+ \alt "for" "(" <expr>* ";" <expr>? ";" <expr>* ")" <statement>
+ \alt "return" ";"
+ \alt "return" <expr> ";"
+ \alt "contiue" ";"
+ \alt "break" ";"
+ 
+ <statement\_no\_short\_if> ::= "{" <statement>* "}"
+ \alt <declaration>
+ \alt <expr> ";"
+ \alt <if\_statement\_short>
+ \alt <switch\_statement>
+ \alt "while" "(" <expr> ")" <statement\_no\_short\_if>
+ \alt "for" "(" <expr>* ";" <expr>? ";" <expr>* ")" <statement\_no\_short\_if>
+ \alt "return" ";"
+ \alt "return" <expr> ";"
+ \alt "contiue" ";"
+ \alt "break" ";"
+ 
+ <if\_statement> ::= "if" "(" <expr> ")" <statement>
+ \alt "if" "(" <expr> ")" <statement\_no\_short\_if> "else" <statement>
+ 
+ <if\_statement\_short> ::= "if" "(" <expr> ")" <statement\_no\_short\_if> "else" <statement\_no\_short\_if>
+ 
+ <switch\_statement> ::= "switch" "(" <expr> ")" "{" <label\_statements>* "}"
+ 
+ <label\_statements> ::= "case" <expr> ":" <statement>*
+ \alt "default" ":" <statement>*
+ 
+ <expr> ::= <expr> "=" <ternary\_expr>
+ \alt <expr> "+=" <ternary\_expr>
+ \alt <expr> "-=" <ternary\_expr>
+ \alt <expr> "*=" <ternary\_expr>
+ \alt <expr> "/=" <ternary\_expr>
+ \alt <expr> "\%=" <ternary\_expr>
+ \alt <ternary\_expr>
+ 
+ <ternary\_expr> ::= <ternary\_expr> "?" <or\_expr> ":" <or\_expr>
+ \alt <or\_expr>
+ 
+ <or\_expr> ::= <or\_expr> "||" <and\_expr>
+ \alt <and\_expr>
+ 
+ <and\_expr> ::= <and\_expr> "&&" <equality\_expr>
+ \alt <equality\_expr>
+ 
+ <equality\_expr> ::= <equality\_expr> "==" <greater\_less\_expr>
+ \alt <equality\_expr> "!=" <greater\_less\_expr>
+ \alt <greater\_less\_expr>
+ 
+ <greater\_less\_expr> ::= <greater\_less\_expr> "<" <add\_sub\_expr>
+ \alt <greater\_less\_expr> "<=" <add\_sub\_expr>
+ \alt <greater\_less\_expr> ">" <add\_sub\_expr>
+ \alt <greater\_less\_expr> ">=" <add\_sub\_expr>
+ \alt <add\_sub\_expr>
+ 
+ <add\_sub\_expr> ::= <add\_sub\_expr> "+" <mult\_div\_mod\_expr>
+ \alt <add\_sub\_expr> "-" <mult\_div\_mod\_expr>
+ \alt <mult\_div\_mod\_expr>
+ 
+ <mult\_div\_mod\_expr> ::= <mult\_div\_mod\_expr> "*" <unary\_prefix\_expr>
+ \alt <mult\_div\_mod\_expr> "/" <unary\_prefix\_expr>
+ \alt <mult\_div\_mod\_expr> "\%" <unary\_prefix\_expr>
+ \alt <unary\_prefix\_expr>
+ 
+ <unary\_prefix\_expr> ::= "++" <identifier>
+ \alt "-""-"<identifier>
+ \alt "+"<unary\_prefix\_expr>
+ \alt "-"<unary\_prefix\_expr>
+ \alt "!"<unary\_prefix\_expr>
+ \alt "(" <type\_specifier> ")"<unary\_prefix\_expr>
+ 
+ <post\_and\_infix\_expr> ::= <identifier>"++"
+ \alt <identifier>"-""-"
+ \alt identifier "(" <post\_and\_infix\_expr> ")"
+ \alt <post\_and\_infix\_expr>"."<expr\_value>
+ \alt "(" <expr> ")"
+ \alt <expr\_value>
+ 
+ <function\_call> ::= <identifier> "(" <actual\_parameter>? ")"
+ 
+ <actual\_parameter> ::= <expr>
+ \alt <expr> "," <actual\_parameter>
+ 
+ <expr\_value> ::= <integer\_literal>
+ \alt <decimal\_literal>
+ \alt "true"
+ \alt "false"
+ \alt <identifier>
+ \alt <port\_input\_identifier> <port\_value>
+ \alt <port\_output\_identifier> <port\_value>
+ \alt <port\_memory\_identifier> <port\_value>
+ \alt <port\_analog\_input\_identifier> <port\_value>
+ \alt <port\_analog\_output\_identifier> <port\_value>
+ \alt <function\_call>
+ 
+ <port\_value> ::= <expr\_value>
+ \alt "(" <expr> ")"
+ 
+ <comment> ::= "//" <not\_line\_terminator>* <line\_terminator>
+ 
+ <integer\_literal> ::= <digit>+
+ 
+ <decimal\_literal> ::= <digit>+ "." <digit>+
+ 
+ <port\_input\_identifier> ::= "I#"
+ 
+ <port\_output\_identifier> ::= "O#"
+ 
+ <port\_memory\_identifier> ::= "M#"
+ 
+ <port\_analog\_input\_identifier> ::= "AI#"
+ 
+ <port\_analog\_output\_identifier> ::= "AO#"
+ 
+  
+\end{grammar}

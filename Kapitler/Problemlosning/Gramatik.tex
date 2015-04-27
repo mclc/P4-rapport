@@ -2,5 +2,13 @@
 
 Der er nu blevet udarbejdet en kravspecifikation med hvilke dele sproget skal have og ikke have og sproget kan nu fastlægges. For at kunne definere et sprog entydigt er man nødt til at have en grammatik der tillader det. Til det benyttes der \gls{cfg}.
 
-\gls{cfg} er en meget god måde at beskrive et sprog med en særlig rekursiv syntaks. \gls{cfg} består af en række substitutions-regler. Hver regel består af en variabel efterfulgt af en streng af variabler og terminaler. Terminaler er konkrete karakterer, hvor variabler kan være både karakterer og variabler i sekvens. Et hvert \gls{cfg} starter men en startvariabel. På figur \mgfix{whatever} ses et udklip af sprogets syntaks.
-\SCC{Kode/CFG/CFG_Small_Example.scc}{Usklip af sprogets syntaks}{CFG_Small_Example}
+\gls{cfg} er en effektiv måde at beskrive et sprog med en særlig rekursiv syntaks. \gls{cfg} består af en række substitutions-regler hvor hver regel består af en variabel efterfulgt af en streng af variabler og terminaler. Terminaler er konkrete karakterer, hvor variabler kan være både karakterer og variabler. En hver \gls{cfg} starter men en startvariabel.
+
+På kodeeksemplet ses et udklip af sprogets \gls{cfg}. Her kan man se at sprogets startvariabel er \textit{program} som ifølge den første regel kan være \textit{statement} efterfulgt af \textit{program}. Spørgsmålstegnet efter \textit{program} betyder at \textit{program} er valgfrit. Det vil sige man kan nøjes med \textit{statement} for at reglen er overholdt. Ifølge den anden regel kan \textit{program} også udtrykkes som \textit{function\_declaration} efterfulgt af \textit{program}. På samme måde som i første regel er denne variabel også valgfri.
+
+\SCC{Kode/CFG/CFG_Variable_Example.scc}{Udklip af sprogets syntaks}{CFG_Variable_Example}
+
+\noindent På dette kodeeksempel ses variablen \textit{port\_identifier} kan være terminalerne \textit{I}, \textit{Q}, \textit{M}, \textit{AI}, \textit{AQ} efterfulgt af \textit{\#}.
+\SCC{Kode/CFG/CFG_Terminal_Example.scc}{}{CFG_Terminal_Example}
+
+\subsubsection{Implementation}

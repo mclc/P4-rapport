@@ -29,7 +29,7 @@
     \begin{table}[H]
     \centering\footnotesize
     \begin{tabular}{l|l|l}
-    \textbf{Id} & \textbf{Type} & \textbf{Scope} \\\midrule
+    \textbf{Id} & \textbf{Type} & \textbf{Scope} \\\bottomrule
     foo & function, double & global\\
     count & integer & function parameter\\
     sum & double & local block\\
@@ -45,6 +45,6 @@
     
     \tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungerer i compileren til \sprognavn}{symtab}
     
-    Ulempen ved at gøre det på denne måde er at fordi vi har flere tabeller bliver vi måske nød til at søge gennem flere for at finde et givet element hvis det ikke er erklæret i samme scope. 
+\noindent Ulempen ved at gøre det på denne måde er at fordi vi har flere tabeller bliver vi måske nød til at søge gennem flere for at finde et givet element hvis det ikke er erklæret i samme scope. 
     
     %Tabellen bliver hovedsageligt brugt i forbindelse med type checking af et \gls{ast}, men bliver også brugt i andre faser af kompileringsprocessen til at skrive, læse og dele information til/fra tabellen omkring variabler, funktioner og andet. For eksempel kan man vælge at udvide et \gls{ast} med information der bliver brugt til optimering af objekt koden.

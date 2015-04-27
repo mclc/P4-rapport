@@ -21,17 +21,19 @@ Prioteringen for den individuelle funktion er nødvendig, i forhold til det tids
 % DENNE TABEL ER LIDT FOR STOR, MEN ELLERS KAN DET IKKE STÅ PÆNT, OG MAN SER DET IKKE I RAPPORTEN.....
 %
 \begin{table}[H]
-\begin{tabular}{|m{10em}|m{12em}|m{10em}|m{8em}|}
-\hline
-\textbf{Must have} & \textbf{Should have} & \textbf{Could have} & \textbf{Want to have} \\ \hline
-Kontrolstruktur & Decrement & Const & Betinget udtryk   \\ \hline
-Datatyper & Compound assignments & Unsigned datatyper  & \\ \hline
-Structs & Increment &  &	   \\ \hline
-Specielle Datatyper	&  &  &		   \\ \hline
-Funktioner &  &  & 		   \\ \hline
-Kommentarer &  &  & 		   \\ \hline
-Arrays &  &  & 	   \\ \hline
-Operatorere &  &  & 		   \\ \hline
+\centering
+%\rowcolors{2}{blue!10}{white}
+\begin{tabular}{l|l|l|l}
+\toprule
+\textbf{Must have} & \textbf{Should have} & \textbf{Could have} & \textbf{Want to have} \\ \midrule
+Kontrolstruktur & Decrement & Const & Betinget udtryk   \\ 
+Datatyper & Compound assignments & Unsigned datatyper  & \\ 
+Structs & Increment &  &	   \\ 
+Specielle Datatyper	&  &  &		   \\ 
+Funktioner &  &  & 		   \\ 
+Kommentarer &  &  & 		   \\ 
+Arrays &  &  & 	   \\ 
+Operatorere &  &  & 		   \\ \bottomrule
  
  %if & for & do-While & Betingede udtryk   \\ \hline
  %int & decrement & const & unsigned int  \\ \hline
@@ -128,29 +130,56 @@ Ligeledes er det valgt ikke at implementere pointeraritmetik af den grund, at de
 Dette afsnit resultere i en række kriterier som er prioriteret efter behov, som er med til at skabe et brugbart og yderst velegnet sprog til målgruppen, uden væsentlige svagheder. Omtalte behov kan delvist udledes fra problemanalysen \mefix{indsæt ref}, såvel som \gls{moscow}-analysen.
 Følgende sektioner udspecificere kriterierne individuelt og deres prioritet i en samlet tabel.\\
 
-\noindent\textbf{Readability} er\\
+\noindent\textbf{Readability} er kriteriet som omhandler hvor læsbart programmet er, samt om programmøren kan se handlingen og derved forstå hvad der programmet gør.
 
-\noindent\textbf{Writeability} er\\
+Dette er vigtigt i den forstand, at en ny programmør hurtigt skal kunne sætte sig ind i, hvordan programmet fungere, for at undgå yderligere omkostninger. 
 
-\noindent\textbf{Adaptability} er\\
+Readability er blevet placeret i kategorien "Vigtig" på grund af det "trade-off" som finder sted, når man vælger at øge writeability´en.
+Dette trade-off sker, ved at man øger writeabilityen som gør at koden er lettere at skrive, hvilket ikke altid gør det lettere at læse, og omvendt bliver det ikke lettere at skrive hvis det skal være lettere at skrive, og dermed kan man i de fleste tilfælde ikke opnå begge dele.
+\\
+Dette vil sige at et for loop i sproget COBOL er mere læsbart i forhold til C\#, dette kan ses på kodeeksempel \ref{code:ekscobol}
 
-\noindent\textbf{Learnability} er\\
+\Cobol{Kode/Readability-cobol.cbl}{Viser et for-loop skrevet i sproget COBOL}{ekscobol}
+
+\noindent Man ser at opbygningen af koden, ligner meget en almindelig sætning, hvilket er meget let at læse. Derimod hvis man ser på C\# kodeeksempel \ref{code:ekscsharp} kan man se at opbygningen af opbygningen af sætningen indeholder parenteser, akkolade og semikolon, hvilket gør det besværligt at læse for en person, som ikke har arbejdet med programmering før.
+
+\CSharp{Kode/Readability-csharp.cs}{Viser et for-loop skrevet i sproget C\#}{ekscsharp}
+
+
+
+
+\noindent\textbf{Writeability} er hvordan koden skrives i et dokument, samt hvilken syntaks der benyttes. Dette er med til at sikre, at programmøren hurtigt og effektivt kan skrive koden.
+
+Dette kan være en hurtigere repræsentation af funktionen, som gør det hurtigere at skrive det. Dette giver et trade-off i Readability, da det gør det sværer at læse.\\
+
+\noindent\textbf{Adaptability} er muligheden for at tilpasse koden til andre enheder, hvor det i \gls{plc} verdenen, ville betyde at man ville kunne bruge programmeringssproget, på flere forskellige enheder selvom det er forskellige producenter. Adaptability er valgt at kategorisere som vigtigt, da det ville være lettere for en automatiktekniker at kunne lærer et sprog, og kunne bruge det til alle \gls{plc} enheder.
+
+Dette giver programmøren uafhængighed i forhold til hvilken producent vil arbejde med, og giver derved flere jobmuligheder.\\
+
+\noindent\textbf{Learnability} er hvor let programmeringssproget er at lærer, og hvor let det er at benytte det.
+
+Herunder er Learnability hvor nemt programmøren har ved at indlærer nye funktioner, ud fra dokumentationen, da programmøren umuligt kan huske alle funktioner i et stort sprog, og derved skal kunne indlærer det på ny, ved at kigge på et dataark. \\
+Learnability er placeret under mindre vigtigt, da sproget er prioriteret til automatikteknikere, som har gennemgået et grundkursus, hvilket er med til at sikre at den kommende programmør bliver sat ordenligt ind i sproget. Hermed er det valgt at nedprioritere sprogets learnability, således der kan implementeres flere funktioner, som giver en rig mulighed for udnyttelse af hele \gls{plc}´en.\\
 
 \noindent\textbf{Orthogonality} er\\
 
-\noindent\textbf{Reliability} er\\
+\noindent\textbf{Reliability} er hvordan koden håndtere fejl, og hvor pålideligt det generelt er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
+
+Dette er en yderst vigtig parameter i løsningen, da det skal kører på en \gls{plc} hvor driftsikkerhed er en af top prioriteterne.\\
+
 
 \begin{table}[H]
-\centering
-\begin{tabular}{|l|c|c|c|c|}
-\hline
-\textbf{Kriterium} & \multicolumn{1}{l|}{\textbf{Meget vigtigt}} & \multicolumn{1}{l|}{\textbf{Vigtigt}} & \multicolumn{1}{l|}{\textbf{Mindre vigtigt}} & \multicolumn{1}{l|}{\textbf{Irrelevant}}  \\ \hline
-Readability        &   & X &   &    \\ \hline
-Writeability       & X &   &   &    \\ \hline
-Adaptability       &   & X &   &    \\ \hline
-Learnability       &   &   & X &    \\ \hline
-Orthogonality      &   & X &   &    \\ \hline
-Reliability        & X &   &   &    \\ \hline
+\centering       
+\rowcolors{2}{blue!10}{white}
+\begin{tabular}{l c c c c}
+\toprule
+\textbf{Kriterium} & \textbf{Meget vigtigt} & \textbf{Vigtigt} & \textbf{Mindre vigtigt}  \\ \midrule
+Readability        &   & X &       \\ 
+Writeability       & X &   &       \\ 
+Adaptability       &   & X &       \\ 
+Learnability       &   &   & X     \\ 
+Orthogonality      &   & X &       \\ 
+Reliability        & X &   &       \\ \bottomrule
 \end{tabular}
 \caption{Endelige kriterier som løsningen skal opfylde.}
 \label{table:kriterier}

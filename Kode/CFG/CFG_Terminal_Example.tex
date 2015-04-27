@@ -1,0 +1,19 @@
+\begin{Grammar}
+ \begin{grammar}
+ port_identifier = ('I' | 'Q' | 'M' | 'AI' | 'AQ') '#';
+ <port\_Identifier> ::= I#
+ \alt Q
+ \alt M
+ \alt AI
+ \alt AQ
+ 
+ <while\_statement> ::= "while" "(" <expr> ")" "{" <statement>? "}"
+ 
+ <expr> ::= <expr> "&&" <expr2>
+ \alt <expr> "||" <expr2>
+ \alt <expr2>
+  
+  
+ \end{grammar}
+ \caption{Udsnit af CFG til PLC++}\label{gra:udsnit}
+\end{Grammar}

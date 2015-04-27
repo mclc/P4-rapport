@@ -21,9 +21,11 @@ For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav a
 En gramatik for et sprog kan også være unambigius hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en kildekode. Et eksempel på en unambigius gramatik kunne være følgende:
 
 \sfix{Indsæt kode: expr = expr plus expr | number}
+\mfix{Indsæt caption osv. til figur}
 \tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{}{}
 
-Gramatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om gramatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3:
+
+Grammatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3:
 \sfix{Indsæt abstract syntax tree}
 
 For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \sfix{Indsæt}
@@ -33,7 +35,40 @@ For at løse dette problem er det nødvendigt at definere rækkefølgen ved at t
 Dette tvinger altså parseren til at generere det abstrakte syntax træ på følgende måde:
 \sfix{Indsæt abstract syntax tree}
 
+\subsubsubsection{Finite Automata}
+Finite Automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til at beskrive forskellige stadier et program kan gennemgå. Der skilnes mellem to forskellige automata - \gls{dfa} og \gls{nfa}. Da \gls{nfa} er en overbygning på \gls{dfa}, indledes afsnittet med en grundig forklaring og definition af \gls{dfa}, som der efterfølgende bygges videre på for at opnå det nødvendige teoretiske grundlag til implementation af en parser.\\
 
+\noindent \textbf{\gls{dfa}} er kendetegnet ved ikke at have nogen hukommelse om tidligere stadier, samt kun én mulighed for at gå til et andet stadie afhængig af det input den modtager.
+
+\tikzfigure{Figurer/TikZ/SimpleDFA.tex}{En simpel DFA, kaldet $M_1$}{simpledfa}
+
+\noindent På figur \ref{fig:simpledfa} ses \gls{dfa}'en kaldet $M_1$, som vil blive beskrevet sammen med gennemgangen af den relevante teori. En \gls{dfa} kan beskrives med en 5-tuple, bestående af \[M = (Q, \Sigma, \delta, q_0, F)\]
+
+\begin{itemize}
+    \item $Q$ angiver et sæt bestående af alle tilstande i \gls{dfa}'en.\\
+        $Q = \{q_0, q_1\}$
+    \item $\Sigma$ angiver alfabetet - altså, de tegn der er tilladt som input.\\
+        $\Sigma = \{0, 1\}$
+    \item $\delta: Q \times \Sigma \rightarrow Q$ kaldes transitionsfunktionen, og angiver hvilket det næste stadie afhængigt af nuværende stadie og input. $\delta$ for $M_1$ ses på tabel \ref{tab:transfunk_m1}
+    \item $q_0 \in Q$ angiver startstadiet.\\
+        $q_0 = q_0$
+    \item $F \subseteq Q$ angiver sættet af \textit{accept states}. Hvis en streng ender i et accept state, er strengen accepteret.\\
+        $F = \{q_1\}$
+\end{itemize}
+
+\begin{table}[H]
+    \centering
+        \begin{tabular}{ c|c c }
+        \centering
+            $\delta$ & 0 & 1\\ \hline 
+            $q_0$ & $q_0$ & $q_1$\\
+            $q_1$ & $q_0$ & $q_1$\\
+        \end{tabular}
+    \caption{\textit{Transitionsfunktion for $M_1$}}
+    \label{tab:transfunk_m1}
+\end{table}
+
+\notdone{Snak om regex osv.}
 
 %\figur{Figurer/MTAST.png}{Abstrakt syntakstræ baseret på kodeeksempel \ref{code:minitriangleforscanner}}{MTAST}{1.0}
 
