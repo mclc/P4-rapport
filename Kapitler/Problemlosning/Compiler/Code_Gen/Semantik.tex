@@ -1,10 +1,22 @@
+\mfix{Pt. indsat som bilag - bare for at kunne se kompileret udgave}
+
 \subsubsection{Typer}
 
 \subsubsubsection{Char}
 
+\subsubsubsection{Bool}
+
 \subsubsubsection{Int}
 
+\subsubsubsection{Long}
+
 \subsubsubsection{Float}
+
+\subsubsubsection{Double}
+
+\subsubsubsection{Timer}
+
+\subsubsubsection{Port}
 
 \subsubsubsection{Struct}
 
@@ -18,17 +30,38 @@
 \subsubsubsection{Eksplicit}
 
 
-\subsubsection{udtryk}
+\subsubsection{Udtryk}
+
+\subsubsubsection{Operatorer}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \centering
+
+        Primær             & x++ \quad x- - \quad a{[}x{]} \quad x.y \quad (x)                 \\ \hline
+        Unær               & ++x \quad - -x \quad ! \quad -x \quad +x \quad (cast)x       \\ \hline
+        Multiplikationer   & * \quad / \quad \%                                               \\ \hline
+        Additioner         & + \quad -                                                        \\ \hline
+        Sammenligning      & \textless \quad \textgreater \quad \textless= \quad\textgreater= \\ \hline
+        Ligheder           & == \quad !=                                                      \\ \hline
+        Logisk og          & \&\&                                                              \\ \hline
+        Logisk eller       & ||                                                               \\ \hline
+        Betinget udtryk    & ?:                                                               \\ \hline
+        Sammensatte udtryk & *= \quad /= \quad \%= \quad += \quad -=                          \\ \hline
+        Assignment         & =                                                                \\ \hline
+
+    \end{tabular}
+    \caption{\textit{Operatorprioritering (højest til lavest)}}
+    \label{tab:operatorprioritering}
+\end{table}
+
+\subsubsubsubsection{Precedence}
 
 \subsubsubsection{Boolsk udtryk}
 
 \subsubsubsection{Aritmetisk}
-
-\subsubsubsection{Operatorer}
-
-\subsubsubsubsection{Precedence}
-
-
 
 
 \subsubsection{Statements}
@@ -38,10 +71,8 @@
 \subsubsection{Declaration}
 Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden.
 
-declaration =
-	type_qualifier? type_specifier identifier array_definition? ;											
-  | type_qualifier? type_specifier identifier array_definition? = expr ;
-;
+\input{Kode/CFG/Declaration.tex}
+% Tilføjet som CFG-kode af Mikkel
 
 
 \subsubsection{Declaration}
