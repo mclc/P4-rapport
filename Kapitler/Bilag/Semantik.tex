@@ -1,3 +1,54 @@
-\[ \frac{expr \rightarrow v_1}{(expr) \rightarrow v} \quad v = v_1 \]
+\bgroup
+\def\arraystretch{3}
+\begin{table}[H]
+\centering
+\begin{tabular}{l c l}
+    
+    $[PLUS_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;+\;expr_2 \rightarrow v}$ & where $v = v_1 + v_2$ \\
+    
+    $[MINUS_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;-\;expr_2 \rightarrow v}$ & where $v = v_1 - v_2$ \\
+    
+    $[MULT_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;*\;expr_2 \rightarrow v}$ & where $v = v_1 \cdot v_2$ \\
+    
+    $[PAREN_{BS}]$ &$\frac{expr_1 \rightarrow v_1}{(expr_1) \rightarrow v_1}$ & \\
+    
+    $[NUM_{BS}]$ &$n \rightarrow v$ if $\mathcal{N}\llbracket n\rrbracket = v$ & \\
+    
+\end{tabular}
+\caption{Arismetiske operationer}
+\label{tab:arithmetic}
+\end{table}
+\egroup
 
-\[ \frac{A \rightarrow v_1 \quad B \rightarrow v_2}{A + B \rightarrow v} \quad v = v_1 = v_2 \]
+Der findes en funktion, $\mathcal{N} : \textbf{Num} \rightarrow \mathbb{Z}$, som angives hvordan tallet omdannes til en konkret værdi, hvor $\mathcal{N}\llbracket \underline{x}\rrbracket = x$
+
+\bgroup
+\def\arraystretch{3}
+\begin{table}[H]
+\centering
+\begin{tabular}{l c l}
+    
+    $[EQUALS-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;=\;expr_2 \rightarrow \; tt}$ & if $v_1 = v_2$ \\
+    
+    $[EQUALS-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;=\;expr_2 \rightarrow \; ff}$ & if $v_1 \ne v_2$ \\
+    
+    $[GREATERTHAN-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; tt}$ & if $v_1 < v_2$ \\
+    
+    $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\ % Skulle egentlig gerne være < med pil igennem
+    
+    $[NOT-1_{BS}]$ &$\frac{b \rightarrow \; tt}{! b \rightarrow \; ff}$ & \\
+    
+    $[NOT-2_{BS}]$ &$\frac{b \rightarrow \; ff}{! b \rightarrow \; tt}$ & \\
+    
+    $[PAREN_{BS}]$ &$\frac{b_1 \rightarrow \; v}{(b_1) \rightarrow \; v}$ & \\
+    
+    $[AND-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; tt}{b_1 \bigwedge b_2 \rightarrow \; tt}$ & \\
+    
+    $[AND-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigwedge b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
+    
+    
+\end{tabular}
+\caption{Boolske operationer}
+\label{tab:bool}
+\end{table}
+\egroup

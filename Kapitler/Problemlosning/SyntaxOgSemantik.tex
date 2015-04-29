@@ -1,0 +1,106 @@
+\section{Syntax}\label{sec:Syntax}
+
+\mfix{Pt. indsat som bilag - bare for at kunne se kompileret udgave}
+
+\subsection{Typer}
+
+\subsubsubsection{Bool}
+Den boolske datatype repræsenterer enten værdien sand eller falsk. Denne type kan ikke konverteres til andre typer ligesom i C eller C++. Alle boolske udtryk konverteres til denne type.
+
+\subsubsection{Heltal}
+Af heltalstyper er det valgt 2 forskellige: Int og Long. 
+
+\subsubsection{Int}
+Int datatypen er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. Int kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
+
+\subsubsection{Long}
+Long er ligeledes en signed integer, men på 32 bits. Den maksimale værdi er 2\textsuperscript{31}-1 og den minimale værdi er -2\textsuperscript{31}.
+
+\subsubsection{Kommatal}
+Af kommatal er der valgt to forskellige med forskellige opløsninger. En Float og en Double. Float er 4 byte og Double er 8 Byte.
+
+\subsubsection{Struct}
+Struct er en indkapsulering af andre typer og/eller funktioner. På denne måde kan der laves mere komplekse typer end dem der i forvejen er til rådighed. En struct skal defineres i roden på samme måde som en funktion hvorefter den kan instantieres som en almindelig variabel.
+
+\subsubsection{Array}
+Et Array er en datastruktur som holder et antal af elementer af en bestemt type. Elementerne holdes i sekvens og man kan tilgå hvert enkelt efter alementets index.
+
+\subsubsection{Port}
+Port datatypen er adskilder sig fra de andre datatyper til at være mapped til en port på \gls{plc}'en.
+
+Af porte findes der Digitale og Analoge inputs samt Digitale og Analoge outputs. De digitale porte kan have værdien sand eller falsk som en bool. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille. \mgfix{så opløsningen på Analoge ind og ud er 1/1000 det er et problem ved bla bla-- tag med i diskussion}
+
+\subsubsection{Timer}
+En timer er for så vidt muligt en hardcoded struct hvor keyworded struct ikke er nødvendigt. \mgfix{Søren mangler at få lavet denne type færdig - referer til Gadeberg}
+
+\subsection{Udtryk}
+Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
+
+\subsubsection{Operatorer}
+I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan man få forskellige resultater, alt efter hvilken rækkefælge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste. 
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \centering
+
+        Primær             & x++ \quad x- - \quad a{[}x{]} \quad x.y \quad (x)                 \\ \hline
+        Unær               & ++x \quad - -x \quad ! \quad -x \quad +x \quad (cast)x       \\ \hline
+        Multiplikationer   & * \quad / \quad \%                                               \\ \hline
+        Additioner         & + \quad -                                                        \\ \hline
+        Sammenligning      & \textless \quad \textgreater \quad \textless= \quad\textgreater= \\ \hline
+        Ligheder           & == \quad !=                                                      \\ \hline
+        Logisk og          & \&\&                                                              \\ \hline
+        Logisk eller       & ||                                                               \\ \hline
+        Betinget udtryk    & ?:                                                               \\ \hline
+        Sammensatte udtryk & *= \quad /= \quad \%= \quad += \quad -=                          \\ \hline
+        Assignment         & =                                                                \\ \hline
+
+    \end{tabular}
+    \caption{\textit{Operatorprioritering (højest til lavest)}}
+    \label{tab:operatorprioritering}
+\end{table}
+\subsubsection{Boolske udtryk}
+\textbf{Or expression}
+% Mangler der ikke noget?
+%or_expr || and_expr																
+\textbf{And expression}
+	% Mangler der ikke noget?
+	%and_expr && equality_expr																	
+\textbf{Equality expressions}
+    % Mangler der ikke noget?
+	%equality_expr == greater_less_expr
+  %|	equality_expr != greater_less_expr
+
+\textbf{Greater and less than expressions}
+
+    \input{Kode/CFG/GreaterOrLess.tex}
+
+\subsubsection{Aritmetiske udtryk}
+
+\textbf{Add and sub expressions}
+
+    \input{Kode/CFG/AddSub.tex}
+  
+\textbf{MultDivMod}
+
+    \input{Kode/CFG/MultDivMod.tex}
+
+\textbf{Unary expressions}
+
+    \input{Kode/CFG/Unary.tex} 
+  
+\textbf{Primary expressions}
+
+    \input{Kode/CFG/Primary.tex}
+
+
+\subsection{Statements}
+
+
+
+\subsection{Declarations}
+Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden.
+
+\input{Kode/CFG/Declaration.tex}
+% Tilføjet som CFG-kode af Mikkel
