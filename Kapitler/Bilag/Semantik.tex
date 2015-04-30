@@ -10,6 +10,10 @@
     
     $[MULT_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;*\;expr_2 \rightarrow v}$ & where $v = v_1 \cdot v_2$ \\
     
+    $[DIV{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
+    
+    %% Mangler modulo
+    
     $[PAREN_{BS}]$ &$\frac{expr_1 \rightarrow v_1}{(expr_1) \rightarrow v_1}$ & \\
     
     $[NUM_{BS}]$ &$n \rightarrow v$ if $\mathcal{N}\llbracket n\rrbracket = v$ & \\
@@ -34,7 +38,7 @@ Der findes en funktion, $\mathcal{N} : \textbf{Num} \rightarrow \mathbb{Z}$, som
     
     $[GREATERTHAN-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; tt}$ & if $v_1 < v_2$ \\
     
-    $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\ % Skulle egentlig gerne være < med pil igennem
+    $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\
     
     $[NOT-1_{BS}]$ &$\frac{b \rightarrow \; tt}{! b \rightarrow \; ff}$ & \\
     
@@ -45,6 +49,10 @@ Der findes en funktion, $\mathcal{N} : \textbf{Num} \rightarrow \mathbb{Z}$, som
     $[AND-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; tt}{b_1 \bigwedge b_2 \rightarrow \; tt}$ & \\
     
     $[AND-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigwedge b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
+    
+    $[OR-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; ff}{b_1 \bigvee b_2 \rightarrow \; tt}$ & \\
+    
+    $[OR-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigvee b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
     
     
 \end{tabular}

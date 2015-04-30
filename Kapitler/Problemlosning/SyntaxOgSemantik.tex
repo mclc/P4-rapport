@@ -61,30 +61,129 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \label{tab:operatorprioritering}
 \end{table}
 \subsubsection{Boolske udtryk}
-\textbf{Or expression}
-% Mangler der ikke noget?
-%or_expr || and_expr																
+
 \textbf{And expression}
 	% Mangler der ikke noget?
-	%and_expr && equality_expr																	
+	%and_expr && equality_expr	
+	
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[AND-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; tt}{b_1 \bigwedge b_2 \rightarrow \; tt}$ & \\
+    
+        $[AND-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigwedge b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
+        
+    \end{tabular}
+    \caption{AND expression}
+    \label{tab:andexpr}
+    \end{table}
+    \egroup
+
+\textbf{Or expression}
+% Mangler der ikke noget?
+%or_expr || and_expr	
+
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[OR-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; ff}{b_1 \bigvee b_2 \rightarrow \; tt}$ & \\
+    
+        $[OR-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigvee b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
+        
+    \end{tabular}
+    \caption{OR expression}
+    \label{tab:orexpr}
+    \end{table}
+    \egroup
+    
 \textbf{Equality expressions}
     % Mangler der ikke noget?
 	%equality_expr == greater_less_expr
   %|	equality_expr != greater_less_expr
+  
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[EQUALS-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;=\;expr_2 \rightarrow \; tt}$ & if $v_1 = v_2$ \\
+        
+        $[EQUALS-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;=\;expr_2 \rightarrow \; ff}$ & if $v_1 \ne v_2$ \\
+        
+    \end{tabular}
+    \caption{Equality expressions}
+    \label{tab:equaexpr}
+    \end{table}
+    \egroup
 
 \textbf{Greater and less than expressions}
 
     \input{Kode/CFG/GreaterOrLess.tex}
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[GREATERTHAN-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; tt}$ & if $v_1 < v_2$ \\
+        
+        $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\
+        
+    \end{tabular}
+    \caption{Greater and less than expressions}
+    \label{tab:greaterexpr}
+    \end{table}
+    \egroup
 
 \subsubsection{Aritmetiske udtryk}
 
 \textbf{Add and sub expressions}
+
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[PLUS_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;+\;expr_2 \rightarrow v}$ & where $v = v_1 + v_2$ \\
+        
+        $[MINUS_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;-\;expr_2 \rightarrow v}$ & where $v = v_1 - v_2$ \\
+        
+    \end{tabular}
+    \caption{Add and sub expression}
+    \label{tab:addandsub}
+    \end{table}
+    \egroup
 
     \input{Kode/CFG/AddSub.tex}
   
 \textbf{MultDivMod}
 
     \input{Kode/CFG/MultDivMod.tex}
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[MULT_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;*\;expr_2 \rightarrow v}$ & where $v = v_1 \cdot v_2$ \\
+        
+        $[DIV{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
+    \end{tabular}
+    \caption{MultDivMod}
+    \label{tab:multdivmod}
+    \end{table}
+    \egroup
+    \mfix{Mangler modulo}
 
 \textbf{Unary expressions}
 
