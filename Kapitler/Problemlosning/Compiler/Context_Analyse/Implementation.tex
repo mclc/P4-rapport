@@ -1,1 +1,43 @@
 \subsubsection{Implementation}
+Context analysen i compileren udviklet er blevet delt op i 2 mindre dele; herunder scope checker og type checker. Før vi kan kigge på scope checkeren skal vi først kigge på hvordan visitor mønstret er implementeret i SableCC.
+
+\subsubsubsection{Visitor mønstret i SableCC}
+\sfix{Har vi ikke skrevet teori omkring det her?}.
+
+SableCC generer som standard et interface med navn Analytics som implementerer interfacet Switch. Analytics interfacet indeholder en metode for alle noder og tokens med præfixet case. 
+
+Alle noder implementer interfacet Switchable som indeholder en metode med navn apply som tager en Switch som input parameter. Noden skal dermed kalde sin egen metode i Analytics interfacet. Eksempel kalder node ASubExpr metoden caseASubExpr i Analytics interfacet som ses i kode \sfix{Kode}
+
+Et eksempel ved SubExpr kan ses i kode \sfix{Indsæt kode}
+%@Override
+%public void apply(Switch sw)
+%{
+%    ((Analysis) sw).caseASubExpr(this);
+%}
+
+Dermed er det muligt at lave en AnalyticsAdapter som implementer Analytics interfacet. Alle case metoder kalder en metode kaldet defaultCase som tager noden som input parameter. AnalyticsAdapter implementer også metoder til at gemme data om hver node i en hashtable. 
+
+Til at gennemløbe træet genererer SableCC en klasse med navn DeptFirstAdapter som nedarver fra AnalyticsAdapter klassen. DeptFirstAdapter overskriver alle case funktioner. Alle case funktioner kalder nu apply med sig selv som argument på alle subnoder i den pågældende node. Dermed har vi en simpel træløbning da apply kalder den pågældende case funktion i klassen. For at have mere fleksibilitet oprettes også en in og en out metode hvor hver node på samme måde som case metoden. Case metoden kalder nu først in metoden, dernæst apply(this) på alle subnoder og til slut out metoden. Det er dermed eksempelvis nu muligt at bruge en stack til at håndtere matematik kun ved at overskrive out metoderne \sfix{Vis det?}.
+
+SableCC's visitor mønster er nu forklaret som skal bruges til scope checkeren, type checkeren og code generation.
+
+\subsubsubsection{Scope checker}
+Scope checkerens opgaver er at tjekke at de konkrete identifiers kan tilgås i den konkrete kontekst. Dog skal der her tages højde for om der er statisk scope eller dynamisk scope. PLC++ specikationen siger at der skal være dynamisk scope for funktioner, structs og globale variabler, mens der skal være statisk scope inden for alle funktioner. Ved at have dynamisk scope for funktioner, og structs kan vi desuden slippe for header filer, prototyper og en hel masse begynder programmør fejl.
+
+For at håndtere dynamisk scope køres først en præprocessor der indlæser funktioner, structs og globale variabler ind i symboltabellen. Dernæst køres scopecheckeren der tjekker hver gang der stødes på en identifier om den konkrete identifier eksisterer i det pågældende scope. Den håndterer også oprettelsen af lokale variabler, sålededes det ikke er muligt at bruge en lokal variabel der ikke er blevet deklareret endnu (static scope).
+
+For at forhindre at alle funktioner, structs og globale variabler bliver registret to gange (både i præprocessoren og scopecheckeren) overrides case metoderne fra DeptFirstAdapteren og de bliver sat til at gøre ingenting.
+
+\subsubsubsection{Type checker}
+Type checkerens opgave er at tjekke at alle expressions er gyldige, eksempelvis at det ikke er tilladt at addere 2 boolske værdier. Derudover skal alle metodekald også tjekkes om de er gyldige, samt alle statements der har et krav om at have en specifik type af expr. Eksempelvis kræver et if-statement en boolsk datatype som condition.
+
+Expressions kan evalueres på en stack vha. DeptFirstAdapterens out metoder. Eksempelvis vil udtrykket 3 + (5 * 2) blive evalueret i følgende rækkefølge:
+3
+5
+2
+* (pop 2 tal fra stacken og multiplicer dem og push til stacken)
++ (samme som multiplikation dog addition)
+
+Stacken vil dermed indlæse de 3 første tal, dernæst gange de 2 seneste tal sammen og ligge på stacken og til slut addere det første tal med resultatet af multiplikationen af 5 og 2. I typecheckerens eksempel er vi dog i stedet nødt til at registrere typen af tallene således at true + 1 er et ugyldigt input, hvorimod 1 + 1 er gyldigt. Dette gøres på samme måde med stacken bortset fra at vi ligger et objekt på stacken der indikerer om det er en boolsk værdi eller en tal værdi.
+
+Dette er en kort forklaring om hvordan context analysen er implementeret. \sfix{Afsnit om symboltable}

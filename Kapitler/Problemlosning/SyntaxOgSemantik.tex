@@ -1,4 +1,4 @@
-\section{Syntax}\label{sec:Syntax}
+\section{Syntax og semantik}\label{sec:Syntax}
 
 \mfix{Pt. indsat som bilag - bare for at kunne se kompileret udgave}
 
@@ -37,7 +37,7 @@ En timer er for så vidt muligt en hardcoded struct hvor keyworded struct ikke e
 Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
 
 \subsubsection{Operatorer}
-I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan man få forskellige resultater, alt efter hvilken rækkefælge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste. 
+I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan man få forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste. 
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|}
@@ -82,7 +82,7 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \end{table}
     \egroup
 
-\textbf{Or expression}
+\noindent \textbf{Or expression}
 % Mangler der ikke noget?
 %or_expr || and_expr	
 
@@ -102,7 +102,7 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \end{table}
     \egroup
     
-\textbf{Equality expressions}
+\noindent \textbf{Equality expressions}
     % Mangler der ikke noget?
 	%equality_expr == greater_less_expr
   %|	equality_expr != greater_less_expr
@@ -123,7 +123,7 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \end{table}
     \egroup
 
-\textbf{Greater and less than expressions}
+\noindent \textbf{Greater and less than expressions}
 
     \input{Kode/CFG/GreaterOrLess.tex}
     
@@ -133,9 +133,9 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \centering
     \begin{tabular}{l c l}
         
-        $[GREATERTHAN-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; tt}$ & if $v_1 < v_2$ \\
+        $[GREATERTHAN-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;< \;expr_2 \rightarrow \; tt}$ & if $v_1 <  v_2$ \\
         
-        $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;<\;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\
+        $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;< \;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\
         
     \end{tabular}
     \caption{Greater and less than expressions}
@@ -143,9 +143,9 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \end{table}
     \egroup
 
-\subsubsection{Aritmetiske udtryk}
+\noindent \subsubsection{Aritmetiske udtryk}
 
-\textbf{Add and sub expressions}
+\noindent \textbf{Add and sub expressions}
 
     \bgroup
     \def\arraystretch{3}
@@ -165,7 +165,7 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
 
     \input{Kode/CFG/AddSub.tex}
   
-\textbf{MultDivMod}
+\noindent \textbf{MultDivMod}
 
     \input{Kode/CFG/MultDivMod.tex}
     
@@ -177,29 +177,117 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
         
         $[MULT_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;*\;expr_2 \rightarrow v}$ & where $v = v_1 \cdot v_2$ \\
         
-        $[DIV{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
+        $[DIV_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
+        
+        $[MOD_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;\%\;expr_2 \rightarrow v}$ & where $v = v_1 mod v_2$ \\
+        
+        
     \end{tabular}
     \caption{MultDivMod}
     \label{tab:multdivmod}
     \end{table}
     \egroup
-    \mfix{Mangler modulo}
 
-\textbf{Unary expressions}
+\noindent \textbf{Unary expressions}
 
     \input{Kode/CFG/Unary.tex} 
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[NEG-T_{BS}]$ &$\frac{expr_1 \rightarrow_b\; tt}{expr_1 \rightarrow_b\; ff}$ &  \\
+        
+        $[NEG-\bot_{BS}]$ &$\frac{expr_1 \rightarrow_b\; ff}{expr_1 \rightarrow_b\; tt}$ &  \\
+        
+        $[UNARY-MINUS_{BS}]$ &$\frac{expr_1 \rightarrow\; v}{-expr_1 \rightarrow\; -v}$ &  \\
+        
+        $[PLUS-MINUS_{BS}]$ &$\frac{expr_1 \rightarrow\; -v}{+expr_1 \rightarrow\; v}$ &  \\
+        
+    \end{tabular}
+    \caption{Unary expressions}
+    \label{tab:unary}
+    \end{table}
+    \egroup
+    
   
-\textbf{Primary expressions}
+\noindent \textbf{Primary expressions}
 
     \input{Kode/CFG/Primary.tex}
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[INCREMENT_{BS}]$ & $\frac{expr_1 \rightarrow v_1}{expr_1++\; \rightarrow v}$ & where $v = v_1 + 1$ \\
+        
+        $[DECREMENT_{BS}]$ &$\frac{expr_1 \rightarrow v_1}{expr_1- -\; \rightarrow v}$ & where $v = v_1 - 1$ \\
+        
+        
+    \end{tabular}
+    \caption{Primary expressions}
+    \label{tab:primary}
+    \end{table}
+    \egroup
+    \mfix{På en måde skal der være forskel på pre og post fix increment.}
 
 
-\subsection{Statements}
+\noindent \subsection{Statements}
 
+\noindent \subsubsection{While-løkke}
 
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[WHILE-TRUE_{BS}]$ & $
+        \frac{\langle S, s\rangle  \rightarrow s^{\prime\prime} \quad \langle while\;b\;\{ S\},\;s^{\prime\prime}\rangle  \rightarrow s^{\prime}}
+        {\langle while\;b\;\{ S\},\;s\rangle  \rightarrow s^{\prime}}
+        $ & if $s \vdash b \rightarrow_b tt$ \\
+        
+        $[WHILE-FALSE_{BS}]$ & $
+        \langle while\;b\;\{S\},\;s\rangle  \rightarrow s$ & 
+        if $s \vdash b \rightarrow_b ff$ \\
 
-\subsection{Declarations}
+    \end{tabular}
+    \caption{While-løkke}
+    \label{tab:while}
+    \end{table}
+    \egroup
+    
+Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
+
+\noindent \subsubsection{If-else statements}
+
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[IF-TRUE_{BS}]$ & $
+        \frac{\langle S_1,\;s\rangle  \rightarrow s^\prime}
+        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
+        $ & if $s \vdash b \rightarrow_b tt$ \\
+        
+        $[IF-FALSE_{BS}]$ & $
+        \frac{\langle S_2,\;s\rangle  \rightarrow s^\prime}
+        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
+        $ & if $s \vdash b \rightarrow_b ff$ \\
+        
+    \end{tabular}
+    \caption{If-else statements}
+    \label{tab:ifelse}
+    \end{table}
+    \egroup
+
+\noindent \subsection{Declarations}
 Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden.
 
 \input{Kode/CFG/Declaration.tex}
-% Tilføjet som CFG-kode af Mikkel

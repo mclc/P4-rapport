@@ -17,12 +17,13 @@ For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav a
 
 \sfix{Vi skal tjekke vores sprog om det er LR, LL, eller hvad det end er}
 
-\subsubsubsection{Unambigius grammar}
-En gramatik for et sprog kan også være unambigius hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en kildekode. Et eksempel på en unambigius gramatik kunne være følgende:
+\subsubsubsection{Unambiguous grammar}
+\mfix{Skal vi kalde det utvetydig grammatik i stedet?}
+En grammatik for et sprog kan også være unambigius hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en kildekode. Et eksempel på en unambigius gramatik kunne være følgende:
 
 \sfix{Indsæt kode: expr = expr plus expr | number}
 \mfix{Indsæt caption osv. til figur}
-\tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{}{}
+\tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{Eksempel på parse tree for en unambiguous grammar}{unambiguous}
 
 
 Grammatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3:

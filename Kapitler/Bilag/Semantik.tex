@@ -1,3 +1,5 @@
+\mfix{Kopier fra andet afsnit, når done}
+
 \bgroup
 \def\arraystretch{3}
 \begin{table}[H]
@@ -10,13 +12,13 @@
     
     $[MULT_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;*\;expr_2 \rightarrow v}$ & where $v = v_1 \cdot v_2$ \\
     
-    $[DIV{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
+    $[DIV_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
     
     %% Mangler modulo
     
     $[PAREN_{BS}]$ &$\frac{expr_1 \rightarrow v_1}{(expr_1) \rightarrow v_1}$ & \\
     
-    $[NUM_{BS}]$ &$n \rightarrow v$ if $\mathcal{N}\llbracket n\rrbracket = v$ & \\
+    $[NUM_{BS}]$ &$n \rightarrow v$ & if $\mathcal{N}\llbracket n\rrbracket = v$ \\
     
 \end{tabular}
 \caption{Arismetiske operationer}

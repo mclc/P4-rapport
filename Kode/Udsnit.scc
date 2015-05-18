@@ -1,20 +1,37 @@
-while_statement =
-  {while} while_keyword l_par expr r_par scope;
-  
-while_keyword = 'while';
+Helpers
+digit =	['0' .. '9'];
 
+Tokens
 l_par = '(';
 r_par = ')';
-
-expr = 
-  {compare_and} expr and_operator expr2 |
-  {compare_or} expr or_operator expr2 |
-  {term} expr2;
-  
-scope = 
-  l_brc statements? r_brc;
-  
 and_operator = '&&';
 or_operator = '||';
 
-port_identifier = ('I' | 'Q' | 'M' | 'AI' | 'AQ') '#';
+while_keyword = 'while';
+
+Productions
+statement {-> statement} =
+    // Scope
+    {scope} l_brc statement* r_brc																{-> New statement.scope([statement.statement])}
+    
+  // Iteration
+  | {while} while_keyword l_par [condition]:expr r_par statement								{-> New statement.while(condition.expr, statement.statement)}
+;
+
+// Precedence 12 (Logical OR)
+or_expr {-> expr} =
+	{or} [left]:or_expr or_operator [right]:and_expr											{-> New expr.compare_or(left.expr, right.expr)}
+  | {factor} [expr]:and_expr																	{-> expr.expr}
+;
+
+// Precedence 11 (Logical AND)
+and_expr {-> expr} =
+	{and} [left]:and_expr and_operator [right]:equality_expr									{-> New expr.compare_and(left.expr, right.expr)}
+  | {factor} [expr]:equality_expr																{-> expr.expr}
+;
+
+Abstract Syntax Tree
+expr =
+    {compare_and}				[left]:expr						[right]:expr
+  | {compare_or}				[left]:expr						[right]:expr
+;
