@@ -38,7 +38,7 @@
             + out...(...)
     };
     
-    \node[class, right=3cm of Switch](Switchable){
+    \node[class, right=3.5cm of Switch](Switchable){
         \nodepart[align=center]{one}
             <<Interface>>\\
             \textbf{Switchable}
@@ -49,7 +49,13 @@
         \nodepart{one}
             \textbf{\textit{Node}}
     };
-    \node[class, below=of Node](PProgram){
+    \node[class, below=of Node](Start){
+        \nodepart{one}
+            \textbf{Start}
+        \nodepart[align=left]{three}
+            + apply((Analytics) Switch)
+    };
+    \node[class, right=of Start](PProgram){
         \nodepart{one}
             \textbf{\textit{PProgram}}
     };
@@ -59,12 +65,7 @@
         \nodepart[align=left]{three}
             + apply((Analytics) Switch)
     };
-    \node[class, right=of PProgram](Start){
-        \nodepart{one}
-            \textbf{Start}
-        \nodepart[align=left]{three}
-            + apply((Analytics) Switch)
-    };
+    
     
     
     \draw[generalization](Analytics)--(Switch);
@@ -77,8 +78,9 @@
     \draw[generalization](AProgram)--(PProgram);
     
     %\draw[thick]($(Switchable.west)+(0,-0.75cm)$)--(Switch);
-    \path[line]($(AProgram.west)+(0,-0.5cm)$)--($(AProgram.west)+(-0.25cm,-0.5cm)$)|-($(Analytics.east)+(0,-0.75cm)$);
-    \path[line]($(Start.west)+(0,-0.5cm)$)--($(Start.west)+(-0.5cm,-0.5cm)$)|-($(Start.west)+(-0.5,1.0cm)$)--($(Start.west)+(-3.5cm,1.0cm)$)|-($(Analytics.east)+(0,-0.25cm)$);
+    \path[line]($(AProgram.west)+(0,-0.5cm)$)--($(AProgram.west-|Analytics.east)+(0.5cm,-0.5cm)$)|-($(Analytics.east)+(0,-0.75cm)$);
+    \path[line]($(Start.west)+(0,-0.5cm)$)--($(Start.west)+(-0.25cm,-0.5cm)$)|-($(Analytics.east)+(0,-0.25cm)$);
+    %\path[line]($(Start.west)+(0,-0.5cm)$)--($(Start.west)+(-0.5cm,-0.5cm)$)|-($(Start.west)+(-0.5,1.0cm)$)--($(Start.west)+(-3.5cm,1.0cm)$)|-($(Analytics.east)+(0,-0.25cm)$);
     
     %\path[line]($(DepthFirstAdapter.east)+(0,1.5cm)$)--($(DepthFirstAdapter.east-|Start.east)+(0.5cm,1.5cm)$)|-node[label={above:1}]{}($(Start.east)+(0,-0.5cm)$);
     \path[line]($(DepthFirstAdapter.east)+(0,1.5cm)$)--($(DepthFirstAdapter.east-|AProgram.east)+(0.5cm,1.5cm)$)|-($(AProgram.east)+(0,-0.5cm)$);

@@ -26,8 +26,26 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
     \label{tab:operatorprioritering}
 \end{table}
 \subsubsection{Boolske udtryk}
+Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings eller ligheds operatorerne. operatorerne ses herunder.
 
-\textbf{And expression}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \centering
+
+        Sammenligning      & \textless \quad \textgreater \quad \textless= \quad\textgreater= \\ \hline
+        Ligheder           & == \quad !=                                                      \\ \hline
+        Logisk og          & \&\&                                                              \\ \hline
+        Logisk eller       & ||                                                               \\ \hline
+
+
+    \end{tabular}
+    \caption{\textit{Operatorer i boolske udtryk}}
+    \label{tab:operatorprioritering}
+\end{table}
+
+\noindent\textbf{And expression}
 
 \noindent Et and expression er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 herunder kan gramatikken ses i BNF.
@@ -51,9 +69,9 @@ herunder kan gramatikken ses i BNF.
     \end{table}
     \egroup
 
-\noindent \textbf{Or expression}
+\noindent\textbf{Or expression}
 
-Et or expression tager ligesom and expression 2 operander men returnerer sand hvis bare et af operanderne er sande. Gramatikken for and expression kan ses herunder.
+\noindent Et or expression tager ligesom and expression 2 operander men returnerer sand hvis bare et af operanderne er sande. Gramatikken for and expression kan ses herunder.
 
 \input{Kode/CFG/BNF_or_expr.scc}
 
@@ -73,8 +91,9 @@ Et or expression tager ligesom and expression 2 operander men returnerer sand hv
     \end{table}
     \egroup
     
-\noindent \textbf{Equality expressions}
-    Whatever
+\textbf{Equality expressions}
+
+\noindent\noindent Whatever
     
     \input{Kode/CFG/BNF_equality_expr.scc}
 

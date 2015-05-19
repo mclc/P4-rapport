@@ -5,12 +5,9 @@ Context analysen i compileren udviklet er blevet delt op i 2 mindre dele; herund
 
 SableCC generer som standard et interface med navn Analytics som implementerer interfacet Switch. Analytics interfacet indeholder en metode for alle noder og tokens med præfixet case. (Se klassediagram på figur \ref{fig:sableCCAnalytics})
 
-Alle noder implementer interfacet Switchable som indeholder en metode med navn apply, som tager en Switch som input parameter. Noden skal dermed kalde sin egen metode i Analytics interfacet. Eksempel kalder noden ASubExpr metoden caseASubExpr i Analytics interfacet som ses i kode \sfix{Indsæt kode}
-%@Override
-%public void apply(Switch sw)
-%{
-%    ((Analysis) sw).caseASubExpr(this);
-%}
+Alle noder implementer interfacet Switchable som indeholder en metode med navn apply, som tager en Switch som input parameter. Noden skal dermed kalde sin egen metode i Analytics interfacet. Eksempel kalder noden ASubExpr metoden caseASubExpr i Analytics interfacet som ses i kode \ref{code:nodeVisitorJava}
+
+\Java{Kode/NodeVisitor.java}{Implementering af interfacet Switchable i noderne genereret af SableCC}{nodeVisitorJava}
 
 Dermed er det muligt at lave en AnalyticsAdapter som implementer Analytics interfacet. Alle case metoder kalder en metode kaldet defaultCase som tager noden som input parameter. AnalyticsAdapter implementerer også metoder til at gemme data om hver node i en hashtable. 
 

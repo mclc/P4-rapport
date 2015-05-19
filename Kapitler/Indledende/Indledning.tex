@@ -4,11 +4,21 @@
 
 \noindent \gls{plc}'en egner sig især til disse produktionsområder, fordi dens konstruktion er tolerant overfor store temperatursvingninger, vibrationer, og en høj luftfugtighed. Det adskiller sig i høj grad fra den almindelige computer, som traditionelt ikke er designet til de hårde arbejdsmiljøer. \gls{plc}'en konstrueres med et udvidelses \gls{io} modul, som giver mulighed for at tilslutte analoge og digitale instrumenter, såsom sensorer, temperaturmålere og aktuatorer. \\
 
-\noindent \gls{plc}'en skal programmeres til dens konkrete anvendelsesområde, hvilket ofte programmeres af industriteknikere, som ikke nødvendigvis besidder den store programmeringserfaring. De fleste \gls{plc}'er programmeres i et ladder-logisk paradigme, hvor mange af \gls{plc}-producenterne har udviklet et \gls{ide}, som understøtter drag-and-drop. Paradigmet og \gls{ide}'et gør det relativt nemt at kode \gls{plc}'en til dens arbejdsformål. Det kan imidlertid være en tidskrævende og uoverskueligt proces, hvis det automatiserede anlæg skal håndtere et højt antal digitale indgange og udgange. Det skyldes at \gls{plc}-programmeringssproget ikke har udviklet sig i takt med at anlæggene er blevet større og mere avancerede. Hertil ville det være oplagt med et mere moderne programmeringssprog, som eksempelvis det objekt-orienterede programmeringsparadigme. Dette giver den enkelte programmør mulighed for polymorfisme, nedarvning og indkapsling.
+\noindent \gls{plc}'en skal programmeres til dens konkrete anvendelsesområde, hvilket ofte programmeres af industriteknikere, som ikke nødvendigvis besidder den store programmeringserfaring. De fleste \gls{plc}'er programmeres i et ladder-logisk paradigme, hvor mange af \gls{plc}-producenterne har udviklet et \gls{ide}, som understøtter drag-and-drop. Paradigmet og \gls{ide}'et gør det relativt nemt at kode \gls{plc}'en til dens arbejdsformål. Det kan imidlertid være en tidskrævende og uoverskueligt proces, hvis det automatiserede anlæg skal håndtere et højt antal digitale indgange og udgange. Det skyldes at \gls{plc}-programmeringssproget ikke har udviklet sig i takt med at anlæggene er blevet større og mere avancerede. Hertil ville det være oplagt med nogle af egenskaberne fra et mere moderne programmeringssprog, som eksempelvis det objekt-orienterede programmeringsparadigme. Dette giver den enkelte programmør mulighed for polymorfisme, nedarvning og indkapsling. \\
 
 \noindent På baggrund af denne indledning, opstilles den initierende problemstilling: \\
 
 \noindent \textit{Det er for ineffektivitet at konstruere et stort \gls{plc}-program i det logiske programmeringsparadigme, da programmøren hurtigt kan miste overblikket, grundet manglende abstraktionsniveau.}
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -22,8 +32,6 @@
 %\noindent Arduino har sidenhen solgt mere end 250.000 enheder, hvor den almene bruger – tilsvarende BASIC Stamp – forefindes iblandt studerende og hobbister. På trods af de mange brugere, kan det dog formodes, at mange folk uden yderligere programmeringserfaringer, har svært ved at komme i gang med Arduinoen. Dette skyldes primært den mangelfulde dokumentation, dårlige abstraktioner samt misvisende navngivning [www.hackvandedam.nl]\mfix{Kilde}. Dette leder derfor over til den opstillede initierende problemstilling: \\
 
 % \noindent \textit{Det er for besværligt for hobbyister og studerende at komme i gang med at udvikle software til mikrocontrollere,% herunder Arduino.}
-
-
 
 %7. april 1953 udkom den første kommercielle computer - dette var IBMs 701-maskine. Dengang havde meget få mennesker hverken plads eller råd til at anskaffe sig en computer. Udover det var det svært at udvikle software til disse tidligere computere, da dette foregik i et meget lavt og maskinnært sprog - eksempelvis maskinkode eller højest assembly. Som årene gik, blev computere både billigere og mindre, men der skete også noget andet, som så småt åbnede dørene for at flere kunne udvikle software til maskinerne: Nemlig at compilere begyndte at udkomme i 1960'erne. Dette gør det muligt at skrive kode, som er væsentligt nemmere for mennesker at læse. Derefter sørger et andet program, compileren, for at lave det om til maskinkode, som computere kan arbejde med.
 

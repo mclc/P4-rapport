@@ -25,9 +25,9 @@ Gramatikken SableCC bruger til at lave scanneren og parseren
 
 \noindent Det er værd at bemærke at rækkefølgen ikke er bevaret i kodeeksemplet, men er opsat efter forklaringen.
 
-På linje 1-2 ses helperen digit som bruges som en "hjælpe" tekst i tokens.
+På linje 1-2 ses helperen digit som bruges som en "hjælpe" regex der kan bruges til definationen af tokens.
 
-På linje 4-8 ses en række tokens som lexeren skal genkende. Herunder paranteser, og operatoren og eller operatoren samt while keywordet.
+På linje 4-8 ses en række tokens som lexeren skal genkende. Herunder parenteser, og operatoren og eller operatoren samt while keywordet.
 
 På linje 12-19 en del af production reglen for et statement. I følgende eksempel er medtaget hvordan et scope bliver defineret (linje 14-15) samt et while statement (linje 17-18). Det kan ses på linje 13 at den tilhørende overklasse node i det abstrakte syntaks træ hedder statement (udtrykt i tuborgklammerne). På linje 15 kan det derudover ses at scope refererer til statement.scope. Med andre ord, superklassen på noden er statement og den konkrete node i det abstrakte syntaks træ er scope. Noden tager også et array af statements med som parameter. SableCC genkender et array vha. hårde paranteser. Bemærk den specielle syntaks med statement.statement. Dette betyder at vi tager produktionsreglen statement og referer til den abstrakte syntaks træs node statement som produktionsreglen genererer.
 
@@ -39,6 +39,10 @@ På linje 21-31 ses 2 expressions herunder and og or expression. For at speciali
 
 %Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjælp af nul eller en \textit{statements} omgivet af tuborgklammer.\\
 
+\subsubsubsection{Dangling else problematik}
+
+
+\subsubsubsection{SableCC's implementation af lexer og parser}
 \noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
 
 \tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{En NFA genereret af SableCC}{sableccnfa}
