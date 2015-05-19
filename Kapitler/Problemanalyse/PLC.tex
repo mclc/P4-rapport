@@ -40,26 +40,28 @@ Det er således en problemstilling, som har en dominoeffekt igennem hele systeme
 
 \noindent I år 1993 blev det første udkast til \gls{iec} 1131-3 standarden publiceret\cite{iecStandard}. Standarden havde til formål at sikre en generalisering af hvordan software til \gls{plc}'er skrives og forstås. Igennem årene er det blevet mere og mere normalt, at både slutkunden, leverandøren og \gls{plc}-producenten følger, og efterspørger denne standard. 
 
-\gls{iec} 1131-3 standarden definerer fem forskellige programmeringssprog til en \gls{plc}. To grafiske (\gls{lad} og \gls{fbd}) og tre tekstrepræsenterede (\gls{il}, \gls{sfc} og \gls{st}) sprog. Alle sprog kan kombineres på kryds og tværs af hinanden. Det er dermed muligt for den enkelte programmør at opstille programmet i \gls{lad}, ved at skrive det i \gls{il} og benytte sig af predefinerede funktionsblokke fra \gls{fbd}. Ønsker programmøren selv at definerer sine egne funktionblokke, som kan indeholde matematiske udtryk, kan \gls{st} anvendes.
+\gls{iec} 1131-3 standarden definerer fem forskellige programmeringssprog til en \gls{plc}. To grafiske (\gls{lad} og \gls{fbd}) og tre tekstrepræsenterede (\gls{il}, \gls{sfc} og \gls{st}) sprog. Alle sprog kan kombineres på kryds og tværs af hinanden. Det er dermed muligt for den enkelte programmør at opstille programmet i \gls{lad}, ved at skrive det i \gls{il} og benytte sig af predefinerede funktionsblokke fra \gls{fbd}. Ønsker programmøren selv at definerer sine egne funktionblokke, som kan indeholde aritmetiske udtryk, kan \gls{st} anvendes. Dette betyder at programmøren i visse tilfælde er nødsaget til at have kendskab til - og skifte imellem flere programmeringssprog. 
 
 \subsubsection{Ladder Diagrams}
 \gls{lad} er et grafisk programmeringssprog, der har fået navnet fra dens grafiske repræsentation, som ligner en stige. Funktionerne er opbygget i \textit{sekventielle trin}\fn{Sekventielle trin}{Ved initialisering udføres programmet henholdsvist fra top mod bund}, hvorved den almene PLC-programmeringskonsensus, er at navngive funktionerne: "Trin \textit{n: <Funktionsnavn>}". 
 \gls{lad} opstilles i såkaldte \textit{rung}'s, og ved brug af logiske funktionsblokke, såsom \textit{AND}, \textit{OR}, \textit{NOT}, \textit{NAND}, \textit{NOR}, \textit{XOR}, kan der defineres regler for hvornår en given udgang skal tænde/slukke. 
 
-I \gls{ide}'et kan man ved hjælp af Drag \& Drop-funktionalitet indsætte kontaktsæt, timere og andre funktionsblokke, som aktiveres når de opstillede betingelser er opfyldte. På figur \ref{fig:Ladder} ses et simpelt \gls{lad}-program. \textit{AND}, \textit{OR} og \textit{COIL}-symboler som repræsenterer en ind og ud-gange på \gls{plc}'en. Første linje viser, at udgangen Q10.00 aktiveres, såfremt indgangene \textit{( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 )} er aktive.
+I \gls{ide}'et kan man ved hjælp af Drag \& Drop-funktionalitet indsætte kontaktsæt, timere og andre funktionsblokke, som aktiveres når de opstillede betingelser er opfyldte. På figur \ref{fig:Ladder} ses et simpelt \gls{lad}-program. \textit{AND}, \textit{OR} og \textit{COIL}-symboler som repræsenterer en ind/udgang på \gls{plc}'en. Første linje viser, at udgangen Q10.00 aktiveres, såfremt indgangene \textit{( ( 000.01 \&\& 000.04) || 000.00 ) \&\& 000.02 )} er aktive.
 
 \figur{Figurer/Billeder/Ladder.png}{Grafisk repræsentation af ladder programmering}{Ladder}{0.4}
 
-\noindent \gls{lad} kan anvendes i et \textit{monitor}-program som giver programmøren mulighed for at se hvilke funktionsblokke der er aktive, samt at \textit{force} (ON/OFF) kontaktsæt. Det er en stor hjælp, når der skal fejlfindes på et anlæg. Igennem \textit{CX-programmer}, som er Omrons programmerings-\gls{ide}, er det således muligt at  se præcis hvilke funktionsblokke der er aktive, betingelser (indgange og \textit{SET}-blokke) for udgange, samt hvilke værdier der er allokeret i \gls{plc}'ens hukommelse. \gls{lad} har grundet sin grafiske repræsentation en høj læsbarhed. Såfremt programmet er småt, kan programmet hurtigt gennemskues. Mange virksomheder vælger dermed også at vedlægge et \gls{lad}-diagram, som slutkunden kan bruge i tilfælde af nedbrud, regulering eller udbyggelse. \cite{FDB_desc}
+\noindent \gls{lad} kan anvendes i et \textit{monitor}-program som giver programmøren mulighed for at se programmet i realtime. Hvorved det kan ses hvilke funktionsblokke der er aktive, værdier i hukommelsen, samt at \textit{enforce} (ON/OFF) kontaktsæt. Det er en stor hjælp, når eksempelvis der skal fejlfindes på anlægget. Igennem \textit{CX-programmer}, som er Omrons programmerings-\gls{ide}, er det dermed muligt at se præcis hvilke funktionsblokke der er aktive, betingelser (indgange og \textit{SET}-blokke) for udgange, samt hvilke værdier der er allokeret i \gls{plc}'ens hukommelse. \gls{lad} har grundet sin grafiske repræsentation en høj læsbarhed; sålænge at programmet holdes relativt lille og simpelt. Denne antagelse er bygget på egne erfaringer, og bliver ydermere underbygget af figur \ref{fig:siemens-lad}. Figuren viser et relativt simpelt anlæg som bestod af et transportbånd, en række sensorer og en drejearm. Udsnittet af programmet, som kan ses på figur \ref{fig:siemens-lad}, undersøger hvilken position drejearmen er i, og på baggrund af dette, afgøre hvilken retning drejearmen skal dreje. Programmet er en del af \textit{scan-cycle} og bliver dermed kørt i en uendelig løkke. De mange betingelser og \textit{coils} kan besværliggøre læsbarheden, hvorved tilpasninger i programmet kan blive en tidskrævende og besværlig proces.
 
-\noindent Det blev tidligere nævnt, at matematiske udtryk skal udtrykkes i \gls{st}. \gls{st} bliver således udtryk i seperate funktionsblokke, som det næste afsnit vil komme nærmere ind på. 
+\figur{Figurer/Billeder/siemens_plc.jpg}{\gls{lad}-diagram konstrueret i Siemens Step7}{siemens-lad}{1.0}
+
+\noindent Såfremt at anlægget og programmet er simpelt, kan \gls{lad} dermed give en høj læsbarhed. Det er også almindelige konsensus i industrien at vedlægge \gls{lad}-diagrammer, som slutkunden kan bruge i tilfælde af nedbrud, regulering eller udbyggelse. \cite{FDB_desc}
+
+Det blev tidligere nævnt, at aritmetiske udtryk skal programmeres i \gls{st}-funktionsblokke, som det næste afsnit vil komme nærmere ind på. 
 
 \subsubsection{Structured Text}
-\gls{st} er baseret på Pascal, og har den tilsvarende syntaktiske struktur. \gls{st} kan anvendes i kombination med \gls{lad}, hvorved det er er muligt at udtrykke aritmetiske operationer, iterative loops og funktioner. \gls{st} udtrykkes i en seperat funktionsblok, og hentes ind i \gls{lad}-diagrammet. Det skal således aktiveres med et kontaktsæt, som ikke er muligt at udtrykke i \gls{st}-programmet. Det er dermed ikke muligt at strukturer hele programmet i ét \gls{st}-program, hvilket umildbart heller ikke er hensigten. \gls{st} er hjælpefunktioner, som anvendes i tilfælde, hvor der skal foretages en bestemt opgave, som nemmere kan udtrykkes i en seperat funktionblok - og som ikke allerede er udtryk i én eksisterende funktionsblokke. Det kan dermed øge programmets læsbarhed, idet at det er muligt at kategorisere specifikke funktionaliteter i adskilte program-blokke. Disse funktionsblokke ydermere anvendes op til flere gange.
+\gls{st} er baseret på Pascal, og har den tilsvarende syntaktiske struktur. \gls{st} kan anvendes i kombination med \gls{lad}, hvorved det er er muligt at udtrykke aritmetiske operationer, iterative loops og funktioner. \gls{st} udtrykkes i en seperat funktionsblok, og hentes ind i \gls{lad}-diagrammet. Det skal således aktiveres med et kontaktsæt, som ikke er muligt at udtrykke i \gls{st}-programmet. Det er dermed ikke muligt at strukturer hele programmet i ét \gls{st}-program, hvilket umildbart heller ikke er hensigten. \gls{st} er hjælpefunktioner, som anvendes i tilfælde, hvor der skal foretages en bestemt opgave, som nemmere kan udtrykkes i en seperat funktionblok - og som ikke allerede er udtryk i én eksisterende funktionsblokke. Det kan dermed øge programmets læsbarhed, idet at det er muligt at kategorisere specifikke funktionaliteter i adskilte program-blokke. Disse funktionsblokke ydermere anvendes op til flere gange. 
 
 \Cobol{Kode/StructuredTextExsample.tex}{}{st_exsample}
-
-Figur \ref{fig:st_exsample} 
 
 % kort gennemgang af ST - hvad bliver det brugt til?
 
@@ -74,9 +76,22 @@ Figur \ref{fig:st_exsample}
 \noindent \gls{fbd} er en repræsentation, som de erfarne \gls{plc}-programmører anvender. \gls{fbd} kan fungere som et bibliotek, som kan importeres i konkrete implementationer, og dermed give den ønskede funktionalitet til projektet. \cite{FDB_desc}
 
 \subsubsection{Instruction List}
-\gls{il} beskrives nemmest som et tekstrepræsenteret LAD-programmeringssprog. IL består af en række instruktioner; én instruks pr. linje. En instruks kan bestå af én eller flere operander. Ulempen ved IL er, at \gls{plc}-producenterne ikke vælger at følge konventionen (jf. \gls{iec} 1131-3), hvorved notationen skifter på tværs af producenterne. Figur \ref{fig:plc-il} viser et simpelt eksempel på et \gls{il}-repræsenteret program. \textit{LD} udtrykker operatoren, og instruerer at \textit{A} skal indlæses i \gls{mar}\fn{\gls{mar}}{Holder hukommelsesplaceringen af dét data som ønskes tilgået}. Det kan dermed blive kaldt af andre operationer. Den næste linje, har det boolske udtryk, \textit{ANDN}, som definerer at \textit{B} ikke skal registreres. \textit{ST} er et udtryk for at resultatet skal indlæses i \textit{C}. Programmøren skal være opmærksom på - som det også blev nævnt tidligere - at \gls{plc}-producenterne har valgt deres egne notationer. Hertil kan det nævnes, at OMRON benævner operatoren \textit{ST} som \textit{OUT}, hvor Siemens eksempelvis har valgt \textit{AN} som deres notation for \textit{ANDN}. \cite{FDB_desc}
+\gls{il} beskrives nemmest som et tekstrepræsenteret LAD-programmeringssprog. \gls{il} består af en række instruktioner; én instruks pr. linje. En instruks kan bestå af én eller flere operander. Ulempen ved \gls{il} er, at \gls{plc}-producenterne ikke vælger at følge konventionen (jf. \gls{iec} 1131-3), hvorved notationen skifter på tværs af producenterne. Kodeeksempel \ref{code:fixedfee-il} viser et relativt simpelt program som grundlæggende beregner et gebyr, og sætter en udgang på \gls{plc}'en. Denne operation bliver foretaget ved at benytte en predefineret \textit{LD}-instruks \enquote*{P\_First\_Cycle} (Omron standard), som kun køres én gang under programinitialisering. Dette bliver benyttet som \textit{init()}-metoden, som også kendes fra Arduino-programmeringssproget \cite{ardiono_code_init}. På linje 2 bliver der erklæret en \textit{stack}, hvorefter en global variabel med værdien 2, bliver flyttet til et defineret hukommelsesområde. Herefter bliver funktionerne erklæret og kaldt med \gls{il}-instrukserne: \enquote*{SBN} og \enquote*{SBS}. Afslutningsvist bliver udgangen Q\#100.00 sat med instruksen \enquote{OUT}. 
 
-\figur{Figurer/Billeder/plc-il.png}{Simpel illustration af et \gls{il}-repræsenteret \gls{plc}-program}{plc-il}{0.3}
+\Cobol{Kode/FixedFee-IL.tex}{Simpelt eksempel på IL-kode, som består af 2 metoder og 2 funktioner. Der bliver udregnet et gebyr, hvorefter en udgang sættes på \gls{plc}'en. Kodeeksemplet er direkte konverteret fra PLC++, og kan ses i bilag \ref{bil:fixedfee}}{fixedfee-il}
+
+\noindent I kodeeksemplet \ref{code:fixedfee-il} er læsbarheden ikke ret stor, men indsættes 
+
+
+
+
+Der findes flere hundredevis af forskellige operatorer i \gls{il}, som kan benyttes
+
+Programmøren skal være opmærksom på - som det også blev nævnt tidligere - at \gls{plc}-producenterne har valgt af benytte deres egne notationer for \gls{il}-instrukser. Hertil kan det nævnes, at OMRON benævner operatoren \textit{ST} som \textit{OUT}, hvor Siemens eksempelvis har valgt \textit{AN} som deres notation for \textit{ANDN}. Det betyder grundlæggende at  \cite{FDB_desc}
+
+
+
+Fordelen ved \gls{il} er, at det er muligt at udtrykke hele \gls{plc}-programmet i \gls{il}, hvilket inkluderer aritmetiske udtryk, kontaktsæt og funktioner. \gls{il} er dog, såfremt at det kun skrives tekstrepræsenteret, ikke særlig læsbart. CX-programmer understøtter en direkte konvertering mellem det tekstrepræsenteret og det grafiske, hvorved det er muligt for den enkelte programmør at skifte mellem repræsentationerne. 
 
 \subsubsection{Objektorienteret Programmering}
 \label{subsec:software_codesys}
@@ -95,6 +110,9 @@ CODESYS blev tidligere gennemgået (se afsnit \ref{subsec:codesys}), hvor det bl
 \noindent\gls{oop}-programmeringsparadigmet kan - såfremt at programmøren besidder den nødvendige programmeringserfaring - medvirke til et velstruktureret program. Foruden CODESYS, er der også en række andre producenter, som har forsøgt at implementere \gls{oop} - her kan der bl.a. nævnes Beckhoff, som har en kraftig tilvækst igennem det sidste årti. I året 1999 omsatte Beckhoff for \$50 millioner, som i året 2010 er steget til \$346 millioner. Dette indikerer at flere vælger at migrere over til \gls{oop}, fremfor det traditionelle \gls{lad}, og \gls{oop} kan dermed anses for at være i et gunstigt indtog i det mangfoldige \gls{plc}-univers\cite{beckhoff-sold}.
 
 
+
+
+%Figur \ref{fig:plc-il} viser et simpelt eksempel på et \gls{il}-repræsenteret program. \textit{LD} udtrykker operatoren, og instruerer at \textit{A} skal indlæses i \gls{mar}\fn{\gls{mar}}{Holder hukommelsesplaceringen af dét data som ønskes tilgået}. Det kan dermed blive kaldt af andre operationer. Den næste linje, har det boolske udtryk, \textit{ANDN}, som definerer at \textit{B} ikke skal registreres. \textit{ST} er et udtryk for at resultatet skal indlæses i \textit{C}. 
 
 
 

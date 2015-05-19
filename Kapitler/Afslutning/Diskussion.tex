@@ -1,1 +1,45 @@
 \chapter{Diskussion}\label{sec:Diskussion}
+\textit{Diskussionen gennemgår og belyser projektets udfordrende emner, så som konverteringen fra PLC++ til \gls{IL} samt hvordan værdier gemmes i hukommelsen på \gls{plc}en.
+Specielt hvordan hukommelsen bliver udnyttet vil blive diskuteret, herunder brugen af stack. 
+Dertil vil beslutningerne som er foretaget igennem projektet blive diskuteret, samt erkendes som værende acceptable eller utilfredsstillende.}
+
+\subsection*{Stack}
+En \gls{plc} har en begrænset mængde hukommelse, som er fordelt på flere forskellige hukommelsesområder.
+Dette gør at man skal være opmærksom på hvordan hukommelsen benyttes, og derved at man ikke kan allokere uendelig mængder hukommelse.
+Der bliver i programmet brugt flere forskellige hukommelsesområder, til hvert deres formål. Dette er med til at sikre at man ikke bruger den samme adresse og derved overskriver en anden værdi, medmindre det er hensigten.
+Til variabler benyttes hukommelsesområdet D, og med en egenimplementation af stack, som er inspireret fra \gls{c} hvilket giver en let og overskueligt måde at adressere en ny hukommelsesadresse.
+Her gemmes værdien af variablen på stacken mens, selve variablen bliver gemt på stacken.
+Værdien ligges derefter over i hukommelsesområdet D.
+Dette giver et par fordele og ulemper, heriblandt at man ikke kan genbruge de adresser som allerede er benyttet. Dette er grundet at man ikke ved hvornår programmet er færdig med at bruge en variable, og man derved ikke kan fjerne den fra dets hukommelsesområde.
+Fordelen ved stacken er at man generelt, bortset fra variabler har en god skik for genbrug af hukommelsesadresser.
+Dette er implementeret ved at man i push funktionen til stacken tæller adressen op, og ved pop funktionen tæller den ned igen. Derved undgår man et stort spild af adresser, hvilket er praktisk i forhold til hukommelsesområdets størrelse.
+
+Det er blevet vurderet som et incitament for codegeneration, at genbruge hukommelsesadresser så meget som muligt. Derfor er der lagt vægt på at benytte stacken til så mange operationer og værdier som muligt.
+Et alternativ som der blev undersøgt var en garbagecollecter, som kunne hjælpe til med at fjerne ubrugte variabler fra hukommelsen, dette blev dog nedprioriteret, da der skal være omtrent 500 variabler før det bliver et problem.
+
+
+\subsection*{Paradigme}
+\subsection*{Notation}
+
+\subsection*{Paradigme}
+
+\subsection*{Globale variabler}
+Globale variable er et attraktivt tiltag til programmering, hvorledes man kan have globale værdier tilgængelig for alle funktioner.
+Dette giver mulighed for at have en global counter variable, som tælles op når en handling er udført.
+Implementationen af globale variabler har ledt an til en problemstilling, som forekommer når PLC++ omskrives til instruction list. Problemet er at \gls{plc}en kun kan håndtere variabler som var de globale.
+Derfor kan man ikke redefinere en variable, ej heller inde i et scope, hvilket giver anledning til problemer.
+Dette er tilgængeligt i de fleste programmeringssporg at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
+
+
+
+\subsection*{Port}
+Port er en af de vigtigste implementationer, da det er her \gls{plc}en modtager og udsender data fra.
+Port bliver håndteret i promille hvilket
+
+\mgfix{ Omtal "Port" datatypens opløsning i promille kunne laves anderledes da vi maksimalt kan have en opløsning på 1/1000 del. Fordele ved usability ulemper ved grov opløsning på ind- og udgangskort.}
+
+
+
+Kravspecifikationen (har vi valgt de rigtige funktioner)
+
+

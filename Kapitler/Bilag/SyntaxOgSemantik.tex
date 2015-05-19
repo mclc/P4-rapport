@@ -1,25 +1,43 @@
-\section{Syntaks og semantik}\label{sec:Syntax}
-I dette afsnit vil de mest relevante dele af syntaksen med tilhørende semantik blive belyst. Den fulde specifikation kan findes i bilag. \mgfix{Ref til billag}
+\section{Syntax og semantik}\label{sec:Syntax}
+
+\mfix{Pt. indsat som bilag - bare for at kunne se kompileret udgave}
 
 \subsection{Typer}
-Inden gennemgang af de forskellige programdele omtales de mest basale datatyper.
 
 \subsubsubsection{Bool}
-Den boolske datatype repræsenterer værdien sand eller falsk. Denne type kan ikke konverteres til andre typer ligesom i C eller C++. Alle boolske udtryk konverteres til denne type.
+Den boolske datatype repræsenterer enten værdien sand eller falsk. Denne type kan ikke konverteres til andre typer ligesom i C eller C++. Alle boolske udtryk konverteres til denne type.
+
+\subsubsection{Heltal}
+Af heltalstyper er det valgt 2 forskellige: Int og Long. 
 
 \subsubsection{Int}
-Int datatypen er datatypen beregnet til at holde heltalsværdier. Int er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. Int kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
+Int datatypen er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. Int kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
+
+\subsubsection{Long}
+Long er ligeledes en signed integer, men på 32 bits. Den maksimale værdi er 2\textsuperscript{31}-1 og den minimale værdi er -2\textsuperscript{31}.
+
+\subsubsection{Kommatal}
+Af kommatal er der valgt to forskellige med forskellige opløsninger. En Float og en Double. Float er 4 byte og Double er 8 Byte.
+
+\subsubsection{Struct}
+Struct er en indkapsulering af andre typer og/eller funktioner. På denne måde kan der laves mere komplekse typer end dem der i forvejen er til rådighed. En struct skal defineres i roden på samme måde som en funktion hvorefter den kan instantieres som en almindelig variabel.
+
+\subsubsection{Array}
+Et Array er en datastruktur som holder et antal af elementer af en bestemt type. Elementerne holdes i sekvens og man kan tilgå hvert enkelt efter alementets index.
 
 \subsubsection{Port}
-Port datatypen er adskilder sig fra de andre datatyper ved at være være et alias for port nummeret. Den kan bruges hvis en yderligere eller mere hensigtsmæssig navngivning ønskes til ind og udgangsporte på \gls{plc}'en.
+Port datatypen er adskilder sig fra de andre datatyper til at være mapped til en port på \gls{plc}'en.
 
-Af porte findes der digitale og analoge inputs samt digitale og analoge outputs. De digitale porte kan have den samme værdi som den boolske datatype, altså sand eller falsk. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille.
+Af porte findes der Digitale og Analoge inputs samt Digitale og Analoge outputs. De digitale porte kan have værdien sand eller falsk som en bool. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille. \mgfix{så opløsningen på Analoge ind og ud er 1/1000 det er et problem ved bla bla-- tag med i diskussion}
+
+\subsubsection{Timer}
+En timer er for så vidt muligt en hardcoded struct hvor keyworded struct ikke er nødvendigt. \mgfix{Søren mangler at få lavet denne type færdig - referer til Gadeberg}
 
 \subsection{Udtryk}
 Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
 
 \subsubsection{Operatorer}
-I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
+I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan man få forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste. 
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|}
@@ -45,12 +63,6 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
 \subsubsection{Boolske udtryk}
 
 \textbf{And expression}
-Et and expression er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
-herunder kan gramatikken ses i bnf.
-and_expr =
-	and_expr && equality_expr																	
-  | equality_expr																						
-;
 	% Mangler der ikke noget?
 	%and_expr && equality_expr	
 	
@@ -111,6 +123,26 @@ and_expr =
     \end{table}
     \egroup
 
+\noindent \textbf{Greater and less than expressions}
+
+    \input{Kode/CFG/GreaterOrLess.tex}
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[GREATERTHAN-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;< \;expr_2 \rightarrow \; tt}$ & if $v_1 <  v_2$ \\
+        
+        $[GREATERTHAN-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;< \;expr_2 \rightarrow \; ff}$ & if $v_1 \geq v_2$ \\
+        
+    \end{tabular}
+    \caption{Greater and less than expressions}
+    \label{tab:greaterexpr}
+    \end{table}
+    \egroup
+
 \noindent \subsubsection{Aritmetiske udtryk}
 
 \noindent \textbf{Add and sub expressions}
@@ -132,8 +164,77 @@ and_expr =
     \egroup
 
     \input{Kode/CFG/AddSub.tex}
+  
+\noindent \textbf{MultDivMod}
+
+    \input{Kode/CFG/MultDivMod.tex}
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[MULT_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;*\;expr_2 \rightarrow v}$ & where $v = v_1 \cdot v_2$ \\
+        
+        $[DIV_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;/\;expr_2 \rightarrow v}$ & where $v = \frac{v_1}{v_2}$ \\
+        
+        $[MOD_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;\%\;expr_2 \rightarrow v}$ & where $v = v_1 mod v_2$ \\
+        
+        
+    \end{tabular}
+    \caption{MultDivMod}
+    \label{tab:multdivmod}
+    \end{table}
+    \egroup
+
+\noindent \textbf{Unary expressions}
+
+    \input{Kode/CFG/Unary.tex} 
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[NEG-T_{BS}]$ &$\frac{expr_1 \rightarrow_b\; tt}{expr_1 \rightarrow_b\; ff}$ &  \\
+        
+        $[NEG-\bot_{BS}]$ &$\frac{expr_1 \rightarrow_b\; ff}{expr_1 \rightarrow_b\; tt}$ &  \\
+        
+        $[UNARY-MINUS_{BS}]$ &$\frac{expr_1 \rightarrow\; v}{-expr_1 \rightarrow\; -v}$ &  \\
+        
+        $[PLUS-MINUS_{BS}]$ &$\frac{expr_1 \rightarrow\; -v}{+expr_1 \rightarrow\; v}$ &  \\
+        
+    \end{tabular}
+    \caption{Unary expressions}
+    \label{tab:unary}
+    \end{table}
+    \egroup
     
   
+\noindent \textbf{Primary expressions}
+
+    \input{Kode/CFG/Primary.tex}
+    
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[INCREMENT_{BS}]$ & $\frac{expr_1 \rightarrow v_1}{expr_1++\; \rightarrow v}$ & where $v = v_1 + 1$ \\
+        
+        $[DECREMENT_{BS}]$ &$\frac{expr_1 \rightarrow v_1}{expr_1- -\; \rightarrow v}$ & where $v = v_1 - 1$ \\
+        
+        
+    \end{tabular}
+    \caption{Primary expressions}
+    \label{tab:primary}
+    \end{table}
+    \egroup
+    \mfix{På en måde skal der være forskel på pre og post fix increment.}
+
 
 \noindent \subsection{Statements}
 

@@ -1,0 +1,23 @@
+and_expr =
+	and_expr && equality_expr
+  | equality_expr
+;
+\begin{Grammar}
+ \begin{grammar}
+
+    <and\_expr> ::= <> "&&" <>
+    \alt <add\_sub\_expr> "-" <mult\_div\_mod\_expr>
+  
+ \end{grammar}
+ \caption{Add and sub expressions}\label{gra:addsub}
+\end{Grammar}
+
+\begin{Grammar}
+ \begin{grammar}
+
+    <add\_sub\_expr> ::= <add\_sub\_expr> "+" <mult\_div\_mod\_expr>
+    \alt <add\_sub\_expr> "-" <mult\_div\_mod\_expr>
+  
+ \end{grammar}
+ \caption{Add and sub expressions}\label{gra:addsub}
+\end{Grammar}

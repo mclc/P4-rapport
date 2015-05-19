@@ -1,0 +1,26 @@
+\footnotesize
+\begin{tikzpicture}
+    \Tree   [.BranchStmt
+                [[[[if ]]]]
+                [.TrueExpr [[[true ]]]]
+                [.BranchStmt
+                    [[[if ]]]
+                    [.TrueExpr [[true ]]]
+                    [.ExprStmt
+                        [.AssignExpr
+                            [.IdExpr a ]
+                            [= ]
+                            [.FalseExpr false ]
+                        ]
+                    ]
+                    [[[else ]]]
+                    [.ExprStmt
+                        [.AssignExpr
+                            [.IdExpr a ]
+                            [= ]
+                            [.TrueExpr true ]
+                        ]
+                    ]
+                ]
+            ]
+\end{tikzpicture}
