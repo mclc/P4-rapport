@@ -11,3 +11,7 @@ Muligheden for at lave korte if-else sætninger, hvor man ikke eksplicit angiver
 \Java{Kode/Tests/Parser/DanglingElseTest.java}{Dangling Else Test}{danglingelsetest}
 
 \noindent På linje 6 ses det at den første, og eneste, funktion hendes ind i variables \textit{function}. Derefter findes \textit{ifStatement}, som er den første if-sætning (den uden else). Derefter findes \textit{ifElseStatement}, som skulle indeholde både en \textit{if} og en \textit{else}.
+
+Linje 14 og 15 sørger for at tjekke om det pågældende else-statement rent faktisk binder sig til det der forventes (kodeeksempel \ref{code:danglingelseppp1}). På linje 14 tjekkes det om \textit{ifStatement} har en søster \mfix{Heddet det det?} til højre, hvilken den ikke bør have, da \textit{else} ikke binder sig til den. Næste linje tjekker om \textit{ifElseStatement} har, altså at \textit{getRight()} ikke returnerer null. 
+
+Hvis begge disse antagelser er sande, er testen gået igennem, og dangling else problemet er løst som det forventes.
