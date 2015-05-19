@@ -47,7 +47,7 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 
 \noindent\textbf{And expression}
 
-\noindent Et and expression er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
+\noindent Et "and expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 herunder kan gramatikken ses i BNF.
 \mfix{Centrer dette BNF exsempel}
 \input{Kode/CFG/BNF_and_expr.scc}
@@ -59,9 +59,11 @@ herunder kan gramatikken ses i BNF.
     \centering
     \begin{tabular}{l c l}
         
-        $[AND-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; tt}{b_1 \bigwedge b_2 \rightarrow \; tt}$ & \\
+        $[AND-1_{BS}]$ &$\frac{and\_expr \rightarrow \; tt \quad equality\_expr \rightarrow \; tt}{and\_expr \bigwedge equality\_expr \rightarrow \; tt}$ & \\
     
-        $[AND-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigwedge b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
+        $[AND-2_{BS}]$ &$\frac{and\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
+        
+        $[AND-2_{BS}]$ &$\frac{equality\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
         
     \end{tabular}
     \caption{AND expression}

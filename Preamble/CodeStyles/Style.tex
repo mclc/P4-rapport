@@ -30,6 +30,6 @@
 }
 
 % Indlæs kode fra fil med style
-\newcommand{\kodeprintstyle}[4]{
-    \lstinputlisting[language=#4, style=Default, caption={#2}, label={code:#3}]{#1}
+\newcommand{\kodeprintstyle}[5]{
+    \lstinputlisting[language=#4, style=Default, caption={#2} ({#5}), label={code:#3}]{#1}
 }

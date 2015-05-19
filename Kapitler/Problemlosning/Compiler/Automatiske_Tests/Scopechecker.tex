@@ -1,3 +1,9 @@
 \subsubsection{Scopechecker}
 
 \Java{Kode/Tests/Scopechecker/Assignments.java}{Assignment Tests}{assignmenttest}
+
+\noindent De to første tests vist i kodeeksempel \ref{code:assignmenttest} viser to forskellige former for assignments, som derudover også bidrager til forståelsen af scope-regler i PLC++. Den tredje viser scope-regler for funktioner. I den første test, \textit{errorOnNonDeclaredVariable()}, prøves der er tildele værdien 1 til \textit{i}, hvilket bør give fejl da variabler ikke kan bruges før de er deklareret - dette giver altså en \textit{SymbolNotFoundException}.
+
+Test 2, \textit{canAssignToDeclaredVariableInParentScope()}, viser at det med scope-reglerne skal være muligt at have globale variable. Dette ses ved at der tildeles en værdi til \textit{i}, som tidligere blev deklareret udenfor funktionen.
+
+Den sidste test, \textit{canCallFunctionBelow()}, viser at en funktion, som er deklareret nedenunder kaldstedet, bliver kaldt. I et sprog som C, ville dette ikke kunne lade sig gøre uden prototypes. Dette bruges dog ikke i PLC++, men alligevel fejler testen ikke - dette kan der læses mere om i afsnit x.x \mfix{Lad os skrive noget om det også}. 
