@@ -1,20 +1,3 @@
-\section{Syntaks og semantik}\label{sec:Syntax}
-I dette afsnit vil de mest relevante dele af syntaksen med tilhørende semantik blive belyst. Den fulde specifikation kan findes i bilag. \mgfix{Ref til billag}
-
-\subsection{Typer}
-Inden gennemgang af de forskellige programdele omtales de mest basale datatyper.
-
-\subsubsubsection{Bool}
-Den boolske datatype repræsenterer værdien sand eller falsk. Denne type kan ikke konverteres til andre typer ligesom i C eller C++. Alle boolske udtryk konverteres til denne type.
-
-\subsubsection{Int}
-Int datatypen er datatypen beregnet til at holde heltalsværdier. Int er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. Int kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
-
-\subsubsection{Port}
-Port datatypen er adskilder sig fra de andre datatyper ved at være være et alias for port nummeret. Den kan bruges hvis en yderligere eller mere hensigtsmæssig navngivning ønskes til ind og udgangsporte på \gls{plc}'en.
-
-Af porte findes der digitale og analoge inputs samt digitale og analoge outputs. De digitale porte kan have den samme værdi som den boolske datatype, altså sand eller falsk. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille.
-
 \subsection{Udtryk}
 Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
 
@@ -45,15 +28,13 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
 \subsubsection{Boolske udtryk}
 
 \textbf{And expression}
-Et and expression er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
-herunder kan gramatikken ses i bnf.
-and_expr =
-	and_expr && equality_expr																	
-  | equality_expr																						
-;
-	% Mangler der ikke noget?
-	%and_expr && equality_expr	
-	
+
+\noindent Et and expression er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
+herunder kan gramatikken ses i BNF.
+\mfix{Centrer dette BNF exsempel}
+\input{Kode/CFG/BNF_and_expr.scc}
+
+
     \bgroup
     \def\arraystretch{3}
     \begin{table}[H]
@@ -71,8 +52,10 @@ and_expr =
     \egroup
 
 \noindent \textbf{Or expression}
-% Mangler der ikke noget?
-%or_expr || and_expr	
+
+Et or expression tager ligesom and expression 2 operander men returnerer sand hvis bare et af operanderne er sande. Gramatikken for and expression kan ses herunder.
+
+\input{Kode/CFG/BNF_or_expr.scc}
 
     \bgroup
     \def\arraystretch{3}
@@ -91,10 +74,11 @@ and_expr =
     \egroup
     
 \noindent \textbf{Equality expressions}
-    % Mangler der ikke noget?
-	%equality_expr == greater_less_expr
-  %|	equality_expr != greater_less_expr
-  
+    Whatever
+    
+    \input{Kode/CFG/BNF_equality_expr.scc}
+
+
     \bgroup
     \def\arraystretch{3}
     \begin{table}[H]
@@ -134,59 +118,3 @@ and_expr =
     \input{Kode/CFG/AddSub.tex}
     
   
-
-\noindent \subsection{Statements}
-
-\noindent \subsubsection{While-løkke}
-
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[WHILE-TRUE_{BS}]$ & $
-        \frac{\langle S, s\rangle  \rightarrow s^{\prime\prime} \quad \langle while\;b\;\{ S\},\;s^{\prime\prime}\rangle  \rightarrow s^{\prime}}
-        {\langle while\;b\;\{ S\},\;s\rangle  \rightarrow s^{\prime}}
-        $ & if $s \vdash b \rightarrow_b tt$ \\
-        
-        $[WHILE-FALSE_{BS}]$ & $
-        \langle while\;b\;\{S\},\;s\rangle  \rightarrow s$ & 
-        if $s \vdash b \rightarrow_b ff$ \\
-
-    \end{tabular}
-    \caption{While-løkke}
-    \label{tab:while}
-    \end{table}
-    \egroup
-    
-Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
-
-\noindent \subsubsection{If-else statements}
-
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[IF-TRUE_{BS}]$ & $
-        \frac{\langle S_1,\;s\rangle  \rightarrow s^\prime}
-        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
-        $ & if $s \vdash b \rightarrow_b tt$ \\
-        
-        $[IF-FALSE_{BS}]$ & $
-        \frac{\langle S_2,\;s\rangle  \rightarrow s^\prime}
-        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
-        $ & if $s \vdash b \rightarrow_b ff$ \\
-        
-    \end{tabular}
-    \caption{If-else statements}
-    \label{tab:ifelse}
-    \end{table}
-    \egroup
-
-\noindent \subsection{Declarations}
-Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden.
-
-\input{Kode/CFG/Declaration.tex}

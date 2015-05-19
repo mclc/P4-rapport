@@ -1,0 +1,13 @@
+\subsection{Typer}
+Inden gennemgang af de forskellige programdele omtales de mest basale datatyper.
+
+\subsubsubsection{Bool}
+Den boolske datatype repræsenterer værdien sand eller falsk. Denne type kan ikke konverteres til andre typer ligesom i C eller C++. Alle boolske udtryk konverteres til denne type.
+
+\subsubsection{Int}
+Int datatypen er datatypen beregnet til at holde heltalsværdier. Int er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. Int kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
+
+\subsubsection{Port}
+Port datatypen er adskilder sig fra de andre datatyper ved at være være et alias for port nummeret. Den kan bruges hvis en yderligere eller mere hensigtsmæssig navngivning ønskes til ind og udgangsporte på \gls{plc}'en.
+
+Af porte findes der digitale og analoge inputs samt digitale og analoge outputs. De digitale porte kan have den samme værdi som den boolske datatype, altså sand eller falsk. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille.

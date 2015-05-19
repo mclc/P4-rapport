@@ -1,0 +1,9 @@
+\begin{Grammar}
+ \begin{grammar}
+
+    <and\_expr> ::= <and\_expr> "&&" <equality\_expr>
+    \alt <equality\_expr>
+  
+ \end{grammar}
+ \caption{And expression}\label{gra:addexpr}
+\end{Grammar}

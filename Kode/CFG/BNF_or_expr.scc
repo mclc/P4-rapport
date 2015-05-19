@@ -1,0 +1,9 @@
+\begin{Grammar}
+ \begin{grammar}
+
+    <or\_expr> ::= <or\_expr> "||" <and\_expr>
+    \alt <and\_expr>
+  
+ \end{grammar}
+ \caption{Or expression}\label{gra:orexpr}
+\end{Grammar}

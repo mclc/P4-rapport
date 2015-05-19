@@ -1,0 +1,50 @@
+\noindent \subsection{Statements}
+
+\noindent \subsubsection{While-løkke}
+
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[WHILE-TRUE_{BS}]$ & $
+        \frac{\langle S, s\rangle  \rightarrow s^{\prime\prime} \quad \langle while\;b\;\{ S\},\;s^{\prime\prime}\rangle  \rightarrow s^{\prime}}
+        {\langle while\;b\;\{ S\},\;s\rangle  \rightarrow s^{\prime}}
+        $ & if $s \vdash b \rightarrow_b tt$ \\
+        
+        $[WHILE-FALSE_{BS}]$ & $
+        \langle while\;b\;\{S\},\;s\rangle  \rightarrow s$ & 
+        if $s \vdash b \rightarrow_b ff$ \\
+
+    \end{tabular}
+    \caption{While-løkke}
+    \label{tab:while}
+    \end{table}
+    \egroup
+    
+Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
+
+\noindent \subsubsection{If-else statements}
+
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[IF-TRUE_{BS}]$ & $
+        \frac{\langle S_1,\;s\rangle  \rightarrow s^\prime}
+        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
+        $ & if $s \vdash b \rightarrow_b tt$ \\
+        
+        $[IF-FALSE_{BS}]$ & $
+        \frac{\langle S_2,\;s\rangle  \rightarrow s^\prime}
+        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
+        $ & if $s \vdash b \rightarrow_b ff$ \\
+        
+    \end{tabular}
+    \caption{If-else statements}
+    \label{tab:ifelse}
+    \end{table}
+    \egroup

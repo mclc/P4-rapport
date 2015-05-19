@@ -1,1 +1,13 @@
-\subsubsection*{Parser}
+\subsubsection{Parser}
+
+Muligheden for at lave korte if-else sætninger, hvor man ikke eksplicit angiver start og slut (enten ved curly brackets \mfix{Hvad var det nu de hed på dansk?} eller \textit{end}), åbner op for en interessant problemstilling: dangling else (se afsnit x.x\mfix{Det skal vi have skrevet om i implementation} for mere info). 
+
+\PPP{Kode/Tests/Parser/DanglingElse1.ppp}{Dangling Else, mulighed 1}{danglingelseppp1}
+
+\PPP{Kode/Tests/Parser/DanglingElse2.ppp}{Dangling Else, mulighed 2}{danglingelseppp2}
+
+\noindent Koden i \ref{code:danglingelseppp1} og \ref{code:danglingelseppp2} illustrerer dette problem rigtig godt. Det er præcis det samme stykke kode - det er bare umuligt at se hvad \textit{else} på linje 4 knytter sig til. Implementationen af løsning findes i afsnit x.x \mfix{samme ref som tidligere}, men det er også en rigtig god idé at lave automatiserede tests, som tester om løsningen opfører sig som forventet. Testen ses i kodeeksempel \ref{code:danglingelsetest}
+
+\Java{Kode/Tests/Parser/DanglingElseTest.java}{Dangling Else Test}{danglingelsetest}
+
+\tikzfigure{Figurer/TikZ/DangelingElseAST.tex}{AST for Dangling Else-problemet}{danglingelseast}{1.0}
