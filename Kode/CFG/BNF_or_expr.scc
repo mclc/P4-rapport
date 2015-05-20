@@ -5,5 +5,5 @@
     \alt <and\_expr>
   
  \end{grammar}
- \caption{Or expression}\label{gra:orexpr}
+ \caption{OR expression}\label{gra:orExpr}
 \end{Grammar}

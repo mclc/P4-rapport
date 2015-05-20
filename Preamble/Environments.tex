@@ -17,7 +17,7 @@
   % the file extension for the file used to create the list:
  fileext   = logr,% don't use log here!
   % the heading for the list:
- listname  = {Grammatik},
+ listname  = {Grammatikstykker},
   % the name used in captions:
   name      = Grammatik,
   % the default floating parameters if the environment is used
@@ -26,3 +26,15 @@
 ]{Grammar}
 
 \grammarindent=80pt
+
+\DeclareFloatingEnvironment[
+  % the file extension for the file used to create the list:
+ fileext   = logr,% don't use log here!
+  % the heading for the list:
+ listname  = {Semantikstykker},
+  % the name used in captions:
+  name      = Semantik,
+  % the default floating parameters if the environment is used
+  % without optional argument:
+  placement = H
+]{semantik}

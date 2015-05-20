@@ -1,7 +1,7 @@
 \subsubsection{Implementation}
 
 \mfix{Tjek ref når alt er flyttet}
-I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser og derudover genereres SableCC et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sec:visitor}).
+I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser og derudover genereres SableCC et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sct:visitorSableCC}).
 
 SableCC har desuden den fordel\sfix{Kan også være en ulempe} at den både genererer en scanner og parser. For at kunne gøre dette, er SableCC afhængig af en konfigurationsfil som indeholder den kontekst-fri grammatik samt hvordan det abstrakte syntaks træ bliver genereret af SableCC.
 

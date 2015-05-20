@@ -1,7 +1,17 @@
+
+
 \noindent \subsection{Statements}
+Sproget plc++ består af en række forskellige statements. Statements som erkleringer, funktionskald loops og mange andre. Under dette afsnit vil de mest betydende statement typer blive gennemgået og forklaret. Den fulde syntaks og semantik specifikation kan findes i bilag.
+
+\input{Kapitler/Problemlosning/SyntaxOgSemantik/Declarations.tex}
+
+
+
+\input{Kapitler/Problemlosning/SyntaxOgSemantik/Udtryk.tex}
 
 \noindent \subsubsection{While-løkke}
 
+    \begin{semantik}
     \bgroup
     \def\arraystretch{3}
     \begin{table}[H]
@@ -18,10 +28,11 @@
         if $s \vdash b \rightarrow_b ff$ \\
 
     \end{tabular}
-    \caption{While-løkke}
     \label{tab:while}
     \end{table}
     \egroup
+    \caption{While-løkke}
+    \end{semantik}
     
 Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
 

@@ -1,5 +1,5 @@
 \subsection{Udtryk}
-Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
+Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en Bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
 
 \subsubsection{Operatorer}
 I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
@@ -42,10 +42,11 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 
     \end{tabular}
     \caption{\textit{Operatorer i boolske udtryk}}
-    \label{tab:operatorprioritering}
+    \label{tab:operatorerboolsk}
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent\textbf{And expression}
+
 \noindent Et "and expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 herunder kan gramatikken ses i BNF.
 \mfix{Centrer dette BNF exsempel}
@@ -71,7 +72,8 @@ herunder kan gramatikken ses i BNF.
     \egroup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent\textbf{Or expression}
-\noindent Et or expression tager ligesom "and expression" 2 operander men returnerer sand hvis bare et af operanderne er sande. Gramatikken for and expression kan ses herunder.
+
+\noindent Et "or expression" tager ligesom "and expression" 2 operander men returnerer sand hvis bare en af operanderne er sande. Gramatikken for and expression kan ses herunder.
 
 \input{Kode/CFG/BNF_or_expr.scc}
 \noindent Herunder ses semantikken for "Or expression"
@@ -90,12 +92,13 @@ herunder kan gramatikken ses i BNF.
         
     \end{tabular}
     \caption{OR expression}
-    \label{tab:orexpr}
+    \label{tab:orExpr}
     \end{table}
     \egroup
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent\textbf{Equality expression}
-\noindent\noindent Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i den fulde syntaks og semantik i bilag.
+
+\noindent\noindent Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i bilag.
     
     \input{Kode/CFG/BNF_equality_expr.scc}
     \noindent Herunder ses semantikken for "Equality expression"
@@ -112,30 +115,33 @@ herunder kan gramatikken ses i BNF.
         
     \end{tabular}
     \caption{Equality expressions}
-    \label{tab:equaexpr}
+    \label{tab:equalityExpr}
     \end{table}
     \egroup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent \subsubsection{Aritmetiske udtryk}
-Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses herunder.
+Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses herunder. Kun de mest basale aritmetiske udtryk vil blive gennemgået her. Resten kan findes i bilag.
 
-\begin{table}[Whatever]
+
+\begin{table}[H]
     \centering
     \begin{tabular}{|l|l|}
         \hline
         \centering
 
-        Primær             & x++ \quad x- - \quad a{[}x{]} \quad x.y \quad (x)                 \\ \hline
-        Unær               & ++x \quad - -x \quad ! \quad -x \quad +x \quad (cast)x       \\ \hline
-        Multiplikationer   & * \quad / \quad \%                                               \\ \hline
-        Additioner         & + \quad -                                                        \\ \hline
+        Primær             & x++ \quad x- -                                    \\ \hline
+        Unær               & ++x \quad - -x \quad -x \quad +x                   \\ \hline
+        Multiplikationer   & * \quad / \quad \%                                \\ \hline
+        Additioner         & + \quad -                                         \\ \hline
 
     \end{tabular}
-    \caption{\textit{Aritmetiske operatorer}
+    \caption{\textit{Aritmetiske Operatorer}}
     \label{tab:aritmetiskeOperatorer}
 \end{table}
 
 \noindent \textbf{Add and sub expressions}
+    \input{Kode/CFG/BNF_add_sub_expr.scc}
+    \noindent Herunder ses semantikken for "Add and sub expressions"
 
     \bgroup
     \def\arraystretch{3}
@@ -143,16 +149,12 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
     \centering
     \begin{tabular}{l c l}
         
-        $[PLUS_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;+\;expr_2 \rightarrow v}$ & where $v = v_1 + v_2$ \\
+        $[PLUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;+\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 + v_2$ \\
         
-        $[MINUS_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;-\;expr_2 \rightarrow v}$ & where $v = v_1 - v_2$ \\
+        $[MINUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;-\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 - v_2$ \\
         
     \end{tabular}
     \caption{Add and sub expression}
-    \label{tab:addandsub}
+    \label{tab:addSubExpr}
     \end{table}
     \egroup
-
-    \input{Kode/CFG/AddSub.tex}
-    
-  

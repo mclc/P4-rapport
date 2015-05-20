@@ -3,7 +3,8 @@
 
     <add\_sub\_expr> ::= <add\_sub\_expr> "+" <mult\_div\_mod\_expr>
     \alt <add\_sub\_expr> "-" <mult\_div\_mod\_expr>
+    \alt <mult\_div\_mod\_expr>
   
  \end{grammar}
- \caption{Add and sub expressions}\label{gra:addsub}
+ \caption{Add and sub expression}\label{gra:addSubExpr}
 \end{Grammar}

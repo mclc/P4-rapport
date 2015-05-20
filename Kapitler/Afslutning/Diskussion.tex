@@ -7,13 +7,13 @@ Dertil vil beslutningerne som er foretaget igennem projektet blive diskuteret, s
 En \gls{plc} har en begrænset mængde hukommelse, som er fordelt på flere forskellige hukommelsesområder.
 Dette gør at man skal være opmærksom på hvordan hukommelsen benyttes, og derved at man ikke kan allokere uendelig mængder hukommelse.
 Der bliver i programmet brugt flere forskellige hukommelsesområder, til hvert deres formål. Dette er med til at sikre at man ikke bruger den samme adresse og derved overskriver en anden værdi, medmindre det er hensigten.
-Til variabler benyttes hukommelsesområdet D, og med en egenimplementation af stack, som er inspireret fra C hvilket giver en let og overskueligt måde at adressere en ny hukommelsesadresse.
+Til variabler benyttes hukommelsesområdet D, sammen med en stack, som er inspireret fra C får man en let og overskueligt måde at adressere en ny hukommelsesadresse.
 Her gemmes værdien af variablen på stacken mens, selve variablen bliver gemt på stacken.
 Værdien ligges derefter over i hukommelsesområdet D.
 Dette giver et par fordele og ulemper, heriblandt at man ikke kan genbruge de adresser som allerede er benyttet. Dette er grundet at man ikke ved hvornår programmet er færdig med at bruge en variable, og man derved ikke kan fjerne den fra dets hukommelsesområde.
 Fordelen ved stacken er at man generelt, bortset fra variabler, har en god skik for genbrug af hukommelsesadresser.
 Dette er implementeret ved at man i push funktionen til stacken tæller adressen op, og ved pop funktionen tæller den ned igen. Derved undgår man et stort spild af adresser, hvilket er praktisk i forhold til hukommelsesområdets størrelse.
-Derudover giver det et godt overblik i Cx One, da programmøren har mulighed for at se værdien af den konkrete variable, og derved giver mulighed for at rette kode direkte i Cx One.
+Derudover giver det et godt overblik i Cx One, da programmøren har mulighed for at se værdien af den konkrete variable, og derved giver mulighed for at fejlrette kode direkte i Cx One.
 
 Det er blevet vurderet som et incitament for codegeneration, at genbruge hukommelsesadresser så meget som muligt. Derfor er der lagt vægt på at benytte stacken til så mange operationer og værdier som muligt.
 Et alternativ som der blev undersøgt var en garbagecollecter, som kunne hjælpe med at fjerne ubrugte variabler fra hukommelsen, dette blev dog nedprioriteret, da der skal være omtrent 500 variabler før det bliver et problem, og det dermed vurderes til at være irrelevant for en \gls{plc}.
@@ -24,7 +24,7 @@ Det har vist sig at være et fornuftigt valg, da de fleste programmører kommer 
 En anden grund til at det imperative paradigme blev valgt, er fordi det er relativt simpelt, og en almindelig person kan forholde sig til det, med meget lidt erfaringen indenfor sproget. 
 Derudover er projektets formål at simplificere programmeringssproget, således at det er let og overskueligt at skrive programmer i det.
 
-Eksemplet på dette kan ses i kodeeksempel \ref{code:fixedfee-il} som viser hvordan et simpelt program skrives i \gls{il}, og henholdvis i \gls{lad} vist på figur \ref{fig:fixedfee-graphic}
+Et eksemplet på dette kan ses i kodeeksempel \ref{code:fixedfee-il} som viser hvordan et simpelt program skrives i \gls{il}, og henholdsvis i \gls{lad} vist på figur \ref{fig:fixedfee-graphic}
 
 Dette giver mulighed for at skrive i et sprog (\gls{il}), som er mere kompakt, og derved tager kortere tid at skrive. Udfordringen ved det, er at det ikke er særlig let at lære, da man skal huske opbygningen af funktioner, samt referencer til de enkelte kald, som man skal foretage.
 Ligeledes er der ikke behov for den kompleksitet som det objektorienteret paradigme giver, da \gls{plc}-programmer for det mest er opbygget i flere sektioner, som hver især håndterer hver deres opgave.
@@ -35,29 +35,25 @@ Kravspecifikation ligger til baggrund for projektets valg af funktioner som skal
 Her vurderede gruppen at kunne nå at implementere en flere forskellige og krævende funktioner som beskrevet i \gls{moscow}-analyse ved tabel \ref{tab:moscow}.
 Dette var dog ikke en realitet, og tidspres begyndte at være en faktorer, som gruppen måtte tage stilling til.
 Derfor blev det besluttet at afgrænse i det perspektiv at studieordningen skulle overholdes, samt at der skulle kunne genereres noget brugbart kode.
-Derfor blev det valgt at prioritere de funktioner som anses for at være essentielle for at programmeringssproget stadig kan bruges. Hertil blev der vurderet at structs ville tage for lang tid at implementere i forhold til dens kompleksitet, samt hvad det vi
-
-
-.notation, 
-tidspres, snak om hvad man kan undvære, og hvad der er elementært
+Derfor blev det valgt at prioritere de funktioner som anses for at være essentielle for at programmeringssproget stadig kan bruges. Hertil blev der vurderet at structs ville tage for lang tid at implementere i forhold til dens kompleksitet, samt hvad det ville bidrage til i sproget.
+Ulempen ved at afgrænse structs, er selvfølgelig at man ikke får mulighed for at benytte structs, men også at funktioner som afhænger af structs ikke bliver implementeret.
+En af disse er Timer som blev specificeret til at skulle bruge structs i grammar, dette er dog ikke særlig smart, da timer ofte bliver brugt på en \gls{plc}, men på daværende tidspunkt, var ideen at man kunne genbruge noget kode, i forhold til at omskrive Timer til en Struct.
+Det vurderes til at være et nødvendigt valg at afgrænse denne funktion, for at opretholde studieordningen samt deadlinen og afleveringen af projektet, dog ikke hensigtsmæssigt i forhold til programmeringssprogets funktionalitet.
 
 \subsection*{Globale variabler}
 Globale variable er et attraktivt tiltag til programmering, hvorledes man kan have globale værdier tilgængelig for alle funktioner.
 Dette giver mulighed for at have en global counter variable, som tælles op når en handling er udført.
 Implementationen af globale variabler har ledt an til en problemstilling, som forekommer når PLC++ omskrives til instruction list. Problemet er at \gls{plc}en kun kan håndtere variabler som var de globale.
 Derfor kan man ikke redefinere en variable, ej heller inde i et scope, hvilket giver anledning til problemer.
-Dette er tilgængeligt i de fleste programmeringssporg at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
-
+Dette er tilgængeligt i de fleste programmeringssprog at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
 
 
 \subsection*{Port}
 Port er en af de vigtigste implementationer, da det er her \gls{plc}en modtager og udsender data fra.
-Port bliver håndteret i promille hvilket
+Port bliver håndteret i promille hvilket er baseret på at det skulle være let at i
+
 
 \mgfix{ Omtal "Port" datatypens opløsning i promille kunne laves anderledes da vi maksimalt kan have en opløsning på 1/1000 del. Fordele ved usability ulemper ved grov opløsning på ind- og udgangskort.}
 
-
-
-Kravspecifikationen (har vi valgt de rigtige funktioner)
 
 

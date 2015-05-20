@@ -16,7 +16,8 @@
  \alt "float"
  \alt "double"
  \alt "timer"
- \alt "port"
+ \alt "input"
+ \alt "output"
  \alt "enum" <identifier>
  \alt "struct" <identifier>
  
@@ -144,7 +145,6 @@
  \alt <identifier>
  \alt <port\_input\_identifier> <port\_value>
  \alt <port\_output\_identifier> <port\_value>
- \alt <port\_memory\_identifier> <port\_value>
  \alt <port\_analog\_input\_identifier> <port\_value>
  \alt <port\_analog\_output\_identifier> <port\_value>
  \alt <function\_call>
@@ -161,9 +161,7 @@
  <port\_input\_identifier> ::= "I#"
  
  <port\_output\_identifier> ::= "O#"
- 
- <port\_memory\_identifier> ::= "M#"
- 
+
  <port\_analog\_input\_identifier> ::= "AI#"
  
  <port\_analog\_output\_identifier> ::= "AO#"
