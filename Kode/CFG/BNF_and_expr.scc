@@ -1,6 +1,3 @@
-% Hvad er problemet?
-% den bugger hvis jeg prøver at centrere..
-
 \begin{Grammar}
  \begin{grammar}
     <and\_expr> ::= <and\_expr> "&&" <equality\_expr>
@@ -8,19 +5,3 @@
  \end{grammar}
  \caption{And expression}\label{gra:addexpr}
 \end{Grammar}
-
-
-
-% Er det ikke bare at kopiere opsætningen fra denne?
-% har jeg også gjort.
-% mener ikke det er nødvendigt med \centering
-%% hvorfor er den så ikke center?
-
-% kigger lige :)
-% hvad skal  jeg så gøre for at få mit lokale bnf centreret?
-% ok :D
-% lige det jeg ville hære ;D
-
-% tjah, godt spørgsmål. :) smid en fixme, så kigger vi på det 
-
-% det ser ud til at grammatik generelt ikke er centreret. går ud fra det er fordi det vil ligne lort med | som alternativ

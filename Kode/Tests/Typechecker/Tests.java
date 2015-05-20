@@ -18,12 +18,17 @@ public void checkMissingReturnStatement() {
     checkCode("int func(){}");
 }
 
-@Test(expected = WrongParameterTypeException.class) // Test 5
+@Test(expected = IncompatibleReturnTypeException.class) // Test 5
+public void checkWrongReturnValue() {
+    checkCode("int func() { return 5.5; }");
+}
+
+@Test(expected = WrongParameterTypeException.class) // Test 6
 public void checkWrongParameterInFunction() {
     checkCode("int func(int k, int p){ func(2.2, 2); return k + p; } ");
 }
 
-@Test(expected = RedefinitionOfConstException.class) // Test 6
+@Test(expected = RedefinitionOfConstException.class) // Test 7
 public void checkAssignmentOfConstInFunction() {
     checkCode("const int i = 7; i = 2");
 }

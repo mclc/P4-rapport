@@ -1,6 +1,12 @@
 \subsubsection{Typechecker}
-Den sidste underdel af compiler som testes, er typecheckeren. Testene ses i kodeeksempel \ref{code:typecheckertests}
+Den sidste underdel af compileren, som testes er typecheckeren. Testene ses i kodeeksempel \ref{code:typecheckertests}
 
 \Java{Kode/Tests/Typechecker/Tests.java}{Tests for typechecker}{typecheckertests}
 
-\noindent Lalala...
+\noindent Test 1 har til formål at tjekke om en værdi assignes til en variabel af den korrekte datatype. Det ses at der assignes \textit{true}, en boolsk datatype, til en float - dette skal give en \textit{IncompaitbleTypesException}.
+
+I test 2 tjekkes der om en \textit{expression}, der returnerer en boolsk værdi, bliver korrekt registreret og derved kan assignes til en bool-variabel. 
+
+De næste fire, test 3-6, omhandler funktioner og deres returværdier. I test 3 forsøger der er returnere en værdi fra en void-funktion - dette skal give en fejl. Test 4 er det omvendt; der returneres intet fra en non-void funktion. Også dette skal give fejl. Test 5 viser en \textit{int}-funktion, hvor der returneres en værdi af typen \textit{float}, hvilket typecheckeren igen skal melde fejl om. Test 6 indeholder korrekt returtype - her er det parametrene der er problemet. Funktionen \textit{func} forventer to \textit{int}s, men de aktuelle parametre er en \textit{float} og en \textit{int} - igen en fejl.
+
+Den sidste test, nummer 7,  tjekker om det er muligt at tildele en kostant variabel (const) en ny værdi. Her forventes en \textit{RedefinitionOfConstException}, da det ikke skal være muligt.

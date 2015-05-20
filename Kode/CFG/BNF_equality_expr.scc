@@ -1,9 +1,10 @@
 \begin{Grammar}
  \begin{grammar}
 
-    <and\_expr> ::= <and\_expr> "&&" <equality\_expr>
-    \alt <equality\_expr>
+    <equality\_expr> ::= <equality\_expr> "==" <greater\_less\_expr>
+    \alt <equality\_expr> "!=" <greater\_less\_expr>
+    \alt <greater\_less\_expr>
   
  \end{grammar}
- \caption{And expression}\label{gra:addexpr}
+ \caption{Equality expression}\label{gra:addexpr}
 \end{Grammar}

@@ -81,7 +81,7 @@ $A$          &                &   &    &   &    &   &    & $q_{8}$ &   &    & $q
 
 \noindent Ud fra grammatikken kan SableCC generere et \gls{ast}. Der vil her blive givet et eksempel ved hjælp af dette udtrykket, som ses i kode \ref{code:exprforast}
 
-\AnsiC{Kode/ExprForAST.c}{Udtryk der bruges til at bygge AST}{exprforast}
+\PPP{Kode/ExprForAST.c}{Udtryk der bruges til at bygge AST}{exprforast}
 
 \noindent Der bruges left-most derivation til at bygge træet. Dette vil sige at reglerne (også kaldet produktioner) udvides fra venstre mod højre. Ved at bygge træet, kan det også give mulighed for at opdage tvetydig grammatik - dette ses ved at det er muligt at lave to forskellige \gls{ast}'er ud fra samme regler og sætning.
 

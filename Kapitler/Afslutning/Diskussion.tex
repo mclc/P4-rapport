@@ -11,24 +11,35 @@ Til variabler benyttes hukommelsesområdet D, og med en egenimplementation af st
 Her gemmes værdien af variablen på stacken mens, selve variablen bliver gemt på stacken.
 Værdien ligges derefter over i hukommelsesområdet D.
 Dette giver et par fordele og ulemper, heriblandt at man ikke kan genbruge de adresser som allerede er benyttet. Dette er grundet at man ikke ved hvornår programmet er færdig med at bruge en variable, og man derved ikke kan fjerne den fra dets hukommelsesområde.
-Fordelen ved stacken er at man generelt, bortset fra variabler har en god skik for genbrug af hukommelsesadresser.
+Fordelen ved stacken er at man generelt, bortset fra variabler, har en god skik for genbrug af hukommelsesadresser.
 Dette er implementeret ved at man i push funktionen til stacken tæller adressen op, og ved pop funktionen tæller den ned igen. Derved undgår man et stort spild af adresser, hvilket er praktisk i forhold til hukommelsesområdets størrelse.
+Derudover giver det et godt overblik i Cx One, da programmøren har mulighed for at se værdien af den konkrete variable, og derved giver mulighed for at rette kode direkte i Cx One.
 
 Det er blevet vurderet som et incitament for codegeneration, at genbruge hukommelsesadresser så meget som muligt. Derfor er der lagt vægt på at benytte stacken til så mange operationer og værdier som muligt.
 Et alternativ som der blev undersøgt var en garbagecollecter, som kunne hjælpe med at fjerne ubrugte variabler fra hukommelsen, dette blev dog nedprioriteret, da der skal være omtrent 500 variabler før det bliver et problem, og det dermed vurderes til at være irrelevant for en \gls{plc}.
 
 \subsection*{Paradigme}
-Valget af paradigme blev hurtigt truffet i projektet, og på baggrund af egne erfaringer med \gls{plc}, samt undersøgelsen af hvad virksomheder benytter \gls{plc}er til, viste det sig at være mest logisk at vælge det imperativ paradigme.
+Valget af paradigme blev hurtigt truffet i projektet, og på baggrund af egne erfaringer med \gls{plc}'er, samt undersøgelsen af hvad virksomheder benytter \gls{plc}'er til, viste det sig at være mest logisk at vælge det imperativ paradigme.
 Det har vist sig at være et fornuftigt valg, da de fleste programmører kommer med en industriuddannelse, og derfor ikke kender til det objektorienterede paradigme.
-En anden grund til at det imperative paradigme blev valgt, er fordi det er reletivt simpelt, og en almindelig person kan forholde sig til det, med meget lidt erfaringen indenfor sproget. 
+En anden grund til at det imperative paradigme blev valgt, er fordi det er relativt simpelt, og en almindelig person kan forholde sig til det, med meget lidt erfaringen indenfor sproget. 
 Derudover er projektets formål at simplificere programmeringssproget, således at det er let og overskueligt at skrive programmer i det.
-På nuværende stadige, kan man skrive \gls{il} til en \gls{plc}, hvilket giver en tekstbaseret programmeringsformat, i stedet for ladderprogramming, som er en graffisk platform.
-Dette giver mulighed for at skrive i et sprog, som er mere kompakt, og derved tager kortere tid at skrive. Udfordringen ved det, er at det ikke er særlig let at lære, da man skal huske opbygningen af funktioner, samt referencer til de enkelte kald som man skal foretage.
-Ligeledes er der ikke behov for den kompleksitet som det objektorienteret paradigme giver, da \gls{plc} programmer for det mest er opbygget i flere sektioner, som hver i sær håndtere hver deres opgave.
-Derved vurderes det at det imperative paradigme er det mest passende, i forhold til de opstillede krav, omkring simplicitet og 
 
-\subsection*{Notation}
+Eksemplet på dette kan ses i kodeeksempel \ref{code:fixedfee-il} som viser hvordan et simpelt program skrives i \gls{il}, og henholdvis i \gls{lad} vist på figur \ref{fig:fixedfee-graphic}
 
+Dette giver mulighed for at skrive i et sprog (\gls{il}), som er mere kompakt, og derved tager kortere tid at skrive. Udfordringen ved det, er at det ikke er særlig let at lære, da man skal huske opbygningen af funktioner, samt referencer til de enkelte kald, som man skal foretage.
+Ligeledes er der ikke behov for den kompleksitet som det objektorienteret paradigme giver, da \gls{plc}-programmer for det mest er opbygget i flere sektioner, som hver især håndterer hver deres opgave.
+Derved vurderes det at det imperative paradigme er det mest passende, i forhold til de definerede krav, omkring simplicitet samt at det skal være overskueligt for en programmør med industriuddannelsen.
+
+\subsection*{Kravspecifikation}
+Kravspecifikation ligger til baggrund for projektets valg af funktioner som skal implementeres.
+Her vurderede gruppen at kunne nå at implementere en flere forskellige og krævende funktioner som beskrevet i \gls{moscow}-analyse ved tabel \ref{tab:moscow}.
+Dette var dog ikke en realitet, og tidspres begyndte at være en faktorer, som gruppen måtte tage stilling til.
+Derfor blev det besluttet at afgrænse i det perspektiv at studieordningen skulle overholdes, samt at der skulle kunne genereres noget brugbart kode.
+Derfor blev det valgt at prioritere de funktioner som anses for at være essentielle for at programmeringssproget stadig kan bruges. Hertil blev der vurderet at structs ville tage for lang tid at implementere i forhold til dens kompleksitet, samt hvad det vi
+
+
+.notation, 
+tidspres, snak om hvad man kan undvære, og hvad der er elementært
 
 \subsection*{Globale variabler}
 Globale variable er et attraktivt tiltag til programmering, hvorledes man kan have globale værdier tilgængelig for alle funktioner.

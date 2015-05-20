@@ -44,14 +44,13 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
     \caption{\textit{Operatorer i boolske udtryk}}
     \label{tab:operatorprioritering}
 \end{table}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent\textbf{And expression}
-
 \noindent Et "and expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 herunder kan gramatikken ses i BNF.
 \mfix{Centrer dette BNF exsempel}
 \input{Kode/CFG/BNF_and_expr.scc}
-
+\noindent Herunder ses semantikken for "And expression"
 
     \bgroup
     \def\arraystretch{3}
@@ -63,19 +62,19 @@ herunder kan gramatikken ses i BNF.
     
         $[AND-2_{BS}]$ &$\frac{and\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
         
-        $[AND-2_{BS}]$ &$\frac{equality\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
+        $[AND-3_{BS}]$ &$\frac{equality\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
         
     \end{tabular}
     \caption{AND expression}
     \label{tab:andexpr}
     \end{table}
     \egroup
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent\textbf{Or expression}
-
-\noindent Et or expression tager ligesom and expression 2 operander men returnerer sand hvis bare et af operanderne er sande. Gramatikken for and expression kan ses herunder.
+\noindent Et or expression tager ligesom "and expression" 2 operander men returnerer sand hvis bare et af operanderne er sande. Gramatikken for and expression kan ses herunder.
 
 \input{Kode/CFG/BNF_or_expr.scc}
+\noindent Herunder ses semantikken for "Or expression"
 
     \bgroup
     \def\arraystretch{3}
@@ -83,22 +82,23 @@ herunder kan gramatikken ses i BNF.
     \centering
     \begin{tabular}{l c l}
         
-        $[OR-1_{BS}]$ &$\frac{b_1 \rightarrow \; tt \quad b_2 \rightarrow \; ff}{b_1 \bigvee b_2 \rightarrow \; tt}$ & \\
+        $[OR-1_{BS}]$ &$\frac{or\_expr \rightarrow \; ff \quad and\_expr \rightarrow \; ff}{or\_expr \bigvee and\_expr \rightarrow \; ff}$ & \\
     
-        $[OR-2_{BS}]$ &$\frac{b_i \rightarrow \; ff}{b_1 \bigvee b_2 \rightarrow \; ff}$ & $i \in \{1, 2\}$\\
+        $[OR-2_{BS}]$ &$\frac{or\_expr \rightarrow \; ss}{or\_expr \bigvee and\_expr \rightarrow \; ss}$ &\\
+        
+        $[OR-2_{BS}]$ &$\frac{and\_expr \rightarrow \; ss}{or\_expr \bigvee and\_expr \rightarrow \; ss}$ &\\
         
     \end{tabular}
     \caption{OR expression}
     \label{tab:orexpr}
     \end{table}
     \egroup
-    
-\textbf{Equality expressions}
-
-\noindent\noindent Whatever
+    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\noindent\textbf{Equality expression}
+\noindent\noindent Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i den fulde syntaks og semantik i bilag.
     
     \input{Kode/CFG/BNF_equality_expr.scc}
-
+    \noindent Herunder ses semantikken for "Equality expression"
 
     \bgroup
     \def\arraystretch{3}
@@ -106,17 +106,34 @@ herunder kan gramatikken ses i BNF.
     \centering
     \begin{tabular}{l c l}
         
-        $[EQUALS-T_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;=\;expr_2 \rightarrow \; tt}$ & if $v_1 = v_2$ \\
+        $[EQUALS-T_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad greater\_less\_expr \rightarrow v_2}{equality\_expr\;=\;greater\_less\_expr \rightarrow \; tt}$ & if $v_1 = v_2$ \\
         
-        $[EQUALS-\bot_{BS}]$ &$\frac{expr_1 \rightarrow v_1 \quad expr_2 \rightarrow v_2}{expr_1\;=\;expr_2 \rightarrow \; ff}$ & if $v_1 \ne v_2$ \\
+        $[EQUALS-\bot_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad greater\_less\_expr \rightarrow v_2}{equality\_expr\;=\;greater\_less\_expr \rightarrow \; ff}$ & if $v_1 \ne v_2$ \\
         
     \end{tabular}
     \caption{Equality expressions}
     \label{tab:equaexpr}
     \end{table}
     \egroup
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent \subsubsection{Aritmetiske udtryk}
+Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses herunder.
+
+\begin{table}[Whatever]
+    \centering
+    \begin{tabular}{|l|l|}
+        \hline
+        \centering
+
+        Primær             & x++ \quad x- - \quad a{[}x{]} \quad x.y \quad (x)                 \\ \hline
+        Unær               & ++x \quad - -x \quad ! \quad -x \quad +x \quad (cast)x       \\ \hline
+        Multiplikationer   & * \quad / \quad \%                                               \\ \hline
+        Additioner         & + \quad -                                                        \\ \hline
+
+    \end{tabular}
+    \caption{\textit{Aritmetiske operatorer}
+    \label{tab:aritmetiskeOperatorer}
+\end{table}
 
 \noindent \textbf{Add and sub expressions}
 
