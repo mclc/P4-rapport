@@ -1,0 +1,19 @@
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[MULT_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr \rightarrow v_2}{equality\_expr\;*\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 * v_2$ \\
+        
+        $[DIV_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr\rightarrow v_2}{equality\_expr\;/\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 / v_2$ \\
+        
+        $[MOD_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr \rightarrow v_2}{equality\_expr\;\%\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 mod v_2$ \\
+        
+    \end{tabular}
+    \end{table}
+    \egroup
+    \caption{Add and sub expression}
+    \label{sem:addSubExpr}
+\end{semantik}

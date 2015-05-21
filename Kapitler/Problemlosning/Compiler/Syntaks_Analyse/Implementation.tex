@@ -1,37 +1,38 @@
 \subsubsection{Implementation}
 
 \mfix{Tjek ref når alt er flyttet}
-I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser og derudover genereres SableCC et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sct:visitorSableCC}).
-
-SableCC har desuden den fordel\sfix{Kan også være en ulempe} at den både genererer en scanner og parser. For at kunne gøre dette, er SableCC afhængig af en konfigurationsfil som indeholder den kontekst-fri grammatik samt hvordan det abstrakte syntaks træ bliver genereret af SableCC.
+I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser samt SableCC generer både en parser og scanner. Derudover genererer SableCC også et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sct:visitorSableCC}).
 
 SableCC's konfigurationsfil kan indeholde Helpers, Tokens, Ignored Tokens, Productions og Abstract syntax tree.
 
-Helpers er en række hjælpe grammatik der bruges i tokens, i tilfælde af ens kode. Dette kunne eks. være helperen digit der kan være alle tal mellem 0 og 9. Helperen digit bliver brugt til integer\_literal og decimal\_literal, dermed undgår man at skrive den samme gramatik flere gange.
+Helpers er en række hjælpe regulære udtryk der bruges i tokens. Dette kunne eks. være helperen digit der kan være alle tal mellem 0 og 9. Helperen digit bliver brugt til både integer\_literal og decimal\_literal, dermed undgår man at skrive det samme regulære udtryk flere gange.
 
-Tokens indeholder reglerene for lexeren. Tokens er alle mindre dele af et sprog, som bruges af parseren til at lave det abstrakte syntaks træ. Ved at bruge kommandoen \textit{--verbose} til compileren vil den printe alle tokens.
+Tokens indeholder de regulære udtryk for tokens som lexeren skal genkende\sfix{Scanner eller lexer?}. Tokens er alle mindre dele af et sprog, som bruges af parseren til \gls{ast}. Ved at bruge kommandoen \textit{--verbose} under eksekveringen af PLC++ compileren vil den printe alle tokens.
 
-Ignored tokens definerer hvilke tokens parseren skal ignorere under fremstillingen af det abstrakte syntaks træ.
+Ignored tokens definerer hvilke tokens parseren skal ignorere.
 
-Productions definerer alle regler for parseren. Produktionsreglerne definerer også hvordan reglerne skal bruges til at generere det abstrakte syntax træ. Hvis intet abstrakt syntax træ er blevet defineret laver SableCC sit eget abstrakte syntax træ ud fra productions reglerne. Det er dog i de fleste tilfælde smart at lave sit eget abstrakt syntax træ, grundet at simple matematik operationer såsom gange og plusse kan lave et meget kompliceret abstrakt syntax træ, da grammatikken ikke må være unambigius. Productionreglerne refererer til det abstrakte syntaks træ vha. tuborgklammer. \sfix{Kan det defineres mere klart}
+Productions definerer alle reglerne for parseren. Produktionsreglerne definerer også hvordan reglerne skal mappes til det tilhørende \gls{ast}, hvis sådant et er defineret. Hvis intet \gls{ast} er blevet defineret laver SableCC sit eget \gls{ast} ud fra produktionsreglerne. Det er dog i de fleste tilfælde smart\sfix{Andet ord?} at lave sit eget \gls{ast}, grundet at simple matematiske operationer såsom multiplikation og addition kan lave et meget kompliceret \gls{ast}, da grammatikken ikke må være unambigius, og dermed skal addition og multiplikation placeres i 2 seperate regler hvor additions reglen referer til multiplikationsreglen. Dermed vil mange expressions have ekstra noder som der i teorien er unødvendige. Derudover er der også problematikken med dangeling else, der ellers vil kunne resultere i at der findes 2 noder for alle statements, da produktionsreglen for statement bliver dubleret (dog med små tilretninger). 
 
-Abstract syntax tree definerer som navnet antyder hvordan det abstrakte syntaks træ ser ud og hvilke subnoder hver enkelt node har.
+Alle referencer i produktionsreglerne til \gls{ast} sker vha. tuborgklammer. \sfix{Kan det defineres mere klart?}
+
+Abstract syntax tree definerer som navnet antyder alle noder i SableCCs genererede \gls{ast}.
 
 Et udsnit af grammatikken anvendt til at generere parser/scanner til PLC++, ses på kode \ref{code:cfgudsnit}
 
 Gramatikken SableCC bruger til at lave scanneren og parseren
 
 \SCC{Kode/Udsnit.scc}{Udsnit af CFG i SableCC-syntax}{cfgudsnit}
+\mfix{Det kunne være fint og få dette kodeeksempel gjort pænere}
 
-\noindent Det er værd at bemærke at rækkefølgen ikke er bevaret i kodeeksemplet, men er opsat efter forklaringen.
+\noindent Det er værd at bemærke at der er blevet omskrevet i dele af gramatikken. Derudover er nogle dele af grammatikken simplificeret til det pågældende eksempel.
 
-På linje 1-2 ses helperen digit som bruges som en "hjælpe" regex der kan bruges til definationen af tokens.
+På linje 1-2 ses helperen digit som bruges som en "hjælpe" regulært udtryk der kan bruges til definitionen af tokens.
 
-På linje 4-8 ses en række tokens som lexeren skal genkende. Herunder parenteser, og operatoren og eller operatoren samt while keywordet.
+På linje 4-8 ses en række tokens som lexeren\sfix{Lexer vs scanner} skal genkende. Herunder parenteser, og operatoren og eller operatoren samt while keywordet.
 
-På linje 12-19 en del af production reglen for et statement. I følgende eksempel er medtaget hvordan et scope bliver defineret (linje 14-15) samt et while statement (linje 17-18). Det kan ses på linje 13 at den tilhørende overklasse node i det abstrakte syntaks træ hedder statement (udtrykt i tuborgklammerne). På linje 15 kan det derudover ses at scope refererer til statement.scope. Med andre ord, superklassen på noden er statement og den konkrete node i det abstrakte syntaks træ er scope. Noden tager også et array af statements med som parameter. SableCC genkender et array vha. hårde paranteser. Bemærk den specielle syntaks med statement.statement. Dette betyder at vi tager produktionsreglen statement og referer til den abstrakte syntaks træs node statement som produktionsreglen genererer.
+På linje 12-19 en del af produktionsreglen for et statement. I følgende eksempel er medtaget hvordan et scope bliver defineret (linje 14-15) samt et while statement (linje 17-18). Det kan ses på linje 13 at den tilhørende overklasse node i \gls{ast} der hedder statement (udtrykt i tuborgklammerne). På linje 15 kan det derudover ses at scope refererer til statement.scope. Med andre ord, superklassen på noden er statement og den konkrete node i \gls{ast} er scope. Noden tager også et array af statements med som parameter. SableCC genkender et array vha. hårde paranteser. Bemærk den specielle syntaks med statement.statement. Dette betyder at vi tager produktionsreglen statement og indikerer at SableCC skal omskrive til \gls{ast} noden.\sfix{Omskriv muligvis?}
 
-På linje 21-31 ses 2 expressions herunder and og or expression. For at specialisere precendence i SableCC er man nødt til at lave denne særlige konstruktion der gør sådan at and expression bliver prioriteret højere end or expression (En af ulemperne ved SableCC). Dette giver dog som standard et meget grimt abstrakt syntaks træ, da alle faktorer også bliver en seperat node. Eksempelvis for at lave en andExpr skal man først have en factorOrExpr node og derefter en andAndExpr node. Derfor kan man lave sit eget abstrakte syntaks træ som kun indeholder en expr node. En meget lille del af expr node i det abstrakte syntaks træ kan ses på linje 33-37. Her vises compareAndExpr og compareOrExpr. Som der refereres til i produktionsreglerne.
+På linje 21-31 ses 2 expressions herunder and og or expression. For at specialisere precendence i SableCC er man nødt til at lave denne særlige konstruktion der gør sådan at and expression bliver prioriteret højere end or expression (En af ulemperne ved SableCC). Dette giver dog som standard et uhensigtsmæssigt \gls{ast}, da alle faktorer også bliver en separat node. Eksempelvis skal man for at lave en andExpr først have en factorOrExpr node og derefter en andAndExpr node. Derfor er det en fordel at lave et seperat \gls{ast} som kun indeholder en expr node. En meget lille del af expr node i \gls{ast} kan ses på linje 33-37. Her vises compareAndExpr og compareOrExpr. Som der referereres til i produktionsreglerne.
 
 %På linje 1-2 ses definitionen for et \textit{while\_statement} - altså en løkke af typen while. Teksten i tuborgklammerne angiver navnet, som kan bruges til intern brug i programmet. Herefter fortæller grammatikken hvad et \textit{while\_statement} består af. Det første, \textit{while\_keyword}, er defineret på linje 4 som værende teksten "while"\mbox{}. Da det ikke er muligt at skrive keywords på samme måde som i \gls{bnf}, er det nødvendigt at definere alle i starten af konfigurationsfilen.
 
@@ -43,7 +44,7 @@ På linje 21-31 ses 2 expressions herunder and og or expression. For at speciali
 \label{subsec:danglingelse}
 Et af det meget ofte forekommende problemer under skrivningen af gramatikken til et sprog er dangling else problematikken. Problemet er aktuelt i alle sprog der har mulighed for at lave if-statements uden klart at definere start og slut på det pågældende if-statement.
 
-Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; som kan parses på 2 forskellige måder ved en grammar specifikation som vist i kode \ref{gra:dangProb}.
+Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; som kan parses på 2 forskellige måder ved en grammar specifikation som vist i kode \ref{gra:dangProb} (Se de 2 forskellige måder i figur \ref{fig:danglingElseProblem}).
 
 \begin{Grammar}
  \begin{grammar}
@@ -54,13 +55,11 @@ Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; 
  \caption{Gramatik med dangeling else problemet}\label{gra:dangProb}
 \end{Grammar}
 
-\sfix{Indsæt kode}
+\tikzfigure{Figurer/TikZ/DangelingElseAst2.tex}{2 forskellige \gls{ast} ud fra eksemplet if (expr) if (expr) statement; else statement; med grammatikken \ref{gra:dangProb}}{danglingElseProblem}
 
-\tikzfigure{Figurer/TikZ/DangelingElseAst2.tex}{2 forskellige abstrakte syntaks træer ud fra eksemplet if (expr) if (expr) statement; else statement; med grammatikken \ref{gra:dangProb}}{danglingElseProblem}
+Problematikken kan løses på flere måder. En af måderne er at tilføje et keyword/tegn der gør det muligt at afgøre hvilket else der hører til hvilket if. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje tuborgklammer ved alle if og else statements, eller tilføje et begin og end keyword.
 
-Problematikken kan løses på flere måder. En af måderne er at tilføje et keyword/tegn der gør det muligt at afgøre hvilket else der hører til hvilket if. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje tuborgklammer ved alle if og else statements.
-
-En anden løsning er at sørge for at alle statements inde i et if-statement er et if-else statement, således at det kun er muligt at generere det abstrakte syntaks træ på en måde. Dette giver dog meget dubleret kode, da if typisk ligger sammen med mange andre typer af statements og derfor skal alle disse statements skrives 2 gange.
+En anden løsning er at sørge for at alle statements inde i et if-statement er et if-else statement, således det kun er muligt at generere \gls{ast} på en måde. Dette giver dog meget dubleret kode, da if typisk ligger sammen med mange andre typer af statements og derfor skal alle disse statements skrives 2 gange.
 
 Et eksempel kan ses i kode \ref{gra:dangFix}.
 
@@ -80,11 +79,7 @@ Et eksempel kan ses i kode \ref{gra:dangFix}.
  \caption{Grammatik der løser problemet med dangling else}\label{gra:dangFix}
 \end{Grammar}
 
-PLC++ er implementeret med den sidstnævnte metode.
-
-subsec:parser <-------
- 
-\mfix{Lav x-ref til mit afsnit på et tidspunkt, i test-afsnittet}
+PLC++ er implementeret med den sidstnævnte metode. Der er desuden lavet nogle tests i afsnit \ref{subsec:parser} for at sikre at der ikke er problemer med dangling else og at kildekoden genererer det ønskede \gls{ast} (tætteste if knytter sig til else statementet).
 
 \subsubsubsection{SableCC's implementation af lexer og parser}
 \noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.

@@ -14,7 +14,7 @@ Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden
         
         $[VAR-DECL_{BS}]$ & $
         \frac{\langle D_V, env_v^{\prime\prime}, sto[l \mapsto v] \rangle\;\rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
-        {\langle type\; x = a;\; D_V, env_V, sto \rangle\; \rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
+        {\langle T\; x = a;\; D_V, env_V, sto \rangle\; \rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
         $ & \\
         
         & \multicolumn{1}{l}{where $ env_V, sto \vdash a \rightarrow_a v $}\\
@@ -28,12 +28,12 @@ Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden
         $
         
     \end{tabular}
-    \label{tab:variabler}
     \end{table}
     \egroup
     \caption{Deklaration af variabler}
+    \label{sem:variabler}
 \end{semantik}
-\mfix{Ved ikke lige hvordan vi håndterer at vi har forskellige typer}
+
 
 
 \subsubsection*{Funktioner}
@@ -50,7 +50,7 @@ Vi kører fuld dynamisk. Blablabla...
         
         $[FUNC-DECL_{BS}]$ & $
         \frac{env_V \vdash \langle D_F, env_F[f \mapsto (S, x)] \rangle \rightarrow_{DF}\; env_F^\prime}
-        {env_V \vdash \langle type f(type x) \{ S \}\; ; D_F, env_F \rangle \rightarrow_{DF}\; env_F^\prime}
+        {env_V \vdash \langle T f(T x) \{ S \}\; ; D_F, env_F \rangle \rightarrow_{DF}\; env_F^\prime}
         $ & \\
         
         $[FUNC-EMPTY_{BS}]$ & $
@@ -58,17 +58,37 @@ Vi kører fuld dynamisk. Blablabla...
         $
         
     \end{tabular}
-    \label{tab:funktioner}
     \end{table}
     \egroup
     \caption{Deklaration af funktioner}
+    \label{sem:funktioner}
 \end{semantik}
-\mfix{Ved ikke lige hvordan vi håndterer at vi har forskellige typer}
 
-\subsubsubsection{testhest}
+\mfix{Vi skal på en måde definere hvad T er. Spørg Rune}
 
 
-\subsubsection*{}
+\subsubsection*{Array}
+
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[ARRAY-DECL_{BS}]$ & $
+        \frac{env_V\; \vdash e \rightarrow\; v\;:\;Int}
+        {env_V\; \vdash T\; A[e];}
+        $ & .. \\
+        
+    \end{tabular}
+    \end{table}
+    \egroup
+    \caption{Deklaration af array}
+    \label{sem:arraydecl}
+\end{semantik}
+
+\mfix{Der skal gøres noget mere. Spørg Rune}
 
 \subsubsection*{}
 

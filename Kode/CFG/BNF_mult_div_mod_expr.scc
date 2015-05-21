@@ -1,0 +1,11 @@
+\begin{Grammar}
+ \begin{grammar}
+
+    <mult\_div\_mod\_expr> ::= <equality\_expr> "*" <unary\_prefix\_expr>
+    \alt <mult\_div\_mod\_expr> "/" <unary\_prefix\_expr>
+    \alt <mult\_div\_mod\_expr> "\%" <unary\_prefix\_expr>
+    \alt <unary\_prefix\_expr>
+  
+ \end{grammar}
+ \caption{Equality expression}\label{gra:equalityExpr}
+\end{Grammar}

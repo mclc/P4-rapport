@@ -56,9 +56,13 @@ Operatorere &  &  & 		   \\ \bottomrule
 \noindent Som en forklaring på disse funktioner beskrives de i kategorier herunder.\\
 
 \noindent\textbf{Structs}
-....
-\mefix{Søren den her tager vi lige sammen}\\
+Structs er en måde at gruppere data således man har en type der kan indeholde flere og forskellige typer. Derudover skal hver variabel i en struct have et navn, som derfor hjælper for abstraktionen. Eksempelvis skal et punkt have både en x og y kordinat. En funktion vil dermed kunne tage et punkt som input parameter, i stedet for at skulle overføre de enkelte variabler. Structs bliver dermed en meget stor fordel ved behov for mange variabler.
 
+For at øge abstraktionen yderligere kan man implementere muligheden for funktioner inde i structs. Dette giver mulighed for at stille en række hjælpemetoder til rådighed for den konkrete struct. Dermed slippes for funktioner med forskellige prefixes for at forhindre at funktionsnavnene konflikter.
+
+En måde man kan øge abstraktions niveauet yderligere er vha. information hiding således det er muligt at skjule konkrete implementationsdeltalier for resten af koden. Derudover kan nedarvning og polyformeri også være godt for genbrugeligheden i kode.
+
+Disse egenskaber definere desuden det objektorienterede paradigme, som derfor tilbyder endnu højere abstraktion end den helt simple struct der kun kan indeholde felter. Dog kaldes det objekter i det objektorienterede paradigme. Derudover er der også forskel på hukommelseshåndteringen mellem objekter og structs.
 
 \noindent\textbf{Arrays}
 er en let og overskuelig måde at opbevarer et dataset, og er derfor på listen over Must have. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}.
@@ -66,7 +70,7 @@ er en let og overskuelig måde at opbevarer et dataset, og er derfor på listen 
 Men for at øge abstraktions niveauet og dermed gøre det mere overskueligt for programmøren ville en implementation af denne funktion være ideel.\\
 
 \noindent\textbf{Const}
-giver mulighed for at vibeholde dataene i den pågældende variable, og derved giver den en form for skrivebeskyttelse, således at man ikke kan overskrive denne.
+giver mulighed for at bibeholde dataene i den pågældende variablel, og derved giver den en form for skrivebeskyttelse, således at man ikke kan overskrive denne.
 
 Funktionen er placeret under could have, da den ikke er essentiel for at programmet kan kører, eller gør det lettere for programmøren. 
 Dog kan den i flere tilfælde være rar at benytte, og tilføjes derfor som en mulig implementation.\\
@@ -99,8 +103,7 @@ Dette er med til at øge abstraktionsniveauet og giver mulighed for at genbruge 
 Funktioner er en af byggestenene for programmeringssproget og er derved kategoriseret som must have.\\
 
 \noindent\textbf{Betingede udtryk}
-....
-\mefix{100\% Søren den her tager vi lige sammen}\\
+Betingede udtryk er et udtryk der giver mulighed for at først have en betingelse og så en expression hvis betingelsen er sand eller en anden hvis betingelsen er falsk.\\
 
 \noindent\textbf{Generelt} er der integreret flere funktioner som hovedsageligt er mere globale og kan bruges generelt i flere sammenhænge. En af disse funktioner er kommentarer som er essentielt for et programmeringssprog at indeholde, og derfor er funktionen placeret under Must have. Kommentarer giver mulighed for at strukturere kode, og skriv en kommentar til det, hvilket kan gøre det mere overskueligt i store såvel som små programmer.
 
@@ -137,8 +140,6 @@ Dette vil sige at et for loop i sproget COBOL er mere læsbart i forhold til C\#
 \CSharp{Kode/Readability-csharp.cs}{For-loop}{ekscsharp}
 
 
-
-
 \noindent\textbf{Writeability} er hvordan koden skrives i et dokument, samt hvilken syntaks der benyttes. Dette er med til at sikre, at programmøren hurtigt og effektivt kan skrive koden.
 
 Dette kan være en hurtigere repræsentation af funktionen, som gør det hurtigere at skrive det. Dette giver et trade-off i Readability, da det gør det sværer at læse.\\
@@ -152,7 +153,7 @@ Dette giver programmøren uafhængighed i forhold til hvilken producent vil arbe
 Herunder er Learnability hvor nemt programmøren har ved at indlærer nye funktioner, ud fra dokumentationen, da programmøren umuligt kan huske alle funktioner i et stort sprog, og derved skal kunne indlærer det på ny, ved at kigge på et dataark. \\
 Learnability er placeret under mindre vigtigt, da sproget er prioriteret til automatikteknikere, som har gennemgået et grundkursus, hvilket er med til at sikre at den kommende programmør bliver sat ordenligt ind i sproget. Hermed er det valgt at nedprioritere sprogets learnability, således der kan implementeres flere funktioner, som giver en rig mulighed for udnyttelse af hele \gls{plc}´en.\\
 
-\noindent\textbf{Orthogonality} er\\
+\noindent\textbf{Orthogonality} er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner. Særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer er sproget altså ortogonalt.\\\sfix{Tjek op på forklaringen}
 
 \noindent\textbf{Reliability} er hvordan koden håndtere fejl, og hvor pålideligt det generelt er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
 

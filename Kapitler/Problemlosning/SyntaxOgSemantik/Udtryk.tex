@@ -102,10 +102,10 @@ Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men 
 \subsubsubsection{Equality expression}
 Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i bilag.
     
-    \input{Kode/CFG/BNF_equality_expr.scc}
-    \noindent Herunder ses semantikken for \textit{Equality expression}. Hvis der taget udgangspunkt i \textit{EQUALS-T} læses gramatikken således: Hvis equality\_expr evaluerer til v1 og greater\_less\_expr evaluerer til v2 så er equality\_expr lig med greater\_less\_expr true, hvis v1 og v2 er lig med hinanden.
+\input{Kode/CFG/BNF_equality_expr.scc}
+\noindent Herunder ses semantikken for \textit{Equality expression}. Hvis der taget udgangspunkt i \textit{EQUALS-T} læses gramatikken således: 
 
-
+\noindent Hvis \textit{equality\_expr} evaluerer til $v_1$ og \textit{greater\_less\_expr} evaluerer til $v_2$ så er udtrykket \textit{"equality\_expr = greater\_less\_expr"} \textit{true}, hvis $v_1$ og $v_2$ er lig med hinanden.
 
 \begin{semantik}
     \bgroup
@@ -122,7 +122,7 @@ Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre en
     \end{table}
     \egroup
     \caption{Equality expressions}
-    \label{tab:equalityExpr}
+    \label{sem:equalityExpr}
 \end{semantik}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Aritmetiske udtryk}
@@ -146,8 +146,10 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
 \end{table}
 
 \subsubsubsection{Add and sub expressions}
+\textit{Add and sub expressions} plusser og minuser henholdsvis de to operander og returnerer et heltal eller kommatal alt efter operandernes type. Hvis en af operanderne er af typen \textit{float} returnerer udtrykket en float, ellers returnerer udtrykket \textit{Int}. Nedenfor ses gramatikken for \textit{Add and sub expressions}
+
     \input{Kode/CFG/BNF_add_sub_expr.scc}
-    \noindent Herunder ses semantikken for "Add and sub expressions"
+    \noindent Herunder ses semantikken for "Add and sub expressions" og den læses på samme måde som ved \textit{AND expression}.
 
 \begin{semantik}
     \bgroup
@@ -166,3 +168,18 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
     \caption{Add and sub expression}
     \label{sem:addSubExpr}
 \end{semantik}
+
+\subsubsubsection{Mult, div and mod expression}
+\textit{Mult, div and mod expression} kommer i tre forskellige varianter. Mult returnerer produktet af de to operander. Div returnerer heltalsdivisionen og mod returnerer resten af en division. Nedenfor ser man grametikken for \textit{Mult, div and mod expression}
+\input{Kode/CFG/BNF_mult_div_mod_expr.scc}
+
+Nedenfor ses semantikken som læses på samme måde som ved \textit{AND expression}.
+
+\input{Kode/Semantik/SEM_mult_div_mod_expr.sem}
+
+\subsubsubsection{Incerment and decrement expressions}
+whatever gramatik
+    \input{Kode/CFG/BNF_unary_prefix_expr.scc}
+
+Whatever semantik
+\input{Kode/Semantik/SEM_unary_prefix_expr.sem}

@@ -24,15 +24,19 @@ Sproget PLC++ består af en række forskellige statements. Statements som erklæ
         if $s \vdash b \rightarrow_b ff$ \\
 
     \end{tabular}
-    \label{tab:while}
     \end{table}
     \egroup
     \caption{While-løkke}
+    \label{sem:while}
     \end{semantik}
     
 Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
 
 \noindent \subsubsection{If-else statements}
+
+If-else statements har til formål at tjekke om et givent boolsk udtryk er sandt. Hvis dette er tilfældet, skal statements i den første block udføres. Er det derimod falsk, er det statements i blok to, som skal udføres. Hvis der tages et kig på semantik \ref{sem:ifelse} ses to forskellige transition rules \mfix{Dansk?}: en for sand, og en for falsk. 
+
+
 
 \begin{semantik}
     \bgroup
@@ -52,10 +56,10 @@ Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskr
         $ & if $s \vdash b \rightarrow_b ff$ \\
         
     \end{tabular}
-    \label{tab:ifelse}
     \end{table}
     \egroup
     \caption{If-else statement}
+    \label{sem:ifelse}
 \end{semantik}
     
 \noindent \subsubsection{Funktionskald}
@@ -84,16 +88,33 @@ Der bliver brugt pass by value...
         & where $ env_F f = (S, x, env_V^\prime, env_F^\prime), env_V, sto\;\vdash a \rightarrow_a\;v$ and $l = env_V\;next $&
         
     \end{tabular}
-    \label{tab:funktionskald}
     \end{table}
     \egroup
     \caption{Funktionskald}
+    \label{sem:funktionskald}
 \end{semantik}
 
     
 \noindent \subsubsection{Arrays}
     
-    
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[ARRAY_{BS}]$ & $
+        \frac{..}
+        {..}
+        $ & .. \\
+        
+    \end{tabular}
+    \end{table}
+    \egroup
+    \caption{Array}
+    \label{sem:arrayvalue}
+\end{semantik}
     
 \noindent \subsubsection{Structs}
 Blablabla... \mfix{Er absolut ikke sikker på dette}
@@ -122,10 +143,11 @@ Blablabla... \mfix{Er absolut ikke sikker på dette}
         $}
         
     \end{tabular}
-    \label{tab:structs}
+    
     \end{table}
     \egroup
     \caption{Structs}
+\label{sem:structs}
 \end{semantik}
 
 \mfix{Labels skal flyttes, så vi kan ref til semantik i stedet for tabel}

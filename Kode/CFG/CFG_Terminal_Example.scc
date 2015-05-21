@@ -1,1 +1,1 @@
-port_identifier ::= ('I' | 'Q' | 'M' | 'AI' | 'AQ') '#';
+port_identifier ::= ('I' | 'Q' | 'AI' | 'AQ') '#';
