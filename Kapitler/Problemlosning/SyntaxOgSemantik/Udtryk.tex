@@ -49,13 +49,13 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
     \label{tab:operatorerboolsk}
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent\textbf{And expression}
+\subsubsubsection{AND expression}
 
-\noindent Et "and expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
+\noindent Et "AND expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 herunder kan gramatikken ses i BNF.
 
 \input{Kode/CFG/BNF_and_expr.scc}
-\noindent Herunder ses semantikken for "And expression". Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: Hvis and_expr er true og equality_expr er true så er udtrykket and_expr og equality_expr 
+\noindent Herunder ses semantikken for \textit{And expression}. Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: Hvis \textit{and\_expr} er \textit{true} og \textit{equality\_expr} er \textit{true} så evaluerer udtrykket \textit{and\_expr} og \textit{equality\_expr} til true.
 
     \bgroup
     \def\arraystretch{3}
@@ -75,12 +75,11 @@ herunder kan gramatikken ses i BNF.
     \end{table}
     \egroup
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent\textbf{Or expression}
-
-\noindent Et "or expression" tager ligesom "and expression" 2 operander men returnerer sand hvis bare en af operanderne er sande. Gramatikken for and expression kan ses herunder.
+\subsubsubsection{OR expression}
+Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men returnerer \textit{true} hvis bare en af operanderne er \textit{true}. Gramatikken for \textit{AND expression} kan ses herunder.
 
 \input{Kode/CFG/BNF_or_expr.scc}
-\noindent Herunder ses semantikken for "Or expression"
+\noindent Herunder ses semantikken for \textit{OR expression}. Semantikken læses som på samme måde dom ved \textit{AND expression}.
 
     \bgroup
     \def\arraystretch{3}
@@ -90,9 +89,9 @@ herunder kan gramatikken ses i BNF.
         
         $[OR-1_{BS}]$ &$\frac{or\_expr \rightarrow \; ff \quad and\_expr \rightarrow \; ff}{or\_expr \bigvee and\_expr \rightarrow \; ff}$ & \\
     
-        $[OR-2_{BS}]$ &$\frac{or\_expr \rightarrow \; ss}{or\_expr \bigvee and\_expr \rightarrow \; ss}$ &\\
+        $[OR-2_{BS}]$ &$\frac{or\_expr \rightarrow \; tt}{or\_expr \bigvee and\_expr \rightarrow \; tt}$ &\\
         
-        $[OR-2_{BS}]$ &$\frac{and\_expr \rightarrow \; ss}{or\_expr \bigvee and\_expr \rightarrow \; ss}$ &\\
+        $[OR-2_{BS}]$ &$\frac{and\_expr \rightarrow \; tt}{or\_expr \bigvee and\_expr \rightarrow \; tt}$ &\\
         
     \end{tabular}
     \caption{OR expression}
@@ -100,12 +99,14 @@ herunder kan gramatikken ses i BNF.
     \end{table}
     \egroup
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent\textbf{Equality expression}
-
-\noindent\noindent Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i bilag.
+\subsubsubsection{Equality expression}
+Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i bilag.
     
     \input{Kode/CFG/BNF_equality_expr.scc}
-    \noindent Herunder ses semantikken for "Equality expression"
+    \noindent Herunder ses semantikken for \textit{Equality expression}. Hvis der taget udgangspunkt i \textit{EQUALS-T} læses gramatikken således: Hvis equality\_expr evaluerer til v1 og greater\_less\_expr evaluerer til v2 så er equality\_expr lig med greater\_less\_expr true, hvis v1 og v2 er lig med hinanden.
+
+
+
 \begin{semantik}
     \bgroup
     \def\arraystretch{3}
@@ -124,7 +125,7 @@ herunder kan gramatikken ses i BNF.
     \label{tab:equalityExpr}
 \end{semantik}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\noindent \subsubsection{Aritmetiske udtryk}
+\subsubsection{Aritmetiske udtryk}
 Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses herunder. Kun de mest basale aritmetiske udtryk vil blive gennemgået her. Resten kan findes i bilag.
 
 
@@ -144,7 +145,7 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
     \label{tab:aritmetiskeOperatorer}
 \end{table}
 
-\noindent \textbf{Add and sub expressions}
+\subsubsubsection{Add and sub expressions}
     \input{Kode/CFG/BNF_add_sub_expr.scc}
     \noindent Herunder ses semantikken for "Add and sub expressions"
 
