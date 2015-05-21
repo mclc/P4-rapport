@@ -40,20 +40,19 @@ Ulempen ved at afgrænse structs, er selvfølgelig at man ikke får mulighed for
 En af disse er Timer som blev specificeret til at skulle bruge structs i grammar, dette er dog ikke særlig smart, da timer ofte bliver brugt på en \gls{plc}, men på daværende tidspunkt, var ideen at man kunne genbruge noget kode, i forhold til at omskrive Timer til en Struct.
 Det vurderes til at være et nødvendigt valg at afgrænse denne funktion, for at opretholde studieordningen samt deadlinen og afleveringen af projektet, dog ikke hensigtsmæssigt i forhold til programmeringssprogets funktionalitet.
 
+\gls{moscow}-analysen har ligeledes port som en funktion som skal implementationer, da det er her \gls{plc}en modtager og udsender data fra.
+Det er derfor vigtigt at der er en let måde at håndtere port på, hvilket er håndteret ved at benytte en promilleskala.
+Dette giver et højt abstraktionsniveau for programmøren, da han ikke skal benytte kommatal, eller enorme værdier hvilket hurtigt kan gøre det uoverskueligt.
+Selvom dette aldrig blev implementeret på grund af tidsmangel, er der nogle ulemper som blev forudset.
+Der kan forekomme moduler, som afgiver et analogt inputsignal som er et kommatal, hvilket derfor ikke kan aflæses til fuld præcision. Dette giver problemer i forhold til temperaturmålere, som skal være nøjagtige, og derfor ikke kan bruge denne promille skala.
+Hertil kan der være moduler som har en præcision på mere end promille skalaen kan håndtere, og derved ville man tabe præcision.
+Dette kunne have været implementeret ved ????? \mefix{Jeg ved ikke lige hvad vi kan gøre istedet for promille, udover at bare have det som simple tal}
+
 \subsection*{Globale variabler}
 Globale variable er et attraktivt tiltag til programmering, hvorledes man kan have globale værdier tilgængelig for alle funktioner.
 Dette giver mulighed for at have en global counter variable, som tælles op når en handling er udført.
 Implementationen af globale variabler har ledt an til en problemstilling, som forekommer når PLC++ omskrives til instruction list. Problemet er at \gls{plc}en kun kan håndtere variabler som var de globale.
 Derfor kan man ikke redefinere en variable, ej heller inde i et scope, hvilket giver anledning til problemer.
 Dette er tilgængeligt i de fleste programmeringssprog at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
-
-
-\subsection*{Port}
-Port er en af de vigtigste implementationer, da det er her \gls{plc}en modtager og udsender data fra.
-Port bliver håndteret i promille hvilket er baseret på at det skulle være let at i
-
-
-\mgfix{ Omtal "Port" datatypens opløsning i promille kunne laves anderledes da vi maksimalt kan have en opløsning på 1/1000 del. Fordele ved usability ulemper ved grov opløsning på ind- og udgangskort.}
-
 
 

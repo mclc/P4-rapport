@@ -1,2 +1,73 @@
 \noindent \subsection{Declarations}
 Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden.
+
+\mfix{Her mangler vi med variabler, og funktionsdeklarationer - og alt det andet}
+
+\subsubsection*{Variabler}
+
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{1.5}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[VAR-DECL_{BS}]$ & $
+        \frac{\langle D_V, env_v^{\prime\prime}, sto[l \mapsto v] \rangle\;\rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
+        {\langle type\; x = a;\; D_V, env_V, sto \rangle\; \rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
+        $ & \\
+        
+        & \multicolumn{1}{l}{where $ env_V, sto \vdash a \rightarrow_a v $}\\
+        & \multicolumn{1}{l}{and $ l = env_V\; next $}\\
+        & \multicolumn{1}{l}{and $ env_V^{\prime\prime} = env_V[x \mapsto l] [next \mapsto new\;l] $}\\
+        
+        &&\\
+        
+        $[EMPTY-VAR_{BS}]$ & $
+        \langle \epsilon, env_V, sto \rangle \rightarrow_{DV}\; (env_V, sto) 
+        $
+        
+    \end{tabular}
+    \label{tab:variabler}
+    \end{table}
+    \egroup
+    \caption{Deklaration af variabler}
+\end{semantik}
+\mfix{Ved ikke lige hvordan vi håndterer at vi har forskellige typer}
+
+
+\subsubsection*{Funktioner}
+
+Vi kører fuld dynamisk. Blablabla...
+
+
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{3}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[FUNC-DECL_{BS}]$ & $
+        \frac{env_V \vdash \langle D_F, env_F[f \mapsto (S, x)] \rangle \rightarrow_{DF}\; env_F^\prime}
+        {env_V \vdash \langle type f(type x) \{ S \}\; ; D_F, env_F \rangle \rightarrow_{DF}\; env_F^\prime}
+        $ & \\
+        
+        $[FUNC-EMPTY_{BS}]$ & $
+        env_V \vdash \langle \epsilon, env_F \rangle \rightarrow_{DF}\; env_F
+        $
+        
+    \end{tabular}
+    \label{tab:funktioner}
+    \end{table}
+    \egroup
+    \caption{Deklaration af funktioner}
+\end{semantik}
+\mfix{Ved ikke lige hvordan vi håndterer at vi har forskellige typer}
+
+
+\subsubsection*{}
+
+\subsubsection*{}
+
+\subsubsection*{}

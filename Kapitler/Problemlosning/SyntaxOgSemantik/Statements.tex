@@ -1,11 +1,7 @@
-
-
 \noindent \subsection{Statements}
-Sproget plc++ består af en række forskellige statements. Statements som erkleringer, funktionskald loops og mange andre. Under dette afsnit vil de mest betydende statement typer blive gennemgået og forklaret. Den fulde syntaks og semantik specifikation kan findes i bilag.
+Sproget PLC++ består af en række forskellige statements. Statements som erklæringer, funktionskald, løkker og mange andre. Under dette afsnit vil de mest betydende statements typer blive gennemgået og forklaret. Den fulde syntaks og semantik specifikation kan findes i bilag.
 
 \input{Kapitler/Problemlosning/SyntaxOgSemantik/Declarations.tex}
-
-
 
 \input{Kapitler/Problemlosning/SyntaxOgSemantik/Udtryk.tex}
 
@@ -60,4 +56,76 @@ Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskr
     \end{table}
     \egroup
     \caption{If-else statement}
-    \end{semantik}
+\end{semantik}
+    
+\noindent \subsubsection{Funktionskald}
+
+Blablabla... Deklaration af funktioner findes i semantik x.x \mfix{Ref til funktionsdeclaration}
+
+Der bliver brugt pass by value...
+
+
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{1.5}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        $[CALL_{BS}]$ & 
+        $ \frac
+        {
+            env_V^\prime [x \mapsto l]\;[next \mapsto new l], env_F^\prime\;\vdash \langle S, sto[l \mapsto v] \rangle \rightarrow sto^\prime
+        }
+        {
+            env_V, env_F\;\mapsto \langle call f(a), sto \rangle \rightarrow sto^\prime
+        } $ & \\
+        
+        & where $ env_F f = (S, x, env_V^\prime, env_F^\prime), env_V, sto\;\vdash a \rightarrow_a\;v$ and $l = env_V\;next $&
+        
+    \end{tabular}
+    \label{tab:funktionskald}
+    \end{table}
+    \egroup
+    \caption{Funktionskald}
+\end{semantik}
+
+    
+\noindent \subsubsection{Arrays}
+    
+    
+    
+\noindent \subsubsection{Structs}
+Blablabla... \mfix{Er absolut ikke sikker på dette}
+\begin{semantik}
+    \bgroup
+    \def\arraystretch{2}
+    \begin{table}[H]
+    \centering
+    \begin{tabular}{l c l}
+        
+        \multirow{4}{*}{$[STRUCT_{BS}]$} &
+        \multicolumn{1}{l}{$ env_R \vdash \langle D_V, env_V \rangle \rightarrow env_v^\prime$} \\
+        
+        & \multicolumn{1}{l}{$ env_R, env_V^\prime \vdash \langle D_F, env_F \rangle \rightarrow env_F^\prime $} \\
+        
+        & \multicolumn{1}{l}{$ \langle D_R, env_R, env_V^\prime \rangle \rightarrow_{DS}\;(env_R^\prime, env_V^{\prime\prime}) $} \\
+        
+        
+        & \multicolumn{1}{l}{$ \frac
+            {
+              \langle D_R^\prime, env_R[r \mapsto (env_R^\prime, env_V^{\prime\prime}, env_F^\prime)], env_V^{\prime\prime} \rangle                                       \rightarrow_{DS}\;(env_R^{\prime\prime}, env_V^{\prime\prime\prime})
+            }
+            {
+                \langle struct\;str =\;\{ D_V\;D_F \}, env_R, env_V \rightarrow_{DS}\;(env_R^{\prime\prime}, env_V^{\prime\prime\prime})
+            } 
+        $}
+        
+    \end{tabular}
+    \label{tab:structs}
+    \end{table}
+    \egroup
+    \caption{Structs}
+\end{semantik}
+
+\mfix{Labels skal flyttes, så vi kan ref til semantik i stedet for tabel}

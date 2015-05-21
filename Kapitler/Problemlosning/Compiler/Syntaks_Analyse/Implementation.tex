@@ -103,14 +103,14 @@ subsec:parser <-------
 \centering
 \footnotesize
 \rowcolors{2}{blue!10}{white}
-\begin{tabular}{l@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}m{5em}|l|l|l|l|l|l|l|l|l|l|l|l|l|l}
+\begin{tabular}{l@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}l|l|l|l|l|l|l|l|l|l|l|l|l}
 
-$\delta$         & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $q_{12}$ & $q_{13}$ & $f$ \\ \bottomrule
-$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{8}$\} &   & $q_{11}$ &   & $q_{11}$ &   & $q_{11}$ &   &   & $q_{11}$ &    &    & $q_{11}$ &    &   \\ 
-$I$ & & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ 
-$Q$ & &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ 
-$A$ & &   &    &   &    & $q_{6}$  &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ 
-\#  & &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\
+$\delta$         & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $f$ \\ \bottomrule
+$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{8}$\} &   & $q_{11}$ &   & $q_{11}$ & & & $q_{11}$ & & & $q_{11}$ & &\\ 
+$I$ & & $q_2$ & &       & &       & $q_7$ & &       &          & &     & \\ 
+$Q$ & &       & & $q_4$ & &       &       & &       & $q_{10}$ & &     & \\ 
+$A$ & &       & &       & & $q_6$ &       & & $q_9$ &          & &     & \\ 
+\#  & &       & &       & &       &       & &       &          & & $f$ & \\
 \end{tabular}
 	\caption{Transitionsfunktion til NFA (alle tommer celler angiver den tomme mængde)}
     \label{tab:nfadelta}

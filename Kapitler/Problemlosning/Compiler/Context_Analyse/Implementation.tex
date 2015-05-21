@@ -19,7 +19,7 @@ SableCC's visitor mønster er nu forklaret som skal bruges til scope checkeren, 
 \subsubsubsection{Scope checker}
 Scope checkerens opgaver er at tjekke at de konkrete identifiers kan tilgås i den konkrete kontekst. Dog skal der her tages højde for om der er statisk scope eller dynamisk scope. PLC++ specikationen siger at der skal være dynamisk scope for funktioner, structs og globale variabler, mens der skal være statisk scope inden for alle funktioner. Ved at have dynamisk scope for funktioner, og structs kan vi desuden slippe for header filer, prototyper og en hel masse begynder programmør fejl.
 
-For at håndtere dynamisk scope køres først en præprocessor der indlæser funktioner, structs og globale variabler ind i symboltabellen. Dernæst køres scopecheckeren der tjekker hver gang der stødes på en identifier om den konkrete identifier eksisterer i det pågældende scope. Den håndterer også oprettelsen af lokale variabler, sålededes det ikke er muligt at bruge en lokal variabel der ikke er blevet deklareret endnu (static scope).
+For at håndtere dynamisk scope køres først en præprocessor der indlæser funktioner, structs og globale variabler ind i symboltabellen. Dernæst køres scopecheckeren der tjekker hver gang der stødes på en identifier om den konkrete identifier eksisterer i det pågældende scope. Den håndterer også oprettelsen af lokale variabler, således det ikke er muligt at bruge en lokal variabel der ikke er blevet deklareret endnu (static scope).
 
 For at forhindre at alle funktioner, structs og globale variabler bliver registret to gange (både i præprocessoren og scopecheckeren) overrides case metoderne fra DeptFirstAdapteren og de bliver sat til at gøre ingenting.
 
