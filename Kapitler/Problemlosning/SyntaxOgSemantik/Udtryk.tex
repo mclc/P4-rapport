@@ -3,6 +3,7 @@ Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer u
 
 \subsubsection{Operatorer}
 I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
+
 \begin{table}[H]
     \centering
     \begin{tabular}{|l|l|}
@@ -22,9 +23,11 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
         Assignment         & =                                                                \\ \hline
 
     \end{tabular}
-    \caption{\textit{Operatorprioritering (højest til lavest)}}
+    \caption{Operatorprioritering (højest til lavest)}
     \label{tab:operatorprioritering}
 \end{table}
+
+
 \subsubsection{Boolske udtryk}
 Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings eller ligheds operatorerne. operatorerne ses herunder.
 
@@ -41,7 +44,7 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 
 
     \end{tabular}
-    \caption{\textit{Operatorer i boolske udtryk}}
+    \caption{Operatorer i boolske udtryk}
     \label{tab:operatorerboolsk}
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -49,7 +52,7 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 
 \noindent Et "and expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 herunder kan gramatikken ses i BNF.
-\mfix{Centrer dette BNF exsempel}
+
 \input{Kode/CFG/BNF_and_expr.scc}
 \noindent Herunder ses semantikken for "And expression"
 
@@ -102,7 +105,7 @@ herunder kan gramatikken ses i BNF.
     
     \input{Kode/CFG/BNF_equality_expr.scc}
     \noindent Herunder ses semantikken for "Equality expression"
-
+\begin{semantik}
     \bgroup
     \def\arraystretch{3}
     \begin{table}[H]
@@ -114,10 +117,11 @@ herunder kan gramatikken ses i BNF.
         $[EQUALS-\bot_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad greater\_less\_expr \rightarrow v_2}{equality\_expr\;=\;greater\_less\_expr \rightarrow \; ff}$ & if $v_1 \ne v_2$ \\
         
     \end{tabular}
-    \caption{Equality expressions}
-    \label{tab:equalityExpr}
     \end{table}
     \egroup
+    \caption{Equality expressions}
+    \label{tab:equalityExpr}
+\end{semantik}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \noindent \subsubsection{Aritmetiske udtryk}
 Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses herunder. Kun de mest basale aritmetiske udtryk vil blive gennemgået her. Resten kan findes i bilag.
@@ -135,7 +139,7 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
         Additioner         & + \quad -                                         \\ \hline
 
     \end{tabular}
-    \caption{\textit{Aritmetiske Operatorer}}
+    \caption{Aritmetiske Operatorer}
     \label{tab:aritmetiskeOperatorer}
 \end{table}
 
@@ -143,6 +147,7 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
     \input{Kode/CFG/BNF_add_sub_expr.scc}
     \noindent Herunder ses semantikken for "Add and sub expressions"
 
+\begin{semantik}
     \bgroup
     \def\arraystretch{3}
     \begin{table}[H]
@@ -154,7 +159,8 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
         $[MINUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;-\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 - v_2$ \\
         
     \end{tabular}
-    \caption{Add and sub expression}
-    \label{tab:addSubExpr}
     \end{table}
     \egroup
+    \caption{Add and sub expression}
+    \label{sem:addSubExpr}
+\end{semantik}

@@ -35,7 +35,7 @@ Dette gøres ved out metoderne som beskrevet i afsnit \ref{sct:visitorSableCC} p
 
 Stacken vil dermed indlæse de 3 første tal, dernæst gange de 2 seneste tal sammen og ligge på stacken og til slut addere det første tal med resultatet af multiplikationen af 5 og 2. Udtrykket kan dermed opstilles til 3 5 2 * +. Denne notation kaldes også reverse polish notation \cite{CraftingCompiler_2009}.
 
-I typecheckerens eksempel er vi dog i stedet nødt til at registrere typen af tallene således at true + 1 er et ugyldigt input, hvorimod 1 + 1 er gyldigt. Dette gøres på samme måde med stacken bortset fra at vi ligger et objekt på stacken der indikerer om det er en boolsk værdi eller en tal værdi. Et eksempel på hvordan kostanter bliver pushed til stacken kan ses i kodeeksempel \ref{code:exprTypeEvaluator}
+I typecheckerens eksempel er vi dog i stedet nødt til at registrere typen af tallene således at true + 1 er et ugyldigt input, hvorimod 1 + 1 er gyldigt. Dette gøres på samme måde med stacken bortset fra at vi ligger et objekt på stacken der indikerer om det er en boolsk værdi eller en tal værdi. Et eksempel på hvordan kostanter bliver pushed til stacken, samt hvordan de 2 seneste værdier sammenlignes ved en større end expression kan ses i kodeeksempel \ref{code:exprTypeEvaluator}
 
 \Java{Kode/ExprTypeEvaluator.java}{Push af konstanters type på stacken som giver mulighed for typecheck}{exprTypeEvaluator}
 

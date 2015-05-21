@@ -21,8 +21,13 @@ public class ExpressionTypeEvaluator extends DepthFirstAdapter {
     }
 
     @Override
-    public void outAFalseExpr(AFalseExpr node) {
-        super.outAFalseExpr(node);
-        stack.push(SymbolType.Boolean());
+    public void outACompareGreaterExpr(ACompareGreaterExpr node) {
+        super.outACompareGreaterExpr(node);
+        SymbolType arg2 = stack.pop(), arg1 = stack.pop();
+
+        if (arg1.equals(SymbolType.Type.Int) && arg2.equals(SymbolType.Type.Int)) {
+            stack.push(SymbolType.Boolean());
+        } else if //...
     }
+
 }

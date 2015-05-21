@@ -40,7 +40,51 @@ På linje 21-31 ses 2 expressions herunder and og or expression. For at speciali
 %Det sidste element er \textit{scope}, som på linje 14-15 er defineret ved hjælp af nul eller en \textit{statements} omgivet af tuborgklammer.\\
 
 \subsubsubsection{Dangling else problematik}
+\label{subsec:danglingelse}
+Et af det meget ofte forekommende problemer under skrivningen af gramatikken til et sprog er dangling else problematikken. Problemet er aktuelt i alle sprog der har mulighed for at lave if-statements uden klart at definere start og slut på det pågældende if-statement.
 
+Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; som kan parses på 2 forskellige måder ved en grammar specifikation som vist i kode \ref{gra:dangProb}.
+
+\begin{Grammar}
+ \begin{grammar}
+    <statement> ::= "if" "(" <expr> ")" <statement> 
+    \alt "if" "(" <expr> ")" <statement> "else" <statement>
+    \alt <while\_statement>;
+ \end{grammar}
+ \caption{Gramatik med dangeling else problemet}\label{gra:dangProb}
+\end{Grammar}
+
+\sfix{Indsæt kode}
+
+\tikzfigure{Figurer/TikZ/DangelingElseAst2.tex}{2 forskellige abstrakte syntaks træer ud fra eksemplet if (expr) if (expr) statement; else statement; med grammatikken \ref{gra:dangProb}}{danglingElseProblem}
+
+Problematikken kan løses på flere måder. En af måderne er at tilføje et keyword/tegn der gør det muligt at afgøre hvilket else der hører til hvilket if. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje tuborgklammer ved alle if og else statements.
+
+En anden løsning er at sørge for at alle statements inde i et if-statement er et if-else statement, således at det kun er muligt at generere det abstrakte syntaks træ på en måde. Dette giver dog meget dubleret kode, da if typisk ligger sammen med mange andre typer af statements og derfor skal alle disse statements skrives 2 gange.
+
+Et eksempel kan ses i kode \ref{gra:dangFix}.
+
+\begin{Grammar}
+ \begin{grammar}
+    <statement> ::= <if\_statement>
+    \alt <while\_statement>;
+    
+    <statement\_no\_short> ::= <if\_statement\_no\_short>
+    \alt <while\_statement\_no\_short>;
+    
+    <if\_statement> ::= "if" "(" <expr> ")" <statement> 
+    \alt"if" "(" <expr> ")" <statement\_no\_short > "else" <statement>;
+    
+    <if\_statement\_no\_short> ::= "if" "(" <expr> ")" <statement\_no\_short> "else" <statement\_no\_short>;
+ \end{grammar}
+ \caption{Grammatik der løser problemet med dangling else}\label{gra:dangFix}
+\end{Grammar}
+
+PLC++ er implementeret med den sidstnævnte metode.
+
+subsec:parser <-------
+ 
+\mfix{Lav x-ref til mit afsnit på et tidspunkt, i test-afsnittet}
 
 \subsubsubsection{SableCC's implementation af lexer og parser}
 \noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
@@ -48,8 +92,8 @@ På linje 21-31 ses 2 expressions herunder and og or expression. For at speciali
 \tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{En NFA genereret af SableCC}{sableccnfa}
 
 \noindent \textbf{Formel definition af NFA i figur \ref{fig:sableccnfa}}\\
-\noindent $Q$ = \{$s$, $q_1$, $q_2$, $q_3$, $q_4$, $q_5$, $q_6$, $q_7$, $q_8$, $q_9$, $q_{10}$, $q_{11}$, $q_{12}$, $q_{13}$, $f$\}\\
-\noindent $\Sigma$ = \{$\epsilon$, $I$, $Q$, $M$, $A$, $\#$\}\\
+\noindent $Q$ = \{$s$, $q_1$, $q_2$, $q_3$, $q_4$, $q_5$, $q_6$, $q_7$, $q_8$, $q_9$, $q_{10}$, $q_{11}$, $f$\}\\
+\noindent $\Sigma$ = \{$\epsilon$, $I$, $Q$, $A$, $\#$\}\\
 \noindent $\delta$ = Se tabel \ref{tab:nfadelta}\\
 \noindent $q_0$ = $s$\\
 \noindent $F$= \{$f$\}\\
@@ -62,14 +106,13 @@ På linje 21-31 ses 2 expressions herunder and og or expression. For at speciali
 \begin{tabular}{l@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}m{5em}|l|l|l|l|l|l|l|l|l|l|l|l|l|l}
 
 $\delta$         & $s$              & $q_{1}$ & $q_{2}$ & $q_{3}$ & $q_{4}$ & $q_{5}$ & $q_{6}$ & $q_{7}$ & $q_{8}$ & $q_{9}$ & $q_{10}$ & $q_{11}$ & $q_{12}$ & $q_{13}$ & $f$ \\ \bottomrule
-$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{7}$ ,$q_{10}$\} &   & $q_{13}$ &   & $q_{13}$ &   & $q_{13}$ &   &   & $q_{13}$ &    &    & $q_{13}$ &    &   \\ 
-$I$          &                & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ 
-$Q$          &                &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ 
-$M$          &                &   &    &   &    & $q_{6}$ &    &   &   &    &    &    &    &    &   \\
-$A$          &                &   &    &   &    &   &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ 
-\#         &                &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\
+$\epsilon$ & \{$q_{1}$ ,$q_{3}$ ,$q_{5}$ ,$q_{8}$\} &   & $q_{11}$ &   & $q_{11}$ &   & $q_{11}$ &   &   & $q_{11}$ &    &    & $q_{11}$ &    &   \\ 
+$I$ & & $q_{2}$ &    &   &    &   &    &   & $q_{9}$ &    &    &    &    &    &   \\ 
+$Q$ & &   &    & $q_{4}$ &    &   &    &   &   &    &    & $q_{12}$ &    &    &   \\ 
+$A$ & &   &    &   &    & $q_{6}$  &    & $q_{8}$ &   &    & $q_{11}$ &    &    &    &   \\ 
+\#  & &   &    &   &    &   &    &   &   &    &    &    &    & $f$  &   \\
 \end{tabular}
-	\caption{\textit{Transitionsfunktion til NFA (alle tommer celler angiver den tomme mængde)}}
+	\caption{Transitionsfunktion til NFA (alle tommer celler angiver den tomme mængde)}
     \label{tab:nfadelta}
 \end{table}
 

@@ -1,0 +1,30 @@
+\begin{tikzpicture}[sibling distance=0.1cm]
+    \Tree   [.If
+                [[[if ]]]
+                [.Condition [[(expr) ]]]
+                [.OnTrue
+                    [.IfElse
+                        [if ]
+                        [.Condition (expr) ]
+                        [.OnTrue statement; ]
+                        [else ]
+                        [.OnFalse statement; ]
+                    ]
+                ]
+            ]
+\end{tikzpicture}
+\begin{tikzpicture}[sibling distance=0.1cm]
+    \Tree   [.IfElse
+                [[[if ]]]
+                [.Condition [[(expr) ]]]
+                [.OnTrue
+                    [.If
+                        [if ]
+                        [.Condition (expr) ]
+                        [.OnTrue statement; ]
+                    ]
+                ]
+                [[[else ]]]
+                [.OnFalse [[statement; ]]]
+            ]
+\end{tikzpicture}
