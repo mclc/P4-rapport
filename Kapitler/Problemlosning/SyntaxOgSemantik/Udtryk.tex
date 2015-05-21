@@ -1,5 +1,5 @@
 \subsection{Udtryk}
-Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en Bool. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at snakke om hvilke operatorer der kan benyttes.
+Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en \textit{Bool}. Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at omtale brugen af operatorer.
 
 \subsubsection{Operatorer}
 I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
@@ -45,7 +45,7 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 
 
     \end{tabular}
-    \caption{Operatorer i boolske udtryk}
+    \caption{Boolske operatorer}
     \label{tab:operatorerboolsk}
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -55,7 +55,7 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 herunder kan gramatikken ses i BNF.
 
 \input{Kode/CFG/BNF_and_expr.scc}
-\noindent Herunder ses semantikken for "And expression"
+\noindent Herunder ses semantikken for "And expression". Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: Hvis and_expr er true og equality_expr er true så er udtrykket and_expr og equality_expr 
 
     \bgroup
     \def\arraystretch{3}

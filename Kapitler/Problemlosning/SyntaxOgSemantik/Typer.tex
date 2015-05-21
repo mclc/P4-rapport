@@ -1,19 +1,15 @@
 \subsection{Typer}
-Inden gennemgang af syntaksen omtales de mest nødvendige datatyper.\\
+Inden gennemgang af syntaksen omtales de mest nødvendige datatyper.
 
-\noindent\textbf{Bool}
+\subsubsection*{Bool}
+Den boolske datatype repræsenterer værdien \textit{sand} eller \textit{falsk}. Denne type kan ikke konverteres til andre typer ligesom i \textit{C} eller \textit{C++}. Alle boolske udtryk returnerer denne type.
 
-\noindent Den boolske datatype repræsenterer værdien \textit{sand} eller \textit{falsk}. Denne type kan ikke konverteres til andre typer ligesom i \textit{C} eller \textit{C++}. Alle boolske udtryk returnerer denne type.\\
+\subsubsection*{Int}
+\textit{Int} datatypen er datatypen beregnet til at holde heltalsværdier. \textit{Int} er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. \textit{Int} kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
 
-\noindent\textbf{Int}
+\subsubsection*{Array}
+\textit{Array} datatypen er en datastruktur der kan holde n antal elementer i sekvens, hvor n angives på instansieringstidspunktet. Alle elementer i arrayet skal være i samme type og kan tilgås ved at skrive araryets navn efterfulgt af en integer \textit{i} indpakket i et sæt hårde parenteser, der returnerer det \textit{i.} element.
 
-\noindent\textit{Int} datatypen er datatypen beregnet til at holde heltalsværdier. \textit{Int} er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. \textit{Int} kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.\\
-
-\noindent\textbf{Array}
-
-\noindent\textit{Array} datatypen er en datastruktur der kan holde n antal elementer i sekvens, hvor n angives på instansieringstidspunktet. Alle elementer i arrayet skal være i samme type og kan tilgås ved at skrive araryets navn efterfulgt af en \textit{integer} \textit{i} indpakket i et sæt hårde parenteser, der returnerer det \textit{i.} element.\\
-
-\noindent\textbf{Port}
-
-\noindent\textit{Port} datatypen er adskilder sig fra de andre datatyper ved at være være et alias for port nummeret på \gls{plc}'en. Den kan bruges hvis en yderligere eller mere hensigtsmæssig navngivning ønskes til ind og udgangsporte på \gls{plc}'en.
-Af porte findes der digitale og analoge inputs samt digitale og analoge outputs. De digitale porte kan have den samme værdi som den boolske datatype, altså \textit{sand} eller \textit{falsk}. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille.\\
+\subsubsection*{Port}
+\textit{Port} datatypen er adskilder sig fra de andre datatyper ved at være være et alias for port nummeret på \gls{plc}'en. Den kan bruges hvis en yderligere eller mere hensigtsmæssig navngivning ønskes til ind og udgangsporte på \gls{plc}'en.
+Af porte findes der digitale og analoge inputs samt digitale og analoge outputs. De digitale porte kan have den samme værdi som den boolske datatype, altså \textit{sand} eller \textit{falsk}. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille.
