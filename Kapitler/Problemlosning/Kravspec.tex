@@ -19,7 +19,7 @@ Prioriteringen for den individuelle funktion er nødvendig, i forhold til det ti
 \textbf{Must have} & \textbf{Should have} & \textbf{Could have} & \textbf{Want to have} \\ \midrule
 Kontrolstruktur & Increment/Decrement & Const & Betingede udtryk   \\ 
 Datatyper & Compound assignments & Unsigned datatyper  & \\ 
-Structs & &  &	   \\ 
+Structs & Information hiding &  &	   \\ 
 Specielle Datatyper	&  &  &		   \\ 
 Funktioner &  &  & 		   \\ 
 Kommentarer &  &  & 		   \\ 
@@ -66,37 +66,43 @@ Switch er placeret under could have, da alle switch kontrolstrukturer kan konstr
 \textit{do-while} er placeret under could have, siden det ikke bliver brugt særlig meget i \gls{plc} programmering, og derfor vurderes det som værende irrelevant.\\
 
 \noindent\textbf{Datatyper og unsigned}
-er integreret meget sammenligning med C med et par få tilføjelser, disse tilføjelser er timer, port samt bool.\\
-Timer er en datatype, som kan indeholde en tid i form af \textit{hh:mm:ss} hvor værdien begynder på 00:00:00 og ender ved 23:59:59, denne timer er beregnet til at kunne udfører tidsbestemte handlinger i programmet.\\
-Port er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne integration er en nødvendighed, i forhold til at man skal kunne styrer portene på \gls{plc}´en, hvilket derfor giver anledning til en ny datatype.
+er de basale typer sproget indeholder. PLC++'s typesystem er meget sammenligning med C med et par få tilføjelser, disse tilføjelser er timer, port samt bool.\\
+Timer er en speciel struct der ikke kræver struct er skrevet foran denne. Timer structen er implementeret i standard biblioteket og benytter brugerdefinere compiler genererede metoder. Timers funktionalitet er at kunne starte/stoppe en timer, der giver et output når intervallet timeren er sat til er udløbet.\\
+Port er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern memory), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne datatype kan bruges til at skifte en port til en anden på kørselstidspunktet. Dette er eksempelvis praktisk i forhold til funktioner, da man så kan tage en port som input parameter.\sfix{Reelt set er vores port datatype useless}
 
-String har man valgt at sætte, som et højrankeret funktionalitetskrav i \gls{moscow}-analysen, da dette giver mulighed for at let håndtering af strenge baseret på text, tal og karaktere. \mefix{Vend tilbage, når string er implementeret, og skriv hvordan}
+Strings er ikke implementeret i PLC++ og er derfor under want to have da anvendelsesområdet til en \gls{plc} er meget lille, da \gls{plc}'er typisk udenlukkende arbejder med boolske værdier. En senere udvidelse kunne dog inkludere strings for at skabe større integration med \glc{hmi}\sfix{Nogle der definerer hmi under problemanalysen?}.
+
+%String har man valgt at sætte, som et højrankeret funktionalitetskrav i \gls{moscow}-analysen, da dette giver mulighed for at let håndtering af strenge baseret på text, tal og karaktere. \mefix{Vend tilbage, når string er implementeret, og skriv hvordan}
 
 Til sidst er \textit{boolean} implementeret, hvilket kan læses under afsnit \ref{sec:forskelfrac}\\
-Unsigned er blevet nedprioriteret og derved placeret i could have, da denne funktionalitet ikke er yderst nødvendig, eller særlig brugt indenfor \gls{plc} sproget.\mefix{Måske lidt en bred påstand}\\
+Unsigned er blevet nedprioriteret og derved placeret i could have, da denne funktionalitet ikke er yderst nødvendig, eller særlig brugt indenfor \gls{plc} udvikling.\mefix{Måske lidt en bred påstand}\\
 
 \noindent\textbf{Structs}
-Structs er en måde at gruppere data således man har en type der kan indeholde flere og forskellige typer. Derudover skal hver variabel i en struct have et navn, som derfor hjælper for abstraktionen. Eksempelvis skal et punkt have både en x og y kordinat. En funktion vil dermed kunne tage et punkt som input parameter, i stedet for at skulle overføre de enkelte variabler. Structs bliver dermed en meget stor fordel ved behov for mange variabler.
+Structs er en måde at gruppere data således man har en type der kan indeholde flere og forskellige typer. Derudover har hver variabel i en struct et navn, som derfor hjælper for abstraktionen. Eksempelvis skal et punkt have både en x og y kordinat. En funktion vil dermed kunne tage et punkt som input parameter, i stedet for at skulle overføre de enkelte variabler. Structs bliver dermed en meget stor fordel ved behov for mange variabler.
 
 For at øge abstraktionen yderligere kan man implementere muligheden for funktioner inde i structs. Dette giver mulighed for at stille en række hjælpemetoder til rådighed for den konkrete struct. Dermed slippes for funktioner med forskellige prefixes for at forhindre at funktionsnavnene konflikter.
 
-En måde man kan øge abstraktions niveauet yderligere er vha. information hiding således det er muligt at skjule konkrete implementationsdeltalier for resten af koden. Derudover kan nedarvning og polyformeri også være godt for genbrugeligheden i kode.
+En måde man kan øge abstraktions niveauet endnu mere er vha. information hiding således det er muligt at skjule konkrete implementationsdeltaljer for resten af koden. Derudover kan nedarvning og polyformeri også være godt for genbrugeligheden i kode.
 
 Disse egenskaber definere desuden det objektorienterede paradigme, som derfor tilbyder endnu højere abstraktion end den helt simple struct der kun kan indeholde felter. Dog kaldes det objekter i det objektorienterede paradigme. Derudover er der også forskel på hukommelseshåndteringen mellem objekter og structs.
 
+Der er blevet valgt at fokusere på det imperative paradigme og derfor implementeres ikke nedarvning og polyformeri. Nedarvning og polyformeri bruger ofte flere ressourcer og er derfor uegnet til PLC verdenen da hastigheden kan have stor indflydelse. Derudover bliver \gls{plc} projekter oftest ikke så store, dels pga. de typiske opgavers kompleksitet og dels hastigheden på PLC'en. Implementeringen af det objektorinterede paradigme kan derfor ved større projekter som OOP er mest egnet til vise sig at blive for ressourcekrævende.\sfix{Skal vi flytte denne her del til problemanalyse og referere der til i stedet?}
+
+Information hiding kan være praktisk for \gls{plc} programmering, da det gør det muligt at stille et public api til rådighed for structs, som skjuler konkrete implementationsdeltalier. Information hiding kan desuden laves som et compiler step og bruger derfor ikke yderligere ressourcer. Information hideing bliver derfor placeret i moscow analysen under should have.
+
 \noindent\textbf{Arrays}
-er en let og overskuelig måde at opbevarer et dataset, og er derfor på listen over Must have. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}.
+er en let og overskuelig måde at opbevare et dataset, og er derfor på listen over must have. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}.
 
 Men for at øge abstraktions niveauet og dermed gøre det mere overskueligt for programmøren ville en implementation af denne funktion være ideel.\\
 
 \noindent\textbf{Const}
 giver mulighed for at bibeholde dataene i den pågældende variablel, og derved giver den en form for skrivebeskyttelse, således at man ikke kan overskrive denne.
 
-Funktionen er placeret under could have, da den ikke er essentiel for at programmet kan kører, eller gør det lettere for programmøren. 
+Funktionen er placeret under could have, da den ikke er essentiel for at programmet kan køre, eller gør det lettere for programmøren. 
 Dog kan den i flere tilfælde være rar at benytte, og tilføjes derfor som en mulig implementation.\\
 
 \noindent\textbf{Funktioner}
-er med til at opdele programmet i flere dele, dette gør det mere læsbart og isolere koden i små scoops.
+er med til at opdele programmet i flere dele, dette gør det mere læsbart og isolerer koden i små scoops.
 
 Dette er med til at øge abstraktionsniveauet og giver mulighed for at genbruge kode i andre handlinger.
 Funktioner er en af byggestenene for programmeringssproget og er derved kategoriseret som must have.\\
@@ -106,9 +112,9 @@ Betingede udtryk er et udtryk der giver mulighed for at først have en betingels
 
 \noindent\textbf{Generelt} er der integreret flere funktioner som hovedsageligt er mere globale og kan bruges generelt i flere sammenhænge. En af disse funktioner er kommentarer som er essentielt for et programmeringssprog at indeholde, og derfor er funktionen placeret under Must have. Kommentarer giver mulighed for at strukturere kode, og skriv en kommentar til det, hvilket kan gøre det mere overskueligt i store såvel som små programmer.
 
-Udover kommentarer er der implementeret flere operatorer, som gør det muligt at lave matematiske operationer, dette er nemt at implementerer og en basal funktion som skal være til stede ved \gls{plc} programmering.
+Udover kommentarer er der implementeret flere operatorer, som gør det muligt at lave matematiske operationer, dette er nemt at implementere og en basal funktion som skal være til stede ved \gls{plc} programmering.
 
-Til sidst er det muligt at lave assignments og declerations som er essentielt for at kunne tildele variabler eller udtryk en værdi.
+Til sidst skal det være muligt at lave assignments og declarations som er essentielt for at kunne tildele variabler eller udtryk en værdi.
 
 \subsection{Forskel fra C}
 \label{sec:forskelfrac}
