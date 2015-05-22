@@ -31,5 +31,7 @@
 
 % Indlæs kode fra fil med style
 \newcommand{\kodeprintstyle}[5]{
-    \lstinputlisting[language=#4, style=Default, caption={#2} ({#5}), label={code:#3}]{#1}
+    \begin{figure}[H]
+        \lstinputlisting[language=#4, style=Default, caption={#2} ({#5}), label={code:#3}]{#1}
+    \end{figure}
 }

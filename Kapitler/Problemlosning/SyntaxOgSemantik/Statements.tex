@@ -6,6 +6,9 @@ Sproget PLC++ består af en række forskellige statements. Statements som erklæ
 \input{Kapitler/Problemlosning/SyntaxOgSemantik/Udtryk.tex}
 
 \noindent \subsubsection{While-løkke}
+For at kunne iterere i sproget 
+
+\input{Kode/CFG/BNF_while.tex}
 
     \begin{semantik}
     \bgroup
@@ -36,7 +39,7 @@ Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskr
 
 If-else statements har til formål at tjekke om et givent boolsk udtryk er sandt. Hvis dette er tilfældet, skal statements i den første block udføres. Er det derimod falsk, er det statements i blok to, som skal udføres. Hvis der tages et kig på semantik \ref{sem:ifelse} ses to forskellige transition rules \mfix{Dansk?}: en for sand, og en for falsk. 
 
-
+\input{Kode/CFG/BNF_if_else.tex}
 
 \begin{semantik}
     \bgroup
@@ -68,6 +71,7 @@ Blablabla... Deklaration af funktioner findes i semantik x.x \mfix{Ref til funkt
 
 Der bliver brugt pass by value...
 
+\input{Kode/CFG/BNF_call.tex}
 
 \begin{semantik}
     \bgroup
@@ -96,6 +100,8 @@ Der bliver brugt pass by value...
 
     
 \noindent \subsubsection{Arrays}
+
+\input{Kode/CFG/BNF_array.tex}
     
 \begin{semantik}
     \bgroup
@@ -118,6 +124,11 @@ Der bliver brugt pass by value...
     
 \noindent \subsubsection{Structs}
 Blablabla... \mfix{Er absolut ikke sikker på dette}
+
+
+\input{Kode/CFG/BNF_struct.tex}
+
+
 \begin{semantik}
     \bgroup
     \def\arraystretch{2}

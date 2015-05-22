@@ -1,6 +1,5 @@
 \begin{grammar}
  
- %<while\_statement> ::= "while" "(" <expr> ")" "{" <statement>? "}"
  
  %<expr> ::= <expr> "&&" <expr2>
  %\alt <expr> "||" <expr2>
@@ -36,7 +35,6 @@
  
  <struct\_declaration> ::= <declaration>
  \alt <function\_declaration>
- %% Yaaay, det betyder at vi har funktioner i structs
  
  <enum\_definition> ::= "enum" <identifier> "{" <enum\_flags> "}"
  
@@ -50,7 +48,7 @@
  <declaration> ::= <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? ";"
  \alt <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? <expr>? ";"
  
- <array\_definition> ::= "{" <interger\_literal>? "}"
+ <array\_definition> ::= "[" <integer\_literal>? "]"
  
  <statement> ::= <declaration>
  \alt <expr> ";"
@@ -79,6 +77,8 @@
  <if\_statement\_short> ::= "if" "(" <expr> ")" <statement\_no\_short\_if> "else" <statement\_no\_short\_if>
  
  <switch\_statement> ::= "switch" "(" <expr> ")" "{" <label\_statements>* "}"
+ 
+ <while\_statement> ::= "while" "(" <expr> ")" "{" <statement>? "}"
  
  <label\_statements> ::= "case" <expr> ":" <statement>*
  \alt "default" ":" <statement>*

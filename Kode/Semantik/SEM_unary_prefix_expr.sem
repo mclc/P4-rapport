@@ -5,11 +5,9 @@
     \centering
     \begin{tabular}{l c l}
         
-        $[MULT_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr \rightarrow v_2}{equality\_expr\;*\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 * v_2$ \\
-        
-        $[DIV_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr\rightarrow v_2}{equality\_expr\;/\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 / v_2$ \\
-        
-        $[MOD_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr \rightarrow v_2}{equality\_expr\;\%\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 mod v_2$ \\
+        $[PREINC_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr \rightarrow v_2}{equality\_expr\;*\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 * v_2$ \\
+        \mfix{mikkel laver denne semantik med rune}
+
         
     \end{tabular}
     \end{table}

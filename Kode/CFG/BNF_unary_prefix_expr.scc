@@ -1,9 +1,21 @@
 \begin{Grammar}
  \begin{grammar}
 
-    <or\_expr> ::= <or\_expr> "||" <and\_expr>
-    \alt <and\_expr>
-  
+    <unary\_prefix\_expr> ::= "++"<identifier>
+    \alt "-""-"<identifier>
+    \alt "+"<unary\_prefix\_expr>
+    \alt "-"<unary\_prefix\_expr>
+    \alt "!"<unary\_prefix\_expr>
+    \alt "(type\_specifier)"<unary\_prefix\_expr>
+    \alt <post\_and\_infix\_expr>
+    
+    <post\_and\_infix\_expr> ::= <identifier>"++"
+    \alt <identifier>"-""-"
+    \alt <indentifier>(<post\_and\_infix\_expr>)
+    \alt <post\_and\_infix\_expr>"."<expr\_value>
+    \alt (<expr>)
+    \alt <expr\_value>
+    
  \end{grammar}
  \caption{OR expression}\label{gra:orExpr}
 \end{Grammar}

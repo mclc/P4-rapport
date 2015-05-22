@@ -8,7 +8,7 @@ Alle noder implementer interfacet Switchable som indeholder en metode med navn a
 
 \Java{Kode/NodeVisitor.java}{Implementering af interfacet Switchable i noderne genereret af SableCC}{nodeVisitorJava}
 
-Dermed er det muligt at lave en AnalyticsAdapter som implementer Analytics interfacet. Alle case metoder kalder en metode kaldet defaultCase som tager noden som input parameter. AnalyticsAdapter implementerer også metoder til at gemme data om hver node i en hashtable. 
+\noindent Dermed er det muligt at lave en AnalyticsAdapter som implementer Analytics interfacet. Alle case metoder kalder en metode kaldet defaultCase som tager noden som input parameter. AnalyticsAdapter implementerer også metoder til at gemme data om hver node i en hashtable. 
 
 Til at gennemløbe træet genererer SableCC en klasse med navn DepthFirstAdapter som nedarver fra AnalyticsAdapter klassen. DepthFirstAdapter overskriver alle case funktioner således at alle case funktioner kalder apply med DepthFirstAdapteren som argument på alle subnoder i den pågældende node. Dermed har vi en simpel træløbning da apply kalder den pågældende case funktion i klassen (Se klassediagram på figur \ref{fig:sableCCAnalytics}). For at have mere fleksibilitet oprettes også en in og en out metode for alle noder. Case metoden kalder nu først in metoden, dernæst apply(this) på alle subnoder og til slut out metoden. Det er dermed eksempelvis nu muligt at bruge en stack til at håndtere matematiske operationer kun ved at overskrive out metoderne.
 

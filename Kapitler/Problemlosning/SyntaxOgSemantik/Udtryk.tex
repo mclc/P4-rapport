@@ -177,9 +177,10 @@ Nedenfor ses semantikken som læses på samme måde som ved \textit{AND expressi
 
 \input{Kode/Semantik/SEM_mult_div_mod_expr.sem}
 
-\subsubsubsection{Incerment and decrement expressions}
-whatever gramatik
-    \input{Kode/CFG/BNF_unary_prefix_expr.scc}
+\subsubsubsection{Increment and decrement expressions}
+\textit{Increment and decremet expressions} er i to forskellige varianter. Som en prefix operator og en sufix operator. Nedenfor ses gramatikken for begge typer increment og decrement samt en masse andre. Det er dog kun prefix increment vi vil gennemgå. resten kan ses i bilag.
+\mgfix{der skal forklares hvordan denne semantik læses.. gøres dog først når semantikken er lavet - bolden ligger hos mikkel.}
+\input{Kode/CFG/BNF_unary_prefix_expr.scc}
 
-Whatever semantik
+Herunder vises semantikken for prefix increment.
 \input{Kode/Semantik/SEM_unary_prefix_expr.sem}

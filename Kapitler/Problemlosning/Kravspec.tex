@@ -5,8 +5,8 @@ De vigtigste krav til PLC++ vil blive gennemgået, forklaret og prioriteret i en
 
 \subsection{MoSCoW}
 \gls{moscow}-analysen har til formål at belyse kravspecifikationens funktioner, samt opnåelse af disse.
-Disse funktioner kan ved hjælpe af \gls{moscow}-analyse opstilles med prioritet, for hvert individuelle funktion.
-Prioteringen for den individuelle funktion er nødvendig, i forhold til det tidsmæssige aspekt, og giver ydermere en arbejdsstruktur for implementationen af funktionen.
+Disse funktioner kan ved hjælp af en \gls{moscow}-analyse opstilles med prioritet, for hver individuelle funktion.
+Prioriteringen for den individuelle funktion er nødvendig, i forhold til det tidsmæssige aspekt, og giver ydermere en arbejdsstruktur for implementationen af funktionen.
 
 %
 % DENNE TABEL ER LIDT FOR STOR, MEN ELLERS KAN DET IKKE STÅ PÆNT, OG MAN SER DET IKKE I RAPPORTEN.....
@@ -17,19 +17,18 @@ Prioteringen for den individuelle funktion er nødvendig, i forhold til det tids
 \begin{tabular}{l|l|l|l}
 \toprule
 \textbf{Must have} & \textbf{Should have} & \textbf{Could have} & \textbf{Want to have} \\ \midrule
-Kontrolstruktur & Decrement & Const & Betinget udtryk   \\ 
+Kontrolstruktur & Increment/Decrement & Const & Betingede udtryk   \\ 
 Datatyper & Compound assignments & Unsigned datatyper  & \\ 
-Structs & Increment &  &	   \\ 
+Structs & &  &	   \\ 
 Specielle Datatyper	&  &  &		   \\ 
 Funktioner &  &  & 		   \\ 
 Kommentarer &  &  & 		   \\ 
 Arrays &  &  & 	   \\ 
-Operatorere &  &  & 		   \\ \bottomrule
+Operatorer &  &  & 		   \\ \bottomrule
  
- %if & for & do-While & Betingede udtryk   \\ \hline
- %int & decrement & const & unsigned int  \\ \hline
- 
- 
+%if & for & do-While & Betingede udtryk   \\ \hline
+%int & decrement & const & unsigned int  \\ \hline
+
 % structs & increment & Optimizer &    \\ \hline
 % Expressions & Compound assignments &  &   \\ \hline
 % while & switch &  &    \\ \hline
@@ -51,9 +50,30 @@ Operatorere &  &  & 		   \\ \bottomrule
 \end{tabular}
 \caption{MoSCoW-tabel}
 \label{tab:moscow}
-\end{table}
+\end{table}\sfix{Hvad er specielle datatyper?}
 
 \noindent Som en forklaring på disse funktioner beskrives de i kategorier herunder.\\
+
+\noindent\textbf{Kontrolstruktur}
+er placeret under must have da kontrolstrukturer er en central del af programmering.
+Derfor vælges der at implementere \textit{if} og \textit{while}, med hendblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}.
+
+Dette er grundet at man med \textit{if} og \textit{while} kan konstruere de andre, men ikke omvendt. Dog kan det være besværgelig og ineffektivt at konstruere en switch vha. if.
+
+\textit{switch} er placeret under should have, og kan have en væsentlig betydning for hvordan programmøren strukturerer sin kodning og udformer programmer i sproget.
+Switch er placeret under could have, da alle switch kontrolstrukturer kan konstrueres vha. if kontrolstrukturen. Dog kan det i visse tilfælde være besværeligt og direkte ineffektivt at konstruere en switch vha. if kontrolstrukturen, hvis switch kontrolstrukturen kan falde igennem til næste betingelse.
+
+\textit{do-while} er placeret under could have, siden det ikke bliver brugt særlig meget i \gls{plc} programmering, og derfor vurderes det som værende irrelevant.\\
+
+\noindent\textbf{Datatyper og unsigned}
+er integreret meget sammenligning med C med et par få tilføjelser, disse tilføjelser er timer, port samt bool.\\
+Timer er en datatype, som kan indeholde en tid i form af \textit{hh:mm:ss} hvor værdien begynder på 00:00:00 og ender ved 23:59:59, denne timer er beregnet til at kunne udfører tidsbestemte handlinger i programmet.\\
+Port er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne integration er en nødvendighed, i forhold til at man skal kunne styrer portene på \gls{plc}´en, hvilket derfor giver anledning til en ny datatype.
+
+String har man valgt at sætte, som et højrankeret funktionalitetskrav i \gls{moscow}-analysen, da dette giver mulighed for at let håndtering af strenge baseret på text, tal og karaktere. \mefix{Vend tilbage, når string er implementeret, og skriv hvordan}
+
+Til sidst er \textit{boolean} implementeret, hvilket kan læses under afsnit \ref{sec:forskelfrac}\\
+Unsigned er blevet nedprioriteret og derved placeret i could have, da denne funktionalitet ikke er yderst nødvendig, eller særlig brugt indenfor \gls{plc} sproget.\mefix{Måske lidt en bred påstand}\\
 
 \noindent\textbf{Structs}
 Structs er en måde at gruppere data således man har en type der kan indeholde flere og forskellige typer. Derudover skal hver variabel i en struct have et navn, som derfor hjælper for abstraktionen. Eksempelvis skal et punkt have både en x og y kordinat. En funktion vil dermed kunne tage et punkt som input parameter, i stedet for at skulle overføre de enkelte variabler. Structs bliver dermed en meget stor fordel ved behov for mange variabler.
@@ -74,27 +94,6 @@ giver mulighed for at bibeholde dataene i den pågældende variablel, og derved 
 
 Funktionen er placeret under could have, da den ikke er essentiel for at programmet kan kører, eller gør det lettere for programmøren. 
 Dog kan den i flere tilfælde være rar at benytte, og tilføjes derfor som en mulig implementation.\\
-
-\noindent\textbf{Datatyper og unsigned}
-er integreret meget sammenligning med C med et par få tilføjelser, disse tilføjelser er timer, port, string samt bool.\\
-Timer er en datatype, som kan indeholde en tid i form af \textit{hh:mm:ss} hvor værdien begynder på 00:00:00 og ender ved 23:59:59, denne timer er beregnet til at kunne udfører tidsbestemte handlinger i programmet.\\
-Port er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne integration er en nødvendighed, i forhold til at man skal kunne styrer portene på \gls{plc}´en, hvilket derfor giver anledning til en ny datatype.
-
-String har man valgt at sætte, som et højrankeret funktionalitetskrav i \gls{moscow}-analysen, da dette giver mulighed for at let håndtering af strenge baseret på text, tal og karaktere. \mefix{Vend tilbage, når string er implementeret, og skriv hvordan}
-
-Til sidst er \textit{boolean} implementeret, hvilket kan læses under afsnit \ref{sec:forskelfrac}\\
-Unsigned er blevet nedprioriteret og derved placeret i could have, da denne funktionalitet ikke er yderst nødvendig, eller særlig brugt indenfor \gls{plc} sproget.\mefix{Måske lidt en bred påstand}\\
-
-\noindent\textbf{Kontrolstruktur}
-er placeret under must have, af den grund at det foruden denne funktion ville være et meget begrænset sprog, med begrænset funktionalitet.
-Derfor vælges der at implementere \textit{if} og \textit{while}, med hendblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}.
-
-Dette er grundet at man med \textit{if} og \textit{while} kan konstruere de andre, men ikke omvendt.
-
-\textit{switch} er placeret under should have, og har en væsentlig betydning for hvordan programmøren strukturere sin kodning, og udformer programmer i sproget.
-Hertil er det ikke nødvendigt, da programmøren kan konstruere en switch ligende situration ved hjælp \textit{if} og \textit{else} løkker. 
-
-\textit{do-while} er placeret under could have, siden det ikke bliver brugt særlig meget i \gls{plc} programmering, og derfor vurderes som irrelevant på en hvis front.\\
 
 \noindent\textbf{Funktioner}
 er med til at opdele programmet i flere dele, dette gør det mere læsbart og isolere koden i små scoops.

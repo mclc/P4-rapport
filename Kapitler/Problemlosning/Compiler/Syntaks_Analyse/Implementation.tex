@@ -57,7 +57,9 @@ Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; 
 
 \tikzfigure{Figurer/TikZ/DangelingElseAst2.tex}{2 forskellige \gls{ast} ud fra eksemplet if (expr) if (expr) statement; else statement; med grammatikken \ref{gra:dangProb}}{danglingElseProblem}
 
-Problematikken kan løses på flere måder. En af måderne er at tilføje et keyword/tegn der gør det muligt at afgøre hvilket else der hører til hvilket if. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje tuborgklammer ved alle if og else statements, eller tilføje et begin og end keyword.
+\mfix{Kan vi gøre noget med figuren?}
+
+\noindent Problematikken kan løses på flere måder. En af måderne er at tilføje et keyword/tegn der gør det muligt at afgøre hvilket else der hører til hvilket if. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje tuborgklammer ved alle if og else statements, eller tilføje et begin og end keyword.
 
 En anden løsning er at sørge for at alle statements inde i et if-statement er et if-else statement, således det kun er muligt at generere \gls{ast} på en måde. Dette giver dog meget dubleret kode, da if typisk ligger sammen med mange andre typer af statements og derfor skal alle disse statements skrives 2 gange.
 
@@ -79,7 +81,7 @@ Et eksempel kan ses i kode \ref{gra:dangFix}.
  \caption{Grammatik der løser problemet med dangling else}\label{gra:dangFix}
 \end{Grammar}
 
-PLC++ er implementeret med den sidstnævnte metode. Der er desuden lavet nogle tests i afsnit \ref{subsec:parser} for at sikre at der ikke er problemer med dangling else og at kildekoden genererer det ønskede \gls{ast} (tætteste if knytter sig til else statementet).
+\noindent PLC++ er implementeret med den sidstnævnte metode. Der er desuden lavet nogle tests i afsnit \ref{subsec:parser} for at sikre at der ikke er problemer med dangling else og at kildekoden genererer det ønskede \gls{ast} (tætteste if knytter sig til else statementet).
 
 \subsubsubsection{SableCC's implementation af lexer og parser}
 \noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
