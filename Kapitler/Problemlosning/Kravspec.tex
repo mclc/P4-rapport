@@ -118,20 +118,20 @@ Til sidst skal det være muligt at lave assignments og declarations som er essen
 
 \subsection{Forskel fra C}
 \label{sec:forskelfrac}
-I projektet er der blevet taget udgangspunkt i C, hvor man har valgt at tage sin egen erfaring med C kombineret med andres, og taget det bedste fra sproget samt tilføjet eventuelle mangler eller ønsker.
+I projektet er der blevet taget udgangspunkt i C, hvor man har valgt at tage sin egen erfaring med C kombineret med andres, og tage det bedste fra sproget samt tilføje eventuelle mangler eller ønsker.
 Nogle af disse tilføjelser er blandt andet den boolske datatype, som giver et højere abstraktion, hvilket gør det  lettere for programmøren at associere det med virkelige hændelser.
 
-Hertil giver det anledning til at programmøren ikke laver lige så mange fejl, baseret på at datatypen \textit{boolean} kun acceptere true/false, hvorimod en \textit{int} som agerer som en \textit{boolean}, men kan acceptere flere værdier.
+Hertil giver det anledning til at programmøren ikke laver lige så mange fejl, baseret på at datatypen \textit{boolean} kun accepterer true/false, hvorimod en \textit{int} som agerer som en \textit{boolean} i C kan acceptere flere værdier.
 
-Ligeledes er det valgt ikke at implementere pointeraritmetik af den grund, at det skaber potentielle fejlkilder, som kan være en hindring for selv den øvede programmør. Hertil er det tænkt at det skal være et effektivt programmeringssprog, hvor programmøren ikke eksplicit skal erklærer hvad han/hun vil.
+Ligeledes er det valgt ikke at implementere pointeraritmetik af den grund, at det skaber potentielle fejlkilder, som kan være en hindring for selv den øvede programmør. Hertil er det tænkt at det skal være et effektivt programmeringssprog, hvor programmøren ikke eksplicit skal erklære hvad han/hun vil.\sfix{Så er vi vel ovre i det logiske paradigme}
 
 \subsection{Kriterier}
-Dette afsnit resultere i en række kriterier som er prioriteret efter behov, som er med til at skabe et brugbart og yderst velegnet sprog til målgruppen, uden væsentlige svagheder. Omtalte behov kan delvist udledes fra problemanalysen \mefix{indsæt ref}, såvel som \gls{moscow}-analysen.
-Følgende sektioner udspecificere kriterierne individuelt og deres prioritet i en samlet tabel.\\
+Dette afsnit resulterer i en række kriterier som er prioriteret efter behov, som er med til at skabe et brugbart og yderst velegnet sprog til målgruppen uden væsentlige svagheder. Omtalte behov kan delvist udledes fra problemanalysen (Afsnit \ref{sec:problemanalyse}), såvel som \gls{moscow}-analysen.
+Følgende sektioner udspecificerer kriterierne individuelt og deres prioritet i en samlet tabel.\\
 
 \noindent\textbf{Readability} er kriteriet som omhandler hvor læsbart programmet er, samt om programmøren kan se handlingen og derved forstå hvad der programmet gør.
 
-Dette er vigtigt i den forstand, at en ny programmør hurtigt skal kunne sætte sig ind i, hvordan programmet fungere, for at undgå yderligere omkostninger. 
+Dette er vigtigt for at en ny programmør hurtigt kan sætte sig ind i hvordan programmet fungerer. Dermed spares penge, da programmøren skal bruge mindre tid på at finde ud af hvad koden gør. 
 
 Readability er blevet placeret i kategorien "Vigtig" på grund af det "trade-off" som finder sted, når man vælger at øge writeability´en.
 Dette trade-off sker, ved at man øger writeabilityen som gør at koden er lettere at skrive, hvilket ikke altid gør det lettere at læse, og omvendt bliver det ikke lettere at skrive hvis det skal være lettere at skrive, og dermed kan man i de fleste tilfælde ikke opnå begge dele.
@@ -140,29 +140,31 @@ Dette vil sige at et for loop i sproget COBOL er mere læsbart i forhold til C\#
 
 \Cobol{Kode/Readability-cobol.cbl}{For-loop}{ekscobol}
 
-\noindent Man ser at opbygningen af koden, ligner meget en almindelig sætning, hvilket er meget let at læse. Derimod hvis man ser på C\# kodeeksempel \ref{code:ekscsharp} kan man se at opbygningen af opbygningen af sætningen indeholder parenteser, akkolade og semikolon, hvilket gør det besværligt at læse for en person, som ikke har arbejdet med programmering før.
+\noindent Man ser at opbygningen af koden, ligner meget en almindelig sætning, hvilket er meget let at læse. Derimod hvis man ser på C\# kodeeksempel \ref{code:ekscsharp} kan man se at opbygningen af opbygningen af sætningen indeholder parenteser, akkolade og semikolon, hvilket gør det besværligt at læse for programmører.
 
 \CSharp{Kode/Readability-csharp.cs}{For-loop}{ekscsharp}
 
 
-\noindent\textbf{Writeability} er hvordan koden skrives i et dokument, samt hvilken syntaks der benyttes. Dette er med til at sikre, at programmøren hurtigt og effektivt kan skrive koden.
+\noindent\textbf{Writeability} er et kriterie for hvor let det er at skrive koden. Dermed har writability meget af gøre med hvilken syntaks der benyttes. Dette er med til at sikre, at programmøren hurtigt og effektivt kan skrive koden.
 
-Dette kan være en hurtigere repræsentation af funktionen, som gør det hurtigere at skrive det. Dette giver et trade-off i Readability, da det gør det sværer at læse.\\
+Eksempelvis indeholder nogle sprog begin og end blokke, hvor andre bruger et enkelt tegn til at repræsentere det samme, herunder typisk et scope. Dermed er det meget hurtigere at skrive kode i sproget der kun kræver et tegn hver gang programmøren ønsker et nyt scope.
+
+Writability giver dog typisk et trade-off i forhold til Readability, som forklaret under Readability.\\
 
 \noindent\textbf{Adaptability} er muligheden for at tilpasse koden til andre enheder, hvor det i \gls{plc} verdenen, ville betyde at man ville kunne bruge programmeringssproget, på flere forskellige enheder selvom det er forskellige producenter. Adaptability er valgt at kategorisere som vigtigt, da det ville være lettere for en automatiktekniker at kunne lærer et sprog, og kunne bruge det til alle \gls{plc} enheder.
 
-Dette giver programmøren uafhængighed i forhold til hvilken producent vil arbejde med, og giver derved flere jobmuligheder.\\
+Dette giver programmøren uafhængighed i forhold til hvilken producent programmøren vil arbejde med.\\
 
-\noindent\textbf{Learnability} er hvor let programmeringssproget er at lærer, og hvor let det er at benytte det.
+\noindent\textbf{Learnability} er hvor let programmeringssproget er at lære, og hvor let det er at benytte det.
 
-Herunder er Learnability hvor nemt programmøren har ved at indlærer nye funktioner, ud fra dokumentationen, da programmøren umuligt kan huske alle funktioner i et stort sprog, og derved skal kunne indlærer det på ny, ved at kigge på et dataark. \\
-Learnability er placeret under mindre vigtigt, da sproget er prioriteret til automatikteknikere, som har gennemgået et grundkursus, hvilket er med til at sikre at den kommende programmør bliver sat ordenligt ind i sproget. Hermed er det valgt at nedprioritere sprogets learnability, således der kan implementeres flere funktioner, som giver en rig mulighed for udnyttelse af hele \gls{plc}´en.\\
+Herunder er Learnability hvor nemt programmøren har ved at indlærer nye funktioner, ud fra dokumentationen, da programmøren umuligt kan huske alle funktioner i et stort sprog, og derved skal kunne indlære det på ny, ved at kigge på et dataark. \\
+Learnability er placeret under mindre vigtigt, da sproget er prioriteret til automatikteknikere, som har gennemgået et grundkursus, hvilket er med til at sikre at den kommende programmør bliver sat ordenligt ind i sproget. Hermed er det valgt at nedprioritere sprogets learnability, således der kan implementeres flere funktioner, som giver en rig mulighed for udnyttelse af hele \gls{plc}´en.\\\sfix{Jeg ville prioritere anderledes - det er netop vigtigt så vi kan få anvendelsen af PLC++ højere op}
 
-\noindent\textbf{Orthogonality} er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner. Særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer er sproget altså ortogonalt.\\\sfix{Tjek op på forklaringen}
+\noindent\textbf{Orthogonality} er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner. Særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele er sproget altså fuldstændigt ortogonalt.\\\sfix{Tjek op på forklaringen - prioritet?}
 
 \noindent\textbf{Reliability} er hvordan koden håndtere fejl, og hvor pålideligt det generelt er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
 
-Dette er en yderst vigtig parameter i løsningen, da det skal kører på en \gls{plc} hvor driftsikkerhed er en af top prioriteterne.\\
+Dette er en yderst vigtig parameter i løsningen, da det skal kører på en \gls{plc} hvor driftsikkerhed er en af top prioriteterne.\\\sfix{Argument igen for imperativt - men også argument for exception handling}
 
 
 \begin{table}[H]
