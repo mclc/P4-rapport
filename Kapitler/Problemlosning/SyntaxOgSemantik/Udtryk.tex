@@ -1,5 +1,14 @@
 \subsection{Udtryk}
-Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en \textit{Bool}. Herunder ses gramatikken for udtr
+Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en \textit{Bool}. Herunder ses gramatikken for udtryk.
+
+\begin{Grammar}
+ \begin{grammar}
+
+ <e> ::= $n$ | $fp$ | $x$  | $e_1$ "+" $e_2$ | $e_1$ "-" $e_2$ | $e_1$ "*" $e_2$ | $e_1$ "/" $e_2$ | $e_1$ "\%" $e_2$ | "("$e_1$")" | $x$ "=" $e_1$ | $e$ "?" $e_1$ ":" $e_2$ | $e$"++" | $e$"--" | "-"$e$ | $A[e]$ | "true" | "false" | $e_1$ "==" $e_2$ | $e_1$ != $e_2$ | $e_1$ "<" $e_2$ | $e_1$ "<=" $e_2$ | $e_1$ ">" $e_2$ | $e_1$ ">=" $e_2$ | $e_1$ "\&\&" $e_2$ | $e_1$ "||" $e_2$ | "!"$e_1$ | $\epsilon$
+
+ \end{grammar}
+ \caption{Udtryk}\label{gra:expressions}
+\end{Grammar}
 
 
 
@@ -57,10 +66,8 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 \subsubsubsection{AND expression}
 
 \noindent Et "AND expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
-herunder kan gramatikken ses i BNF.
 
-\input{Kode/CFG/BNF_and_expr.scc}
-\noindent Herunder ses semantikken for \textit{And expression}. Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: Hvis \textit{and\_expr} er \textit{true} og \textit{equality\_expr} er \textit{true} så evaluerer udtrykket \textit{and\_expr} og \textit{equality\_expr} til true.
+\noindent Herunder ses semantikken for \textit{And expression}. Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: \mgfix{wip}
 
 
 \begin{align*}
@@ -68,30 +75,12 @@ herunder kan gramatikken ses i BNF.
 &[AND_\bot] & &\frac{SEnv \vdash e_i \rightarrow_e \bot}{SEnv \vdash e_1 \&\& e_2 \rightarrow_e \bot} & &i \in \{1, 2\}\\\\
 \end{align*}        
 
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[AND-1_{BS}]$ &$\frac{and\_expr \rightarrow \; tt \quad equality\_expr \rightarrow \; tt}{and\_expr \bigwedge equality\_expr \rightarrow \; tt}$ & \\
-    
-        $[AND-2_{BS}]$ &$\frac{and\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
-        
-        $[AND-3_{BS}]$ &$\frac{equality\_expr \rightarrow \; ff}{and\_expr \bigwedge equality\_expr \rightarrow \; ff}$ & \\
-        
-    \end{tabular}
-    \caption{AND expression}
-    \label{tab:andexpr}
-    \end{table}
-    \egroup
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{OR expression}
-Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men returnerer \textit{true} hvis bare en af operanderne er \textit{true}. Gramatikken for \textit{AND expression} kan ses herunder.
+Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men returnerer \textit{true} hvis bare en af operanderne er \textit{true}. 
 
-\input{Kode/CFG/BNF_or_expr.scc}
-\noindent Herunder ses semantikken for \textit{OR expression}. Semantikken læses som på samme måde dom ved \textit{AND expression}.
+\noindent Herunder ses semantikken for \textit{OR expression}. Semantikken læses som på samme måde dom ved \textit{AND expression}. \mgfix{double check}
 
 \begin{align*}
 &[OR_{\top\top}] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \top}{SEnv \vdash e_1\; ||\; e_2 \rightarrow_e \top}\\\\
@@ -99,31 +88,11 @@ Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men 
 &[OR_\bot] & &\frac{SEnv \vdash e_i \rightarrow_e \bot}{SEnv \vdash e_1 \;||\; e_2 \rightarrow_e \bot} & &i \in \{1, 2\}\\\\
 \end{align*}
 
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[OR-1_{BS}]$ &$\frac{or\_expr \rightarrow \; ff \quad and\_expr \rightarrow \; ff}{or\_expr \bigvee and\_expr \rightarrow \; ff}$ & \\
-    
-        $[OR-2_{BS}]$ &$\frac{or\_expr \rightarrow \; tt}{or\_expr \bigvee and\_expr \rightarrow \; tt}$ &\\
-        
-        $[OR-2_{BS}]$ &$\frac{and\_expr \rightarrow \; tt}{or\_expr \bigvee and\_expr \rightarrow \; tt}$ &\\
-        
-    \end{tabular}
-    \caption{OR expression}
-    \label{tab:orExpr}
-    \end{table}
-    \egroup
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{Equality expression}
 Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i bilag.
-    
-\input{Kode/CFG/BNF_equality_expr.scc}
-\noindent Herunder ses semantikken for \textit{Equality expression}. Hvis der taget udgangspunkt i \textit{EQUALS-T} læses gramatikken således: 
 
-\noindent Hvis \textit{equality\_expr} evaluerer til $v_1$ og \textit{greater\_less\_expr} evaluerer til $v_2$ så er udtrykket \textit{"equality\_expr = greater\_less\_expr"} \textit{true}, hvis $v_1$ og $v_2$ er lig med hinanden.
+\noindent Herunder ses semantikken for \textit{Equality expression}. Hvis der taget udgangspunkt i \textit{EQUALS-T} læses gramatikken således: \mgfix{wip}
 
 \begin{align*}
 &[EQ_\top] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1 \quad SEnv \vdash e_2 \rightarrow_e v_2}{SEnv \vdash e_1 == e_2 \rightarrow_e \top} & &\text{if } v_1 = v_2\\\\
@@ -131,23 +100,6 @@ Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre en
 &[NEQ_\bot] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1 \quad SEnv \vdash e_2 \rightarrow_e v_2}{SEnv \vdash e_1\; != e_2 \rightarrow_e \bot} & &\text{if } v_1 = v_2\\\\
 \end{align*}
 
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[EQUALS-T_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad greater\_less\_expr \rightarrow v_2}{equality\_expr\;=\;greater\_less\_expr \rightarrow \; tt}$ & if $v_1 = v_2$ \\
-        
-        $[EQUALS-\bot_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad greater\_less\_expr \rightarrow v_2}{equality\_expr\;=\;greater\_less\_expr \rightarrow \; ff}$ & if $v_1 \ne v_2$ \\
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Equality expressions}
-    \label{sem:equalityExpr}
-\end{semantik}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Aritmetiske udtryk}
 Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses herunder. Kun de mest basale aritmetiske udtryk vil blive gennemgået her. Resten kan findes i bilag.
@@ -170,47 +122,34 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
 \end{table}
 
 \subsubsubsection{Add and sub expressions}
-\textit{Add and sub expressions} plusser og minuser henholdsvis de to operander og returnerer et heltal eller kommatal alt efter operandernes type. Hvis en af operanderne er af typen \textit{float} returnerer udtrykket en float, ellers returnerer udtrykket \textit{Int}. Nedenfor ses gramatikken for \textit{Add and sub expressions}
+\textit{Add and sub expressions} plusser og minuser henholdsvis de to operander og returnerer et heltal eller kommatal alt efter operandernes type. Hvis en af operanderne er af typen \textit{float} returnerer udtrykket en float, ellers returnerer udtrykket \textit{Int}.
 
-    \input{Kode/CFG/BNF_add_sub_expr.scc}
-    \noindent Herunder ses semantikken for "Add and sub expressions" og den læses på samme måde som ved \textit{AND expression}.
+\noindent Herunder ses semantikken for "Add and sub expressions".
 
 \begin{align*}
-&[VAR] & &SEnv \vdash x \rightarrow_e v & &\text{if } x = l \text{ and } sto\; l = v\\\\
 &[PLUS] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 + e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 + v_2\\\\
 &[SUB] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 - e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 - v_2\\\\
 \end{align*}
-
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-    $[PLUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;+\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 + v_2$ \\
-        
-    $[MINUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;-\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 - v_2$ \\
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Add and sub expression}
-    \label{sem:addSubExpr}
-\end{semantik}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{Mult, div and mod expression}
-\textit{Mult, div and mod expression} kommer i tre forskellige varianter. Mult returnerer produktet af de to operander. Div returnerer heltalsdivisionen og mod returnerer resten af en division. Nedenfor ser man grametikken for \textit{Mult, div and mod expression}
-\input{Kode/CFG/BNF_mult_div_mod_expr.scc}
+\textit{Mult, div and mod expression} kommer i tre forskellige varianter. Mult returnerer produktet af de to operander. Div returnerer heltalsdivisionen og mod returnerer resten af en division.
 
-Nedenfor ses semantikken som læses på samme måde som ved \textit{AND expression}.
+Nedenfor ses semantikken for Mod, div og mod expressions, som læses på samme måde som ved \textit{AND expression}.
 
-\input{Kode/Semantik/SEM_mult_div_mod_expr.sem}
+\begin{align*}
+&[MULT] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 * e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 \cdot v_2\\\\
+&[DIV] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1\; /\; e_2 \rightarrow_e\; v} & &\text{where}\; v = \frac{v_1}{v_2}\\\\
+&[MOD] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1\; \%\; e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 - (v_2 \cdot \floor*{\frac{v_1}{v_2}})\\\\
+\end{align*}
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{Increment and decrement expressions}
-\textit{Increment and decremet expressions} er i to forskellige varianter. Som en prefix operator og en sufix operator. Nedenfor ses gramatikken for begge typer increment og decrement samt en masse andre. Det er dog kun prefix increment vi vil gennemgå. resten kan ses i bilag.
-\mgfix{der skal forklares hvordan denne semantik læses.. gøres dog først når semantikken er lavet - bolden ligger hos mikkel.}
-\input{Kode/CFG/BNF_unary_prefix_expr.scc}
+\textit{Increment and decrement expressions} er i to forskellige varianter. Som en prefix operator og en sufix operator. Nedenfor ses grammatikken for begge typer increment og decrement. 
 
-Herunder vises semantikken for prefix increment.
-\input{Kode/Semantik/SEM_unary_prefix_expr.sem}
+\begin{align*}
+&[INC_{POST}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle e\text{++}, sto \rangle \rightarrow \langle v, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v + 1\\\\
+&[DEC_{POST}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle e\text{- -}, sto \rangle \rightarrow \langle v, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v - 1\\\\
+&[INC_{PRE}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle \text{++}e, sto \rangle \rightarrow \langle v^\prime, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v + 1\\\\
+&[DEC_{PRE}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle \text{- -}e, sto \rangle \rightarrow \langle v^\prime, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v - 1\\\\
+\end{align*}

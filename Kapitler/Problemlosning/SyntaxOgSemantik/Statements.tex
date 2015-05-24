@@ -8,30 +8,7 @@ Sproget PLC++ består af en række forskellige statements. Statements som erklæ
 \noindent \subsubsection{While-løkke}
 For at kunne iterere i sproget 
 
-\input{Kode/CFG/BNF_while.tex}
 
-    \begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[WHILE-TRUE_{BS}]$ & $
-        \frac{\langle S, s\rangle  \rightarrow s^{\prime\prime} \quad \langle while\;b\;\{ S\},\;s^{\prime\prime}\rangle  \rightarrow s^{\prime}}
-        {\langle while\;b\;\{ S\},\;s\rangle  \rightarrow s^{\prime}}
-        $ & if $s \vdash b \rightarrow_b tt$ \\
-        
-        $[WHILE-FALSE_{BS}]$ & $
-        \langle while\;b\;\{S\},\;s\rangle  \rightarrow s$ & 
-        if $s \vdash b \rightarrow_b ff$ \\
-
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{While-løkke}
-    \label{sem:while}
-    \end{semantik}
     
 Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
 
@@ -48,15 +25,7 @@ If-else statements har til formål at tjekke om et givent boolsk udtryk er sandt
     \centering
     \begin{tabular}{l c l}
         
-        $[IF-TRUE_{BS}]$ & $
-        \frac{\langle S_1,\;s\rangle  \rightarrow s^\prime}
-        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
-        $ & if $s \vdash b \rightarrow_b tt$ \\
         
-        $[IF-FALSE_{BS}]$ & $
-        \frac{\langle S_2,\;s\rangle  \rightarrow s^\prime}
-        {\langle if\;b\;\{S_1\}\;else\;\{S_2\},\;s\rangle  \rightarrow s^\prime}
-        $ & if $s \vdash b \rightarrow_b ff$ \\
         
     \end{tabular}
     \end{table}
@@ -67,7 +36,7 @@ If-else statements har til formål at tjekke om et givent boolsk udtryk er sandt
     
 \noindent \subsubsection{Funktionskald}
 
-Blablabla...\mfix{Mikkel er mongol} Deklaration af funktioner findes i semantik x.x \mfix{Ref til funktionsdeclaration}
+Blablabla... Deklaration af funktioner findes i semantik x.x \mfix{Ref til funktionsdeclaration}
 
 Der bliver brugt pass by value...
 

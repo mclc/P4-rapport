@@ -5,11 +5,16 @@ Efter at have fuldendt problemløsningen kan der konkluderes i hvilken grad prob
 Problemformuleringen har lagt til grunde for kravspecifikationen, som indeholder udspecificerede funktionaliteter.
 Disse funktionaliteter er ved hjælp af en \gls{moscow}-analyse blevet tildelt en prioritet, således at funktionen kunne klassificeres ud fra dens vigtighed af den samlede løsning.
 
-Den samlede løsning vurderes udfra i hvilken grad kriterierne er opfyldt, dette belyses i afsnit \ref{subsec:il-pa}, hvor der påvises hvordan et eksempel i \gls{il} hurtig giver overblik, hvorimod \gls{ladder} giver en mere indviklet oversigt. Derimod hvis man opretholder eksemplet fra \gls{il} med PLC++ som kan ses i bilag \label{bil:semantik}, kan man se at koden er væsentlig mindre for PLC++.
+Den samlede løsning vurderes udfra i hvilken grad kriterierne er opfyldt, dette belyses i afsnit \ref{subsec:il-pa}, hvor der påvises hvordan et eksempel i \gls{il} hurtig giver overblik, hvorimod \gls{lad} giver en mere indviklet oversigt. Derimod hvis man opretholder eksemplet fra \gls{il} med PLC++ som kan ses i bilag \label{bil:semantik}, kan man se at koden er væsentlig mindre for PLC++.
 Herudover kan programmøren let få et overblik med sine egne funktionsnavne, hvorimod man i \gls{il} har en SBN og SBS block, som giver en reference i form af et id til den \textit{block} den kører.
 Derfor menes det at PLC++ giver et bedre overblik, samt en højere \textit{readability} i form af at man ikke behøver at forholde sig til adressering af hukommelsesadresser.
 Dertil kunne det tænkes at programmøren har lettere ved at lære PLC++ fremfor \gls{il}, da det har en højere  \textit{readability} samt at programmøren ikke skal lære instructioner, hvilket derfor leder til en højere \textit{learnability}. Dette er en bred påstand som der ikke er evidens for, foruden kodeeksempler som konkret viser kompleksiteten af \gls{il} og PLC++.
-Det er dog langt fra alle instrustri tekniker som programmere i \gls{il}, mest af alt på grund af dets kompleksitet som vist i  
+Det er dog langt fra alle instrustri tekniker som programmere i \gls{il}, mest af alt på grund af dets kompleksitet som vist i kodeeksemple \ref{code:fixedfee-il}.
+Derimod kodes der i \gls{lad}, som førhen er blevet konkluderet som et sprog med dårlig overblik for programmøren.
+Når man konkludere på \gls{lad}-programmering mod PLC++, er det vigtigt at man ser på et hvilken målgruppe som der arbejdes med.
+Hvilket tidligere er defineret som værende til industri tekniker med nogen programmeringserfaring, samt at programmet har en mellemstor størrelse.
+Hvis man derfor kigger på mellemstore programmer gør det sig gældende at \gls{lad}-programmering bliver meget uoverskueligt, og generelt er svært at rette i, hvorimod PLC++ giver et godt overblik.
+Kigger man derimod på små programmer har \gls{lad}-programmering en klar fordel, da programmøren ikke behøver at 
 
 
 
