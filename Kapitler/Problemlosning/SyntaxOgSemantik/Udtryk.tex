@@ -57,6 +57,12 @@ herunder kan gramatikken ses i BNF.
 \input{Kode/CFG/BNF_and_expr.scc}
 \noindent Herunder ses semantikken for \textit{And expression}. Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: Hvis \textit{and\_expr} er \textit{true} og \textit{equality\_expr} er \textit{true} så evaluerer udtrykket \textit{and\_expr} og \textit{equality\_expr} til true.
 
+
+\begin{align*}
+&[AND_\top] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \top}{SEnv \vdash e_1\; \&\&\; e_2 \rightarrow_e \top}\\\\
+&[AND_\bot] & &\frac{SEnv \vdash e_i \rightarrow_e \bot}{SEnv \vdash e_1 \&\& e_2 \rightarrow_e \bot} & &i \in \{1, 2\}\\\\
+\end{align*}        
+
     \bgroup
     \def\arraystretch{3}
     \begin{table}[H]
@@ -74,12 +80,19 @@ herunder kan gramatikken ses i BNF.
     \label{tab:andexpr}
     \end{table}
     \egroup
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{OR expression}
 Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men returnerer \textit{true} hvis bare en af operanderne er \textit{true}. Gramatikken for \textit{AND expression} kan ses herunder.
 
 \input{Kode/CFG/BNF_or_expr.scc}
 \noindent Herunder ses semantikken for \textit{OR expression}. Semantikken læses som på samme måde dom ved \textit{AND expression}.
+
+\begin{align*}
+&[OR_{\top\top}] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \top}{SEnv \vdash e_1\; ||\; e_2 \rightarrow_e \top}\\\\
+&[OR_{\top\bot}] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \bot}{SEnv \vdash e_1\; ||\; e_2 \rightarrow_e \top}\\\\
+&[OR_\bot] & &\frac{SEnv \vdash e_i \rightarrow_e \bot}{SEnv \vdash e_1 \;||\; e_2 \rightarrow_e \bot} & &i \in \{1, 2\}\\\\
+\end{align*}
 
     \bgroup
     \def\arraystretch{3}
@@ -106,6 +119,12 @@ Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre en
 \noindent Herunder ses semantikken for \textit{Equality expression}. Hvis der taget udgangspunkt i \textit{EQUALS-T} læses gramatikken således: 
 
 \noindent Hvis \textit{equality\_expr} evaluerer til $v_1$ og \textit{greater\_less\_expr} evaluerer til $v_2$ så er udtrykket \textit{"equality\_expr = greater\_less\_expr"} \textit{true}, hvis $v_1$ og $v_2$ er lig med hinanden.
+
+\begin{align*}
+&[EQ_\top] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1 \quad SEnv \vdash e_2 \rightarrow_e v_2}{SEnv \vdash e_1 == e_2 \rightarrow_e \top} & &\text{if } v_1 = v_2\\\\
+&[NEQ_\top] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1 \quad SEnv \vdash e_2 \rightarrow_e v_2}{SEnv \vdash e_1\; != e_2 \rightarrow_e \top} & &\text{if } v_1 \ne v_2\\\\
+&[NEQ_\bot] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1 \quad SEnv \vdash e_2 \rightarrow_e v_2}{SEnv \vdash e_1\; != e_2 \rightarrow_e \bot} & &\text{if } v_1 = v_2\\\\
+\end{align*}
 
 \begin{semantik}
     \bgroup
@@ -151,6 +170,12 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
     \input{Kode/CFG/BNF_add_sub_expr.scc}
     \noindent Herunder ses semantikken for "Add and sub expressions" og den læses på samme måde som ved \textit{AND expression}.
 
+\begin{align*}
+&[VAR] & &SEnv \vdash x \rightarrow_e v & &\text{if } x = l \text{ and } sto\; l = v\\\\
+&[PLUS] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 + e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 + v_2\\\\
+&[SUB] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 - e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 - v_2\\\\
+\end{align*}
+
 \begin{semantik}
     \bgroup
     \def\arraystretch{3}
@@ -158,9 +183,9 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
     \centering
     \begin{tabular}{l c l}
         
-        $[PLUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;+\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 + v_2$ \\
+    $[PLUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;+\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 + v_2$ \\
         
-        $[MINUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;-\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 - v_2$ \\
+    $[MINUS_{BS}]$ &$\frac{add\_sub\_expr \rightarrow v_1 \quad mult\_div\_expr \rightarrow v_2}{add\_sub\_expr\;-\;mult\_div\_expr \rightarrow v}$ & where $v = v_1 - v_2$ \\
         
     \end{tabular}
     \end{table}

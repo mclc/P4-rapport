@@ -28,8 +28,8 @@
  <function\_definition> ::= <type\_specifier> <identifier> "(" <formal\_parameter>? ")" "{" <statement>* "}"
  \alt "void" <identifier> "(" <formal\_parameter>? ")" "{" <statement>* "}"
  
- <formal\_parameters> ::= <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>?
- \alt <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? "," <formal\_parameter>
+ <formal\_parameters> ::= "const"? <type\_specifier> <identifier> <array\_definition>?
+ \alt "const"? <type\_specifier> <identifier> <array\_definition>? "," <formal\_parameter>
  
  <struct\_definition> ::= "struct" <identifier> "{" <struct\_declaration>* "}"
  
@@ -43,32 +43,35 @@
  
  <enum\_flag> ::= <identifier> <integer\_literal>?
  
- <type\_qualifier> ::= <const>
+ %<type\_qualifier> ::= <const>
  
- <declaration> ::= <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? ";"
- \alt <type\_qualifier>? <type\_specifier> <identifier> <array\_definition>? <expr>? ";"
+ <declaration> ::= "const"? <type\_specifier> <identifier> <array\_definition>? ";"
+ \alt "const"? <type\_specifier> <identifier> <array\_definition>? <expr>? ";"
  
  <array\_definition> ::= "[" <integer\_literal>? "]"
  
- <statement> ::= <declaration>
+ <statement> ::= ";"
+ \alt "{" <statement>* "}"
+ \alt <declaration> ";"
  \alt <expr> ";"
  \alt <if\_statement>
  \alt <switch\_statement>
  \alt "while" "(" <expr> ")" <statement>
  \alt "for" "(" <expr>* ";" <expr>? ";" <expr>* ")" <statement>
  \alt "return" <expr>? ";"
- \alt "contiue" ";"
+ \alt "continue" ";"
  \alt "break" ";"
  
- <statement\_no\_short\_if> ::= "{" <statement>* "}"
- \alt <declaration>
+ <statement\_no\_short\_if> ::= ";"
+ \alt "{" <statement>* "}"
+ \alt <declaration> ";"
  \alt <expr> ";"
- \alt <if\_statement\_short>
+ \alt <if\_statemen\_short>
  \alt <switch\_statement>
- \alt "while" "(" <expr> ")" <statement\_no\_short\_if>
- \alt "for" "(" <expr>* ";" <expr>? ";" <expr>* ")" <statement\_no\_short\_if>
+ \alt "while" "(" <expr> ")" <statement>
+ \alt "for" "(" <expr>* ";" <expr>? ";" <expr>* ")" <statement>
  \alt "return" <expr>? ";"
- \alt "contiue" ";"
+ \alt "continue" ";"
  \alt "break" ";"
  
  <if\_statement> ::= "if" "(" <expr> ")" <statement>
@@ -78,10 +81,11 @@
  
  <switch\_statement> ::= "switch" "(" <expr> ")" "{" <label\_statements>* "}"
  
- <while\_statement> ::= "while" "(" <expr> ")" "{" <statement>? "}"
- 
  <label\_statements> ::= "case" <expr> ":" <statement>*
  \alt "default" ":" <statement>*
+ 
+ <expr\_multiple> ::= <expr>
+ \alt <expr> "," <expr_mult>
  
  <expr> ::= <expr> "=" <ternary\_expr>
  \alt <expr> "+=" <ternary\_expr>
@@ -125,6 +129,7 @@
  \alt "-"<unary\_prefix\_expr>
  \alt "!"<unary\_prefix\_expr>
  \alt "(" <type\_specifier> ")"<unary\_prefix\_expr>
+ \alt <post\_and\_infix\_expr>
  
  <post\_and\_infix\_expr> ::= <identifier>"++"
  \alt <identifier>"-""-"
@@ -143,10 +148,10 @@
  \alt "true"
  \alt "false"
  \alt <identifier>
- \alt <port\_input\_identifier> <port\_value>
- \alt <port\_output\_identifier> <port\_value>
- \alt <port\_analog\_input\_identifier> <port\_value>
- \alt <port\_analog\_output\_identifier> <port\_value>
+ \alt "I\#" <port\_value>
+ \alt "O\#" <port\_value>
+ \alt "AI\#" <port\_value>
+ \alt "AO\#" <port\_value>
  \alt <function\_call>
  
  <port\_value> ::= <expr\_value>
@@ -157,14 +162,5 @@
  <integer\_literal> ::= <digit>+
  
  <decimal\_literal> ::= <digit>+ "." <digit>+
- 
- <port\_input\_identifier> ::= "I#"
- 
- <port\_output\_identifier> ::= "O#"
 
- <port\_analog\_input\_identifier> ::= "AI#"
- 
- <port\_analog\_output\_identifier> ::= "AO#"
- 
-  
 \end{grammar}

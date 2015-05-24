@@ -69,4 +69,6 @@ Emit funktionen som set i kodeeksempel \ref{code:emit} er relativ simpel, den å
 
 For at kunne bruge mange af de teknikker der allerede var udviklet til Assembly compilere er det nødvendigt at have en stack, og den indebyggede i \gls{plc}'en var utilstrækkelig \cfix{hvorfor var den ikke tilstrækkelig?}, har PLC++ kompileren en indebygget stack, der bruger woking memory området W400 - W512. 
 
-\Java{Kode/Stack.java}{Push og Pop funkionerne fra stacken.}{emit}
+\Java{Kode/Stack.java}{Push funkionen fra Stack klassen.}{push}
+
+Klassen Stack sørger for dette med standard funktionerne man ville forvente af en stack data struktur push og pop. Hvor push funktionen kan ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variable der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største data type der er til gængelig på 32 bit. Det giver noget data spild men tilgengæld er pop funktionen kun en decrement af pointeren og returnering af værdien og så håndtere modtageren værdien.

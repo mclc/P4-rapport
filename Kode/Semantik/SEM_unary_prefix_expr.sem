@@ -1,3 +1,9 @@
+\begin{align*}
+&[MULT] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 * e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 \cdot v_2\\\\
+&[DIV] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1\; /\; e_2 \rightarrow_e\; v} & &\text{where}\; v = \frac{v_1}{v_2}\\\\
+&[MOD] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1\; \%\; e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 - (v_2 \cdot \floor*{\frac{v_1}{v_2}})\\\\
+\end{align*}
+
 \begin{semantik}
     \bgroup
     \def\arraystretch{3}

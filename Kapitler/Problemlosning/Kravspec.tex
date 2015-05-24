@@ -70,7 +70,7 @@ er de basale typer sproget indeholder. PLC++'s typesystem er meget sammenligning
 Timer er en speciel struct der ikke kræver struct er skrevet foran denne. Timer structen er implementeret i standard biblioteket og benytter brugerdefinere compiler genererede metoder. Timers funktionalitet er at kunne starte/stoppe en timer, der giver et output når intervallet timeren er sat til er udløbet.\\
 Port er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern memory), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne datatype kan bruges til at skifte en port til en anden på kørselstidspunktet. Dette er eksempelvis praktisk i forhold til funktioner, da man så kan tage en port som input parameter.\sfix{Reelt set er vores port datatype useless}
 
-Strings er ikke implementeret i PLC++ og er derfor under want to have da anvendelsesområdet til en \gls{plc} er meget lille, da \gls{plc}'er typisk udenlukkende arbejder med boolske værdier. En senere udvidelse kunne dog inkludere strings for at skabe større integration med \glc{hmi}\sfix{Nogle der definerer hmi under problemanalysen?}.
+Strings er ikke implementeret i PLC++ og er derfor under want to have da anvendelsesområdet til en \gls{plc} er meget lille, da \gls{plc}'er typisk udenlukkende arbejder med boolske værdier. En senere udvidelse kunne dog inkludere strings for at skabe større integration med \gls{hmi}\sfix{Nogle der definerer hmi under problemanalysen?}.
 
 %String har man valgt at sætte, som et højrankeret funktionalitetskrav i \gls{moscow}-analysen, da dette giver mulighed for at let håndtering af strenge baseret på text, tal og karaktere. \mefix{Vend tilbage, når string er implementeret, og skriv hvordan}
 
@@ -160,15 +160,15 @@ Dette giver programmøren uafhængighed i forhold til hvilken producent programm
 Herunder er Learnability hvor nemt programmøren har ved at indlærer nye funktioner, ud fra dokumentationen, da programmøren umuligt kan huske alle funktioner i et stort sprog, og derved skal kunne indlære det på ny, ved at kigge på et dataark. \\
 Learnability er placeret under mindre vigtigt, da sproget er prioriteret til automatikteknikere, som har gennemgået et grundkursus, hvilket er med til at sikre at den kommende programmør bliver sat ordenligt ind i sproget. Hermed er det valgt at nedprioritere sprogets learnability, således der kan implementeres flere funktioner, som giver en rig mulighed for udnyttelse af hele \gls{plc}´en.\\\sfix{Jeg ville prioritere anderledes - det er netop vigtigt så vi kan få anvendelsen af PLC++ højere op}
 
-\noindent\textbf{Orthogonality} er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner. Særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele er sproget altså fuldstændigt ortogonalt. Dermed kan orthogonality have indflydelse på både writability idet det bliver lettere at lave avancerede konstruktioner, readability da konstruktionerne kan blive meget komplekse og dermed mindre \\\sfix{Tjek op på forklaringen - prioritet?}
+\noindent\textbf{Orthogonality} er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner. Særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele er sproget altså fuldstændigt ortogonalt. Dermed kan orthogonality have indflydelse på både writability idet det bliver lettere at lave avancerede konstruktioner, readability da konstruktionerne kan blive meget komplekse og dermed mindre læsbare. Da skrivbarhed også er meget vigtigt er orthogonality ligeledes blevet lagt under vigtigt sammen med readability. Orthogonality er dog ikke målet i sig selv, og det er derfor vigtigere med højere readability.\\\sfix{Tjek op på forklaringen - prioritet?}
 
-\noindent\textbf{Reliability} er hvordan koden håndtere fejl, og hvor pålideligt det generelt er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
+\noindent\textbf{Reliability} er hvordan koden håndterer fejl, og hvor pålideligt koden der kan skrives med programmeringssproget er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
 
-Dette er en yderst vigtig parameter i løsningen, da det skal kører på en \gls{plc} hvor driftsikkerhed er en af top prioriteterne.\\\sfix{Argument igen for imperativt - men også argument for exception handling}
+Dette er en vigtig parameter i løsningen, da det skal kører på en \gls{plc} hvor driftsikkerhed er en af top prioriteterne. Dog er fejlhåndtering vha. exceptions ineffektivt og der afgrænses i første omgang derfor for fra det.\\\sfix{Argument igen for imperativt - men også argument for exception handling}
 
 
 \begin{table}[H]
-\centering       
+\centering
 \rowcolors{2}{blue!10}{white}
 \begin{tabular}{l c c c c}
 \toprule
