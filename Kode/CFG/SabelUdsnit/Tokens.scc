@@ -1,0 +1,7 @@
+Tokens
+l_par = '(';
+r_par = ')';
+and_operator = '&&';
+or_operator = '||';
+
+while_keyword = 'while';

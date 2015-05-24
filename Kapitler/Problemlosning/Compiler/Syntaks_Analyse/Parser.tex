@@ -69,7 +69,47 @@ Finite Automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til
     \label{tab:transfunk_m1}
 \end{table}
 
-\notdone{Snak om regex osv.}
+\subsubsubsection{Regular Expressions}
+Regular expressions hænger tæt sammen med regular languages - ethvert sprog, som er regular, kan nemlig beskrives med en regular expression. Det er dog ikke her hovedvægten bliver lagt, da det er mere relevant at komme ind på regular expressions i programmeringssammenhæng. Her kan det bruges til at genkende "mønstre"\mbox{}, som er yderst relevant i forbindelse med scanneren. 
+
+Det smarte ved regular expressions er altså at disse mønstre kan skrives utroligt kompakt. Et eksempel kunne være 
+
+$$ \{w \in \{0, 1\}^* / w = 0^m\; 1\; 0^n, m,n \geq 0\} $$
+
+\noindent I dette eksempel vil ord som 1, 01, 10, 010, 0100, ... være indeholdt i dette sprog. En meget mere kompakt for af dette, kan skrives som regular expression vha. $ 0^* 1\; 0^* $, som siger at der skal være nul, en eller flere nuller efterfulgt af et enkelt et-tal og derefter nul, en eller flere nuller igen. Det er desuden også muligt at bruge $0^+$, hvilket betyder at der skal være en eller flere. Tages der udgangspunkt i eksemplet før, og ændrer det til $0^* 1\; 0^+$, vil det nu betyde at ord som 1 og 01 ikke er i sproget, da ordet skulle slutte med mindst ét nul. 
+
+Det er også muligt at bruge operatorer som $\cup$ og $\cap$ til at sammensætte flere udtryk. Der vil blive taget udgangspunkt i dette eksempel
+
+$$ \{w \in \{a, b\}^* / w \text{ starts with }b \text{ or end with }bb\} $$
+
+\noindent som kan omskrives til $b(a \cup b)^* \cup (a \cup b)^* bb$. Kort fortalt siger denne regular expression at der findes to muligheder. Mulighed siger at der først skal være ét b og derefter må a'er og b'er blandes på vilkårlige måder. Den anden mulighed er først a'er og b'er blandet - og derefter to b'er. Altså præcist hvad den anden definition beskrev.
+
+Det sidste der kan beskrives om regular expressions, er at disse uden videre kan omdannes til en \gls{nfa} ved at følge en simpel algoritme. Algoritmen vil ikke blive forklaret yderligere, men et simpelt eksempel vil følge udfra $((a^*b) \cup aa)^*$. Den resulterende NFA ses på figur \ref{fig:regextonfa}
+
+\tikzfigure{Figurer/TikZ/RegexToNFA.tex}{Regular expression til NFA}{regextonfa}
+
+\noindent \textbf{Formel definition af NFA i figur \ref{fig:regextonfa}}\\
+\noindent $Q$ = \{$q_0$, $r_0$, $r_1$, $s_0$, $s_1$, $s_2$\}\\
+\noindent $\Sigma$ = \{$\epsilon$, $a$, $b$\}\\
+\noindent $\delta$ = Se tabel \ref{tab:regextonfa}\\
+\noindent $q_0$ = $q_0$\\
+\noindent $F$= \{$q_0$\}\\
+
+\begin{table}[H]
+\centering
+\footnotesize
+\rowcolors{2}{black!5}{white}
+\begin{tabular}{l@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}l|l|l|l|l|l}
+
+$\delta$   & $q_0$          & $r_0$ & $r_1$ & $s_0$ & $s_1$ & $s_2$ \\ \bottomrule
+$\epsilon$ & $\{r_0, s_0\}$ &       & $q_0$ &       &       & $q_0$ \\
+$a$        &                & $r_0$ &       & $s_1$ & $s_2$ &       \\
+$b$        &                & $r_1$ &       &       &       &
+
+\end{tabular}
+	\caption{Transitionsfunktion (alle tommer celler angiver den tomme mængde)}
+    \label{tab:regextonfa}
+\end{table}
 
 %\figur{Figurer/MTAST.png}{Abstrakt syntakstræ baseret på kodeeksempel \ref{code:minitriangleforscanner}}{MTAST}{1.0}
 

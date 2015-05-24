@@ -1,133 +1,41 @@
 \noindent \subsection{Statements}
-Sproget PLC++ består af en række forskellige statements. Statements som erklæringer, funktionskald, løkker og mange andre. Under dette afsnit vil de mest betydende statements typer blive gennemgået og forklaret. Den fulde syntaks og semantik specifikation kan findes i bilag.
+Sproget PLC++ består af en række forskellige statements. Statements som funktionskald, iterative og selektive kontrolstrukturer. Under dette afsnit vil de mest betydende statements blive gennemgået og forklaret med tilhørende semantik. Nedenfor ses grammatikken for Statements i PLC++.
 
-\input{Kapitler/Problemlosning/SyntaxOgSemantik/Declarations.tex}
-
-\input{Kapitler/Problemlosning/SyntaxOgSemantik/Udtryk.tex}
-
-\noindent \subsubsection{While-løkke}
-For at kunne iterere i sproget 
-
-
-    
-Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker.
-
-\noindent \subsubsection{If-else statements}
-
-If-else statements har til formål at tjekke om et givent boolsk udtryk er sandt. Hvis dette er tilfældet, skal statements i den første block udføres. Er det derimod falsk, er det statements i blok to, som skal udføres. Hvis der tages et kig på semantik \ref{sem:ifelse} ses to forskellige transition rules \mfix{Dansk?}: en for sand, og en for falsk. 
-
-\input{Kode/CFG/BNF_if_else.tex}
-
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{If-else statement}
-    \label{sem:ifelse}
-\end{semantik}
-    
-\noindent \subsubsection{Funktionskald}
-
-Blablabla... Deklaration af funktioner findes i semantik x.x \mfix{Ref til funktionsdeclaration}
-
-Der bliver brugt pass by value...
-
-\input{Kode/CFG/BNF_call.tex}
-
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{1.5}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[CALL_{BS}]$ & 
-        $ \frac
-        {
-            env_V^\prime [x \mapsto l]\;[next \mapsto new l], env_F^\prime\;\vdash \langle S, sto[l \mapsto v] \rangle \rightarrow sto^\prime
-        }
-        {
-            env_V, env_F\;\mapsto \langle call f(a), sto \rangle \rightarrow sto^\prime
-        } $ & \\
-        
-        & where $ env_F f = (S, x, env_V^\prime, env_F^\prime), env_V, sto\;\vdash a \rightarrow_a\;v$ and $l = env_V\;next $&
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Funktionskald}
-    \label{sem:funktionskald}
-\end{semantik}
-
-    
-\noindent \subsubsection{Arrays}
-
-\input{Kode/CFG/BNF_array.tex}
-    
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[ARRAY_{BS}]$ & $
-        \frac{..}
-        {..}
-        $ & .. \\
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Array}
-    \label{sem:arrayvalue}
-\end{semantik}
-    
-\noindent \subsubsection{Structs}
-Blablabla... \mfix{Er absolut ikke sikker på dette}
+\begin{align*}
+&[BRACES] & & \frac{E\vdash Sts : \text{ok}}{E\vdash\{\;Sts\;\} : \text{ok}}\\\\
+&[COMP] & &\frac{E \vdash St : \text{ok}\quad E \vdash Sts : \text{ok}}{E \vdash St;\;Sts : \text{ok}}\\\\
+&[IF] & &\frac{E \vdash e : \text{Bool}\quad E \vdash St : \text{ok}}{E \vdash \text{if}\; (e)\;  St : \text{ok}}\\\\
+&[IF-ELSE] & &\frac{E \vdash e : \text{Bool}\quad E \vdash St_1 : \text{ok}\quad E \vdash St_2 : \text{ok}}{E \vdash \text{if}\; (e)\; St_1\; \text{else} \;St_2 : \text{ok}}\\\\
+&[WHILE] & &\frac{E \vdash e : \text{Bool}\quad E \vdash S : \text{ok}}{E \vdash while\; (e)\; St : \text{ok}}\\\\
+&[FOR] & &\frac{E \vdash e_1 : \text{ok}\enskip E \vdash e_2 : \text{bool}\enskip E \vdash e_3 : \text{ok}\enskip E \vdash : \text{ok}}{E \vdash \text{for } (\; e_1;\; e_2;\; e_3\;) \; St : \text{ok}}\\\\
+&[CALL] & &\frac{E \vdash F : (x : T \rightarrow \text{ok})\quad E \vdash e : \text{T}}{E \vdash F(e) : \text{ok}}\\\\
+&[CPS] & &\frac{E \vdash x : T\quad E \vdash e : T}{E \vdash x\; op\; e : \text{ok}}\\
+& & &\text{where}\; op \in \{+=, -=, *=, *=, \%=\}
+\end{align*}
 
 
-\input{Kode/CFG/BNF_struct.tex}
+\subsubsection*{While-løkke}
+For at kunne iterere i sproget er der blevet valgt både while- og for-løkke som en del af sproget. Da while-løkker og for-løkker er semantiske ækvivalente, og for-løkker omskrives til while-løkker inden code generation, er det ikke relevant at opskrive en semantik for for-løkker. 
+
+Nedenfor ses semantikken for while-løkker.
+
+\begin{align*}
+&[WHILE_\top] & &Env \vdash \langle St, sto \rangle \rightarrow sto^{\prime\prime}\\
+& & &\frac{Env \vdash \langle \text{while } (e)\; St,\; sto^{\prime\prime} \rangle \rightarrow sto^\prime}{Env \vdash \langle \text{while } (e)\; St,\; sto \rangle \rightarrow sto^\prime} & &\text{if } Env \vdash e \rightarrow_e \top\\\\
+%
+&[WHILE_\bot] & &Env \vdash \langle \text{while } (e)\; St,\; sto \rangle \rightarrow sto & &\text{if } Env \vdash e \rightarrow_e \bot\\\\
+\end{align*}
+
+\subsubsection*{If-else statements}
+If-else er en af de selektive kontrolstrukturer der er valgt til at kunne selektere eksekvering af kode. If-else statementet tager et boolsk udtryk der afgør om dens krop skal eksekveres. Hvis det boolske udtryk evaluerer til false bliver else kroppen eksekveret. Dette if-else statement fungerer nøjagtig som man kender det i C.
+Nedenfor ses semantikken for if-else statementet.
+
+\begin{align*}
+&[IF-E_\top] & &\frac{Env \vdash \langle St_1, sto \rangle \rightarrow sto^\prime}{Env \vdash \langle \text{if } (e)\;St_1 \text{ else } St_2,\; sto \rangle \rightarrow sto^\prime} & &\text{if } Env \vdash e \rightarrow_e \top\\\\
+%
+&[IF-E_\bot] & &\frac{Env \vdash \langle St_2, sto \rangle \rightarrow sto^\prime}{Env \vdash \langle \text{if } (e)\; St_1 \text{ else } St_2,\; sto \rangle \rightarrow sto^\prime} & &\text{if } Env \vdash e \rightarrow_e \bot\\\\
+\end{align*}
 
 
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{2}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        \multirow{4}{*}{$[STRUCT_{BS}]$} &
-        \multicolumn{1}{l}{$ env_R \vdash \langle D_V, env_V \rangle \rightarrow env_v^\prime$} \\
-        
-        & \multicolumn{1}{l}{$ env_R, env_V^\prime \vdash \langle D_F, env_F \rangle \rightarrow env_F^\prime $} \\
-        
-        & \multicolumn{1}{l}{$ \langle D_R, env_R, env_V^\prime \rangle \rightarrow_{DS}\;(env_R^\prime, env_V^{\prime\prime}) $} \\
-        
-        
-        & \multicolumn{1}{l}{$ \frac
-            {
-              \langle D_R^\prime, env_R[r \mapsto (env_R^\prime, env_V^{\prime\prime}, env_F^\prime)], env_V^{\prime\prime} \rangle                                       \rightarrow_{DS}\;(env_R^{\prime\prime}, env_V^{\prime\prime\prime})
-            }
-            {
-                \langle struct\;str =\;\{ D_V\;D_F \}, env_R, env_V \rightarrow_{DS}\;(env_R^{\prime\prime}, env_V^{\prime\prime\prime})
-            } 
-        $}
-        
-    \end{tabular}
-    
-    \end{table}
-    \egroup
-    \caption{Structs}
-\label{sem:structs}
-\end{semantik}
+\subsubsection*{Structs}
 
-\mfix{Labels skal flyttes, så vi kan ref til semantik i stedet for tabel}

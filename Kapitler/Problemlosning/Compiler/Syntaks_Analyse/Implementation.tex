@@ -13,26 +13,34 @@ Ignored tokens definerer hvilke tokens parseren skal ignorere.
 
 Productions definerer alle reglerne for parseren. Produktionsreglerne definerer også hvordan reglerne skal mappes til det tilhørende \gls{ast}, hvis sådant et er defineret. Hvis intet \gls{ast} er blevet defineret laver SableCC sit eget \gls{ast} ud fra produktionsreglerne. Det er dog i de fleste tilfælde smart\sfix{Andet ord?} at lave sit eget \gls{ast}, grundet at simple matematiske operationer såsom multiplikation og addition kan lave et meget kompliceret \gls{ast}, da grammatikken ikke må være unambigius, og dermed skal addition og multiplikation placeres i 2 seperate regler hvor additions reglen referer til multiplikationsreglen. Dermed vil mange expressions have ekstra noder som der i teorien er unødvendige. Derudover er der også problematikken med dangeling else, der ellers vil kunne resultere i at der findes 2 noder for alle statements, da produktionsreglen for statement bliver dubleret (dog med små tilretninger). 
 
-Alle referencer i produktionsreglerne til \gls{ast} sker vha. tuborgklammer. \sfix{Kan det defineres mere klart?}
+Alle referencer i produktionsreglerne til \gls{ast} sker vha. akkolader. \sfix{Kan det defineres mere klart?}
 
 Abstract syntax tree definerer som navnet antyder alle noder i SableCCs genererede \gls{ast}.
 
-Et udsnit af grammatikken anvendt til at generere parser/scanner til PLC++, ses på kode \ref{code:cfgudsnit}
+\subsubsection*{Udsnit af SableCC gramatikken}
+Nedstående afsnit vil gå i dybden med dele af gramatikken. Det er dog værd at bemærke at dele af grammatikken er simplificeret til det pågældende eksempel (navnene på reglerne er dog ikke ændret).
+%Et udsnit af grammatikken anvendt til at generere parser/scanner til PLC++
 
-Gramatikken SableCC bruger til at lave scanneren og parseren
+%Gramatikken SableCC bruger til at lave scanneren og parseren
 
-\SCC{Kode/Udsnit.scc}{Udsnit af CFG i SableCC-syntax}{cfgudsnit}
-\mfix{Det kunne være fint og få dette kodeeksempel gjort pænere}
+%\SCC{Kode/Udsnit.scc}{Udsnit af CFG i SableCC-syntax}{cfgudsnit}
+%\mfix{Det kunne være fint og få dette kodeeksempel gjort pænere}
 
-\noindent Det er værd at bemærke at der er blevet omskrevet i dele af gramatikken. Derudover er nogle dele af grammatikken simplificeret til det pågældende eksempel.
+%\noindent Det er værd at bemærke at der er blevet omskrevet i dele af gramatikken. Derudover er nogle dele af grammatikken simplificeret til det pågældende eksempel.
 
-På linje 1-2 ses helperen digit som bruges som en "hjælpe" regulært udtryk der kan bruges til definitionen af tokens.
+\SCC{Kode/CFG/SabelUdsnit/Helpers.scc}{Del af helper sektionen i config filen til SableCC}{cfghelpers}
 
-På linje 4-8 ses en række tokens som lexeren\sfix{Lexer vs scanner} skal genkende. Herunder parenteser, og operatoren og eller operatoren samt while keywordet.
+På kode \ref{code:cfghelpers} ses helperen digit som bruges som en "hjælpe" regulært udtryk der kan bruges til definitionen af tokens.
 
-På linje 12-19 en del af produktionsreglen for et statement. I følgende eksempel er medtaget hvordan et scope bliver defineret (linje 14-15) samt et while statement (linje 17-18). Det kan ses på linje 13 at den tilhørende overklasse node i \gls{ast} der hedder statement (udtrykt i tuborgklammerne). På linje 15 kan det derudover ses at scope refererer til statement.scope. Med andre ord, superklassen på noden er statement og den konkrete node i \gls{ast} er scope. Noden tager også et array af statements med som parameter. SableCC genkender et array vha. hårde paranteser. Bemærk den specielle syntaks med statement.statement. Dette betyder at vi tager produktionsreglen statement og indikerer at SableCC skal omskrive til \gls{ast} noden.\sfix{Omskriv muligvis?}
+\SCC{Kode/CFG/SabelUdsnit/Tokens.scc}{Del af token sektionen i config filen til SableCC}{cfgtokens}
 
-På linje 21-31 ses 2 expressions herunder and og or expression. For at specialisere precendence i SableCC er man nødt til at lave denne særlige konstruktion der gør sådan at and expression bliver prioriteret højere end or expression (En af ulemperne ved SableCC). Dette giver dog som standard et uhensigtsmæssigt \gls{ast}, da alle faktorer også bliver en separat node. Eksempelvis skal man for at lave en andExpr først have en factorOrExpr node og derefter en andAndExpr node. Derfor er det en fordel at lave et seperat \gls{ast} som kun indeholder en expr node. En meget lille del af expr node i \gls{ast} kan ses på linje 33-37. Her vises compareAndExpr og compareOrExpr. Som der referereres til i produktionsreglerne.
+På kode \ref{code:cfgtokens} ses en række tokens som lexeren\sfix{Lexer vs scanner} skal genkende. Herunder parenteser, og operatoren og eller operatoren samt while keywordet.
+
+\SCC{Kode/CFG/SabelUdsnit/Productions.scc}{Del af productions sektionen i config filen til SabelCC}{cfgproductions}
+
+På kode \ref{code:cfgproductions} en del af produktionsreglen for et statement. I følgende eksempel er medtaget hvordan et scope bliver defineret (linje 14-15) samt et while statement (linje 17-18). Det kan ses på linje 13 at den tilhørende overklasse node i \gls{ast} der hedder statement (udtrykt i akkoladerne). På linje 15 kan det derudover ses at scope refererer til statement.scope. Med andre ord, superklassen på noden er statement og den konkrete node i \gls{ast} er scope. Noden tager også et array af statements med som parameter. SableCC genkender et array vha. hårde paranteser. Bemærk den specielle syntaks med statement.statement. Dette betyder at vi tager produktionsreglen statement og indikerer at SableCC skal omskrive til \gls{ast} noden.\sfix{Omskriv muligvis?}
+
+På linje 21-31 ses 2 expressions - herunder \textit{and} og \textit{or} expressions. For at specialisere precendence i SableCC er man nødt til at lave denne særlige konstruktion der gør sådan at and expression bliver prioriteret højere end or expression (En af ulemperne ved SableCC). Dette giver dog som standard et uhensigtsmæssigt \gls{ast}, da alle faktorer også bliver en separat node. Eksempelvis skal man for at lave en andExpr først have en factorOrExpr node og derefter en andAndExpr node. Derfor er det en fordel at lave et seperat \gls{ast} som kun indeholder en expr node. En meget lille del af expr node i \gls{ast} kan ses på linje 33-37. Her vises compareAndExpr og compareOrExpr. Som der referereres til i produktionsreglerne.
 
 %På linje 1-2 ses definitionen for et \textit{while\_statement} - altså en løkke af typen while. Teksten i tuborgklammerne angiver navnet, som kan bruges til intern brug i programmet. Herefter fortæller grammatikken hvad et \textit{while\_statement} består af. Det første, \textit{while\_keyword}, er defineret på linje 4 som værende teksten "while"\mbox{}. Da det ikke er muligt at skrive keywords på samme måde som i \gls{bnf}, er det nødvendigt at definere alle i starten af konfigurationsfilen.
 
@@ -84,7 +92,7 @@ Et eksempel kan ses i kode \ref{gra:dangFix}.
 \noindent PLC++ er implementeret med den sidstnævnte metode. Der er desuden lavet nogle tests i afsnit \ref{subsec:parser} for at sikre at der ikke er problemer med dangling else og at kildekoden genererer det ønskede \gls{ast} (tætteste if knytter sig til else statementet).
 
 \subsubsubsection{SableCC's implementation af lexer og parser}
-\noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit x.x\mfix{ref} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
+\noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit \ref{ssec:syntaxanalysis} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
 
 \tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{En NFA genereret af SableCC}{sableccnfa}
 

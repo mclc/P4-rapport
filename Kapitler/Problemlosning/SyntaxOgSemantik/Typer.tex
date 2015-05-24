@@ -1,11 +1,11 @@
 \subsection{Typer}
-Inden gennemgang af syntaksen omtales de mest nødvendige datatyper.
+For at kunne håndtere data i PLC++ er datatyper nødvendige. Om det er data fra digitale eller analoge indgange der skal modelleres inden de skal bruges til output eller om det er intern beregning. Det er dog kun de mest betydende datatyper der omtales i dette afsnit.
 
 \subsubsection*{Bool}
-Den boolske datatype repræsenterer værdien \textit{sand} eller \textit{falsk}. Denne type kan ikke konverteres til andre typer ligesom i \textit{C} eller \textit{C++}. Alle boolske udtryk returnerer denne type.
+For at kunne håndtere digitale signaler i plc'en er en boolsk datatype oplagt. Den boolske datatype repræsenterer værdien \textit{sand} eller \textit{falsk} ligesom digitale signaler. Denne type kan ikke konverteres til andre typer ligesom i \textit{C} eller \textit{C++}. Alle boolske udtryk returnerer denne type.
 
 \subsubsection*{Int}
-\textit{Int} datatypen er datatypen beregnet til at holde heltalsværdier. \textit{Int} er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. \textit{Int} kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
+For at kunne håndtere heltal er \textit{Int} et krav til PLC++. \textit{Int} er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. \textit{Int} kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768.
 
 \subsubsection*{Array}
 \textit{Array} datatypen er en datastruktur der kan holde n antal elementer i sekvens, hvor n angives på instansieringstidspunktet. Alle elementer i arrayet skal være i samme type og kan tilgås ved at skrive araryets navn efterfulgt af en integer \textit{i} indpakket i et sæt hårde parenteser, der returnerer det \textit{i.} element.

@@ -19,6 +19,7 @@ I dag bliver de fleste automatiserede anlæg konstrueret med en \gls{plc}. Det g
  programmeringsparadigme.
 
 \subsubsection{PLC-producenter}
+\label{sec:plc}
 \noindent For at give en bedre forståelse for \gls{plc}'en, vil nedenstående afsnit korfattet introducere tre \gls{plc}-producenter. Indledningsvist vil Siemens blive introduceret, som er en af de største \gls{plc}-
 producenter på markedet. Omron er på lige fod med Siemens et udbredt fabrikat, som benyttes i rigtig mange automatiserede anlæg. Omron's \gls{plc}-model, \enquote*{SYSMAC CP1H}, er samtidig tilgængelig for gruppen. CODESYS er de ledende udviklere af softwareapplikation til \gls{plc}'er, og har udviklet CODESYS SP6, som bygger på det \gls{oop}
 
@@ -37,6 +38,7 @@ producenter på markedet. Omron er på lige fod med Siemens et udbredt fabrikat,
 \noindent \gls{plc}'ens hardware og de førende \gls{plc}-producenter er nu blevet gennemgået; hvor det blev belyst at \gls{plc}'ens mekaniske konstruktion er modstanddygtige overfor barske arbejdsmiljøer. Ydermere blev der afdækket, at de fleste \gls{plc}-producenter, som f.eks. Siemens og Omron, stadig benytter sig af det logiske programmeringsparadigme. Det næste afsnit vil komme nærmere ind på, hvad årsagerne er til at producenterne ikke udvikler sig mere på det softwaremæssige område.
 
 \subsection{Software}
+\label{subsec:plcsoftware}
 %% PDF TIL PLC-GENNEMGANG: 
 %% http://www.etf.unssa.rs.ba/~slubura/Procesni%20racunari/Programmable%20Logic%20Controllers%204th%20Edition%20%28W%20Bolton%29.pdf
 Programmeringsprog til \gls{plc}'en har ikke udviklet sig meget siden indtoget i 1960'erne (se afsnit \ref{subsec:siemens} og \ref{subsec:omron}). Dette kan umildbart skyldes flere faktorer; Brugerne, herunder industrien og slutkunderne, efterspørger ikke et moderne programmeringssprog i en sådan grad, at producenter, såsom Siemens og Omron ønsker at efterkomme kravet. Det skyldes naturligvis at \gls{plc}-producenternes kunder, og deres ønsker, er en direkte funktion af \gls{plc}-producenternes udviklingsforetagende. \\
@@ -98,7 +100,7 @@ Kodeeksempel \ref{code:st_exsample} viser et simpelt \gls{st}-program, som best�
 \subsubsubsection{Instruction List, IL}
 \gls{il} beskrives nemmest som et tekstrepræsenteret LAD-programmeringssprog. \gls{il} består af en række instruktioner; én instruks pr. linje. En instruks kan bestå af én eller flere operander. Ulempen ved \gls{il} er, at \gls{plc}-producenterne ikke vælger at følge konventionen (jf. \gls{iec} 1131-3), hvorved notationen skifter på tværs af producenterne. Kodeeksempel \ref{code:fixedfee-il} viser et relativt simpelt program som grundlæggende beregner et gebyr, og aktivere en udgang på \gls{plc}'en. Denne operation bliver foretaget ved at benytte en predefineret LD-instruks \textit{P\_First\_Cycle} (Omron standard), som kun køres én gang under programinitialisering. Dette bliver benyttet som \textit{init()}-metoden, på tilsvarende måde, som det kendes fra Arduino-programmeringssproget \cite{ardiono_code_init}. På linje 2 bliver en \textit{stack} defineret, ved brug af \textit{SSET(630)}, hvorefter en global variabel med værdien 2, bliver flyttet til et hukommelsesområdet W402. Herefter bliver funktionerne defineret og kaldt med \gls{il}-instrukserne: \textit{SBN} og \textit{SBS}. Afslutningsvist bliver udgangen Q\#100.00 sat med instruksen \textit{OUT}. 
 
-\IL{Kode/FixedFee-IL.tex}{Simpelt eksempel på IL-kode, som består af 2 metoder og 2 funktioner. Der bliver udregnet et gebyr, hvorefter en udgang sættes på \gls{plc}'en. Kodeeksemplet er direkte konverteret fra PLC++, og kan ses i bilag \ref{bil:fixedfee}}{fixedfee-il}
+\IL{Kode/FixedFee-IL.tex}{Simpelt eksempel på IL-kode, som består af 2 metoder og 2 funktioner. Der bliver udregnet et gebyr, hvorefter en udgang sættes på \gls{plc}'en. Kodeeksemplet er direkte compileret fra PLC++, og kan ses i bilag \ref{bil:fixedfee}}{fixedfee-il}
 
 \noindent Som det også kan ses i kodeeksemplet \ref{code:fixedfee-il}, kan programmet hurtigt blive uoverkommeligt - og det er på trods af, at programmet kun foretager et par simple operationer. Det er svært at adskille funktionerne fra hinanden, deres tilhørende kroppe, samt at gennemskue funktionernes kaldstidspunkter. Skal anlægget fejlfindes under aktiv kørsel, er det ikke muligt for programmøren at se programmet eksekveringsstadier og værdier. Læsbarheden kan dermed erkendes som værende relativ lav i det tekstrepræsenteret \gls{il}. Imidlertid er det muligt - som tidligere nævnt - at få \gls{il}-instrukserne direkte konverteret til et \gls{lad}-diagram. Herved er det muligt at se programmet i realtime, hukommelsesområder kan inspectes, watches kan opsættes og eksekveringstadierne kan give en pegning om hvorhenne programmet fejler. Endvidere kan programmet ses i \gls{lad}-diagram, som har en meget højere læsbarhed. Figur \ref{fig:fixedfee-graphic} viser forrige kodeeksempel \ref{code:fixedfee} i CX-Programmer.
 
@@ -131,63 +133,22 @@ Fordelen ved \gls{il} er, at det er muligt at udtrykke hele \gls{plc}-programmet
 
 \noindent\gls{oop}-programmeringsparadigmet kan - såfremt at programmøren besidder den nødvendige programmeringserfaring - medvirke til et velstruktureret program. Foruden CODESYS, er der også en række andre producenter, som har forsøgt at implementere \gls{oop} - her kan der bl.a. nævnes Beckhoff, som har en kraftig tilvækst igennem det sidste årti. I året 1999 omsatte Beckhoff for \$50 millioner, som i året 2010 er steget til \$346 millioner. Dette indikerer at flere vælger at migrere over til \gls{oop}, fremfor det traditionelle \gls{lad}, og \gls{oop} kan dermed anses for at være i et gunstigt indtog i det mangfoldige \gls{plc}-univers\cite{beckhoff-sold}.
 
+\subsection{PLC begrænsninger}\label{sec:plcprob}
+Da PLC'er typisk er bygget til industrimaskiner og i et miljø hvor hardware robustheden er meget vigtig, er hastigheden på PLC'erne typisk meget langsom i forhold til en almindelig computer. Derudover er der typisk en maksimal størrelse på programmerne.
 
+Et eksempel er Omrons PLC CP1H. CP1H har en begrænsning på 20.000 steps, hvor hver instruktion kan være mellem 1 - 7 steps. Derudover har CP1H også en begrænsning på maks 256 subrutiner og maks 256 jump.
 
+Dette giver nogle begrænsninger i forhold til udviklingen af et høj niveau sprog. Eksempler på strukturer der kræver jumps er selektive og iterative kontrolstrukturer. Derfor skal PLC++ have så få jumps som muligt ud fra det generede kode. Dermed bliver ting såsom exception handling udelukket da dette kræver et ekstra tjek eksempelvis ved alle divisioner, da Omron sætter et error flag ved division af 0.
 
+Objektorienteret programmering er derudover også problematisk i forhold til nedarvning og polyformeri. Ved polyformeri skal der være en jump table til alle medtoder der kan overskrives og dermed vil dette give problemer ved små programmer.
 
+Nedarvning giver desuden ikke mulighed for et statisk typesystem, hvilket gør typekonvertering ineffektiv, da der skal være flere tjek under kørselstidspunktet. Der skal desuden være en form for fejlhåndtering når det ikke er muligt at lave denne typekonvertering.
 
+Disse begrænsninger vidner også om at projekterne udviklet til PLC'er typisk ikke er kæmpe projekter. Dog kan et sprog stadig retfærdiggøres i forhold til de ulemper der er i forhold til både \gls{lad} og \gls{il}. Dermed 
 
+% https://www.ia.omron.com/products/family/1778/specification.html
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+%Der er blevet valgt at fokusere på det imperative paradigme og derfor implementeres ikke nedarvning og polyformeri. Nedarvning og polyformeri bruger ofte flere ressourcer og er derfor uegnet til PLC verdenen da hastigheden kan have stor indflydelse. Derudover bliver \gls{plc} projekter oftest ikke så store, dels pga. de typiske opgavers kompleksitet og dels hastigheden på PLC'en. Implementeringen af det objektorinterede paradigme kan derfor ved større projekter som OOP er mest egnet til vise sig at blive for ressourcekrævende.\sfix{Skal vi flytte denne her del til problemanalyse og referere der til i stedet?}\sfix{Kilde på PLC er langsomt}
 
 
 %\gls{fbd} er den anden grafiske måde at repræsentere et \gls{plc}-program. \gls{fbd} er programmeret ved hjælp af de samme logiske blokke som omtalt i \gls{lad}. Ligeledes kan på samme måde bruge mere avancerede blokke som timere og tællere. På figur \ref{fig:FBD} ses et eksempel på Et simpelt Function Block Diagram.
@@ -198,16 +159,6 @@ Fordelen ved \gls{il} er, at det er muligt at udtrykke hele \gls{plc}-programmet
 
 %\noindent Flere softwarefirmaer har forsøgt at implementere det objektorienterede paradigme i \gls{plc}'en. For mange industriteknikere, som også fungerer som \gls{plc}-programmører i industrien, kan \gls{oop} dog blive for omstændigt. For at kunne programmere et funktionelt program i det \gls{oop} paradigme, kræver den anderledes abstrakt tænkegang, som for mange; kan forekomme meget uoverskuelig i begyndelsen. Det kræver således, at den enkelte programmør, er villig til give slip på gamle vaner og notationer - hvilket kan være en tidskrævende proces.
 %Mange \gls{plc}-programmører holder derfor fast i de gamle og velkendte programmeringsrutiner. Dette kan i visse tilfælde, som tidligere nævnt, ligeledes skyldes arbejdspladsens konservative indgangsvinkel\cite{PLC_Siemens_OOP}.  \\
-
-
-
-
-
-
-
-
-
-
 
 %\subsubsection{Opsummering}
 

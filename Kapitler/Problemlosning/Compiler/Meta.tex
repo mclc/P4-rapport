@@ -1,6 +1,13 @@
 \section{Compilere}
 Compilere er grundstenen i alt programmering, og store dele af datalogien, som vi kender den i dag. De tidlige udgaver af programmer og styresystemer blev skrevet i ren maskinkode - en disciplin som de færreste mennesker er i stand til at udføre. Derfor blev konceptet med høj-niveau sprog opfundet. Det vil sige at man kan skrive et stykke software, med bogstaver og ord som er væsentligt mere læsbar for mennesket. Herefter transformerer et andet stykke software denne tekst om til maskinkode - dette kaldes en compiler.
 
+For at forstå compileringsprocessen af PLC++ er der lavet et tombstone diagram (figur \ref{fig:thombstone}) der viser compileringsprocessen. Det første step er at et program bliver skrevet i sproget PLC++. Programmet i sproget PLC++ bliver derefter oversat til \gls{il} ved oversætteren kørenede i Java Virtual Machine (Java Bytecode - compileret fra Java). Java Bytecode bliver interpreteret under kørslen til maskinkode for den konkrete platform der kører koden (i de fleste tilfælde x86 eller x86\_64).
+
+Programmet er nu repræsenteret i IL. Dette bliver yderligere af Omron's Cx Programmer compileret videre til maskinkode til PLC'en.
+
+\figur{Figurer/Billeder/Tombstone.png}{Tombstone diagram}{thombstone}{1.0}
+
+\subsection{Opbyging af en compiler}
 En compiler består overordnet set typisk af 3 forskellige dele som set i figur \ref{fig:compilerOpbygning}. Herunder syntax analysen som omdanner kildekoden til et abstrakt syntaks træ. Der kan læses mere omkring syntaks analysen i afsnit \ref{ssec:syntaxanalysis}. Contextual analysen er tjek for om de konkrete udtryk er lovlige ud fra semantikken definereret i afsnit \ref{sec:Syntax}. Contextual analysen omdanner det abstrakte syntaks træ til et dekoreret abstrakt syntaks træ, det kan der læses mere om i afsnit \ref{ssec:contextual}. Sidste del er code generation der omdanner det dekorerede syntaks træ om til kode. Der kan læses mere omkring code generation i afsnit \ref{ssec:codegen}.
 
 \tikzfigure{Figurer/TikZ/CompilerOpbygning.tex}{Opbygningen af en compiler}{compilerOpbygning}{}

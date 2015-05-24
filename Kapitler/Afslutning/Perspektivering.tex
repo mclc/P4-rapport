@@ -1,36 +1,30 @@
 \chapter{Perspektivering}
 \label{sec:Perspektivering}
-\textit{Perspektiveringen gennemgår og belyser projektets muligheder for udvikling, samt eventuelle ideer som er fremkommet under udviklingsfasen.
-Der vil i perspektiveringen være eksempler på hvordan projektet ville kunne udvides, samt hvordan det kan videreføres til andre platforme.
-}
+\textit{Perspektiveringen gennemgår og belyser projektets muligheder for udvikling samt eventuelle idéer som er fremkommet under udviklingsfasen.Der vil i perspektiveringen være eksempler på hvordan projektet ville kunne udvides, samt hvordan det kan videreføres til andre platforme.}
 
 \subsection*{Objektorienteret}
 Det objektorienterede paradigme har været afgrænset fra projektet, da det ikke levede op til de definerede krav, samt at målgruppen var forskellig fra den ønskede.
-Målet for projektet har er at skabe overblik for den individuelle industritekniker i mellemstore programmer, hvor det vidste sig at det imperative paradigme der var det korrekte valg.
-Derimod hvis man kigger på meget store programmer, kunne det tænkes at det objektorienterede paradigme er en bedre løsning, i forhold til at man har mulighed for at opnå et højere abstraktionsniveau.
+Målet for projektet er at skabe overblik for den enkelte industritekniker i mellemstore programmer, hvor det viste sig at det imperative paradigme var det rigtige valg.
 
-De mange fornuftige ting i det objektorienteret paradigme, er blandt andet nedarvning hvilket kunne være smart i den forstand, at programmører til \gls{plc}er normalt programmere mange af de samme features flere gange, men med små justeringer.
-Derfor kunne nedarvning give mening, i forhold til at en programmør derved kunne have en standard klasse, som personen kan kode videre på, til de enkelte moduler.
+Kigger man derimod på meget store programmer kan det tænkes at det objektorienterede paradigme er en bedre løsning, da man har mulighed for at opnå et højere abstraktionsniveau.
+
+De mange fornuftige ting i det objektorienterede paradigme er blandt andet nedarvning, hvilket kunne være smart i den forstand, at programmører til \gls{plc}'er normalt programmerer mange af de samme features flere gange, men med små justeringer.
+Derfor kunne nedarvning give mening, da en programmør derved kunne have en superklasse, som personen kan kode videre på, til de enkelte moduler.
 Dette ville øge abstraktionsniveauet og derved gøre det lettere at dele store programmer op i små blokke af kode.
-Det objektorienteret paradigme vil dog kræve en omstrukturering af industriuddannelsen, således at programmøren lærer omkring det objektorienterede paradigme.
+
+Det objektorienterede paradigme vil dog kræve en omstrukturering af industriuddannelsen, så industriteknikerne lærer det objektorienterede paradigme.
 Dette ville være med til at øge programmørens forståelse for genbrug af kode, hvilket ville kunne øge produktiviteten.
 
-\subsection*{Integrated development environment}
-Codesys, Omron og Siemens har alle hver deres IDE, som alle giver muligheden for at skrive \gls{il} og ladder samt structured text.
-Hertil kunne det være smart hvis man kunne implementere således at der kunne skrives PLC++ direkte i producenternes IDE. Dette vil give mulighed for at man ikke skulle kopier den generede kode, over i producentens program, og derved ville man spare tid.
-Det vil ligeledes give mulighed for at man kunne implementere funktioner, således at man kunne konvertere PLC++ til \gls{il}.
-Her kunne det tænkes at man kunne gøres således at IDE kunne skelne mellem de forskelle der er imellem de forskellige \gls{plc}er, og derved lave de små justeringer, således at lige meget hvilket program man skriver i PLC++ ville det virke på alle producenters \gls{plc}er.
-Dette kan dog fremprovokere en problemstilling, i forhold til at \gls{plc}er har forskellige størrelser på hukommelsesområdet, hvilket betyder at hver eneste gang at producenten fremstiller en ny \gls{plc}, ville de skulle lave en form for konverter til den, eller sætte en standard for deres produktlinje.
-Derudover ville dette kunne have en indflydelse på, hvordan firmaer ville vælge producenten på grund af deres specifikationer på \gls{plc}en, fremfor deres software.
+\subsection*{Integrated Development Environment}
+Codesys, Omron og Siemens har alle hver deres \gls{ide}, som alle giver muligheden for at skrive \gls{il}, \gls{lad} samt \gls{st}.
+Hertil kunne det være smart, hvis man kunne implementere at der kunne skrives PLC++ direkte i producenternes \gls{ide}. Dette vil blandt andet give mulighed for at man ikke skulle kopiere den generede kode, over i producentens program, og derved ville man spare tid.
+
+Derudover kunne det tænkes at man kunne gøres således at \gls{ide}'en kunne skelne mellem de forskellige \gls{plc}'er, og derved lave de små justeringer, så det vil være muligt at skrive til alle forskellige producenters \gls{plc}'er.
+Dette kan dog skabe en problemstilling, i forhold til at \gls{plc}'er har forskellige størrelser på hukommelsesområdet, hvilket betyder at hver eneste gang producenten fremstiller en ny \gls{plc}, ville de skulle lave en form for konverter til den, eller sætte en standard for deres produktlinje.
+Derudover ville dette kunne have en indflydelse på, hvordan firmaer ville vælge producenten på grund af deres specifikationer på \gls{plc}en - fremfor deres software.
 
 \subsection*{Kompatibilitet}
-Kompatibilitet mellem producenterne har aldrig været optimal, mest af alt fordi hver producent har deres små finjusteringer på instruktioner, samt hvordan de vælger at konvertere koden således at \gls{plc}en forstår det.
-Hertil er der forskellige kompibalitetesproblemer, i forhold til at producenterne har implementeret forskellige instruktioner, hvoraf nogle understøtter flere end andre.
-Her kunne det være smart hvis man benyttede en fælles konvention eller standard, således at en programmør ville kunne programmere til alle de forskellige modeller, uden at skulle lære et nyt sprog.
-Dette ville øge effektiviteten af en programmør væsentligt og dermed også produktionen, da programmøren kun behøver at lære et programmeringssprog, hvorefter personen ville være i stand til at arbejde med alle producenter som overholder standarden.
-
-
-
-
-
-
+Kompatibilitet mellem producenterne har aldrig været optimal, mest af alt fordi hver producent har deres små finjusteringer på instruktioner, samt hvordan de vælger at konvertere koden således at \gls{plc}'en forstår det.
+Hertil er der forskellige kompatibilitetsproblemer, i forhold til at producenterne har implementeret forskellige instruktioner, hvoraf nogle understøtter flere end andre.
+Her kunne det være smart, hvis man benyttede en fælles konvention eller standard, så en programmør ville kunne programmere til alle de forskellige modeller, uden at skulle lære et nyt sprog.
+Dette ville øge effektiviteten af en programmør væsentligt og dermed også produktionen, da programmøren kun behøver at lære ét programmeringssprog, hvorefter personen ville være i stand til at arbejde med alle producenter, som overholder standarden.

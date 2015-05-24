@@ -24,10 +24,10 @@ Der adskilles ikke mellem arismetiske og boolske expressions i de syntaktiske ka
     \item $ D_S \in \textbf{DecS} $ - Deklaration af structs
     \item $ D_A \in \textbf{DecA} $ - Deklaration af arrays
 \end{itemize}
-
+\pagebreak
 
 \tocless \section{Formation rules}
-Formation rules, også kendt som den abstrakte syntaks, findes i grammatik \ref{gra:formationrules}
+\noindent Formation rules, også kendt som den abstrakte syntaks, findes i grammatik \ref{gra:formationrules}
 
 \begin{Grammar}
  \begin{grammar}
@@ -54,7 +54,7 @@ Formation rules, også kendt som den abstrakte syntaks, findes i grammatik \ref{
 
 \tocless \section{Environments}
 
-Der bruges environment-store modellen, hvilket betyder at alle variables skal gemmes i et environment, hvor variablen er associeret med værdien.
+\noindent Der bruges environment-store modellen, hvilket betyder at alle variables skal gemmes i et environment, hvor variablen er associeret med værdien.
 
 $$ \textbf{EnvV} = \textbf{Var} \cup \{next\} \rightharpoonup \textbf{Loc} $$
 
@@ -69,9 +69,10 @@ $$ \textbf{EnvF} = \textbf{Fnames} \rightharpoonup \textbf{EnvV} \times \textbf{
 \noindent og
 
 $$ \textbf{EnvS} = \textbf{Snames} \rightharpoonup \textbf{EnvV} \times \textbf{EnvF} \times \textbf{EnvS} $$
+\pagebreak
 
 \tocless \section{Typechecker}
-I forbindelse med udarbejdelsen af typechecker, er det nødvendigt at opstille transition rules for disse. Der tages udgangspunkt i simple formation rules
+\noindent I forbindelse med udarbejdelsen af typechecker, er det nødvendigt at opstille transition rules for disse. Der tages udgangspunkt i simple formation rules
 
 \begin{grammar}
     \centering
@@ -155,7 +156,7 @@ $$ E : \textbf{Var} \cup \textbf{Fnames} \cup \textbf{Snames} \rightharpoonup \t
 &[COMP] & &\frac{E \vdash St : \text{ok}\quad E \vdash Sts : \text{ok}}{E \vdash St;\;Sts : \text{ok}}\\\\
 &[IF] & &\frac{E \vdash e : \text{Bool}\quad E \vdash St : \text{ok}}{E \vdash \text{if}\; (e)\;  St : \text{ok}}\\\\
 &[IF-ELSE] & &\frac{E \vdash e : \text{Bool}\quad E \vdash St_1 : \text{ok}\quad E \vdash St_2 : \text{ok}}{E \vdash \text{if}\; (e)\; St_1\; \text{else} \;St_2 : \text{ok}}\\\\
-&[WHILE] & &\frac{E \vdash e : \text{Bool}\quad E \vdash S : \text{ok}}{E \vdash while\; (e)\; St : \text{ok}}\\\\
+&[WHILE] & &\frac{E \vdash e : \text{Bool}\quad E \vdash St : \text{ok}}{E \vdash while\; (e)\; St : \text{ok}}\\\\
 &[FOR] & &\frac{E \vdash e_1 : \text{ok}\enskip E \vdash e_2 : \text{bool}\enskip E \vdash e_3 : \text{ok}\enskip E \vdash : \text{ok}}{E \vdash \text{for } (\; e_1;\; e_2;\; e_3\;) \; St : \text{ok}}\\\\
 &[CALL] & &\frac{E \vdash F : (x : T \rightarrow \text{ok})\quad E \vdash e : \text{T}}{E \vdash F(e) : \text{ok}}\\\\
 &[CPS] & &\frac{E \vdash x : T\quad E \vdash e : T}{E \vdash x\; op\; e : \text{ok}}\\
@@ -164,7 +165,7 @@ $$ E : \textbf{Var} \cup \textbf{Fnames} \cup \textbf{Snames} \rightharpoonup \t
 
 
 \tocless \section{Transition rules}
-Da der arbejdes med en del environments samt storage, er det fordelagtigt et definere det samlet, så der derved spares plads
+\noindent Da der arbejdes med en del environments samt storage, er det fordelagtigt et definere det samlet, så der derved spares plads
 
 $$ Env = \{env_V, env_F, env_S\} $$
 $$ SEnv = \{env_V, env_F, env_S, sto\}$$
@@ -175,11 +176,9 @@ $$ (\textbf{Expr} \cup \mathds{Z} \cup \{\top, \bot\}, \rightarrow, \mathds{Z} \
 
 \tocless \subsection{Expressions}
 
-$ (\Upgamma_{Expr}, \rightarrow, T_{Expr}) $\\
+\noindent For at gøre disse regler mere overskuelige, er expressions delt ind i arismetiske og boolske expressions.\\
 
-\noindent For at gøre disse regler mere overskuelige, er expressions delt ind i arismetiske og boolske expressions.
-
-\subsubsection{Arismetiske}
+\noindent \subsubsection{Arismetiske}
 
 \begin{align*}
 &[VAR] & &SEnv \vdash x \rightarrow_e v & &\text{if } x = l \text{ and } sto\; l = v\\\\
@@ -253,5 +252,12 @@ $ (\Upgamma_{Expr}, \rightarrow, T_{Expr}) $\\
 %
 &[CPS_/] & &\frac{Env \vdash x \rightarrow_e v_1 \quad Env \vdash e \rightarrow_e v_2}{Env \vdash \langle x \text{ /= } e, sto \rangle \rightarrow sto[x \mapsto v]} & &\text{where } v = \frac{v_1}{v_2}\\\\
 %
-&[CPS_\%] & &\frac{Env \vdash x \rightarrow_e v_1 \quad Env \vdash e \rightarrow_e v_2}{Env \vdash \langle x \text{ \%= } e, sto \rangle \rightarrow sto[x \mapsto v]} & &\text{where } v = v_1 - (v_2 \cdot \floor*{\frac{v_1}{v_2}})
+&[CPS_\%] & &\frac{Env \vdash x \rightarrow_e v_1 \quad Env \vdash e \rightarrow_e v_2}{Env \vdash \langle x \text{ \%= } e, sto \rangle \rightarrow sto[x \mapsto v]} & &\text{where } v = v_1 - (v_2 \cdot \floor*{\frac{v_1}{v_2}})\\\\
+%
+&[CALL] & & \frac{Env^\prime_V\big[ x\mapsto l\big]\big[next\mapsto l^\prime\big], Env_F\vdash\langle S, sto\rangle\to sto^\prime}{Env_V, Env_F\vdash\langle F(y), sto\rangle\to sto^\prime} & &
+\begin{array}{l}
+    \text{where } Env_F F = (S, x, Env^\prime_V)\\
+    \text{and } Env_V y = l\\
+    \text{and } l^\prime=Env_V \text{ next}
+\end{array} 
 \end{align*}

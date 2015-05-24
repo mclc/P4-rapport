@@ -56,3 +56,13 @@ Derfor kan man ikke redefinere en variable, ej heller inde i et scope, hvilket g
 Dette er tilgængeligt i de fleste programmeringssprog at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
 
 
+\subsection*{Dekoreret \gls{ast}}
+En standard del af kompilerings processen er at man dekorere sit \gls{ast} med værdier under kontekst analysen. Det blev først sent i udviklingsforøbet opdaget hvordan SabelCC understøtter dekorering af \gls{ast}. Derfor blev det besluttet at fortsætte med den løsning der var blevet udviklet i mellemtiden. Dette har haft den konsekvens at symboltabellen fik meget af den information man ellers ville have dekoreret med, og da dekoration ikke kunne fortælle noget om fx hvor stor en given variable var, blev stacken implementeret så den største mulige variable er altid det der blev returneret, og derfor bliver alle variabler konverteret til den størrelse værdier.
+
+\subsection*{Stack}
+Stacken i sig selv har sine problemer, ud over den har en masse spild plads, så bliver den defineret i \gls{il}-koden uanset om den bliver brugt eller ej. Dette blev implementeret sådan for at sikre at stacken altid var initialisere når den skal bruges. Det kan sagtens tænkes at 
+
+%Et punkt hvor PLC++
+
+%Port kan ikke skiftes i gramma ikke i codegen 
+%Strings ikke implementeret

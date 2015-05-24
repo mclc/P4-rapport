@@ -1,29 +1,30 @@
 \chapter{Konklusion}
 \label{sec:konklusion}
 
-Efter at have fuldendt problemløsningen kan der konkluderes i hvilken grad problemformuleringen er blevet løst.
+Efter at have fuldendt problemløsningen kan der konkluderes i hvilken grad problemformuleringen er løst.
 Problemformuleringen har lagt til grunde for kravspecifikationen, som indeholder udspecificerede funktionaliteter.
-Disse funktionaliteter er ved hjælp af en \gls{moscow}-analyse blevet tildelt en prioritet, således at funktionen kunne klassificeres ud fra dens vigtighed af den samlede løsning.
-
-Den samlede løsning vurderes udfra i hvilken grad kriterierne er opfyldt, dette belyses i afsnit \ref{subsec:il-pa}, hvor der påvises hvordan et eksempel i \gls{il} hurtig giver overblik, hvorimod \gls{lad} giver en mere indviklet oversigt. Derimod hvis man opretholder eksemplet fra \gls{il} med PLC++ som kan ses i bilag \ref{bil:semantik}, kan man se at koden er væsentlig mindre for PLC++.
-Herudover kan programmøren let få et overblik med sine egne funktionsnavne, hvorimod man i \gls{il} har en SBN og SBS block, som giver en reference i form af et id til den \textit{block} den kører.
-Derfor menes det at PLC++ giver et bedre overblik, samt en højere \textit{readability} i form af at man ikke behøver at forholde sig til adressering af hukommelsesadresser.
-Dertil kunne det tænkes at programmøren har lettere ved at lære PLC++ fremfor \gls{il}, da det har en højere  \textit{readability} samt at programmøren ikke skal lære instructioner, hvilket derfor leder til en højere \textit{learnability}. Dette er en bred påstand som der ikke er evidens for, foruden kodeeksempler som konkret viser kompleksiteten af \gls{il} og PLC++.
-Det er dog langt fra alle instrustri tekniker som programmere i \gls{il}, mest af alt på grund af dets kompleksitet som vist i kodeeksemple \ref{code:fixedfee-il}.
+Disse funktionaliteter er ved hjælp af en \gls{moscow}-analyse blevet tildelt en prioritet, således at funktionen kan klassificeres ud fra dens vigtighed af den samlede løsning.
+Den samlede løsning vurderes udfra i hvilken grad kriterierne er opfyldt, hvilket belyses i afsnit \ref{subsec:il-pa}, hvor der påvises hvordan et eksempel i \gls{il} hurtig giver overblik, hvorimod \gls{lad} giver en mere indviklet oversigt. Derimod hvis man opretholder eksemplet fra \gls{il} med PLC++ som kan ses i bilag \ref{bil:semantik}, kan man se at koden er væsentlig mindre for PLC++.
+Herudover kan programmøren let få et overblik med sine egne funktionsnavne, hvorimod man i \gls{il} har en SBN og SBS blok, som giver en reference i form af et id til den blok den kører.
+Derfor menes det at PLC++ giver et bedre overblik, samt en højere læsbarhed i form af at man ikke behøver at forholde sig til adressering af hukommelsesadresser.
+Dertil kunne det tænkes at programmøren har lettere ved at lære PLC++ fremfor \gls{il}, da det har en højere  læsbarhed samt at programmøren ikke skal lære instruktioner, hvilket derfor leder til en højere indlæringskurve. Dette er en bred påstand som der ikke er evidens for, foruden kodeeksempler som konkret viser kompleksiteten af \gls{il} og PLC++.
+Det er dog langt fra alle industri tekniker som programmere i \gls{il}, mest af alt på grund af dets kompleksitet som vist i kodeeksempel \ref{code:fixedfee-il}.
 Derimod kodes der i \gls{lad}, som førhen er blevet konkluderet som et sprog med dårlig overblik for programmøren.
 Når man konkludere på \gls{lad}-programmering mod PLC++, er det vigtigt at man ser på et hvilken målgruppe som der arbejdes med.
-Hvilket tidligere er defineret som værende til industri tekniker med nogen programmeringserfaring, samt at programmet har en mellemstor størrelse.
+Dette har tidligere været defineret som værende til industri tekniker med nogen programmeringserfaring, samt at programmet har en mellemstor størrelse.
 Hvis man derfor kigger på mellemstore programmer gør det sig gældende at \gls{lad}-programmering bliver meget uoverskueligt, og generelt er svært at rette i, hvorimod PLC++ giver et godt overblik.
-Kigger man derimod på små programmer har \gls{lad}-programmering en klar fordel, da programmøren ikke behøver at 
+Kigger man derimod på små programmer har \gls{lad}-programmering en klar fordel, da programmøren ikke behøver at definere standard funktioner, som \textit{Run} og \textit{Init}. Derimod er det let for programmøren at få et overblik med drag-and-drop systemet, som grafisk giver et indblik i hvad der sker når koden eksekveres, hvor PLC++ kræver at man definere standard funktioner.
+Dette vurderes som at værende acceptabelt i forhold til at målgruppen er specificeret til at være til mellemstore programmer.
+Ved helt store programmer kunne det tænkes at det objektorienterede paradigme ville være mere praktisk, i forhold til at man kan benytte nedarvning samt polyformi. Dette er en påstand som ikke er testet, da dette ikke er en del af den endelige løsning samt at problemformuleringen er defineret anderledes.
+
+Der må derfor erkendes, at problemformuleringen må betragtes som værende delvist besvaret.
+Dette skyldes delvist at der ikke er testet på hvorvidt problemformuleringen er opfyldt i forhold til de opstillede krav i \gls{moscow}-analysen.
+Dertil er der foretaget afgrænsning af kriterierne fra \gls{moscow}-analysen, da det blev vurderet at arbejdsbyrden var for stor, i forhold til den mængde tid som var tilbage i projektet.
+Afgrænsningen vurderes til at være fundamental for at opnå et projekt som lever op til studieordningen, og samtidig er brugbart.
+For at kunne klassificere problemformuleringen værende løst, ville det kræve at der bliver implementeret resterende funktioner fra \gls{moscow}-analysen, samt at der bliver udført test omkring hvorvidt programmeringssproget lever op til de opstillede krav.
 
 
 
 
-
-
-Kriterier 4.3 er de opfyldt, kik på kodeeksemplerne og se hvor meget hvert fylder kodeeksemple 2.2
-
-Der erklæres måske for mange ting i programmet, i forhold til hvad brugeren skal bruge. => Hvis man ikke bruge udtryk som 1+1 så skal stacken ikke være der, den bliver dog altid erklæret.
-
-Konklusion, hvornår er vores sprog mere brugbart end andre? - Små programmere store? mellem?
+%Der erklæres måske for mange ting i programmet, i forhold til hvad brugeren skal bruge. => Hvis man ikke bruge udtryk som 1+1 så skal stacken ikke være der, den bliver dog altid erklæret. Konklusion, hvornår er vores sprog mere brugbart end andre? - Små programmere store? mellem?
 

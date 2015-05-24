@@ -10,13 +10,10 @@ Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer u
  \caption{Udtryk}\label{gra:expressions}
 \end{Grammar}
 
-
-
-
-Før der gåes i detaljen med de forskellige udtryk bliver vi nødt til at omtale brugen af operatorer.
+Før der gåes i detaljen med de forskellige udtryk er det nødvendigt at omtale brugen af operatorer og operatorprioritering.
 
 \subsubsection{Operatorer}
-I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter hvilken rækkefølge udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
+I tabel \ref{tab:operatorprioritering} ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter rækkefølgen udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
 
 \begin{table}[H]
     \centering
@@ -44,7 +41,7 @@ I tabellen herunder ses operatorerne der kan benyttes i udtryk. Ved sammensatte 
 
 
 \subsubsection{Boolske udtryk}
-Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings eller ligheds operatorerne. operatorerne ses herunder.
+Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings eller ligheds operatorerne. operatorerne ses i tabel \ref{tab:operatorerbool}. Fælles for dem alle er at de returnerer en \textit{Bool}.
 
 \begin{table}[H]
     \centering
@@ -60,14 +57,18 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 
     \end{tabular}
     \caption{Boolske operatorer}
-    \label{tab:operatorerboolsk}
+    \label{tab:operatorerbool}
 \end{table}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{AND expression}
 
 \noindent Et "AND expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
 
-\noindent Herunder ses semantikken for \textit{And expression}. Hvis der tages udgangspunkt i \textit{AND-1} skal semantikken læses således: \mgfix{wip}
+\noindent Herunder ses semantikken for \textit{And expression}. Hvis der tages udgangspunkt i $[AND_\top]$ skal semantikken læses således: Hvis $e_1$ evaluerer til \textit{true} i $SEnv$ og $e_2$ evaluerer til \textit{true} i $SEnv$ så evaluerer udtrykket $e_1 || e_2$ til true i $SEnv$. 
+
+Hvis der tages udgangspunkt i $[AND_\bot]$ skal semantikken læses således: Hvis $e_i$ evaluerer til \textit{false} i $SEnv$  for i værende 1 eller 2, så evaluerer udtrykket $e_1 && e_2$ til false i $SEnv$.
+
+nv$ så evaluerer udtrykket $e_1 || e_2$ til true i $SEnv$. 
 
 
 \begin{align*}

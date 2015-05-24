@@ -1,0 +1,17 @@
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=1.8cm,semithick]
+    \node[state, accepting, initial](q0){$q_0$};
+    \node[state, above right of=q0](r0){$r_0$};
+    \node[state, right of=r0](r1){$r_1$};
+    \node[state, below right of=q0](s0){$s_0$};
+    \node[state, right of=s0](s1){$s_1$};
+    \node[state, right of=s1](s2){$s_2$};
+    
+    \path   (q0)    edge                node{$\epsilon$}        (r0)
+                    edge                node{$\epsilon$}        (s0)
+            (r0)    edge[loop below]    node{$a$}               (r0)
+                    edge                node{$b$}               (r1)
+            (r1)    edge[bend right=60] node[swap]{$\epsilon$}  (q0)
+            (s0)    edge                node{$a$}               (s1)
+            (s1)    edge                node{$a$}               (s2)
+            (s2)    edge[bend left=60]  node[swap]{$\epsilon$}  (q0);
+\end{tikzpicture}
