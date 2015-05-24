@@ -1,0 +1,17 @@
+\begin{tikzpicture}
+\matrix (m) [matrix of nodes,%nodes={minimum width=1em,minimum height=1.7em}
+            ]
+{
+    PLC++   & $\to$ & IL    &       & MM    & $\to$     & M\\
+            & Java     & C     & $\to$ & M     & M\\
+            & Java      &       & Java     &       & |[font=\tiny,yshift=4pt]|H         \\
+            & Java BC   &       & |[font=\tiny]|H                \\
+  };
+ \draw (m-1-1.south west) |- (m-1-3.north east) |- (m-2-2.north east) |- (m-2-2.south west) |- (m-1-1.south west);
+\draw (m-2-2.south east) |- (m-2-5.north east) --(m-2-5.south east) -- (m-2-5.south west) |- (m-3-4.south west) |- (m-2-2.south east);
+\draw (m-2-5.north west) |- (m-1-7.north east) |- (m-2-6.north east) |- (m-2-5.south east) |- (m-2-5.north west);
+\draw (m-3-4.south east) -- (m-4-4.south) -- (m-3-4.south west);
+\draw (m-2-6.south east) -- (m-3-6.south) -- (m-2-6.south west);
+
+\draw (m-2-3.north east) -- (m-2-4.south east) -- (m-3-4.south west) -- (m-3-3.north west);
+\end{tikzpicture}

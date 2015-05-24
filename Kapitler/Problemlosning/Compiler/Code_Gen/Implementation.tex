@@ -1,7 +1,7 @@
 \subsubsection{Resultater}
 For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør hvad kildekoden dikterer i følge semantikken, blev vi nød til at lave nogle interessante oversætninger som i løbet at dette afsnit vil blive belyst.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering\ttfamily
     \begin{tabular}{l|l l}
         PLC++       & \gls{il} \\\hline
@@ -18,7 +18,7 @@ Fra eksemplet i tabel {\ref{tab:codegenExample} kan man se hvordan at koden find
 
 \tikzfigure{Figurer/TikZ/CodeGenExampleAST.tex}{\Gls{ast} for samme stykke kode som i tabel \ref{tab:codegenExample}.}{codegenAST}
 
-\begin{table}[h]
+\begin{table}[H]
     \centering\ttfamily
     \begin{tabular}{l|l|l l}
          &PLC++                 & \gls{il} \\\hline
@@ -42,7 +42,7 @@ Et ligende eksempel er når man compilere en if-else kæde som set i tabel \ref{
 
 En sidste metode der er interessant at tage fat i er genereringen af arrays, fordi \gls{plc}'er ikke har pointere på samme måde som man ville have dem i fx Assembly og C. Det betyder at PLC++ compileren bliver nød til at finde på et alternativ.
 
-\begin{table}[h]
+\begin{table}[H]
     \centering\ttfamily
     \begin{tabular}{l|l|l l}
          &PLC++       & \gls{il} \\\hline
@@ -67,8 +67,8 @@ Måden at kode generatoren blev implementeret er som før nævnt gennem et visit
 
 Emit funktionen som set i kodeeksempel \ref{code:emit} er relativ simpel, den åbner eller lukker ikke for nogle af sine text writers. Den skriver bare til en af dem afhængig af en boolean. Grunden til dette er blandt andet at CX-Programmer som blev brugt til videre kompilering af programmet gemmer en symbol tabel, som PLC++ udnytter til at forøge læsbarheden af den kompilerede kode ved at erstatte vilkårlige adresser med variable navne. 
 
-For at kunne bruge mange af de teknikker der allerede var udviklet til Assembly compilere er det nødvendigt at have en stack, og den indebyggede i \gls{plc}'en var utilstrækkelig \cfix{hvorfor var den ikke tilstrækkelig?}, har PLC++ kompileren en indebygget stack, der bruger woking memory området W400 - W512. 
+For at kunne bruge mange af de teknikker der allerede var udviklet til Assembly compilere er det nødvendigt at have en stack, og den indebyggede i \gls{plc}'en var utilstrækkelig \cfix{hvorfor var den ikke tilstrækkelig?}, har PLC++ kompileren en indebygget stack, der bruger working memory området W400 - W512. 
 
-\Java{Kode/Stack.java}{Push funkionen fra Stack klassen.}{push}
+\Java{Kode/Stack.java}{Push()-funkionen fra Stack klassen}{push}
 
-Klassen Stack sørger for dette med standard funktionerne man ville forvente af en stack data struktur push og pop. Hvor push funktionen kan ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variable der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største data type der er til gængelig på 32 bit. Det giver noget data spild men tilgengæld er pop funktionen kun en decrement af pointeren og returnering af værdien og så håndtere modtageren værdien.
+Klassen Stack sørger for dette med standard funktionerne man ville forvente af en stack data struktur push og pop. Hvor push funktionen kan ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variable der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største data type der er til gængelig på 32 bit. Det giver noget data spild men tilgengæld er \textit{pop()} funktionen kun en decrement af pointeren og returnering af værdien og så håndterer modtageren værdien.

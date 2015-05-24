@@ -1,95 +1,34 @@
 \noindent \subsection{Declarations}
-Declarationer kommer i 2 forskellige varianter. En med initialisering og en uden.
+Af erklæringer er disse inddelt i fire forskellige kategorier. Variabler, funktioner, structs og arrays. 
+Variabler og arrays skal erklæres før de kan bruges, ligesom man kender det i C. Funktioner skal ligeledes erklæres før de kan benyttes på samme måde som i C. 
 
-\mfix{Her mangler vi med variabler, og funktionsdeklarationer - og alt det andet}
+Struct er lidt speciel i forhold til erklæringer, da en struct skal typedefineres før den kan erklæres. På den måde er en struct ikke en type før den er typedefineret. Dette ses under grammatikken for struct,  \textit{<$D_s$>}. Dette er ækvivalent med den struct man kender i C bortset fra at denne struct kan holde funktionskald.
 
-\subsubsection*{Variabler}
+Nedenfor ses gramatikken for Declarations.
 
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{1.5}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[VAR-DECL_{BS}]$ & $
-        \frac{\langle D_V, env_v^{\prime\prime}, sto[l \mapsto v] \rangle\;\rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
-        {\langle T\; x = a;\; D_V, env_V, sto \rangle\; \rightarrow_{DV}\; (env_V^\prime, sto^\prime)}
-        $ & \\
-        
-        & \multicolumn{1}{l}{where $ env_V, sto \vdash a \rightarrow_a v $}\\
-        & \multicolumn{1}{l}{and $ l = env_V\; next $}\\
-        & \multicolumn{1}{l}{and $ env_V^{\prime\prime} = env_V[x \mapsto l] [next \mapsto new\;l] $}\\
-        
-        &&\\
-        
-        $[EMPTY-VAR_{BS}]$ & $
-        \langle \epsilon, env_V, sto \rangle \rightarrow_{DV}\; (env_V, sto) 
-        $
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Deklaration af variabler}
-    \label{sem:variabler}
-\end{semantik}
+\begin{Grammar}
+ \begin{grammar}
+ <$D_V$> ::= $T$ $x$ "=" $e$";" $D_V$ | $\epsilon$
+ 
+ <$D_F$> ::= $T$ $F$"("$e$")" "{" $St$ "}" $D_F$ | $\epsilon$
+ 
+ <$D_S$> ::= "struct" $S$ "{" $D_V$ $D_F$ "}" $D_S$ | $\epsilon$
+ 
+ <$D_A$> ::= $T$ A "[" $i$ "];" $D_A$ | $\epsilon$
+ \end{grammar}
+ \caption{BNF for Declarations}\label{gra:declarations}
+\end{Grammar}
 
+\noindent Ligeledes vises den tilhørende semantik. Hvis der tages udgangspunkt i variabler \textit{[VAR]} læses semantikken således: \mgfix{wip}
 
-
-\subsubsection*{Funktioner}
-
-Vi kører fuld dynamisk. Blablabla...
-
-
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[FUNC-DECL_{BS}]$ & $
-        \frac{env_V \vdash \langle D_F, env_F[f \mapsto (S, x)] \rangle \rightarrow_{DF}\; env_F^\prime}
-        {env_V \vdash \langle T f(T x) \{ S \}\; ; D_F, env_F \rangle \rightarrow_{DF}\; env_F^\prime}
-        $ & \\
-        
-        $[FUNC-EMPTY_{BS}]$ & $
-        env_V \vdash \langle \epsilon, env_F \rangle \rightarrow_{DF}\; env_F
-        $
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Deklaration af funktioner}
-    \label{sem:funktioner}
-\end{semantik}
-
-\mfix{Vi skal på en måde definere hvad T er. Spørg Rune}
-
-
-\subsubsection*{Array}
-
-\begin{semantik}
-    \bgroup
-    \def\arraystretch{3}
-    \begin{table}[H]
-    \centering
-    \begin{tabular}{l c l}
-        
-        $[ARRAY-DECL_{BS}]$ & $
-        \frac{env_V\; \vdash e \rightarrow\; v\;:\;Int}
-        {env_V\; \vdash T\; A[e];}
-        $ & .. \\
-        
-    \end{tabular}
-    \end{table}
-    \egroup
-    \caption{Deklaration af array}
-    \label{sem:arraydecl}
-\end{semantik}
-
-\mfix{Der skal gøres noget mere. Spørg Rune}
-
-\subsubsection*{}
-
-\subsubsection*{}
+\begin{align*}
+&[EMPTY] & &E \vdash \epsilon : \text{ok}\\\\
+%
+&[VAR] & &\frac{E[x \mapsto T] \vdash D_V : \text{ok}\quad E \vdash e : \text{T}}{E \vdash T x = e; D_V : \text{ok}}\\\\
+%
+&[FUNC] & &\frac{E[F \mapsto (x : T_1 \rightarrow \text{ok}, F : T_2 \rightarrow \text{ok})] \vdash D_F : \text{ok}}{E \vdash T_1\; (T_2\; x)\; \{\; St\; \}\; D_P : \text{ok}}\\\\
+%
+&[STRUCT] & &\frac{E[S \mapsto (x : T \rightarrow \text{ok})] \vdash D_S : \text{ok}}{E \vdash \text{struct}\; S\; \{\;T\; x\;\}\; D_S: \text{ok}}\\\\
+%
+&[ARRAY] & &\frac{E[A \mapsto T] \vdash D_A : \text{ok} \quad E \vdash i : \text{Int}}{E \vdash T A [i]; D_A : \text{ok}}
+\end{align*}

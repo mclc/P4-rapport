@@ -54,9 +54,9 @@ Operatorer &  &  & 		   \\ \bottomrule
 
 \noindent Som en forklaring på disse funktioner beskrives de i kategorier herunder.\\
 
-\noindent\textbf{Kontrolstruktur}
-er placeret under must have da kontrolstrukturer er en central del af programmering.
-Derfor vælges der at implementere \textit{if} og \textit{while}, med hendblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}.
+\subsubsubsection{Kontrolstruktur}
+Kontrolstruktuer er placeret som ét must-have da kontrolstrukturer er en central del af programmering.
+Derfor vælges der at implementere \textit{if} og \textit{while}, med henblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}.
 
 Dette er grundet at man med \textit{if} og \textit{while} kan konstruere de andre, men ikke omvendt. Dog kan det være besværgelig og ineffektivt at konstruere en switch vha. if.
 
@@ -77,8 +77,7 @@ Strings er ikke implementeret i PLC++ og er derfor under want to have da anvende
 Til sidst er \textit{boolean} implementeret, hvilket kan læses under afsnit \ref{sec:forskelfrac}\\
 Unsigned er blevet nedprioriteret og derved placeret i could have, da denne funktionalitet ikke er yderst nødvendig, eller særlig brugt indenfor \gls{plc} udvikling.\mefix{Måske lidt en bred påstand}\\
 
-\noindent\textbf{Structs}
-Structs er en måde at gruppere data således man har en type der kan indeholde flere og forskellige typer. Derudover har hver variabel i en struct et navn, som derfor hjælper for abstraktionen. Eksempelvis skal et punkt have både en x og y kordinat. En funktion vil dermed kunne tage et punkt som input parameter, i stedet for at skulle overføre de enkelte variabler. Structs bliver dermed en meget stor fordel ved behov for mange variabler.
+\noindent\textbf{Structs} er en måde at gruppere data således man har en type der kan indeholde flere og forskellige typer. Derudover har hver variabel i en struct et navn, som derfor hjælper for abstraktionen. Eksempelvis skal et punkt have både en x og y kordinat. En funktion vil dermed kunne tage et punkt som input parameter, i stedet for at skulle overføre de enkelte variabler. Structs bliver dermed en meget stor fordel ved behov for mange variabler.
 
 For at øge abstraktionen yderligere kan man implementere muligheden for funktioner inde i structs. Dette giver mulighed for at stille en række hjælpemetoder til rådighed for den konkrete struct. Dermed slippes for funktioner med forskellige prefixes for at forhindre at funktionsnavnene konflikter.
 
@@ -86,9 +85,9 @@ En måde man kan øge abstraktions niveauet endnu mere er vha. information hidin
 
 Disse egenskaber definere desuden det objektorienterede paradigme, som derfor tilbyder endnu højere abstraktion end den helt simple struct der kun kan indeholde felter. Dog kaldes det objekter i det objektorienterede paradigme. Derudover er der også forskel på hukommelseshåndteringen mellem objekter og structs.
 
-Der er blevet valgt at fokusere på det imperative paradigme og derfor implementeres ikke nedarvning og polyformeri. Nedarvning og polyformeri bruger ofte flere ressourcer og er derfor uegnet til PLC verdenen da hastigheden kan have stor indflydelse. Derudover bliver \gls{plc} projekter oftest ikke så store, dels pga. de typiske opgavers kompleksitet og dels hastigheden på PLC'en. Implementeringen af det objektorinterede paradigme kan derfor ved større projekter som OOP er mest egnet til vise sig at blive for ressourcekrævende.\sfix{Skal vi flytte denne her del til problemanalyse og referere der til i stedet?}
+Der er blevet valgt at fokusere på det imperative paradigme og derfor implementeres ikke nedarvning og polyformeri. Nedarvning og polyformeri bruger ofte flere ressourcer og er derfor uegnet til PLC verdenen da hastigheden kan have stor indflydelse. Derudover bliver \gls{plc} projekter oftest ikke så store, dels pga. de typiske opgavers kompleksitet og dels hastigheden på PLC'en. Implementeringen af det objektorinterede paradigme kan derfor ved større projekter som OOP er mest egnet til vise sig at blive for ressourcekrævende.\sfix{Skal vi flytte denne her del til problemanalyse og referere der til i stedet?}\sfix{Kilde på PLC er langsomt}
 
-Information hiding kan være praktisk for \gls{plc} programmering, da det gør det muligt at stille et public api til rådighed for structs, som skjuler konkrete implementationsdeltalier. Information hiding kan desuden laves som et compiler step og bruger derfor ikke yderligere ressourcer. Information hideing bliver derfor placeret i moscow analysen under should have.
+Information hiding kan være praktisk for \gls{plc} programmering, da det gør det muligt at stille et public api til rådighed for structs, som skjuler konkrete implementationsdeltalier. Information hiding kan desuden laves som et compiler step og bruger derfor ikke yderligere ressourcer. Information hideing bliver derfor placeret i moscow analysen under should have.\\
 
 \noindent\textbf{Arrays}
 er en let og overskuelig måde at opbevare et dataset, og er derfor på listen over must have. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}.
@@ -153,7 +152,7 @@ Writability giver dog typisk et trade-off i forhold til Readability, som forklar
 
 \noindent\textbf{Adaptability} er muligheden for at tilpasse koden til andre enheder, hvor det i \gls{plc} verdenen, ville betyde at man ville kunne bruge programmeringssproget, på flere forskellige enheder selvom det er forskellige producenter. Adaptability er valgt at kategorisere som vigtigt, da det ville være lettere for en automatiktekniker at kunne lærer et sprog, og kunne bruge det til alle \gls{plc} enheder.
 
-Dette giver programmøren uafhængighed i forhold til hvilken producent programmøren vil arbejde med.\\
+Dette giver programmøren uafhængighed i forhold til hvilken producent programmøren vil arbejde med.\\\sfix{Mindre vigtigt}
 
 \noindent\textbf{Learnability} er hvor let programmeringssproget er at lære, og hvor let det er at benytte det.
 
@@ -169,7 +168,7 @@ Dette er en vigtig parameter i løsningen, da det skal kører på en \gls{plc} h
 
 \begin{table}[H]
 \centering
-\rowcolors{2}{blue!10}{white}
+\rowcolors{2}{black!5}{white}
 \begin{tabular}{l c c c c}
 \toprule
 \textbf{Kriterium} & \textbf{Meget vigtigt} & \textbf{Vigtigt} & \textbf{Mindre vigtigt}  \\ \midrule
@@ -180,6 +179,6 @@ Learnability       &   &   & X     \\
 Orthogonality      &   & X &       \\ 
 Reliability        & X &   &       \\ \bottomrule
 \end{tabular}
-\caption{Endelige kriterier som løsningen skal opfylde.}
+\caption{Endelige kriterier som løsningen skal opfylde}
 \label{table:kriterier}
 \end{table}

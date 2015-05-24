@@ -12,9 +12,6 @@
     \begin{tabular}{l c l}
         
         $[PREINC_{BS}]$ &$\frac{equality\_expr \rightarrow v_1 \quad unary\_prefix\_expr \rightarrow v_2}{equality\_expr\;*\;unary\_prefix\_expr \rightarrow v}$ & where $v = v_1 * v_2$ \\
-        \mfix{mikkel laver denne semantik med rune}
-
-        
     \end{tabular}
     \end{table}
     \egroup
