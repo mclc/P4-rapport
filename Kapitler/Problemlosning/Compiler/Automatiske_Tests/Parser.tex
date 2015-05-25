@@ -7,12 +7,12 @@ Muligheden for at lave korte if-else sætninger, hvor man ikke eksplicit angiver
 
 \PPP{Kode/Tests/Parser/DanglingElse2.ppp}{Dangling Else, mulighed 2}{danglingelseppp2}
 
-\noindent Koden i \ref{code:danglingelseppp1} og \ref{code:danglingelseppp2} illustrerer dette problem rigtig godt. Det er præcis det samme stykke kode - det er bare umuligt at se hvad \textit{else} på linje 4 knytter sig til. Implementationen af løsning findes i afsnit \ref{subsec:danglingelse}, men det er også en rigtig god idé at lave automatiserede tests, som tester om løsningen opfører sig som forventet. Testen ses i kodeeksempel \ref{code:danglingelsetest}
+\noindent Kodeeksempel \ref{code:danglingelseppp1} og \ref{code:danglingelseppp2} illustrerer dette problem rigtig godt. Det er præcis det samme stykke kode - det er bare umuligt at se hvad \textit{else} på linje 4 knytter sig til. Implementationen af løsning findes i afsnit \ref{subsec:danglingelse}, men det er også en rigtig god idé at lave automatiserede tests, som tester om løsningen opfører sig som forventet. Testen ses i kodeeksempel \ref{code:danglingelsetest}
 
 \Java{Kode/Tests/Parser/DanglingElseTest.java}{Dangling Else Test}{danglingelsetest}
 
 \noindent På linje 6 ses det at den første, og eneste, funktion hendes ind i variables \textit{function}. Derefter findes \textit{ifStatement}, som er den første if-sætning (den uden else). Derefter findes \textit{ifElseStatement}, som skulle indeholde både en \textit{if} og en \textit{else}.
 
-Linje 14 og 15 sørger for at tjekke om det pågældende else-statement rent faktisk binder sig til det der forventes (kodeeksempel \ref{code:danglingelseppp1}). På linje 14 tjekkes det om \textit{ifStatement} har en \textit{sibling} til højre, hvilken den ikke bør have, da \textit{else} ikke binder sig til den. Næste linje tjekker om \textit{ifElseStatement} har, altså at \textit{getRight()} ikke returnerer \textit{null}. 
+\noindent Linje 14 og 15 sørger for at tjekke om det pågældende else-statement rent faktisk binder sig til det der forventes (kodeeksempel \ref{code:danglingelseppp1}). På linje 14 tjekkes det om \textit{ifStatement} har en \textit{sibling} til højre, hvilken den ikke bør have, da \textit{else} ikke binder sig til den. Næste linje tjekker om \textit{ifElseStatement} har, altså at \textit{getRight()} ikke returnerer \textit{null}. 
 
 Hvis begge disse antagelser er sande, er testen gået igennem, og dangling else problemet er løst som det forventes.

@@ -273,12 +273,11 @@ $\to$ er defineret som den mindste relation der tilfredstiller reglerne fra næs
 %
 &[EMPTY-VAR]&&\langle\epsilon,env_V,sto\rangle\to_{DV}(env_V, sto)\\\\
 %
-&[FUNC-DECL]&&\frac{env_V\vdash env_p[p\mapsto(St,env_V)]\to env'_P}{SEnv\vdash T p(St) St\to env'_P}\\\\
-%\end{align*}
+&[FUNC-DECL]&&env_V\vdash\langle St_1, env_V\rangle\to env'_V\\
+&&&\frac{env'_V\vdash env_F[F\mapsto(T,env_V)]\to env'_P}{SEnv\vdash T F(St_1) St_2\to env'_F}\\\\
 %
-%\tocless \subsection{Statements}
-%
-%\begin{align*}
+&[STRUCT-DECL]&&env_V\vdash\langle St_1, env_V\rangle\to env'_V\\
+&&&\frac{env'_V\vdash env_F[F\mapsto(T,env_V)]\to env'_P}{SEnv\vdash T F(St_1) St_2\to env'_P}\\\\
 %
 &[COM] & &\frac{Env \vdash \langle St, \; sto \rangle \rightarrow sto^{\prime\prime} \enskip Env \vdash \langle Sts, \; sto^{\prime\prime} \rangle \rightarrow sto^\prime}{Env \vdash \langle St; Sts, \; sto \rangle \rightarrow sto^\prime} \span \span \\\\
 %

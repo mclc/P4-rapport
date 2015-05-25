@@ -131,25 +131,72 @@ Til fejlfinding lyser de grønne streger op, som indikerer hvilke instrukser og 
 
 \noindent\gls{oop}-programmeringsparadigmet kan - såfremt at programmøren besidder den nødvendige programmeringserfaring - medvirke til et velstruktureret program. Foruden CODESYS, er der også en række andre producenter, som har forsøgt at implementere \gls{oop} - her kan der bl.a. nævnes Beckhoff, som har en kraftig tilvækst igennem det sidste årti. I året 1999 omsatte Beckhoff for \$50 millioner, som i året 2010 er steget til \$346 millioner. Dette indikerer at flere vælger at migrere over til \gls{oop}, fremfor det traditionelle \gls{lad}, og \gls{oop} kan dermed anses for at være i et gunstigt indtog i det mangfoldige \gls{plc}-univers\cite{beckhoff-sold}. \\
 
-Selvom der findes mange muligheder til selve \gls{plc}-programmeringen; \gls{lad}, \gls{st}, \gls{fbd}, \gls{il} og \gls{oop}, er der dog også en række hardware- og softwaremæssige begrænsninger. Det næste afsnit vil komme nærmere ind på disse begrænsninger.
+\noindent Selvom der findes mange muligheder til selve \gls{plc}-programmeringen; \gls{lad}, \gls{st}, \gls{fbd}, \gls{il} og \gls{oop}, er der dog også en række hardware- og softwaremæssige begrænsninger. Det næste afsnit vil komme nærmere ind på disse begrænsninger.
 
 \subsection{PLC begrænsninger}\label{sec:plcprob}\sfix{Problembeskrivelse skal have hastigheden med}
-Da PLC'er typisk er bygget til industrimaskiner og i et miljø hvor hardware robustheden er meget vigtig, er hastigheden på PLC'erne typisk meget langsom i forhold til en almindelig computer. Derudover er der typisk en maksimal størrelse på programmerne.
+Der blev tidligere redegjort for (se afsnit refxx), at \gls{plc}’er primært anvendes til industrimaskiner, hvor hardwarens robusthed er en central faktor. Det er imidlertid ligeså vigtigt at \gls{plc}’ens instruktioner eksekveres hurtigt og uden fejl. Dette skyldes at \gls{plc}’en gerne skal respondere hurtigt – eksempelvis ved at sætte en udgang på \gls{plc}’en, når en indgang bliver sat. Omrons CP1H (1000 kIPS) er eksempelvis meget langsommere (faktor 125) til at eksekvere instrukser end en Raspberry PI 2 Model B (1.183.700 kIPS) \cite{ (raspberry) }. Et eksempel er Omrons PLC CP1H, som har en begrænsning på 20.000 steps, hvor hver instruktion kan være mellem 1 og 7 steps. Derudover har CP1H også en begrænsning på maks 256 subrutiner og maks 256 jump. \cite{cp1h}
 
-Et eksempel er Omrons PLC CP1H. CP1H har en begrænsning på 20.000 steps, hvor hver instruktion kan være mellem 1 og 7 steps. Derudover har CP1H også en begrænsning på maks 256 subrutiner og maks 256 jump. \cite{cp1h}
+% Slet ikke dette!
+% µ = 10^-6
+% i/s = IPS = Instructions / second
+% s/i = SPI = Seconds / instruction
+% 1.000.000 /µ = 1
 
-Dette giver nogle begrænsninger i forhold til udviklingen af et høj niveau sprog. Eksempler på strukturer der kræver jumps er selektive og iterative kontrolstrukturer. Derfor skal PLC++ have så få jumps som muligt ud fra det generede kode. Dermed bliver ting såsom exception handling også udelukket da dette kræver et ekstra tjek eksempelvis ved alle divisioner, da Omron sætter et error flag ved division af 0 og ved en fejl lave finde ud af hvor den nærmeste exception handler er.\cite{exceptionHandling}\\
+% Rasp 2
+% 1.186 MIPS (Rasp PI) = 1.186 * 10^3 kIPS = 1.186 * 10^6 IPS
 
-\noindent Objektorienteret programmering er derudover også problematisk i forhold til polyformeri. Ved polyformeri skal der være en virtual method table (vtable) til alle metoder der kan overskrives og dermed vil dette give problemer ved selv små programmer med multiple kontrolstrukturer og  klasser der nedarves. Polyformeri vurderes derfor til at være for problematisk at implementere for en PLC til at dette kan betale sig. Nedarvning giver derfor heller ikke mening, da alle nedarvninger uden polyformeri kan beskrives ved en simpel struct der har en deklaration til den anden struct. \cite{Sebesta_2013}\\ 
+% 1.186 * 10^6 IPS = 1.000.000 /µ / x µSPI
+% 1.186 * 10^6 IPS * x µSPI = 1.000.000 /µ
+% x µSPI = 1.000.000 /µ / 1.186 * 10^6 IPS
+% 0,000843 µSPI = 1.000.000 /µ / 1.186 * 10^6 IPS
 
-\noindent Hastigheden vil næsten altid blive langsommere med højere abstraktionslag inkluderet sproget. Dog kan der være tilfælde hvor sproget er konstrueret således at det er muligt at lave avancerede optimeringer, så det er muligt at skrive det samme kode (i target sproget) med færre linjer. Et eksempel på dette er spørgsmålet om C er hurtigere end C++. I teorien skulle C++ være lige så hurtig som C, for ækvivalent kildekode (da næsten alle gyldige C programmer også er gyldige C++ programmer). I praksis er C++ kode normalt en lille smule langsommere end ækvivalente C programmer. Specielt under implementeringen af det objektorienterede paradigme sænkes hastigheden kontra en implementationen i C der dog typisk vil blive længere. Så for alle hastighedskritiske systemer er det objektorienterede paradigme mindre egnet kontra det imperative paradigme. \cite{codeprojectCPP} \cite{stackoverflowWhyCPP} \cite{linusWhyC} \cite{cVsCPPJOE}\\
+%CP1H 0.1 µs pr. LD instruction
+% 0,1 µSPI = 1.000.000 /µ / x IPS
+% 0,1 µSPI * x IPS = 1.000.000 /µ
+% x IPS = 1.000.000 / µ * 0,1 µSPI
+% 100.000 IPS = 1.000.000 / µ * 0.1 µSPI
+% 100 kIPS
+
+Dette giver nogle begrænsninger i forhold til udviklingen af et høj niveau sprog. Eksempler på strukturer der kræver jumps er selektive- og iterative kontrolstrukturer. Af disse årsager skal PLC++ implementeres med så få jumps som muligt – ud fra det generede kode. Funktionaliteter såsom exception-handling bliver også udelukket, da dette ville kræve et ekstra tjek, eksempelvis ved alle divisioner. Omron sætter et error flag ved division af 0 og ved fejl findes den nærmeste exception handler. \cite{exceptionHandling}\\
+
+\noindent \gls{oop}-programmering er derudover også problematisk i forhold til polyformeri. Ved polyformeri skal der være en \gls{vmt} til alle metoder der kan overskrives, hvilket vil give problemer ved brug af multiple kontrolstrukturer og nedarvende klasser. Polyformeri vurderes derfor 
+til at bidrage til flere ulemper end fordele, set i forhold til \gls{plc}-programmering. Nedarvning giver af selvsamme årsager ikke mening, da alle nedarvninger uden polyformeri kan udtrykkes ved en simpel struct der har en deklaration til den anden struct. \cite{Sebesta_2013}\\ 
+
+\noindent Eksekveringshastigheden vil i de fleste tilfælde stige proportionalt med abstraktionsniveauet. Der kan dog være visse tilfælde, hvor sproget er konstrueret således at det er muligt at lave avancerede optimeringer, ved at skrive det samme kode (i target sproget) på færre linjer.
+Et eksempel på eksekveringshastigheden mellem det det imperative- og det objektorienterede paradigme kan ses på performance-målinger mellem C og C++. I teorien skulle C++ være lige så hurtig som C, for ækvivalent kildekode (da næsten alle gyldige C programmer også er gyldige C++ programmer). I praksis er C++ kode normalt en lille smule langsommere end ækvivalente C programmer. Specielt under implementeringen af det objektorienterede paradigme sænkes hastigheden kontra en implementationen i C der dog typisk vil blive længere. Så for alle hastighedskritiske systemer er det objektorienterede paradigme mindre egnet kontra det imperative paradigme. \cite{codeprojectCPP} \cite{stackoverflowWhyCPP} \cite{linusWhyC} \cite{cVsCPPJOE}\\
+
+\noindent Begrænsningerne belyst i dette her afsnit vidner også om at projekterne udviklet til PLC'er typisk ikke er særligt store projekter. Dog kan et nyt sprog stadig retfærdiggøres i forhold til de ulemper der er i forhold til \gls{lad} og \gls{il} belyst i afsnit \ref{subsec:lad} og \ref{subsec:il-pa} og der vil desuden blive belyst andre fordele i kapitel \ref{ch:losning}.
 
 %http://www.codeproject.com/Questions/445035/C-vs-Cplusplus-performance
 %https://stackoverflow.com/questions/497786/why-would-anybody-use-c-over-c
 %http://thread.gmane.org/gmane.comp.version-control.git/57643/focus=57918
 %http://unthought.net/c++/c_vs_c++.html
 
-\noindent Begrænsningerne belyst i dette her afsnit vidner også om at projekterne udviklet til PLC'er typisk ikke er særligt store projekter. Dog kan et nyt sprog stadig retfærdiggøres i forhold til de ulemper der er i forhold til \gls{lad} og \gls{il} belyst i afsnit \ref{subsec:lad} og \ref{subsec:il-pa} og der vil desuden blive belyst andre fordele i kapitel \ref{ch:losning}.
+
+
+
+
+
+
+
+
+%\subsection{PLC begrænsninger}\label{sec:plcprob}\sfix{Problembeskrivelse skal have hastigheden med}
+%Da PLC'er typisk er bygget til industrimaskiner og i et miljø hvor hardware robustheden er meget vigtig, er hastigheden på PLC'erne typisk meget langsom i forhold til en almindelig computer. Derudover er der typisk en maksimal størrelse på programmerne.
+
+%Et eksempel er Omrons PLC CP1H. CP1H har en begrænsning på 20.000 steps, hvor hver instruktion kan være mellem 1 og 7 steps. Derudover har CP1H også en begrænsning på maks 256 subrutiner og maks 256 jump. \cite{cp1h}
+
+%Dette giver nogle begrænsninger i forhold til udviklingen af et høj niveau sprog. Eksempler på strukturer der kræver jumps er selektive og iterative kontrolstrukturer. Derfor skal PLC++ have så få jumps som muligt ud fra det generede kode. Dermed bliver ting såsom exception handling også udelukket da dette kræver et ekstra tjek eksempelvis ved alle divisioner, da Omron sætter et error flag ved division af 0 og ved en fejl lave finde ud af hvor den nærmeste exception handler er.\cite{exceptionHandling}\\
+
+%\noindent Objektorienteret programmering er derudover også problematisk i forhold til polyformeri. Ved polyformeri skal der være en virtual method table (vtable) til alle metoder der kan overskrives og dermed vil dette give problemer ved selv små programmer med multiple kontrolstrukturer og  klasser der nedarves. Polyformeri vurderes derfor til at være for problematisk at implementere for en PLC til at dette kan betale sig. Nedarvning giver derfor heller ikke mening, da alle nedarvninger uden polyformeri kan beskrives ved en simpel struct der har en deklaration til den anden struct. \cite{Sebesta_2013}\\ 
+
+%\noindent Hastigheden vil næsten altid blive langsommere med højere abstraktionslag inkluderet sproget. Dog kan der være tilfælde hvor sproget er konstrueret således at det er muligt at lave avancerede optimeringer, så det er muligt at skrive det samme kode (i target sproget) med færre linjer. Et eksempel på dette er spørgsmålet om C er hurtigere end C++. I teorien skulle C++ være lige så hurtig som C, for ækvivalent kildekode (da næsten alle gyldige C programmer også er gyldige C++ programmer). I praksis er C++ kode normalt en lille smule langsommere end ækvivalente C programmer. Specielt under implementeringen af det objektorienterede paradigme sænkes hastigheden kontra en implementationen i C der dog typisk vil blive længere. Så for alle hastighedskritiske systemer er det objektorienterede paradigme mindre egnet kontra det imperative paradigme. \cite{codeprojectCPP} \cite{stackoverflowWhyCPP} \cite{linusWhyC} \cite{cVsCPPJOE}\\
+
+%http://www.codeproject.com/Questions/445035/C-vs-Cplusplus-performance
+%https://stackoverflow.com/questions/497786/why-would-anybody-use-c-over-c
+%http://thread.gmane.org/gmane.comp.version-control.git/57643/focus=57918
+%http://unthought.net/c++/c_vs_c++.html
+
+%\noindent Begrænsningerne belyst i dette her afsnit vidner også om at projekterne udviklet til PLC'er typisk ikke er særligt store projekter. Dog kan et nyt sprog stadig retfærdiggøres i forhold til de ulemper der er i forhold til \gls{lad} og \gls{il} belyst i afsnit \ref{subsec:lad} og \ref{subsec:il-pa} og der vil desuden blive belyst andre fordele i kapitel \ref{ch:losning}.
 
 % https://www.ia.omron.com/products/family/1778/specification.html
 

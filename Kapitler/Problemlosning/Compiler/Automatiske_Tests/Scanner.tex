@@ -1,13 +1,12 @@
 \subsubsection{Scanner}
 
-På kode \ref{code:testforloops} ses klassen til at teste for-løkker i scanneren. 
+I kodeeksempel \ref{code:testforloops} ses klassen til at teste for-løkker i scanneren. 
 
 \Java{Kode/Tests/Scanner/For.java}{Automatiske tests til for-løkker}{testforloops}
 
 \noindent Disse tre tests indenfor for-løkker har hver deres formål. Den første, \textit{forIteration()}, repræsenterer en helt almindelig for-løkke, som det er syntaktisk korrekt i PLC++. Det forventes at denne test ikke fejler.
+Den næste test, \textit{forIterationWithoutParams()}, viser en for-løkke uden initializer, iterator eller condition. Dette er også korrekt at skrive i PLC++ og bør derfor heller ikke fejle. \\
 
-Dem næste test, \textit{forIterationWithoutParams()}, viser en for-løkke uden initializer, iterator eller condition. Dette er også korrekt at skrive i PLC++ og bør derfor heller ikke fejle. 
-
-I PLC++ er det kun muligt at have declarations udenfor funktioner. Statements og alt dertil tilhørende må kun optræde inden i en funktion. \textit{forIterationInRoot()} viser et eksempel, hvor denne betingelse ikke er opfyldt. Det forventes derfor at der bliver kastet en \textit{ParserException} - hvorved testen er godkendt.\\
+\noindent I PLC++ er det kun muligt at have declarations udenfor funktioner. Statements og alt dertil tilhørende må kun optræde inden i en funktion. \textit{forIterationInRoot()} viser et eksempel, hvor denne betingelse ikke er opfyldt. Det forventes derfor at der bliver kastet en \textit{ParserException} - hvorved testen er godkendt.\\
 
 \noindent Da de resterende tests for scanneren minder meget om denne, er disse ikke medtaget. 
