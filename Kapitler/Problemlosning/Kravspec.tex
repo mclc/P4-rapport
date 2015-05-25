@@ -129,7 +129,6 @@ Dette vil sige at et for loop i sproget COBOL er mere læsbart i forhold til C\#
 
 \CSharp{Kode/Readability-csharp.cs}{For-loop}{ekscsharp}
 
-
 \subsubsection{Writeability} Writeability er et kriterie for hvor let det er at skrive koden. 
 Dermed har writability meget af gøre med hvilken syntaks der benyttes. 
 Dette er med til at sikre, at programmøren hurtigt og effektivt kan skrive koden.
@@ -141,9 +140,9 @@ Writability giver dog typisk et trade-off i forhold til readability, som forklar
 \subsubsection{Learnability} Learnability er hvor let programmeringssproget er at lære, og hvor let det er at benytte det. Herunder er Learnability hvor nemt programmøren har ved at indlærer nye funktioner, ud fra dokumentationen, da programmøren umuligt kan huske alle funktioner i et stort sprog, og derved skal kunne indlære det på ny, ved at kigge på dokumentationen. \\
 Learnability er placeret under vigtigt, da sproget er prioriteret til automatikteknikere, som har gennemgået et grundkursus, hvilket er med til at sikre at den kommende programmør bliver sat ordenligt ind i sproget. Det skal ligeledes være muligt for en eksisterende automatikteknikere at lære sproget hvilket gør at kriteriet vurderes som værende vigtigt.
 
-\subsubsection{Orthogonality} Orthogonality er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner, hvor særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele er sproget altså fuldstændigt ortogonalt. Dermed kan orthogonality have indflydelse på både writability idet det bliver lettere at lave avancerede konstruktioner, readability da konstruktionerne kan blive meget komplekse og dermed mindre læsbare. Da writeability er meget vigtigt bliver det prioriteret som vigtigt sammen med readability. Orthogonality er dog ikke målet i sig selv, og det er derfor vigtigere med højere readability fremfor orthogonality.
+\subsubsection{Ortogonalitet} Orthogonality er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner, hvor særregler gør sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele er sproget altså fuldstændigt ortogonalt. Dermed kan orthogonality have indflydelse på både writability idet det bliver lettere at lave avancerede konstruktioner, readability da konstruktionerne kan blive meget komplekse og dermed mindre læsbare. Da writeability er meget vigtigt bliver det prioriteret som vigtigt sammen med readability. Orthogonality er dog ikke målet i sig selv, og det er derfor vigtigere med højere readability fremfor orthogonality.
 
-\subsubsection{Reliability} Reliability er hvordan koden håndterer fejl, og hvor pålideligt koden der kan skrives med programmeringssproget er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
+\subsubsection{Pålideligt} Reliability er hvordan koden håndterer fejl, og hvor pålideligt koden der kan skrives med programmeringssproget er. Dette er med til at sikre at maskiner som kører med denne kode, har en form for fejlhåndtering, som giver programmøren mulighed for at kunne bearbejde fejlen, og derved endda kunne fortsætte programmet, selvom der opstod en fejl.
 
 Dette er en vigtig parameter i løsningen, da det skal kører på en \gls{plc} hvor driftsikkerhed er en af top prioriteterne. Fejlhåndtering ved hjælp af exceptions er ineffektivt som forklaret i afsnit \ref{sec:plcprob} og der afgrænses derfor fra dette.
 
@@ -153,12 +152,12 @@ Dette er en vigtig parameter i løsningen, da det skal kører på en \gls{plc} h
 \begin{tabular}{l c c c c}
 \toprule
 \textbf{Kriterium} & \textbf{Meget vigtigt} & \textbf{Vigtigt} & \textbf{Mindre vigtigt}  \\ \midrule
-Readability        &   & X &       \\ 
-Writeability       & X &   &       \\ 
-Adaptability       &   &   & X     \\ 
-Learnability       &   & X &       \\ 
-Orthogonality      &   & X &       \\ 
-Reliability        & X &   &       \\ \bottomrule
+Læsbarhed        &   & X &       \\ 
+Skrivbarhed       & X &   &       \\ 
+Kompatibilitet       &   &   & X     \\ 
+Lærrigt       &   & X &       \\ 
+Ortogonalitet      &   & X &       \\ 
+Pålideligt        & X &   &       \\ \bottomrule
 \end{tabular}
 \caption{Endelige kriterier som løsningen skal opfylde}
 \label{table:kriterier}

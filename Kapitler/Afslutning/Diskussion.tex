@@ -1,6 +1,6 @@
 \chapter{Diskussion}\label{sec:Diskussion}
 \textit{Diskussionen gennemgår og belyser projektets udfordrende emner, så som konverteringen fra PLC++ til \gls{il} samt hvordan værdier gemmes i hukommelsen på \gls{plc}en.
-Specielt hvordan hukommelsen bliver udnyttet vil blive diskuteret, herunder brugen af stack. 
+Specielt udnyttelse af hukommelsen vil blive diskuteret, herunder brugen af stack. 
 Dertil vil beslutningerne som er foretaget igennem projektet blive diskuteret, samt erkendes som værende acceptable eller utilfredsstillende.}
 
 \subsection*{Hukommelse}
@@ -15,7 +15,7 @@ Dette giver et par fordele og ulemper, heriblandt at man ikke kan genbruge de ad
 Fordelen ved stacken er at man generelt, bortset fra variabler, har en god skik for genbrug af hukommelsesadresser.
 
 Dette er implementeret ved at man i push funktionen til stacken tæller adressen op, og ved pop funktionen tæller den ned igen. Derved undgår man et stort spild af adresser, hvilket er praktisk i forhold til hukommelsesområdets størrelse.
-Derudover giver det et godt overblik i Cx One, da programmøren har mulighed for at se værdien af den konkrete variable, og derved giver mulighed for at fejlrette kode direkte i Cx One.\\
+Derudover giver det et godt overblik i Cx One, da programmøren har mulighed for at se værdien af den konkrete variable, og derved giver mulighed for at fejlrette kode direkte i CX-programmer.\\
 
 \noindent Det er blevet vurderet som et incitament for codegeneration, at genbruge hukommelsesadresser så meget som muligt. Derfor er der lagt vægt på at benytte stacken til så mange operationer og værdier som muligt. Da variabler og funktionskald ikke benytter stacken er det ikke muligt at kalde funktioner rekursivt, da variablerne derfor vil overskrive hinanden.
 Et alternativ som der blev undersøgt var en optimizer, som kunne hjælpe med at fjerne ubrugte variabler fra hukommelsen, dette blev dog nedprioriteret, da der skal være omtrent 500 variabler før det bliver et problem, og det dermed vurderes til at være irrelevant for en \gls{plc}. Dog vil en optimizer ikke kunne løse alle problemer uden at hukommelseshåndteringen skal benytte en stack.
@@ -49,13 +49,13 @@ Dette giver et højt abstraktionsniveau for programmøren, da han ikke skal beny
 Selvom dette aldrig blev implementeret på grund af tidsmangel, er der nogle ulemper som blev forudset.
 Der kan forekomme moduler, som afgiver et analogt inputsignal som er udenfor promilleskalaen, hvilket derfor ikke kan aflæses til fuld præcision. 
 Hertil kan der være moduler som har en præcision på mere end promille skalaen kan håndtere, og derved ville man tabe præcision.
-Dette kunne have været implementeret ved en hvilken som helst skala der kunne give mere præsition fx 0-1024, hvilket giver mere mening i binært. Men da det ikke er fast hvor stor en spænding der kan være over output portene, og det virker mere logisk at arbejde i procenter eller promiller, blev det promiller. 
+Dette kunne have været implementeret ved en hvilken som helst skala der kunne give mere præcision fx 0-1024, hvilket giver mere mening i forhold til den binære repræsentation. Men da det ikke er fast hvor stor en spænding der kan være over output portene, og det virker mere logisk at arbejde i procenter eller promiller, blev det promiller. 
 
 \subsection*{Globale variabler}
-Globale variable er et attraktivt tiltag til programmering, hvorledes man kan have globale værdier tilgængelig for alle funktioner.
+Globale variabler er et attraktivt tiltag til programmering, hvorledes man kan have globale variabler tilgængelig for alle funktioner.
 Dette giver mulighed for at have en global counter variable, som tælles op når en handling er udført.
 Implementationen af globale variabler har ledt an til en problemstilling, som forekommer når PLC++ omskrives til instruction list. Problemet er at \gls{plc}en kun kan håndtere variabler som var de globale.
-Derfor kan man ikke redefinere en variable, ej heller inde i et scope, hvilket giver anledning til problemer.
+Derfor kan man ikke redefinere en variable, heller inde i et scope, hvilket giver anledning til problemer.
 Dette er tilgængeligt i de fleste programmeringssprog at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
 
 \subsection*{Dekoreret \gls{ast}}
