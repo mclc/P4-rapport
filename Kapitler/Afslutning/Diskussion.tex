@@ -19,7 +19,7 @@ Det er blevet vurderet som et incitament for codegeneration, at genbruge hukomme
 Et alternativ som der blev undersøgt var en garbagecollecter, som kunne hjælpe med at fjerne ubrugte variabler fra hukommelsen, dette blev dog nedprioriteret, da der skal være omtrent 500 variabler før det bliver et problem, og det dermed vurderes til at være irrelevant for en \gls{plc}.
 
 \subsection*{Paradigme}
-Valget af paradigme blev hurtigt truffet i projektet, og på baggrund af egne erfaringer med \gls{plc}'er, samt undersøgelsen af hvad virksomheder benytter \gls{plc}'er til, viste det sig at være mest logisk at vælge det imperativ paradigme.
+Valget af paradigme blev hurtigt truffet i projektet, og på baggrund af egne erfaringer med \gls{plc}'er, \gls{plc}'ernes harware begrænsninger, samt undersøgelsen af hvad virksomheder benytter \gls{plc}'er til, viste det sig at være mest logisk at vælge det imperativ paradigme.
 Det har vist sig at være et fornuftigt valg, da de fleste programmører kommer med en industriuddannelse, og derfor ikke kender til det objektorienterede paradigme.
 En anden grund til at det imperative paradigme blev valgt, er fordi det er relativt simpelt, og en almindelig person kan forholde sig til det, med meget lidt erfaringen indenfor sproget. 
 Derudover er projektets formål at simplificere programmeringssproget, således at det er let og overskueligt at skrive programmer i det.
@@ -28,6 +28,9 @@ Et eksemplet på dette kan ses i kodeeksempel \ref{code:fixedfee-il} som viser h
 
 Dette giver mulighed for at skrive i et sprog (\gls{il}), som er mere kompakt, og derved tager kortere tid at skrive. Udfordringen ved det, er at det ikke er særlig let at lære, da man skal huske opbygningen af funktioner, samt referencer til de enkelte kald, som man skal foretage.
 Ligeledes er der ikke behov for den kompleksitet som det objektorienteret paradigme giver, da \gls{plc}-programmer for det mest er opbygget i flere sektioner, som hver især håndterer hver deres opgave.
+
+\Gls{plc}'er har også nogle meget strenge hardware begrænsninger. For eksempel kan man kun have 256 subroutiner og 256 hop. Det betyder at de mange hop og funktioner i et ikke-optimeret objektorienteret system ville hurtigt få systemet til at overskride sine grænser. Derfor er store projekter, hvor det objektorienterede paradigme virkelig viser sine fordele, ikke mulige.
+
 Derved vurderes det at det imperative paradigme er det mest passende, i forhold til de definerede krav, omkring simplicitet samt at det skal være overskueligt for en programmør med industriuddannelsen.
 
 \subsection*{Kravspecifikation}
@@ -46,7 +49,7 @@ Dette giver et højt abstraktionsniveau for programmøren, da han ikke skal beny
 Selvom dette aldrig blev implementeret på grund af tidsmangel, er der nogle ulemper som blev forudset.
 Der kan forekomme moduler, som afgiver et analogt inputsignal som er udenfor promilleskalaen, hvilket derfor ikke kan aflæses til fuld præcision. 
 Hertil kan der være moduler som har en præcision på mere end promille skalaen kan håndtere, og derved ville man tabe præcision.
-Dette kunne have været implementeret ved ????? \mefix{Jeg ved ikke lige hvad vi kan gøre istedet for promille, udover at bare have det som simple tal}
+Dette kunne have været implementeret ved en hvilken som helst skala der kunne give mere præsition fx 0-1024, hvilket giver mere mening i binært. Men da det ikke er fast hvor stor en spænding der kan være over output portene, og det virker mere logisk at arbejde i procenter eller promiller, blev det promiller. 
 
 \subsection*{Globale variabler}
 Globale variable er et attraktivt tiltag til programmering, hvorledes man kan have globale værdier tilgængelig for alle funktioner.
@@ -55,14 +58,14 @@ Implementationen af globale variabler har ledt an til en problemstilling, som fo
 Derfor kan man ikke redefinere en variable, ej heller inde i et scope, hvilket giver anledning til problemer.
 Dette er tilgængeligt i de fleste programmeringssprog at man kan have en variable som en lokalvariable, og ligeledes have en globalvariable.
 
-
 \subsection*{Dekoreret \gls{ast}}
 En standard del af kompilerings processen er at man dekorere sit \gls{ast} med værdier under kontekst analysen. Det blev først sent i udviklingsforøbet opdaget hvordan SabelCC understøtter dekorering af \gls{ast}. Derfor blev det besluttet at fortsætte med den løsning der var blevet udviklet i mellemtiden. Dette har haft den konsekvens at symboltabellen fik meget af den information man ellers ville have dekoreret med, og da dekoration ikke kunne fortælle noget om fx hvor stor en given variable var, blev stacken implementeret så den største mulige variable er altid det der blev returneret, og derfor bliver alle variabler konverteret til den størrelse værdier.
 
 \subsection*{Stack}
-Stacken i sig selv har sine problemer, ud over den har en masse spild plads, så bliver den defineret i \gls{il}-koden uanset om den bliver brugt eller ej. Dette blev implementeret sådan for at sikre at stacken altid var initialisere når den skal bruges. Det kan sagtens tænkes at 
+Stacken i sig selv har sine problemer, ud over den har en masse spild plads, så bliver den defineret i \gls{il}-koden uanset om den bliver brugt eller ej. Dette blev implementeret sådan for at sikre at stacken altid var initialisere når den skal bruges og da den bliver brugt til næsten alle udtryk burde det ikke være et problem. Der for kunne man alligevel godt samle information omkring programmet i en optimerings runde hvor man fjernede dette stykke kode hvis det ikke var relevant.
 
-%Et punkt hvor PLC++
+\subsection*{Strings}
+Datatypen strings er et array af karaktere som bruges til at kommunikere med andre systemer eller en bruger. Dette kan være meget brugbar til at debugge systemer eller seriel kommunikation. Men det blev ikke implementeret i første version af PLC++. Eftersom en string kan ses som et array af karaktere og der findes allerede gode debugging muligheder for \gls{plc}'er blev dette ikke implementeret.
 
-%Port kan ikke skiftes i gramma ikke i codegen 
-%Strings ikke implementeret
+\subsection*{Port}
+Idéen med port var at man havde en simpel måde til at tilgå porte der kan ændres til at referere andre udgange senere. Den første del af dette er implementeret og fungere fint, men man kan ikke udskifte portene, og det betyder at idéen bag port ikke fungere da man kan direkte referere til portene. Det betyder også at der ikke er noget funktionalitet der mangler fra sproget som konsekvens at dette ikke er implementeret. Derfor blev det vurderet til ikke at være høj prioritet, selvom det reducere \textit{writeability} af sproget som blev vurderet til at være meget vigtig i problem beskrivelsen. 

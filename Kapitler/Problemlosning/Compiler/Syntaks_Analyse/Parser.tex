@@ -4,10 +4,9 @@ Parserens opgave er at få opbygget et abstrakt syntakstræ ud fra de tokens som
 \subsubsubsection{Abstrakt syntakstræ}
 Et abstrakt syntakstræ også forkortet AST er en træstruktur der er en repræsentation at kildekoden. Noderne i træet er forskellige dele af sproget såsom iterative kontrolstrukturer, eller selektive kontrolstrukturer. Et eksempel på en node i træet kunne være et if-statement. Et if-else statement har 2 branches som koden kan udføres. Disse vil kunne blive repræsenteret som 2 seperate nodes, derudover vil betingelsen der skal testes kunne blive repræsenteres som 1 seperat node.
 
-Et eksempel på et abstract syntax tree kan ses i figur
-\sfix{Eksempel på træ}
+\noindent Et eksempel på et abstract syntax tree kan ses i figur \sfix{Eksempel på træ}
 
-Det er muligt at gennemløbe træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode\sfix{Dobbelttjek}. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
+\noindent Det er muligt at gennemløbe træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode\sfix{Dobbelttjek}. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
 
 \subsubsubsection{Top down/buttom up}
 Konstruktionen af det abstrakte syntakstræ bliver udført af parseren. Der findes overordnet 2 forskellige metoder til at konstruere et abstrakt syntakstræ. Den ene metode er top down parsing, som konstruerer det abstrakte syntakstræ fra toppen af. Den anden metode er bottom up parsing der konstruerer fra bunden.
@@ -19,20 +18,16 @@ For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav a
 
 \subsubsubsection{Tvetydig grammatik}
 
-\noindent En grammatik for et sprog kan også være tvetydig, hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en kildekode. Et eksempel på en tvetydig grammatik kunne være følgende:
+\noindent En grammatik for et sprog kan også være tvetydig, hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en grammatik. Et eksempel på en tvetydig grammatik kunne være følgende:
 
 \sfix{Indsæt kode: expr = expr plus expr | number}
 
 \tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{Eksempel på parse tree for en tvetydig grammatik}{unambiguous}
 
 
-Grammatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3:
-\sfix{Indsæt abstract syntax tree}
+\noindent Grammatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3: \sfix{Indsæt abstract syntax tree}
 
-For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \sfix{Indsæt}
-
-\sfix{expr = expr plus factor | factor; factor = expr | number;}
-
+\noindent For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \sfix{expr = expr plus factor | factor; factor = expr | number;}
 Dette tvinger altså parseren til at generere det abstrakte syntax træ på følgende måde:
 \sfix{Indsæt abstract syntax tree}
 
@@ -76,13 +71,11 @@ Det smarte ved regular expressions er altså at disse mønstre kan skrives utrol
 
 $$ \{w \in \{0, 1\}^* / w = 0^m\; 1\; 0^n, m,n \geq 0\} $$
 
-\noindent I dette eksempel vil ord som 1, 01, 10, 010, 0100, ... være indeholdt i dette sprog. En meget mere kompakt for af dette, kan skrives som regular expression vha. $ 0^* 1\; 0^* $, som siger at der skal være nul, en eller flere nuller efterfulgt af et enkelt et-tal og derefter nul, en eller flere nuller igen. Det er desuden også muligt at bruge $0^+$, hvilket betyder at der skal være en eller flere. Tages der udgangspunkt i eksemplet før, og ændrer det til $0^* 1\; 0^+$, vil det nu betyde at ord som 1 og 01 ikke er i sproget, da ordet skulle slutte med mindst ét nul. 
-
-Det er også muligt at bruge operatorer som $\cup$ og $\cap$ til at sammensætte flere udtryk. Der vil blive taget udgangspunkt i dette eksempel
+\noindent I dette eksempel vil ord som 1, 01, 10, 010, 0100, ... være indeholdt i dette sprog. En meget mere kompakt for af dette, kan skrives som regular expression vha. $ 0^* 1\; 0^* $, som siger at der skal være nul, en eller flere nuller efterfulgt af et enkelt et-tal og derefter nul, en eller flere nuller igen. Det er desuden også muligt at bruge $0^+$, hvilket betyder at der skal være en eller flere. Tages der udgangspunkt i eksemplet før, og ændrer det til $0^* 1\; 0^+$, vil det nu betyde at ord som 1 og 01 ikke er i sproget, da ordet skulle slutte med mindst ét nul. Det er også muligt at bruge operatorer som $\cup$ og $\cap$ til at sammensætte flere udtryk. Der vil blive taget udgangspunkt i dette eksempel
 
 $$ \{w \in \{a, b\}^* / w \text{ starts with }b \text{ or end with }bb\} $$
 
-\noindent som kan omskrives til $b(a \cup b)^* \cup (a \cup b)^* bb$. Kort fortalt siger denne regular expression at der findes to muligheder. Mulighed siger at der først skal være ét b og derefter må a'er og b'er blandes på vilkårlige måder. Den anden mulighed er først a'er og b'er blandet - og derefter to b'er. Altså præcist hvad den anden definition beskrev.
+\noindent hvilket kan omskrives til $b(a \cup b)^* \cup (a \cup b)^* bb$. Kort fortalt siger denne regular expression at der findes to muligheder. Mulighed siger at der først skal være ét b og derefter må a'er og b'er blandes på vilkårlige måder. Den anden mulighed er først a'er og b'er blandet - og derefter to b'er. Altså præcist hvad den anden definition beskrev.
 
 Det sidste der kan beskrives om regular expressions, er at disse uden videre kan omdannes til en \gls{nfa} ved at følge en simpel algoritme. Algoritmen vil ikke blive forklaret yderligere, men et simpelt eksempel vil følge udfra $((a^*b) \cup aa)^*$. Den resulterende NFA ses på figur \ref{fig:regextonfa}
 
@@ -101,10 +94,10 @@ Det sidste der kan beskrives om regular expressions, er at disse uden videre kan
 \rowcolors{2}{black!5}{white}
 \begin{tabular}{l@{\hskip\tabcolsep\vrule width 1pt\hskip\tabcolsep}l|l|l|l|l|l}
 
-$\delta$   & $q_0$          & $r_0$ & $r_1$ & $s_0$ & $s_1$ & $s_2$ \\ \bottomrule
-$\epsilon$ & $\{r_0, s_0\}$ &       & $q_0$ &       &       & $q_0$ \\
-$a$        &                & $r_0$ &       & $s_1$ & $s_2$ &       \\
-$b$        &                & $r_1$ &       &       &       &
+$\delta$   & $q_0$          & $r_0$     & $r_1$     & $s_0$     & $s_1$     & $s_2$ \\ \bottomrule
+$\epsilon$ & $\{r_0, s_0\}$ &           & $\{q_0\}$ &           &           & $\{q_0\}$ \\
+$a$        &                & $\{r_0\}$ &           & $\{s_1\}$ & $\{s_2\}$ &       \\
+$b$        &                & $\{r_1\}$ &           &           &           &
 
 \end{tabular}
 	\caption{Transitionsfunktion (alle tommer celler angiver den tomme mængde)}

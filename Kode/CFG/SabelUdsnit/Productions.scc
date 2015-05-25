@@ -1,20 +1,21 @@
 Productions
 statement {-> statement} =
-    // Scope
-    {scope} l_brc statement* r_brc																{-> New statement.scope([statement.statement])}
+  // Scope
+  {scope} l_brc statement* r_brc 
+    {-> New statement.scope([statement.statement])}
     
   // Iteration
-  | {while} while_keyword l_par [condition]:expr r_par statement								{-> New statement.while(condition.expr, statement.statement)}
-;
+  | {while} while_keyword l_par [condition]:expr r_par statement 
+      {-> New statement.while(condition.expr, statement.statement)};
 
-// Precedence 12 (Logical OR)
-or_expr {-> expr} =
-	{or} [left]:or_expr or_operator [right]:and_expr											{-> New expr.compare_or(left.expr, right.expr)}
-  | {factor} [expr]:and_expr																	{-> expr.expr}
-;
+  // Precedence 12 (Logical OR)
+  or_expr {-> expr} = 
+    {or} [left]:or_expr or_operator [right]:and_expr 
+      {-> New expr.compare_or(left.expr, right.expr)} 
+  | {factor} [expr]:and_expr {-> expr.expr};
 
-// Precedence 11 (Logical AND)
-and_expr {-> expr} =
-	{and} [left]:and_expr and_operator [right]:equality_expr									{-> New expr.compare_and(left.expr, right.expr)}
-  | {factor} [expr]:equality_expr																{-> expr.expr}
-;
+  // Precedence 11 (Logical AND)
+  and_expr {-> expr} =
+	{and} [left]:and_expr and_operator [right]:equality_expr
+      {-> New expr.compare_and(left.expr, right.expr)}
+  | {factor} [expr]:equality_expr {-> expr.expr};

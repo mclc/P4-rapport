@@ -1,10 +1,8 @@
 \noindent \subsection{Declarations}
 Af erklæringer er disse inddelt i fire forskellige kategorier. Variabler, funktioner, structs og arrays. 
-Variabler og arrays skal erklæres før de kan bruges, ligesom man kender det i C. Funktioner skal ligeledes erklæres før de kan benyttes på samme måde som i C. 
+Variabler og arrays skal erklæres før de kan bruges, ligesom man kender det i C. Funktioner skal ligeledes erklæres før de kan benyttes på samme måde som i C. Struct er lidt speciel i forhold til erklæringer, da en struct skal typedefineres før den kan erklæres. På den måde er en struct ikke en type før den er typedefineret. Dette ses under grammatikken for struct,  \textit{<$D_s$>}. Dette er ækvivalent med den struct man kender i C bortset fra at denne struct kan holde funktionskald.\\
 
-Struct er lidt speciel i forhold til erklæringer, da en struct skal typedefineres før den kan erklæres. På den måde er en struct ikke en type før den er typedefineret. Dette ses under grammatikken for struct,  \textit{<$D_s$>}. Dette er ækvivalent med den struct man kender i C bortset fra at denne struct kan holde funktionskald.
-
-Nedenfor ses gramatikken for Declarations.
+\noindent Nedenfor ses gramatikken for Declarations.
 
 \begin{Grammar}
  \begin{grammar}
@@ -16,19 +14,7 @@ Nedenfor ses gramatikken for Declarations.
  
  <$D_A$> ::= $T$ A "[" $i$ "];" $D_A$ | $\epsilon$
  \end{grammar}
- \caption{BNF for Declarations}\label{gra:declarations}
+ \caption{Abstrakt syntaks for Declarations}\label{gra:declarations}
 \end{Grammar}
 
-\noindent Ligeledes vises den tilhørende semantik. Hvis der tages udgangspunkt i variabler \textit{[VAR]} læses semantikken således: \mgfix{wip}
-
-\begin{align*}
-&[EMPTY] & &E \vdash \epsilon : \text{ok}\\\\
-%
-&[VAR] & &\frac{E[x \mapsto T] \vdash D_V : \text{ok}\quad E \vdash e : \text{T}}{E \vdash T x = e; D_V : \text{ok}}\\\\
-%
-&[FUNC] & &\frac{E[F \mapsto (x : T_1 \rightarrow \text{ok}, F : T_2 \rightarrow \text{ok})] \vdash D_F : \text{ok}}{E \vdash T_1\; (T_2\; x)\; \{\; St\; \}\; D_P : \text{ok}}\\\\
-%
-&[STRUCT] & &\frac{E[S \mapsto (x : T \rightarrow \text{ok})] \vdash D_S : \text{ok}}{E \vdash \text{struct}\; S\; \{\;T\; x\;\}\; D_S: \text{ok}}\\\\
-%
-&[ARRAY] & &\frac{E[A \mapsto T] \vdash D_A : \text{ok} \quad E \vdash i : \text{Int}}{E \vdash T A [i]; D_A : \text{ok}}
-\end{align*}
+\noindent Ligeledes vises den tilhørende semantik. For $[VAR]$ læses semantikken således:

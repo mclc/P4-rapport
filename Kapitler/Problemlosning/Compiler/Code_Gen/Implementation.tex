@@ -14,7 +14,7 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
     \label{tab:codegenExample}
 \end{table}
 
-Fra eksemplet i tabel {\ref{tab:codegenExample} kan man se hvordan at koden finder deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast} der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitoren laver en \gls{dfs} hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator} visitoren har til standard \gls{dfs}.
+\noindent Fra eksemplet i tabel {\ref{tab:codegenExample} kan man se hvordan at koden finder deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast} der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitoren laver en \gls{dfs} hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator} visitoren har til standard \gls{dfs}.
 
 \tikzfigure{Figurer/TikZ/CodeGenExampleAST.tex}{\Gls{ast} for samme stykke kode som i tabel \ref{tab:codegenExample}.}{codegenAST}
 
@@ -40,7 +40,7 @@ Et ligende eksempel er når man compilere en if-else kæde som set i tabel \ref{
 
 \tikzfigure{Figurer/TikZ/CodeGenIfAST.tex}{\Gls{ast} for samme stykke kode som i tabel \ref{tab:codegenIf}. Detalier om hvad der sker med tokens inden i løkker er udeladt.}{codegenIfAST}
 
-En sidste metode der er interessant at tage fat i er genereringen af arrays, fordi \gls{plc}'er ikke har pointere på samme måde som man ville have dem i fx Assembly og C. Det betyder at PLC++ compileren bliver nød til at finde på et alternativ.
+\noindent En sidste metode der er interessant at tage fat i er genereringen af arrays, fordi \gls{plc}'er ikke har pointere på samme måde som man ville have dem i fx Assembly og C. Det betyder at PLC++ compileren bliver nød til at finde på et alternativ.
 
 \begin{table}[H]
     \centering\ttfamily
@@ -67,7 +67,7 @@ Måden at kode generatoren blev implementeret er som før nævnt gennem et visit
 
 Emit funktionen som set i kodeeksempel \ref{code:emit} er relativ simpel, den åbner eller lukker ikke for nogle af sine text writers. Den skriver bare til en af dem afhængig af en boolean. Grunden til dette er blandt andet at CX-Programmer som blev brugt til videre kompilering af programmet gemmer en symbol tabel, som PLC++ udnytter til at forøge læsbarheden af den kompilerede kode ved at erstatte vilkårlige adresser med variable navne. 
 
-For at kunne bruge mange af de teknikker der allerede var udviklet til Assembly compilere er det nødvendigt at have en stack, og den indebyggede i \gls{plc}'en var utilstrækkelig \cfix{hvorfor var den ikke tilstrækkelig?}, har PLC++ kompileren en indebygget stack, der bruger working memory området W400 - W512. 
+For at kunne bruge mange af de teknikker der allerede var udviklet til assembly compilere er det nødvendigt at have en stack. \gls{plc}en har en indebyggede stack som viste sig at være utilstrækkelig grundet at den ikke havde stackpointer, således at man ikke kunne tage de x'nd element. Derfor har PLC++ kompileren en indebygget stack, der bruger working memory området W400 - W512, som har en pointer således at man frit kan vælge fra stacken.
 
 \Java{Kode/Stack.java}{Push()-funkionen fra Stack klassen}{push}
 

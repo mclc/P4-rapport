@@ -16,6 +16,8 @@ Der adskilles ikke mellem arismetiske og boolske expressions i de syntaktiske ka
     \item $ x \in \textbf{Var} $ - Variabler
     \item $ St \in \textbf{Stm} $ - Statements
     \item $ T \in \textbf{Types} $ - Typer
+    \item $ X \in \textbf{Svar} $ Struct-variabler
+    \item $ SF \in \textbf{SFnames} $ Struct-funktioner
     \item $ F \in \textbf{Fnames} $ - Funktionsnavne
     \item $ S \in \textbf{Snames} $ - Struct-navne
     \item $ A \in \textbf{Anames} $ - Array-navne
@@ -32,21 +34,25 @@ Der adskilles ikke mellem arismetiske og boolske expressions i de syntaktiske ka
 \begin{Grammar}
  \begin{grammar}
 
- <e> ::= $n$ | $fp$ | $x$  | $e_1$ "+" $e_2$ | $e_1$ "-" $e_2$ | $e_1$ "*" $e_2$ | $e_1$ "/" $e_2$ | $e_1$ "\%" $e_2$ | "("$e_1$")" | $x$ "=" $e_1$ | $e$ "?" $e_1$ ":" $e_2$ | $e$"++" | $e$"--" | "-"$e$ | $A[e]$ | "true" | "false" | $e_1$ "==" $e_2$ | $e_1$ != $e_2$ | $e_1$ "<" $e_2$ | $e_1$ "<=" $e_2$ | $e_1$ ">" $e_2$ | $e_1$ ">=" $e_2$ | $e_1$ "\&\&" $e_2$ | $e_1$ "||" $e_2$ | "!"$e_1$ | $\epsilon$
+ <X> ::= $x$ | $S.X$
+ 
+ <SF> ::= $F$ | $S.SF$
+
+ <e> ::= $n$ | $fp$ | $X$  | $e_1$ "+" $e_2$ | $e_1$ "-" $e_2$ | $e_1$ "*" $e_2$ | $e_1$ "/" $e_2$ | $e_1$ "\%" $e_2$ | "("$e_1$")" | $x$ "=" $e_1$ | $e$ "?" $e_1$ ":" $e_2$ | $e$"++" | $e$"--" | "-"$e$ | $A[e]$ | "true" | "false" | $e_1$ "==" $e_2$ | $e_1$ != $e_2$ | $e_1$ "<" $e_2$ | $e_1$ "<=" $e_2$ | $e_1$ ">" $e_2$ | $e_1$ ">=" $e_2$ | $e_1$ "\&\&" $e_2$ | $e_1$ "||" $e_2$ | "!"$e_1$ | $\epsilon$
 
  <T> ::= $i$ | $fp$ | "bool"
  
- <St> ::= "{" $Sts$ "}" | "if" "("$e_1$")" $St$ | "if" "("$e_1$")" $St_1$ "else" $St_2$ | "while" $e$ $St$ | $F$"("$e$")" | "for" "("$e$";" $e$";" $e$")" $St$ | $x$ "+=" $e$ | $x$ "-=" $e$ | $x$ "*=" $e$ | $x$ "/=" $e$ | $x$ "\%=" $e$ | $\epsilon$
+ <St> ::= "{" $Sts$ "}" | "if" "("$e_1$")" $St$ | "if" "("$e_1$")" $St_1$ "else" $St_2$ | "while" $e$ $St$ | $F$"("$e$")" | "for" "("$e$";" $e$";" $e$")" $St$ | $x$ "+=" $e$ | $x$ "-=" $e$ | $X$ "*=" $e$ | $x$ "/=" $e$ | $x$ "\%=" $e$ | $\epsilon$
  
  <Sts> ::= $St$";" $Sts$ | $\epsilon$
  
- <$D_V$> ::= $T$ $x$ "=" $e$";" $D_V$ | $\epsilon$
+ <$D_V$> ::= $T$ $x$ "=" $e$";"
  
- <$D_F$> ::= $T$ $F$"("$e$")" "{" $St$ "}" $D_F$ | $\epsilon$
+ <$D_F$> ::= $T$ $F$"("$e$")" "{" $St$ "}"
  
- <$D_S$> ::= "struct" $S$ "{" $D_V$ $D_F$ "}" $D_S$ | $\epsilon$
+ <$D_S$> ::= "struct" $S$ "{" $D_V$ $D_F$ "}"
  
- <$D_A$> ::= $T$ A "[" $e$ "];" $D_A$ | $\epsilon$
+ <$D_A$> ::= $T$ A "[" $e$ "]"
 
  \end{grammar}
  \caption{Formation rules}\label{gra:formationrules}
@@ -168,21 +174,37 @@ $$ E : \textbf{Var} \cup \textbf{Fnames} \cup \textbf{Snames} \rightharpoonup \t
 \noindent Da der arbejdes med en del environments samt storage, er det fordelagtigt et definere det samlet, så der derved spares plads
 
 $$ Env = \{env_V, env_F, env_S\} $$
-$$ SEnv = \{env_V, env_F, env_S, sto\}$$
+$$ SEnv = \{Env, sto\}$$
 
 \noindent Transitionssystemet er defineret ved
 
-$$ (\textbf{Expr} \cup \mathds{Z} \cup \{\top, \bot\}, \rightarrow, \mathds{Z} \cup \{\top, \bot\} $$
+$$ (\textbf{Expr} \cup \mathds{Z} \cup \{\top, \bot\}, \rightarrow_e, \mathds{Z} \cup \{\top, \bot\} $$
 
 \tocless \subsection{Expressions}
 
-\noindent For at gøre disse regler mere overskuelige, er expressions delt ind i arismetiske og boolske expressions.\\
+$(\Gamma_\textbf{Expr},\to_e,T_\textbf{Expr})$ er defineret neden under.
+
+Konfigurationer
+\[
+    \Gamma_\textbf{Expr} = \textbf{Expr} \cup \mathbb{R} \cup \top \cup \bot \cup \emptyset 
+\]
+Terminerende konfigurationer
+\[
+    (T_\textbf{Expr}=\mathbb{R}\cup\top\cup\bot\cup \emptyset)
+\]
+Transitioner i dette transitions system er relativt til et environment-store pair og er derfor i formen
+\[
+    SEnv \vdash e \to_e (v, sto')
+\]
+$\to_e$ er defineret som den mindste relation der tilfredstiller reglerne fra de næste to sektioner. For at gøre disse regler mere overskuelige, er expressions delt ind i arismetiske og boolske expressions, og ikke relavante værdier er ikke vist, disse skal bare antages som at være uændret.\\
 
 \noindent \subsubsection{Arismetiske}
+\label{ssec:aexpr}
 
 \begin{align*}
 &[VAR] & &SEnv \vdash x \rightarrow_e v & &\text{if } x = l \text{ and } sto\; l = v\\\\
-&[PLUS] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 + e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 + v_2\\\\
+&[SVAR] & &\frac{env_S^\prime, env_V^\prime \vdash X \rightarrow l}{env_R, env_V, sto \vdash s.X \rightarrow l} & &\text{where } env_S\; s = (env_V^\prime, env_F^\prime, env_S^\prime)\\\\
+&[ADD] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 + e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 + v_2\\\\
 &[SUB] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 - e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 - v_2\\\\
 &[MULT] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 * e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 \cdot v_2\\\\
 &[DIV] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1\; /\; e_2 \rightarrow_e\; v} & &\text{where}\; v = \frac{v_1}{v_2}\\\\
@@ -192,10 +214,10 @@ $$ (\textbf{Expr} \cup \mathds{Z} \cup \{\top, \bot\}, \rightarrow, \mathds{Z} \
 & & & & &\text{ and } SEnv_V\; x = l\\\\
 &[TERN_\top] & &\frac{SEnv \vdash e_2 \rightarrow_e v_1}{SEnv \vdash e_1 \text{ ? } e_2 \text{ : } e_3 \rightarrow_e v_1} & &\text{if } SEnv \vdash e_1 \rightarrow_e \top\\\\
 &[TERN_\bot] & &\frac{SEnv \vdash e_3 \rightarrow_e v_2}{SEnv \vdash e_1 \text{ ? } e_2 \text{ : } e_3 \rightarrow_e v_2} & &\text{if } SEnv \vdash e_1 \rightarrow_e \bot\\\\
-&[INC_{POST}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle e\text{++}, sto \rangle \rightarrow \langle v, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v + 1\\\\
-&[DEC_{POST}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle e\text{- -}, sto \rangle \rightarrow \langle v, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v - 1\\\\
-&[INC_{PRE}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle \text{++}e, sto \rangle \rightarrow \langle v^\prime, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v + 1\\\\
-&[DEC_{PRE}] & &\frac{Sto \vdash e \rightarrow v}{Env \vdash \langle \text{- -}e, sto \rangle \rightarrow \langle v^\prime, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v - 1\\\\
+&[INC_{POST}] & &\frac{SEnv \vdash e \rightarrow v}{Env \vdash \langle e\text{++}, sto \rangle \rightarrow \langle v, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v + 1\\\\
+&[DEC_{POST}] & &\frac{SEnv \vdash e \rightarrow v}{Env \vdash \langle e\text{- -}, sto \rangle \rightarrow \langle v, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v - 1\\\\
+&[INC_{PRE}] & &\frac{SEnv \vdash e \rightarrow v}{Env \vdash \langle \text{++}e, sto \rangle \rightarrow \langle v^\prime, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v + 1\\\\
+&[DEC_{PRE}] & &\frac{SEnv \vdash e \rightarrow v}{Env \vdash \langle \text{- -}e, sto \rangle \rightarrow \langle v^\prime, sto[e \mapsto v^\prime] \rangle} & &\text{where }v^\prime = v - 1\\\\
 &[NEG_{FI}] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1}{SEnv \vdash -e_1 \rightarrow_e -v_1}  & &\\\\
 \end{align*}
 
@@ -226,7 +248,37 @@ $$ (\textbf{Expr} \cup \mathds{Z} \cup \{\top, \bot\}, \rightarrow, \mathds{Z} \
 
 \tocless \subsection{Statements}
 
+$(\Gamma_\textbf{Stmt},\to_e,T_\textbf{Stmt})$ er defineret neden under.
+
+\noindent \textit{Konfigurationer}
+\[
+    \Gamma_\textbf{Stmt} = (\textbf{Stmt}\times\textbf{SEnv})\cup(\textbf{SEnv}) 
+\]
+\textit{Terminerende konfigurationer}
+\[
+    (T_\textbf{Stmt}=\textbf{SEnv})
+\]
+Transitioner i dette transitions system er relativt til et environment-store pair og er derfor i formen
+\[
+    SEnv \vdash e \to_e SEnv'
+\]
+$\to$ er defineret som den mindste relation der tilfredstiller reglerne fra næste sektion. For at gøre disse regler mere overskuelige, er ikke relavante værdier er ikke vist, disse skal antages for at være uændret.\\
+
 \begin{align*}
+&[VAR-DECL]&&\frac{\langle Sts,env''_V, sto[l\mapsto v]\rangle\to(env'_V,sto')}{\langle T x = e_1, env_V, sto\rangle\to(env'_V,sto')}&&\begin{array}{l}
+    \text{where } env_V, sto\vdash a\to_e v\\
+    \text{and } l = env_V \text{ next}\\
+    \text{and } env''_V = env_V[x\mapsto l][\text{next}\mapsto \text{new } l]
+\end{array}\\\\
+%
+&[EMPTY-VAR]&&\langle\epsilon,env_V,sto\rangle\to_{DV}(env_V, sto)\\\\
+%
+&[FUNC-DECL]&&\frac{env_V\vdash env_p[p\mapsto(St,env_V)]\to env'_P}{SEnv\vdash T p(St) St\to env'_P}\\\\
+%\end{align*}
+%
+%\tocless \subsection{Statements}
+%
+%\begin{align*}
 %
 &[COM] & &\frac{Env \vdash \langle St, \; sto \rangle \rightarrow sto^{\prime\prime} \enskip Env \vdash \langle Sts, \; sto^{\prime\prime} \rangle \rightarrow sto^\prime}{Env \vdash \langle St; Sts, \; sto \rangle \rightarrow sto^\prime} \span \span \\\\
 %
@@ -254,10 +306,11 @@ $$ (\textbf{Expr} \cup \mathds{Z} \cup \{\top, \bot\}, \rightarrow, \mathds{Z} \
 %
 &[CPS_\%] & &\frac{Env \vdash x \rightarrow_e v_1 \quad Env \vdash e \rightarrow_e v_2}{Env \vdash \langle x \text{ \%= } e, sto \rangle \rightarrow sto[x \mapsto v]} & &\text{where } v = v_1 - (v_2 \cdot \floor*{\frac{v_1}{v_2}})\\\\
 %
-&[CALL] & & \frac{Env^\prime_V\big[ x\mapsto l\big]\big[next\mapsto l^\prime\big], Env_F\vdash\langle S, sto\rangle\to sto^\prime}{Env_V, Env_F\vdash\langle F(y), sto\rangle\to sto^\prime} & &
-\begin{array}{l}
+&[CALL] & & \frac{Env^\prime_V[x\mapsto l][next\mapsto l^\prime], Env_F\vdash\langle S, sto\rangle\to sto^\prime}{Env_V, Env_F\vdash\langle F(y), sto\rangle\to sto^\prime} & 
+&\begin{array}{l}
     \text{where } Env_F F = (S, x, Env^\prime_V)\\
     \text{and } Env_V y = l\\
     \text{and } l^\prime=Env_V \text{ next}
-\end{array} 
+\end{array} \\\\
+&[SFUNC] & &\frac{env_S^\prime, env_F^\prime \vdash SF \rightarrow (St, env_V^{\prime\prime}, env_F^{\prime\prime}, env_S^{\prime\prime})}{env_S, env_F \vdash s.SF \rightarrow (St, env_V^{\prime\prime}, env_F^{\prime\prime}, env_S^{\prime\prime})} & &\text{where } env_S\; s = (env_V^\prime, env_F^\prime, env_S^\prime)
 \end{align*}

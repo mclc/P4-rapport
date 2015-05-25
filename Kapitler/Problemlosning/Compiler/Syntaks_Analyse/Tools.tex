@@ -14,10 +14,7 @@ SableCC er et værktøj der generere en lexer og parser der har objekt orientere
     
 %Den lexical analyse er baseret på deterministic finite automata (DFA), som gør at 
     
-Parseren er en \gls{lalr} parser. Hvis man bryder det ned betyder det at parseren kan kigge på næste symbol inden den beslutter sig for en fortolkning af den givne kode, den læser fra venstre mod højre, og dens resultat vil være den udledning af \gls{ast} der har flest udledninger til venstre.
-    
-I forhold til andre parsere som JLex har SableCC en streng opdeling mellem [Actions] og den specificeret grammatikken, dette gør det lettere at debugge problemer om det er med grammatikken eller [Actions].\sfix{Actions?}
-
-SableCC konfigurationsfil specialiserer tokens i regulære udtryk til lexer genereringen, mens parseren bliver specialiseret i EBNF, dog med tilføjelser til at specialisere det abstrakte syntaks træ.
-
-SableCC understøtter desuden automatisk oprettelse af et abstrakt syntaks træ, men også en defination af det i konfigurationsfilen.
+\noindent Parseren er en \gls{lalr} parser. Hvis man bryder det ned betyder det at parseren kan kigge på næste symbol inden den beslutter sig for en fortolkning af den givne kode, den læser fra venstre mod højre, og dens resultat vil være den udledning af \gls{ast} der har flest udledninger til venstre.
+\noindent I forhold til andre parsere, så som JLex, har SableCC en streng opdeling mellem action code og den specificerede grammatikken. Dette gør det lettere at debugge problemer om det er med grammatikken eller action code.
+\noindent SableCC konfigurationsfil specialiserer tokens i regulære udtryk til lexer genereringen, mens parseren bliver specialiseret i EBNF, dog med tilføjelser til at specialisere det abstrakte syntaks træ.
+\noindent SableCC understøtter desuden automatisk oprettelse af et abstrakt syntaks træ, men også en defination af det i konfigurationsfilen.

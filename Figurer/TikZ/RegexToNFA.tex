@@ -6,12 +6,12 @@
     \node[state, right of=s0](s1){$s_1$};
     \node[state, right of=s1](s2){$s_2$};
     
-    \path   (q0)    edge                node{$\epsilon$}        (r0)
-                    edge                node{$\epsilon$}        (s0)
-            (r0)    edge[loop below]    node{$a$}               (r0)
-                    edge                node{$b$}               (r1)
-            (r1)    edge[bend right=60] node[swap]{$\epsilon$}  (q0)
-            (s0)    edge                node{$a$}               (s1)
-            (s1)    edge                node{$a$}               (s2)
-            (s2)    edge[bend left=60]  node[swap]{$\epsilon$}  (q0);
+    \path   (q0)        edge                node{$\epsilon$}        (r0)
+                        edge                node{$\epsilon$}        (s0)
+            (r0)        edge[loop below]    node{$a$}               (r0)
+                        edge                node{$b$}               (r1)
+            (r1.north)  edge[bend right=60] node[swap]{$\epsilon$}  (q0.north)
+            (s0)        edge                node{$a$}               (s1)
+            (s1)        edge                node{$a$}               (s2)
+            (s2.south)  edge[bend left=60]  node[swap]{$\epsilon$}  (q0.south);
 \end{tikzpicture}
