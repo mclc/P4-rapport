@@ -36,7 +36,7 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
     \label{tab:codegenIf}
 \end{table}
 
-Et ligende eksempel er når man compilere en if-else kæde som set i tabel \ref{tab:codegenIf}. Her bliver der byttet rundt på række følgen af \textit{Do something} og \textit{Do something else}, da man ellers skulle invertere resultatet fra betingelsen, i dette tilfælde \textit{true}, fordi instruktionen \textit{CJP} bliver kun udført hvis den modtager et lavt signal.
+\noindent Et ligende eksempel er når man compilere en if-else kæde som set i tabel \ref{tab:codegenIf}. Her bliver der byttet rundt på række følgen af \textit{Do something} og \textit{Do something else}, da man ellers skulle invertere resultatet fra betingelsen, i dette tilfælde \textit{true}, fordi instruktionen \textit{CJP} bliver kun udført hvis den modtager et lavt signal.
 
 \tikzfigure{Figurer/TikZ/CodeGenIfAST.tex}{\Gls{ast} for samme stykke kode som i tabel \ref{tab:codegenIf}. Detalier om hvad der sker med tokens inden i løkker er udeladt.}{codegenIfAST}
 
@@ -58,7 +58,7 @@ Et ligende eksempel er når man compilere en if-else kæde som set i tabel \ref{
     \label{tab:codegenArray}
 \end{table}
 
-Arrays i programmet bliver håndteret ved at en mængde adresser bliver reserveret til dataen og et symbol bliver indsat der holder værdien af den første adresse af arrayet. Måden hvorpå værdierne i arrayet kan ses i tabel \ref{tab:codegenArray}. Dette forgår ved at den henter addressen på første element og hvor langt den skal gå fra den (linje 2-3), ligger dem sammen (linje 4) og bruger resultatet som en pointer til at hente værdien i arrayet (linje 6).
+\noindent Arrays i programmet bliver håndteret ved at en mængde adresser bliver reserveret til dataen og et symbol bliver indsat der holder værdien af den første adresse af arrayet. Måden hvorpå værdierne i arrayet kan ses i tabel \ref{tab:codegenArray}. Dette forgår ved at den henter addressen på første element og hvor langt den skal gå fra den (linje 2-3), ligger dem sammen (linje 4) og bruger resultatet som en pointer til at hente værdien i arrayet (linje 6).
 
 %\subsubsection{Implementation}
 Måden at kode generatoren blev implementeret er som før nævnt gennem et visitor mønster. Klassen hedder CodeGenerator og består at de funktioner visitor mønsteret diktere den skal have, og en funktion til at skrive resultatet til en fil; \textit{Emit}.
