@@ -42,17 +42,21 @@ Der adskilles ikke mellem arismetiske og boolske expressions i de syntaktiske ka
 
  <T> ::= $i$ | $fp$ | "bool"
  
- <St> ::= "{" $Sts$ "}" | "if" "("$e_1$")" $St$ | "if" "("$e_1$")" $St_1$ "else" $St_2$ | "while" $e$ $St$ | $F$"("$e$")" | "for" "("$e$";" $e$";" $e$")" $St$ | $x$ "+=" $e$ | $x$ "-=" $e$ | $X$ "*=" $e$ | $x$ "/=" $e$ | $x$ "\%=" $e$ | $\epsilon$
+ <St> ::= "{" $Sts$ "}" | "if" "("$e_1$")" $St$ | "if" "("$e_1$")" $St_1$ "else" $St_2$ | "while" $e$ $St$ | $F$"("$P_F$")" | "for" "("$e$";" $e$";" $e$")" $St$ | $x$ "+=" $e$ | $x$ "-=" $e$ | $X$ "*=" $e$ | $x$ "/=" $e$ | $x$ "\%=" $e$ | $\epsilon$
  
  <Sts> ::= $St$";" $Sts$ | $\epsilon$
  
  <$D_V$> ::= $T$ $x$ "=" $e$";"
  
- <$D_F$> ::= $T$ $F$"("$e$")" "{" $St$ "}"
+ <$D_F$> ::= $T$ $F$"("$P_A$")" "{" $St$ "}"
  
- <$D_S$> ::= "struct" $S$ "{" $D_V$ $D_F$ "}"
+ <$D_S$> ::= "struct" $S$ "{" $Sts$ "}"
  
  <$D_A$> ::= $T$ A "[" $e$ "]"
+ 
+ <$P_F$> ::= $T$ x, $P_A$ | $T$ x | $\epsilon$
+ 
+ <$P_F$> ::= e, $P_F$ | e | $\epsilon$
 
  \end{grammar}
  \caption{Formation rules}\label{gra:formationrules}
@@ -203,7 +207,7 @@ $\to_e$ er defineret som den mindste relation der tilfredstiller reglerne fra de
 
 \begin{align*}
 &[VAR] & &SEnv \vdash x \rightarrow_e v & &\text{if } x = l \text{ and } sto\; l = v\\\\
-&[SVAR] & &\frac{env_S^\prime, env_V^\prime \vdash X \rightarrow l}{env_R, env_V, sto \vdash s.X \rightarrow l} & &\text{where } env_S\; s = (env_V^\prime, env_F^\prime, env_S^\prime)\\\\
+&[SVAR] & &\frac{env_S^\prime, env_V^\prime \vdash X \rightarrow l}{env_S, env_V, sto \vdash s.X \rightarrow l} & &\text{where } env_S\; s = (env_V^\prime, env_F^\prime, env_S^\prime)\\\\
 &[ADD] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 + e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 + v_2\\\\
 &[SUB] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 - e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 - v_2\\\\
 &[MULT] & &\frac{SEnv \vdash e_1 \rightarrow_e\; v_1\quad SEnv \vdash e_2 \rightarrow_e\; v_2}{SEnv \vdash e_1 * e_2 \rightarrow_e\; v} & &\text{where}\; v = v_1 \cdot v_2\\\\
@@ -265,19 +269,19 @@ Transitioner i dette transitions system er relativt til et environment-store pai
 $\to$ er defineret som den mindste relation der tilfredstiller reglerne fra næste sektion. For at gøre disse regler mere overskuelige, er ikke relavante værdier er ikke vist, disse skal antages for at være uændret.\\
 
 \begin{align*}
-&[VAR-DECL]&&\frac{\langle Sts,env''_V, sto[l\mapsto v]\rangle\to(env'_V,sto')}{\langle T x = e_1, env_V, sto\rangle\to(env'_V,sto')}&&\begin{array}{l}
+&[VDECL]&&\frac{\langle Sts,env''_V, sto[l\mapsto v]\rangle\to(env'_V,sto')}{\langle T x = e_1, env_V, sto\rangle\to(env'_V,sto')}&&\begin{array}{l}
     \text{where } env_V, sto\vdash a\to_e v\\
     \text{and } l = env_V \text{ next}\\
-    \text{and } env''_V = env_V[x\mapsto l][\text{next}\mapsto \text{new } l]
+    \text{and } env_V'' = env_V[x\mapsto l][\text{next}\mapsto \text{new } l]
 \end{array}\\\\
 %
-&[EMPTY-VAR]&&\langle\epsilon,env_V,sto\rangle\to_{DV}(env_V, sto)\\\\
+%&[EMPTY-VAR]&&\langle\epsilon,env_V,sto\rangle\to_{DV}(env_V, sto)\\\\
 %
-&[FUNC-DECL]&&env_V\vdash\langle St_1, env_V\rangle\to env'_V\\
-&&&\frac{env'_V\vdash env_F[F\mapsto(T,env_V)]\to env'_P}{SEnv\vdash T F(St_1) St_2\to env'_F}\\\\
+&[FDECL]&&env_V\vdash\langle P_F, env_V\rangle\to env'_V\\
+&&&\frac{env'_V\vdash env_F[F\mapsto(T,env_V, St)]\to env'_F}{SEnv\vdash T F(P_F) St\to env'_F}\\\\
 %
-&[STRUCT-DECL]&&env_V\vdash\langle St_1, env_V\rangle\to env'_V\\
-&&&\frac{env'_V\vdash env_F[F\mapsto(T,env_V)]\to env'_P}{SEnv\vdash T F(St_1) St_2\to env'_P}\\\\
+&[SDECL]&&env_V, env_F\vdash St\to (env'_V, env_F')\\
+&&&\frac{env_S[S\mapsto (env_V', env_F')]\to env_S'}{SEnv\vdash \text{struct } S \; \{\;Sts\;\}\to env'_S}\\\\
 %
 &[COM] & &\frac{Env \vdash \langle St, \; sto \rangle \rightarrow sto^{\prime\prime} \enskip Env \vdash \langle Sts, \; sto^{\prime\prime} \rangle \rightarrow sto^\prime}{Env \vdash \langle St; Sts, \; sto \rangle \rightarrow sto^\prime} \span \span \\\\
 %

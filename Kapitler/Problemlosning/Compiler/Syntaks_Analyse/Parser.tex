@@ -31,10 +31,10 @@ For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav a
 Dette tvinger altså parseren til at generere det abstrakte syntax træ på følgende måde:
 \sfix{Indsæt abstract syntax tree}
 
-\subsubsubsection{Finite Automata}
-Finite Automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til at beskrive forskellige stadier et program kan gennemgå. Der skilnes mellem to forskellige automata - \gls{dfa} og \gls{nfa}. Da \gls{nfa} er en overbygning på \gls{dfa}, indledes afsnittet med en grundig forklaring og definition af \gls{dfa}, som der efterfølgende bygges videre på for at opnå det nødvendige teoretiske grundlag til implementation af en parser.\\
+\subsubsubsection{Finite automata}
+Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til at beskrive forskellige stadier et program kan gennemgå. Der skilnes mellem to forskellige automata - \gls{dfa} og \gls{nfa}. Da \gls{nfa} er en overbygning på \gls{dfa}, indledes afsnittet med en grundig forklaring og definition af \gls{dfa}, som der efterfølgende bygges videre på for at opnå det nødvendige teoretiske grundlag til implementation af en parser.\\
 
-\noindent \textbf{\gls{dfa}} er kendetegnet ved ikke at have nogen hukommelse om tidligere stadier, samt kun én mulighed for at gå til et andet stadie afhængig af det input den modtager.
+\noindent \gls{dfa} er kendetegnet ved ikke at have nogen hukommelse om tidligere stadier, samt kun én mulighed for at gå til et andet stadie afhængig af det input den modtager.
 
 \tikzfigure{Figurer/TikZ/SimpleDFA.tex}{En simpel DFA, kaldet $M_1$}{simpledfa}
 
@@ -105,6 +105,5 @@ $b$        &                & $\{r_1\}$ &           &           &           &
 \end{table}
 
 %\figur{Figurer/MTAST.png}{Abstrakt syntakstræ baseret på kodeeksempel \ref{code:minitriangleforscanner}}{MTAST}{1.0}
-
 
 %\noindent På figur \ref{fig:MTAST} ses et sådant træ for koden vist i eksempel \ref{code:minitriangleforscanner}. For at forstå hvordan træet er bygget op, er det dog nødvendigt også at kende til \gls{cfg}. Denne forklares i dybden i afsnit x.x\mfix{Mangler ref}, men den konkrete \gls{cfg} for Mini Triangle kan ses i bilag \ref{bil:minitriangle}. Eksempelvis ses det øverste i den øverste del af træet at \textit{single-Command} består af "\textit{let} Declaration \textit{in} single-Command"\mbox{}, hvilket passer med grammatikken.
