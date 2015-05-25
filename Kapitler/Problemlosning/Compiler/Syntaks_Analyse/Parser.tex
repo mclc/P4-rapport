@@ -4,7 +4,9 @@ Parserens opgave er at få opbygget et abstrakt syntakstræ ud fra de tokens som
 \subsubsubsection{Abstrakt syntakstræ}
 Et abstrakt syntakstræ også forkortet AST er en træstruktur der er en repræsentation at kildekoden. Noderne i træet er forskellige dele af sproget såsom iterative kontrolstrukturer, eller selektive kontrolstrukturer. Et eksempel på en node i træet kunne være et if-statement. Et if-else statement har 2 branches som koden kan udføres. Disse vil kunne blive repræsenteret som 2 seperate nodes, derudover vil betingelsen der skal testes kunne blive repræsenteres som 1 seperat node.
 
-\noindent Et eksempel på et abstract syntax tree kan ses i figur \sfix{Eksempel på træ}
+\noindent Et eksempel på et abstract syntax tree kan ses i figur \ref{fig:exampletree}.
+
+\tikzfigure{Figurer/TikZ/Tree.tex}{Eksempel på et \gls{ast}}{exampletree}
 
 \noindent Det er muligt at gennemløbe træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode\sfix{Dobbelttjek}. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
 

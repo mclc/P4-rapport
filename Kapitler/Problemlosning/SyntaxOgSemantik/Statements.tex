@@ -52,11 +52,12 @@ For at kunne definere mere avancerede typer med tilhørende adfærd er structs b
 Felter i structs kan tilgås i semantikken på to forskellige måder alt efter om det er en variabel eller et funktionskald. Nedenfor ses semantikken for at tilgå både et felt som er en variabel samt et funktionskald.
 
 For $[SVAR]$ læses semantikken således:
-Hvis $X$ evaluerer til $l$ i $env'_s$ og $env'_v$
+Hvis $X$ evaluerer til $l$ i $env'_s$ og $env'_v$ så evaluerer $s.X$ til $l$ i $env_s$, $env_v$ og $sto$ hvor $env_s s$ er lige med $env'_S$, $env'_F$ og $env'_S$. 
 
 
+For $[SFUNC]$ læses semantikken således: \textit{s.SF}
+Hvis $SF$ evaluerer til $St$, $env''_v$, $env''_F$ og $env''_S$ i $env'_s$ og $env'_F$ så evaluerer $s.SF$ til $St$, $env''_v$, $env''_F$ og $env''_S$ i $env_s$ og $env_F$ hvor $env_s s$ er $env'_S$, $env'_F$ og $env'_S$. 
 
-For $[SFUNC]$ læses semantikken således: for at evaluere $s.SF$
 
 \begin{align*}
 &[SVAR] & &\frac{env_S^\prime, env_V^\prime \vdash X \rightarrow l}{env_S, env_V, sto \vdash s.X \rightarrow l} & &\text{where } env_S\; s = (env_V^\prime, env_F^\prime, env_S^\prime)\\\\

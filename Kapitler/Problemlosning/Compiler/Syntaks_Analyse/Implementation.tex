@@ -1,6 +1,5 @@
 \subsubsection{Implementation}
 
-\mfix{Tjek ref når alt er flyttet}
 I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser samt SableCC generer både en parser og scanner. Derudover genererer SableCC også et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sct:visitorSableCC}).
 
 \noindent SableCC's konfigurationsfil kan indeholde Helpers, Tokens, Ignored Tokens, Productions og Abstract syntax tree, hvor helpers er en række hjælpe regulære udtryk der bruges i tokens. Dette kunne eks. være helperen digit der kan være alle tal mellem 0 og 9. Helperen digit bliver brugt til både integer\_literal og decimal\_literal, dermed undgår man at skrive det samme regulære udtryk flere gange.

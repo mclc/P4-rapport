@@ -29,5 +29,4 @@ public class ExpressionTypeEvaluator extends DepthFirstAdapter {
             throw new IncompaitbleTypesException(node, arg1, arg2);
         }
     }
-
 }
