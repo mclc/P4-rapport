@@ -1,17 +1,17 @@
 \section{Kravspecifikation}\label{sct:kravspec}
-Kravspecifikationen vil på baggrund af den opstillede problemformulering, benytte \gls{moscow}-analysen til at afdække hvilke krav der er til det kommende sprog (PLC++). Indledningsvist vil der blive fulgt op på det forrige afsnit, programmeringsparadigmer, hvor valget heraf vil blive redegjort. Efterfølgende vil kriterierne, såsom høj \textit{writeability} og \textit{reliability}, blive uddybet i kriterier-afsnittet. Kravspecifikationen har til formål at definere specifikke retningslinjer til det kommende sprog.
+Kravspecifikationen vil på baggrund af den opstillede problemformulering benytte \gls{moscow}-analysen til at afdække hvilke krav der er til det kommende sprog. Indledningsvist vil der blive fulgt op på det forrige afsnit, programmeringsparadigmer, hvor valget heraf vil blive redegjort. Efterfølgende vil kriterierne, såsom høj \textit{writeability} og \textit{reliability}, blive uddybet i afsnittet med kriterier (\ref{ssec:kriterier}). Kravspecifikationen har til formål at definere specifikke retningslinjer til det kommende sprog.
 
 \subsection{Valg af paradigme}\label{ssec:paradigmevalg}
-Ved \gls{plc}-programmering er det primære formål at styre mekaniske anlæg og kommunikere med andre komponenter. Disse programmeringsopgaver er fortrinsvis simple, med få operationer, og der vil af disse årsager, ikke være behov for at kunne modellere programmet i klasser og objekter. Dog skal det nævnes, at selv om \gls{io} er simple opgaver i kontekst, skal det være muligt at kunne opdele programmet i flere abstraktioner, da et anlæg kan være - og ofte er - opbygget i flere sektioner/dele. Det primære formål, er at konstruere et programmeringssprog som vil forøge læsbarhed og dermed også give et større overblikket i mellemstore projekter. \\
+Ved \gls{plc}-programmering er det primære formål at styre mekaniske anlæg og kommunikere med andre komponenter. Disse programmeringsopgaver er fortrinsvis simple, med få operationer, og der vil af disse årsager, ikke være behov for at kunne modellere programmet i klasser og objekter. Dog skal det nævnes, at selv om \gls{io} er simple opgaver i kontekst, skal det være muligt at kunne opdele programmet i flere abstraktioner, da et anlæg kan være - og ofte er - opbygget i flere sektioner/dele. Det primære formål er at konstruere et programmeringssprog, som vil forøge læsbarhed og dermed også give et større overblikket i mellemstore projekter. \\
 
 \noindent Ud fra disse betragtninger er det blevet vurderet, at det imperative paradigme løser problemformuleringen bedst. Det løser problemstillingen med at anlæggets kan opdeles i forskellige abstraktionsniveauer - ved at understøtte programmeringsfunktionaliteter som funktioner og structs. Samtidig er eksekveringshastigheden hurtig i det imperative paradigme, modsat det objektorienterede (se afsnit \ref{sec:plcprob}), hvilket er en essentiel faktor for \gls{plc}'er. \\
 
-\noindent Det blev tidligere nævnt (se afsnit \ref{sec:c_is_easy2}), at mange syntes C er et godt begyndersprog, blandt andet grundet den lave \textit{indlæringskurve}. Det ville derfor være naturligt at det udviklende sprog bliver inspireret af C's syntaks. Imidlertid ønskes der at tilføje flere funktioner til sproget, som er brugbare til \gls{plc}-programmering. Dette er eksempelvis muligheden for at definere datatyper som \textit{'I'} (Input) og \textit{'Q'} (Output) (se afsnit \ref{subsec:datatyper}). \\
+\noindent Det blev tidligere nævnt (se afsnit \ref{sec:c_is_easy2}), at flere syntes C er et godt begyndersprog, blandt andet grundet den lave \textit{indlæringskurve}. Det ville derfor være naturligt at det udviklede sprog bliver inspireret af C's syntaks. Imidlertid ønskes der at tilføje flere funktioner til sproget, som er brugbare til \gls{plc}-programmering. Dette er eksempelvis muligheden for at definere datatyper som \textit{'I'} (Input) og \textit{'Q'} (Output) (se afsnit \ref{subsec:datatyper}). \\
 
-\noindent PLC++ skal have en relativ lav \textit{indlæringskurve}, da modtageren (programmøren) er industriteknikere med et begrænset kendskab til imperativ programmering. Af denne årsag ønskes det at simplificerer \textit{pointeraritmetik}, ved at benytte \textit{pass by value} til alle variabler. 
+\noindent PLC++ skal have en relativ lav \textit{indlæringskurve}, da modtageren (programmøren) er industriteknikere med et begrænset kendskab til imperativ programmering. Af denne årsag ønskes det at fjerne alt \textit{pointeraritmetik}.
 
 \subsection{MoSCoW}\label{ssec:moscow}
-\gls{moscow}-analysen har til formål at skitserer hvilke krav der er til programmeringssproget. Tabel \ref{tab:moscow} vil således opstille funktionerne efter prioriteringer; hvor den højeste prioritet vil være placeret i Must-Have, og laveste prioritet i Want-To-Have. Efterfølgende vil funktionerne blive gennemgået, hvor yderligere kommentarer til prioriteringen vil blive forklaret.
+\gls{moscow}-analysen har til formål at skitsere hvilke krav der er til programmeringssproget. Tabel \ref{tab:moscow} vil således opstille funktionerne efter prioriteringer; hvor den højeste prioritet vil være placeret i Must-Have, og laveste prioritet i Want-To-Have. Efterfølgende vil funktionerne blive gennemgået, hvor yderligere kommentarer til prioriteringen vil blive forklaret.
 
 %
 % DENNE TABEL ER LIDT FOR STOR, MEN ELLERS KAN DET IKKE STÅ PÆNT, OG MAN SER DET IKKE I RAPPORTEN.....
@@ -29,7 +29,7 @@ Structs	&  &  &		   \\
 Funktioner &  &  & 		   \\ 
 Kommentarer &  &  & 		   \\ 
 Arrays &  &  & 	   \\ 
-Binære \& aritmetiske operatorer &  &  & 		   \\ \bottomrule
+Boolske \& aritmetiske operatorer &  &  & 		   \\ \bottomrule
  
 %if & for & do-While & Betingede udtryk   \\ \hline
 %int & decrement & const & unsigned int  \\ \hline
@@ -57,96 +57,94 @@ Binære \& aritmetiske operatorer &  &  & 		   \\ \bottomrule
 \label{tab:moscow}
 \end{table}
 
-\noindent Uddybende forklaringer til ovenstående funktioner i tabellen \ref{tab:moscow}, vil blive forklaret nedenstående. 
-
 \subsubsection{Kontrolstruktur}
-Kontrolstruktur er placeret som ét Must-Have da kontrolstrukturer er en helt elementær del af et programmeringssprog. At kunne opsætte betingelser for hvornår en given handling skal eksekveres er essentielt – især i forbindelse med programmering af \gls{plc}'er, hvor inputs fra sensorer og temperaturfølere ofte skal aktivere en udgang. 
-Af denne årsag vælges der at implementere \textit{if} og \textit{while}, med henblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}. Dette er grundet at man med \textit{if} og \textit{while} kan konstruere de andre, men ikke omvendt. Dog kan det være besværligt og ineffektivt at konstruere en switch vha. if, da switch-kontrolstrukturen kan \textit{falde igennem} til næste betingelse.
+Kontrolstruktur er placeret som et Must-Have, da kontrolstrukturer er en helt elementær del af et programmeringssprog. At kunne opsætte betingelser for hvornår en given handling skal eksekveres er essentielt - især i forbindelse med programmering af \gls{plc}'er, hvor input fra sensorer ofte skal aktivere en udgang. 
+Af denne årsag vælges der at implementere \textit{if} og \textit{while}, med henblik på senere hen at implementere \textit{for}, \textit{do-while} samt \textit{switch}. Dette er grundet at man med \textit{if} og \textit{while} kan konstruere de andre, men ikke omvendt. Dog kan det være besværligt og ineffektivt at konstruere en switch ved hjælp af if, da switch-kontrolstrukturen kan \textit{falde igennem} til næste betingelse.
 
-\textit{do-while} som er en \textit{iterative kontrolstruktur}, bliver dog kun implementeret hvis der er tid tilovers, og bliver derfor nedprioriteret til Could-Have. Dette skyldes naturligvis, at man vha. af For og While-løkker kan opnå tilsvarende funktionalitet som \text{do-while}.
+\textit{do-while}, som er en \textit{iterativ kontrolstruktur}, bliver dog kun implementeret hvis der er tid tilovers, og bliver derfor nedprioriteret til Could-Have. 
 
 \subsubsection{Datatyper \& Port}
 \label{subsec:datatyper}
-Datatyper skal forstås som de basale datatyper (såsom \textit{int}, \textit{float} …), som sproget skal indeholde. PLC++'s typesystem er meget sammenligning med C med et par få tilføjelser, disse tilføjelser er \textit{timer}, \textit{port} samt \textit{bool} (se afsnit \ref{ssec:paradigmevalg}).
-Timer kan implementeres som en typedefineret \textit{struct}, hvorved programmøren får mulighed for at benytte en række brugerdefinere compiler genererede metoder, såsom \textit{start}, \textit{stop} og \textit{reset} timer. Timers formål er dermed at give programmøren mulighed for at kunne starte/stoppe en timer – som er ofte anvendt i \gls{plc} – der sætter et output når timeren udløber.
+Datatyper skal forstås som de basale datatyper (såsom \textit{int}, \textit{float} og \textit{bool}), som sproget skal indeholde. PLC++'s typesystem er meget samligneligt med C med et par få tilføjelser. Disse tilføjelser er \textit{timer}, \textit{port} samt \textit{bool} (se afsnit \ref{ssec:paradigmevalg}).
+Timer kan implementeres som en \textit{struct}, hvorved programmøren får mulighed for at benytte en række compiler-genererede metoder, såsom \textit{start}, \textit{stop} og \textit{reset} timer. Timers formål er dermed at give programmøren mulighed for at kunne starte/stoppe en timer, som er ofte anvendt i \gls{plc}, der sætter et output når timeren udløber.
 \textit{Port} er en datatype, som enten kan være defineret som \textit{'I'} (Input), \textit{'Q'} (Output), \textit{'M'} (Intern memory), \textit{'AI'} (Analog input), \textit{'AQ'} (Analog output) og som indeholder et \# efterfølgende. Denne datatype kan bruges til at skifte en port til en anden på kørselstidspunktet. Dette er eksempelvis praktisk i forhold til funktioner, da man så kan tage en port som input parameter.
-\textit{Strings} er essentielt for at kunne kommunikere med \gls{hmi}-komponenter, såsom \gls{plc}-monitors, og er derfor ligeledes høj prioritet. 
+\textit{Strings} er fordelagtigt for at kunne kommunikere med \gls{hmi}-komponenter, såsom \gls{plc}-monitors, og er derfor mellem prioritet.
 
 \subsubsection{Structs \& Information hiding} 
-En måde at gruppere data på, er ved at benytte datatypen, struct. En struct kan holde flere variabler, af forskellige typer og et defineret navn, hvilket øger \textit{læsbarheden} af sproget. I tabel \ref{table:kriterier} kan der ses, at læsbarheden er vigtig, og derfor er structs prioriteret som Must-Have. \\
+En måde at gruppere data på, er ved at benytte datatypen \textit{struct}. En \textit{struct} kan holde flere variabler, af forskellige typer og et defineret navn, hvilket øger \textit{læsbarheden} af sproget. I tabel \ref{table:kriterier} ses det at læsbarheden er vigtig, og derfor er \textit{structs} prioriteret som Must-Have. \\
 
-\noindent For at øge abstraktionsniveauet, og undgå konflikter af funktionsnavngivning, skal det være muligt at definere funktioner inde i structs ved brug af public \gls{api}. Dette giver mulighed for at stille en række hjælpemetoder til rådighed for den konkrete struct, i stedet for at gøre funktionaliteterne tilgængelige globalt.\\ 
+\noindent For at øge abstraktionsniveauet, og undgå konflikter af funktionsnavngivning, skal det være muligt at definere funktioner inde i \textit{structs}. Dette giver mulighed for at stille en række hjælpemetoder til rådighed for den konkrete struct, i stedet for at gøre funktionaliteterne tilgængelige globalt.
 
-\noindent En måde at øge abstraktionsniveauet yderligere er vha. \textit{information hiding}, hvilket giver mulighed for at skjule konkrete implementationsdeltaljer for resten af programmet. Derudover kan nedarvning og polyformeri også øge kode-genbrugligheden i sproget. \textit{Information hiding} har ingen performancemæssig indflydelse, idet at information hiding kan implementeres som et \textit{compiler step} og bruger derfor ikke yderligere ressourcer. Dermed vurderes information hiding som værende en central funktionalitet i PLC++.
+En måde at øge abstraktionsniveauet yderligere er ved hjælp af \textit{information hiding}, hvilket giver mulighed for at skjule konkrete implementationsdeltaljer for resten af programmet. Derudover kan nedarvning og polymorfisme øge kodegenbrugligheden i sproget. \textit{Information hiding} har ingen performancemæssig indflydelse, da det kan implementeres som et \textit{compiler step} og bruger derfor ikke yderligere ressourcer. Dermed vurderes information hiding som værende en god udvidelse i PLC++.
 
 \subsubsection{Funktioner}
-For at øge skriv/-læsbarheden af PLC++, anses funktioner en helt elementær tilføjelse. Funktioner giver programmøren mulighed for at isolere kode i \textit{scoops}, hvorved de samme funktioner kan kaldes op til flere gange. Dette kan være brugbart i mange sammenhænge. Et eksempel kunne være en kompleks beregning, som skal bruges i mange forskellige aspekter af programmet. Hermed har programmøren mulighed for at definere en funktion, som alene håndtere beregningen, og returnere den beregnede værdi tilbage til kaldsstedet. Dette er ligeledes med til at øge abstraktionsniveauet af sproget og prioriteres dermed som Must-Have.
+For at øge skriv/-læsbarheden af PLC++, anses funktioner som værende en helt elementær tilføjelse. Funktioner giver programmøren mulighed for at isolere kode i \textit{scopes}, hvorved de samme funktioner kan kaldes op til flere gange. Dette kan være brugbart i mange sammenhænge. Et eksempel kunne være en kompleks beregning, som skal bruges i mange forskellige aspekter af programmet. Hermed har programmøren mulighed for at definere en funktion, som alene håndterer beregningen, og returnerer den beregnede værdi tilbage til kaldsstedet. Dette er ligeledes med til at øge abstraktionsniveauet af sproget og prioriteres dermed som Must-Have.
 
-Der skal skelnes mellem \textit{funktion} og \textit{procedure}, hvor funktion returnere en værdi, og procedure ikke gør. Denne adskillelse skal forbedre læsbarheden af sproget. 
+Der skal skelnes mellem \textit{funktion} og \textit{procedure}, hvor funktion returnerer en værdi, og procedure ikke gør - disse kaldes også \textit{void-funktioner}. Denne adskillelse skal forbedre læsbarheden af sproget. 
 
-Ydermere skal det være muligt at benytte \textit{formelle parametre} i funktionsdefinitionen efter funktionsnavnet og \textit{aktuelle parametre} som optræder i funktionskaldet. Rækkefølgen af de aktuelle og de formelle parametre skal svare til hinanden. Formålet med dette, er naturligvis at kunne undlade en række globale variabel-erklæringer. 
+Ydermere skal det være muligt at benytte \textit{formelle parametre} i funktionsdefinitionen efter funktionsnavnet og \textit{aktuelle parametre} som optræder i funktionskaldet. Rækkefølgen af de aktuelle og de formelle parametre skal svare til hinanden. Formålet med dette er at kunne undlade en række globale variabelerklæringer. 
 
 \subsubsection{Kommentarer}
-For at øge læsbarheden af sproget yderligere, er det vigtigt at programmøren kan tilknytte kommentarer til koden. Dette højner både læsbarheden for programmøren selv, men også overfor andre programmører, som måske skal tilpasse programmet på et senere tidspunkt. Af denne årsag er kommentarer prioriteret som Must-Have. 
+For at øge læsbarheden af sproget yderligere, er det vigtigt at programmøren kan tilknytte kommentarer til koden. Dette højner både læsbarheden for programmøren selv, men også overfor andre programmører, som eventuelt skal tilpasse programmet på et senere tidspunkt. Af denne årsag er kommentarer prioriteret som Must-Have. 
 
 \subsubsection{Arrays}
-Arrays er en let og overskuelig måde at opbevare et dataset. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}-sproget. For at øge abstraktionsniveauet og dermed gøre det mere overskueligt for programmøren, er arrays prioriteret som Must-Have. Et konkret eksempel på hvornår arrays vil kunne være anvendeligt, vil være i produktionsanlæg, hvor sensorer skal aftaste ved to forskellige transportbånd. Det ene bånd aftaster hver gang der er fejl på produktet, hvor den anden sensor aftaster hvis produktet er intakt. 
+Arrays er en let og overskuelig måde at opbevare et datasæt. Arrays giver muligheden for at indeksere hvert felt med et tal, og giver dermed fleksibilitet og overskuelighed som kendt fra \textit{C}-sproget. For at øge abstraktionsniveauet og dermed gøre det mere overskueligt for programmøren, er arrays prioriteret som Must-Have. Et konkret eksempel på hvornår arrays vil kunne være anvendeligt, vil være i produktionsanlæg, hvor sensorer skal aftaste ved to forskellige transportbånd. Det ene bånd aftaster hver gang der er fejl på produktet, hvor den anden sensor aftaster hvis produktet er intakt. 
 
-\subsubsection{Binære \& aritmetiske operatorer} 
-For at give programmøren mulighed for at foretage matematiske beregninger i sproget (som var muligt i \gls{st} og \gls{il} – se afsnit \ref{subsec:plcsoftware}), skal PLC++ som minimum understøtte de basale aritmetiske operationer. Heriblandt implementeres: minus ('-'), plus ('+'), dividere ('/') samt gange ('*').
+\subsubsection{Boolske \& aritmetiske operatorer} 
+For at give programmøren mulighed for at foretage matematiske beregninger i sproget (som var muligt i \gls{st} og \gls{il} - se afsnit \ref{subsec:plcsoftware}), skal PLC++ som minimum understøtte de basale aritmetiske operationer. Heriblandt implementeres: minus ('-'), plus ('+'), dividere ('/') samt gange ('*').
 
-Derudover skal sproget understøtte binære operatorer, hvilket skal give programmøren mulighed for at sammenligne to operander. De basale binære operatorer ønskes implementeret er: større end ('>'), mindre end ('<'), større eller lige med ('>='), mindre eller lige med ('<='), lige med ('==') samt negation ('!').
+Derudover skal sproget understøtte boolske operatorer, hvilket skal give programmøren mulighed for at sammenligne to operander. De basale boolske operatorer ønskes implementeret er: større end ('>'), mindre end ('<'), større eller lige med ('>='), mindre eller lige med ('<='), lige med ('==') samt negation ('!').
 
 \subsubsection{Increment/Decrement \& Compound assignment} 
 Increment og decrement er en let og overskuelig måde at tælle en variabel op på.
 Denne operator benyttes blandt andet til \textit{for-løkker}, hvor en variabel inkrementeres ved hver iteration.
-Ligeledes er det muligt at benytte operatoren som en \textit{prefix} ('++i') samt \textit{surfix} ('i++'), hvilket specificere om variablen skal inkrementeres før variablen benyttes, eller efter.
-Herunder er der compound assignment ('x += 1') som giver mulighed for at skrive aritmetiske udtryk i en kompakt form. Dette gør det blandt andet hurtigere at skrive, og giver en mere kompakt kode - hvilket kan gøre koden mere overskueligt.
+Ligeledes er det muligt at benytte operatoren som en \textit{prefix} ('++i') samt \textit{surfix} ('i++'), hvilket specificerer om variablen skal inkrementeres før variablen benyttes, eller efter.
+Herunder er der compound assignment ('x += 1') som giver mulighed for at skrive aritmetiske udtryk i en kompakt form. Dette gør det blandt andet hurtigere at skrive, og giver en mere kompakt kode - hvilket i nogle tilfælde kan gøre koden mere overskueligt. I den fulde form skal dette skrives med ('x = x + 1')
 
 \subsubsection{Const}
-Const giver mulighed for at bibeholde dataene i en skrivebeskyttet variabel, hvilket eventuelt kan være brugbart i situationer hvor programmøren skal foretage en beregning med nogle fastdefinerede værdier. Const er prioriteret som Could-Have, da det ikke er essentielt for sprogets funktionalitet. 
+Const giver mulighed for at bibeholde dataene i en skrivebeskyttet variabel, hvilket eventuelt kan være brugbart i situationer, hvor programmøren skal foretage en beregning med nogle fastdefinerede værdier. Const er prioriteret som Could-Have, da det ikke er essentielt for sprogets funktionalitet. 
 
-\subsubsection{Enums} 
-Enums ønskes implementeret for at bidrage til forøget simplificering af koden. Med enums er det muligt at kategorisere en række elementer i en enumeret type. Dette kunne eksempelvis være praktisk i tilfælde hvor programmøren ønsker at definere tre forskellige statusser for anlægget. Det kunne være \textit{run}, \textit{alarm} og \textit{error}.
+\subsubsection{Enum} 
+\textit{Enum} ønskes implementeret for at bidrage til forøget simplificering af koden. Med \textit{enums} er det muligt at kategorisere en række elementer i en \textit{enumerated} type. Dette kunne eksempelvis være praktisk i tilfælde hvor programmøren ønsker at definere tre forskellige statusser for anlægget. Det kunne være \textit{run}, \textit{alarm} og \textit{error}.
 
 \subsubsection{Betingede udtryk}
-Betingede udtryk øger \textit{skrivbarheden} af programmet, da det giver mulighed for at simplificerer if-else kontrolstrukturer, ved at først have betingelsen og så angive to expressions – adskilt med kolon. Hvis betingelsen er sand køres første expression, hvis falsk køres anden. 
+Betingede udtryk øger \textit{skrivbarheden} af programmet, da det giver mulighed for at simplificere if-else kontrolstrukturer, ved at først have betingelsen og så angive to expressions - adskilt med kolon. Hvis betingelsen er sand køres første expression - hvis falsk køres anden. 
 
 \subsection{Kriterier}
-Dette afsnit vil på baggrund af problemeanalysen (se kapitel \ref{sec:problemanalyse}) og gennemgangen af programmeringsparadigmer (se afsnit \ref{ssec:paradigmevalg}) og MoSCoW-analysen (se afsnit \ref{ssec:moscow}), udspecificere de relevante kriterier og belyste rationalet, som er anvendt til at prioritere sprogets kriterier. Afslutningsvist vil kriterierne blive opsat i en tabel, som giver et samlet overblik. 
+\label{ssec:kriterier}
+Dette afsnit vil på baggrund af problemanalysen (kapitel \ref{sec:problemanalyse}), gennemgangen af programmeringsparadigmer (afsnit \ref{ssec:paradigmevalg}) og MoSCoW-analysen (afsnit \ref{ssec:moscow}), udspecificere de relevante kriterier og belyse rationalet, som er anvendt til at prioritere sprogets kriterier. Afslutningsvist vil kriterierne blive opsat i en tabel, som giver et samlet overblik. 
 
 \subsubsection{Readability} 
-Readability er kriteriet som omhandler sprogets læsbarhed. I takt med at det antages at programmøren ikke har større programmeringsmæssig erfaring, anses dette kriterium for at være væsentlig. Høj læsbarhed er centralt, både overfor programmøren selv, men også i situationer, hvor programmet skal læses af andre – det kunne eventuelt være slutkunden. \\
+Readability er kriteriet, som omhandler sprogets læsbarhed. I takt med at det antages at programmøren ikke har større programmeringsmæssig erfaring, anses dette kriterium for at være væsentlig. Høj læsbarhed er centralt, både overfor programmøren selv, men også i situationer, hvor programmet skal læses af andre - det kunne eventuelt være slutkunden. \\
 
-\noindent Læsbarhed er prioriteret som "Vigtigt". Der er således blevet foretaget et ”trade-off” i forhold til skrivbarheden, som prioriteres endnu højere. I takt med at skrivbarheden prioriteres højest, vil det naturligt have en negativ indflydelse på læsbarheden. Et eksempel på dette kunne være brugen af akkolader (’{ }’) i et scoop, som øger programmets læsbarhed, men modsat nedsætter skrivbarheden. 
+\noindent Læsbarhed er prioriteret som "Vigtigt". Der er således blevet foretaget et ”trade-off” i forhold til skrivbarheden, som prioriteres endnu højere. I takt med at skrivbarheden prioriteres højest, vil det naturligt have en negativ indflydelse på læsbarheden. Et eksempel på dette kunne være brugen af akkolader ( '\{ \}' ) i et scope, som øger programmets læsbarhed, men modsat nedsætter skrivbarheden. 
 
-Et eksempel mere kan ses i sproget COBOL, som angiveligvis er mere læsbart i forhold til C\#, dette kan ses på kodeeksempel \ref{code:ekscobol}, som viser et for-loop.
+Et eksempel kan ses i sproget COBOL, som angiveligvis er mere læsbart i forhold til C\#. Dette kan ses på kodeeksempel \ref{code:ekscobol}, som viser et for-loop.
 
 \Cobol{Kode/Readability-cobol.cbl}{For-loop}{ekscobol}
 
-\noindent I kodeeksempel \ref{code:ekscobol} ses et for-loop, som kan læses som en almindelig sætning, hvilket øger selve forståelsen for en uerfaren programmør. Imidlertid viser C\#’s kodeeksempel \ref{code:ekscsharp}, at der bruges parenteser, akkolader og semikolon, som kan forringe læsbarheden og dermed forståelsen for udtrykkets funktion. 
+\noindent I kodeeksempel \ref{code:ekscobol} ses et for-loop, som kan læses som en almindelig sætning, hvilket øger selve forståelsen for en uerfaren programmør. Imidlertid viser C\#'s kodeeksempel \ref{code:ekscsharp}, at der bruges parenteser, akkolader og semikolon, som kan forringe læsbarheden og dermed forståelsen for udtrykkets funktion. 
 
 \CSharp{Kode/Readability-csharp.cs}{For-loop}{ekscsharp}
 
 \subsubsection{Writeability} 
-Writeability er et kriterie der udtrykker hvor let koden kan skrives. Dette er ligeledes med til at sikre, at programmøren hurtigt og effektivt kan skrive koden. Eksempelvis indeholder nogle sprog \textit{begin} og \textit{end}-blokke, hvor andre bruger et enkelt tegn til at repræsentere det samme, herunder typisk et scope. Dermed er det meget hurtigere at skrive kode i sproget der kun kræver et tegn hver gang programmøren ønsker et nyt scope.
-Writability giver dog typisk et trade-off i forhold til readability, som forklaret under Readability.
+Writeability er et kriterie, som udtrykker hvor let, koden kan skrives. Dette er ligeledes med til at sikre, at programmøren hurtigt og effektivt kan skrive koden. Eksempelvis indeholder nogle sprog \textit{begin} og \textit{end}-blokke, hvor andre bruger et enkelt tegn til at repræsentere det samme - herunder typisk et scope. Dermed er det meget hurtigere at skrive kode i sproget, som kun kræver ét tegn, hver gang programmøren ønsker et nyt scope. Writability giver dog typisk et trade-off i forhold til readability
 
 \subsubsection{Adaptability} 
-Adaptability udtrykker kompatibilitetsgraden af sproget. Der blev tidligere i problemanalysen både vist kompatibilitetsproblemer med det hardware- og det softwaremæssige, og det ville derfor være aktuelt at have fokus på dette. Imedens er det blevet valgt, at kompatibilitet ikke skal være i fokus for PLC++, hvilket skyldes tidsmæssig begrænsning. Kompatibilitet fremgår dermed ikke i den opstillede problemformulering, og er derfor prioriteret som ”Mindre vigtigt”.  
+Adaptability udtrykker kompatibilitetsgraden af sproget. Der blev tidligere i problemanalysen både vist kompatibilitetsproblemer med det hardware- og det softwaremæssige, og det vil derfor være aktuelt at have fokus på dette. Det er valgt at kompatibilitet ikke skal være i fokus for PLC++, hvilket skyldes tidsmæssig begrænsning. Kompatibilitet fremgår dermed ikke i den opstillede problemformulering, og er derfor prioriteret som ”Mindre vigtigt”.  
 
 \subsubsection{Learnability} 
-Learnability er et udtryk for hvor let programmeringssproget er at lære. Her vil konkrete tiltag som at simplificere pointeraritmetik og string (i forhold til C), være med til at gøre sproget nemmere at lære. En fyldestgørende dokumentation, kan også være med til at øge learnability. Dette vil dog ikke være noget som vil blive udarbejdet - primært grundet tidsmæssig begrænsninger. Learnability er prioriteret som ”Vigtigt”, da det skal være nemt for førstegangs-programmørerm og industriteknikere – men også for folk der måske har et indledende forhold til C-sproget.
+Learnability er et udtryk for hvor let programmeringssproget er at lære. Her vil konkrete tiltag, som at simplificere pointeraritmetik og \textit{string} (i forhold til C), være med til at gøre sproget nemmere at lære. En fyldestgørende dokumentation kan også være med til at øge learnability. Dette vil dog ikke være noget, som vil blive udarbejdet - primært grundet tidsmæssig begrænsninger. Learnability er prioriteret som ”Vigtigt”, da det skal være nemt for førstegangsprogrammøren og industriteknikere - men også for folk der måske har et indledende forhold til C-sproget.
 
 \subsubsection{Orthogonality} 
-Orthogonality er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner, hvor særregler, såsom muligheden for at addere en integer med en float, vil gøre sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele, er sproget altså fuldstændigt ortogonalt. Dermed kan orthogonality have indflydelse på writability, idet at det bliver lettere at kode avancerede konstruktioner, og readability da konstruktionerne kan blive meget komplekse, og dermed mindre læsbare. Det anses dog vigtigere med højere readability fremfor orthogonality.
+Orthogonality er muligheden for at kunne kombinere forskellige dele af sproget til mere avancerede konstruktioner, hvor særregler, såsom muligheden for at addere en \textit{integer} med en \textit{float}, vil gøre sproget mindre ortogonalt. Hvis det er muligt at benytte alle mulige kombinationer af sprogets dele, er sproget altså fuldstændigt ortogonalt. Dermed kan orthogonality have indflydelse på writability, idet at det bliver lettere at kode avancerede konstruktioner, og readability da konstruktionerne kan blive meget komplekse, og dermed mindre læsbart. Det anses dog vigtigere med højere readability fremfor orthogonality.
 
 \subsubsection{Reliability} 
-Det blev tidligere belyst (se afsnit refxx), at \gls{plc}’ens pålidelig er væsentlig. Reliability udtrykker sprogets sikkerhed, samt muligheden for at fejlfinde. En af de væsentlige fordele ved \gls{lad}, viste sig at være muligheden for at inspicerer programmet for fejl realtime. Derfor er det helt essentielt for PLC++, at denne funktionalitet bibeholdes, hvilket kan gøres muligt såfremt at target-sproget, bliver et sprog som \gls{il}, som understøtter denne funktionalitet – da det kan konverteres direkte til \gls{lad} i Omrons CX-Programmer. 
+Det blev tidligere belyst at \gls{plc}'ens pålidelig er væsentlig. Reliability udtrykker sprogets sikkerhed, samt muligheden for at fejlfinde. En af de væsentlige fordele ved \gls{lad}, viste sig at være muligheden for at inspicere programmet for fejl realtime. Derfor er det helt essentielt for PLC++ at denne funktionalitet bibeholdes, hvilket kan gøres muligt hvis target-sproget bliver et sprog som \gls{il}, som understøtter denne funktionalitet.
 
-Selve fejlhåndteringen af exceptions i PLC++, ville kunne konstrueres ved brug af structs, som kan holde alle informationerne om fejlen. Mere om exception-handling er skrevet i afsnit refxx. \\
+Selve fejlhåndteringen af exceptions i PLC++, ville kunne konstrueres ved brug af \textit{structs}, som kan holde alle informationerne om fejlen. \\
 
-\noindent Nedenstående ses tabel \ref{table:kriterier}, som giver et samlet overblik over kriterierne til PLC++. Her kan det ses at writeability og reliability er prioriteret som "Meget vigtigt", hvor readability, learnability og othogonality er "Vigtigt", og adaptability er nedprioriteret til "Mindre vigtigt".
+\noindent Tabel \ref{table:kriterier} giver et samlet overblik over kriterierne til PLC++. Her kan det ses at writeability og reliability er prioriteret som "Meget vigtigt", hvor readability, learnability og othogonality er "Vigtigt", og adaptability er nedprioriteret til "Mindre vigtigt".
 
 \begin{table}[H]
 \centering
@@ -206,7 +204,7 @@ Reliability        & X &   &       \\ \bottomrule
 
 %For at øge abstraktionen yderligere kan man implementere muligheden for funktioner inde i structs. Dette giver mulighed for at stille en række hjælpemetoder til rådighed for den konkrete struct. Dermed slippes for funktioner med forskellige prefixes for at forhindre at funktionsnavnene konflikter.
 
-%En måde man kan øge abstraktions niveauet endnu mere er vha. information hiding således det er muligt at skjule konkrete implementationsdeltaljer for resten af koden. Derudover kan nedarvning og polyformeri også være godt for genbrugeligheden i kode.
+%En måde man kan øge abstraktions niveauet endnu mere er ved hjælp af information hiding således det er muligt at skjule konkrete implementationsdeltaljer for resten af koden. Derudover kan nedarvning og polymorfisme også være godt for genbrugeligheden i kode.
 
 %Disse egenskaber definere desuden det objektorienterede paradigme, som derfor tilbyder endnu højere abstraktion end den helt simple struct der kun kan indeholde felter. Dog kaldes det objekter i det objektorienterede paradigme. Derudover er der også forskel på hukommelseshåndteringen mellem objekter og structs.
 

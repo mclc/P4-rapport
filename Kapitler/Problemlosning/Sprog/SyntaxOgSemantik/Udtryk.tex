@@ -1,5 +1,5 @@
 \subsubsection{Udtryk}
-Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en \textit{Bool}. Herunder ses gramatikken for udtryk.
+Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer udtryk. Aritmetiske og boolske udtryk. Aritmetiske udtryk returnerer et hel- eller kommatal. Boolske udtryk returnerer en \textit{Bool}. Herunder ses et udsnit af semantikken, mens den fulde semantik findes i bilag \ref{bil:semantik}
 
 \begin{Grammar}
  \begin{grammar}
@@ -7,13 +7,13 @@ Et udtryk er en sekvens af operatorer og operander. I PLC++ findes der 2 typer u
  <e> ::= $n$ | $fp$ | $x$  | $e_1$ "+" $e_2$ | $e_1$ "-" $e_2$ | $e_1$ "*" $e_2$ | $e_1$ "/" $e_2$ | $e_1$ "\%" $e_2$ | "("$e_1$")" | $x$ "=" $e_1$ | $e$ "?" $e_1$ ":" $e_2$ | $e$"++" | $e$"--" | "-"$e$ | $A[e]$ | "true" | "false" | $e_1$ "==" $e_2$ | $e_1$ != $e_2$ | $e_1$ "<" $e_2$ | $e_1$ "<=" $e_2$ | $e_1$ ">" $e_2$ | $e_1$ ">=" $e_2$ | $e_1$ "\&\&" $e_2$ | $e_1$ "||" $e_2$ | "!"$e_1$ | $\epsilon$
 
  \end{grammar}
- \caption{Udtryk}\label{gra:expressions}
+ \caption{Abstract syntax for udtryk}\label{gra:expressions}
 \end{Grammar}
 
-\noindent Før der gås i detaljen med de forskellige udtryk er det nødvendigt at omtale brugen af operatorer og operatorprioritering.
+\noindent Før der gås i detaljen med de forskellige udtryk, er det nødvendigt at omtale brugen af operatorer og operatorprioritering.
 
 \subsubsection{Operatorer}
-I tabel \ref{tab:operatorprioritering} ses operatorerne der kan benyttes i udtryk. Ved sammensatte udtryk med forskellige operatorer er operator prioritering nødvendig. Hvis ikke disse regler fastsættes kan der fåes forskellige resultater, alt efter rækkefølgen udtrykket udregnes. Tabellen er ordnet efter prioritering hvor de øverste udregnes før de nederste.
+I tabel \ref{tab:operatorprioritering} ses operatorerne der kan benyttes i udtryk - ved sammensatte udtryk med forskellige operatorer, er operatorprioritering nødvendig. Hvis ikke disse regler fastsættes, kan der fås forskellige resultater, alt efter rækkefølgen, som udtrykket udregnes i. Tabellen er sorteret efter prioritering, hvor de øverste udregnes før de nederste.
 
 \begin{table}[H]
     \centering
@@ -22,7 +22,7 @@ I tabel \ref{tab:operatorprioritering} ses operatorerne der kan benyttes i udtry
         \centering
 
         Primær             & x++ \quad x- - \quad a{[}x{]} \quad x.y \quad (x)                 \\ \hline
-        Unær               & ++x \quad - -x \quad ! \quad -x \quad +x \quad (cast)x       \\ \hline
+        Unær               & ++x \quad - -x \quad ! \quad -x \quad +x  \\ \hline
         Multiplikationer   & * \quad / \quad \%                                               \\ \hline
         Additioner         & + \quad -                                                        \\ \hline
         Sammenligning      & \textless \quad \textgreater \quad \textless= \quad\textgreater= \\ \hline
@@ -41,7 +41,7 @@ I tabel \ref{tab:operatorprioritering} ses operatorerne der kan benyttes i udtry
 
 
 \subsubsection{Boolske udtryk}
-Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings eller ligheds operatorerne. operatorerne ses i tabel \ref{tab:operatorerbool}. Fælles for dem alle er at de returnerer en \textit{Bool}.
+Boolske udtryk kendetegnes ved at have logiske sammenligningsoperatorer - disse findes i tabel \ref{tab:operatorerbool}. Fælles for dem alle er at de returnerer en \textit{Bool}.
 
 \begin{table}[H]
     \centering
@@ -59,16 +59,15 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
     \caption{Boolske operatorer}
     \label{tab:operatorerbool}
 \end{table}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\noindent Eksempler på disse boolske udtryk, vil nu blive gennemgået.
+
 \subsubsubsection{AND expression}
+\noindent Et "AND expression"\mbox{} er et udtryk, som tager 2 operander og returnerer \textit{true} hvis begge operander er sande - ellers returneres \textit{false}. Herunder ses semantikken for \textit{And expression}\\
 
-\noindent Et "AND expression" er et udtryk der tager 2 operander og returnerer true hvis begge operander er sande. hvis ikke returnerer udtrykket false.
+\noindent For $[AND_\top]$ skal semantikken læses således: Hvis $e_1$ evaluerer til \textit{true} i $SEnv$ og $e_2$ evaluerer til \textit{true} i $SEnv$, så evaluerer udtrykket $e_1 \&\& e_2$ til true i $SEnv$. 
 
-\noindent Herunder ses semantikken for \textit{And expression}. 
-
-\noindent For $[AND_\top]$ skal semantikken læses således: Hvis $e_1$ evaluerer til \textit{true} i $SEnv$ og $e_2$ evaluerer til \textit{true} i $SEnv$ så evaluerer udtrykket $e_1 || e_2$ til true i $SEnv$. 
-
-\noindent For $[AND_\bot]$ skal semantikken læses således: Hvis $e_i$ evaluerer til $false$ i $SEnv$  for $i$ tilhørende 1 eller 2, så evaluerer udtrykket $e_1  \&\&  e_2$ til false i $SEnv$.
+For $[AND_\bot]$ skal semantikken læses således: Hvis $e_i$ evaluerer til \textit{false} i $SEnv$  for $i$ tilhørende 1 eller 2, så evaluerer udtrykket $e_1  \&\& e_2$ til \textit{false} i $SEnv$. Det vil altså sige at hvis bare én operand er \textit{false}, vil hele udtrykket returnere \textit{false}.
 
 \begin{align*}
 &[AND_\top] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \top}{SEnv \vdash e_1\; \&\&\; e_2 \rightarrow_e \top}\\\\
@@ -76,25 +75,23 @@ Boolske udtryk kendetegnes ved at have logisk og, logisk eller, Sammenlignings e
 \end{align*}        
 
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{OR expression}
-Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander men returnerer \textit{true} hvis bare en af operanderne evaluerer \textit{true}. 
+Et \textit{OR expression} tager ligesom \textit{AND expression} 2 operander, men returnerer \textit{true}, hvis bare én af operanderne evaluerer til \textit{true}. 
 
 \noindent Herunder ses semantikken for \textit{OR expression}. Semantikken læses som på samme måde som ved \textit{AND expression}.
 
 \begin{align*}
 &[OR_{\top\top}] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \top}{SEnv \vdash e_1\; ||\; e_2 \rightarrow_e \top}\\\\
 &[OR_{\top\bot}] & &\frac{SEnv \vdash e_1 \rightarrow_e \top \quad SEnv \vdash e_2 \rightarrow_e \bot}{SEnv \vdash e_1\; ||\; e_2 \rightarrow_e \top}\\\\
-&[OR_\bot] & &\frac{SEnv \vdash e_i \rightarrow_e \bot}{SEnv \vdash e_1 \;||\; e_2 \rightarrow_e \bot} & &i \in \{1, 2\}\\\\
 \end{align*}
 
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{Equality expression}
-Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med". De resterende kan ses i bilag.
+Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre end eller lig med, større end, større end eller lig med, lig med og forskellig fra hinanden. Her vises dog kun "lig med"\mbox{}.
 
 \noindent Herunder ses semantikken for \textit{Equality expression}. 
 
-\noindent For $[EQ_\top]$ læses grammatikken således: hvis $e_1$ evaluerer til $v_1$ i $SEnv$ og $e_2$ evaluerer til $v_2$ i $SEnv$, så evaluerer udtrykket $e_1 == e_2$ til $true$ i $SEnv$ hvis $v_1$ er lige med $v_2$.
+\noindent For $[EQ_\top]$ læses grammatikken således: hvis $e_1$ evaluerer til $v_1$ i $SEnv$ og $e_2$ evaluerer til $v_2$ i $SEnv$, så evaluerer udtrykket $e_1 == e_2$ til \textit{true} i $SEnv$ hvis $v_1$ er lige med $v_2$.
 
 \begin{align*}
 &[EQ_\top] & &\frac{SEnv \vdash e_1 \rightarrow_e v_1 \quad SEnv \vdash e_2 \rightarrow_e v_2}{SEnv \vdash e_1 == e_2 \rightarrow_e \top} & &\text{if } v_1 = v_2\\\\
@@ -102,8 +99,7 @@ Sammenlignings udtryk kommer i seks forskellige varianter. Mindre end, mindre en
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Aritmetiske udtryk}
-Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne som ses i tabel \ref{tab:aritmetiskeOperatorer}. Kun de mest basale aritmetiske udtryk vil blive gennemgået her. Resten kan findes i afsnit \ref{ssec:aexpr}
-
+Aritmetiske udtryk returnerer et hel- eller kommatal. Disse udtryk kendetegnes ved at benytte operatorerne, som ses i tabel \ref{tab:aritmetiskeOperatorer}. Kun de mest basale aritmetiske udtryk vil blive gennemgået her.
 
 \begin{table}[H]
     \centering
@@ -122,11 +118,9 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
 \end{table}
 
 \subsubsubsection{Add and sub expressions}
-\textit{Add and sub expressions} returnerer additionen og substraktionen af de to operander og returnerer et heltal eller kommatal alt efter operandernes type. Hvis en af operanderne er af typen $float$ returnerer udtrykket en $float$, ellers returnerer udtrykket en $Int$.
+\textit{Add and sub expressions} returnerer et hel-eller kommatal alt efter operandernes type. Hvis en af operanderne er af typen \textit{float}, returnerer udtrykket en \textit{float}, ellers returnerer udtrykket en \textit{int}. Herunder ses semantikken for "Add and sub expressions"\mbox{}.
 
-\noindent Herunder ses semantikken for "Add and sub expressions"\mbox{}.
-
-\noindent For $[ADD]$ læses semantikken således: hvis $e_1$ evaluerer til $v_1$ i $SEnv$ og $e_2$ evaluerer til $v_2$ i $SEnv$ så evaluerer udtrykket $e_1 + e_2$ til $v$ hvor $v$ er lig med $v_1 + v_2$.
+\noindent For $[ADD]$ læses semantikken således: hvis $e_1$ evaluerer til $v_1$ i $SEnv$ og $e_2$ evaluerer til $v_2$ i $SEnv$, så evaluerer udtrykket $e_1 + e_2$ til $v$ hvor $v$ er lig med $v_1 + v_2$.
 \noindent For $[SUB]$ læses semantikken på samme måde som ved $[PLUS]$.
 
 \begin{align*}
@@ -136,10 +130,8 @@ Aritmetiske udtryk returnerer et hel eller kommatal. Disse udtryk kendetegnes ve
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{Mult, div and mod expression}
-\textit{Mult, div and mod expression} kommer i tre forskellige varianter. Mult returnerer produktet af de to operander. Div returnerer heltalsdivisionen og mod returnerer resten af heltalsdivisionen.
-
-\noindent Nedenfor ses semantikken for Mod, div og mod expressions.
-For $[MULT]$ læses semantikken således: hvis $e_1$ evaluerer til $v_1$ i $SEnv$ og $e_2$ evaluerer til $v_2$ i $SEnv$ så evaluerer udtrykket $e_1 * e_2$ til $v$ hvor $v$ er lig med $v_1 * v_2$.
+\textit{Mult, div and mod expression} kommer i tre forskellige varianter. \textit{Mult} returnerer produktet af de to operander, \textit{div} returnerer heltalsdivisionen og \textit{mod} returnerer resten af heltalsdivisionen. Nedenfor ses semantikken for \textit{Mult}, \textit{div} og \textit{mod} expressions.
+For $[MULT]$ læses semantikken således: hvis $e_1$ evaluerer til $v_1$ i $SEnv$ og $e_2$ evaluerer til $v_2$ i $SEnv$ så evaluerer udtrykket $e_1 * e_2$ til $v$, hvor $v$ er lig med $v_1 \cdot v_2$.
 For $[DIV]$ og $[MOD]$ læses semantikken på samme måde.
 
 \begin{align*}
@@ -151,9 +143,9 @@ For $[DIV]$ og $[MOD]$ læses semantikken på samme måde.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsubsection{Increment and decrement expressions}
-\textit{Increment and decrement expressions} findes i to forskellige varianter. Som en prefix operator og en sufix operator. Prefix versionen tæller operanden en op eller ned og returnerer den inc- eller decrementerede værdi. Postfix versionen returnerer operandens værdi hvorefter den inc- eller decrementerer operanden. Nedenfor ses grammatikken for begge typer increment og decrement.
+\textit{Increment and decrement expressions} findes i to forskellige varianter. Som en prefix-operator og en postfix-operator. Prefix versionen tæller operanden 1 op eller ned og returnerer den inc- eller decrementerede værdi. Postfix-versionen returnerer operandens værdi, hvorefter den inc- eller decrementerer operanden. Nedenfor ses grammatikken for begge typer increment og decrement.
 
-\noindent For $[INC_{POST}]$ læses semantikken således: Hvis udtrykket $e$ evaluerer til $v$ i $SEnv$, så evaluerer udtrykket $e++$ i $sto$ til $v$ og $sto$ hvor $e$ evaluerer til $v'$ i $Env$, Hvor $v'$ er lig med $v+1$ 
+For $[INC_{POST}]$ læses semantikken således: Hvis udtrykket $e$ evaluerer til $v$ i $SEnv$, så evaluerer udtrykket $e++$ i $sto$ til $v$ og $sto$, hvor $e$ mapper til $v^\prime$ - hvor $v^\prime$ er lig med $v+1$ 
 
 \begin{align*}
 &[INC_{POST}] & &\frac{SEnv \vdash e \rightarrow v}{Env \vdash \langle e\text{++}, sto \rangle \rightarrow  v, sto[e \mapsto v^\prime] } & &\text{where }v^\prime = v + 1\\\\

@@ -9,7 +9,7 @@ Sproget PLC++ består af en række forskellige statements. Statements som funkti
 \end{Grammar}
 
 
-\subsubsection*{While-løkke}
+\subsubsubsection*{While-løkke}
 For at kunne iterere i sproget er der blevet valgt både while- og for-løkke som en del af sproget. Nedenfor ses semantikken for while-løkker. \\
 
 \noindent For $[WHILE_\top]$ læses semantikken således: 
@@ -34,7 +34,7 @@ hvis man i $Env$ eksekverer $St$ i $sto$ og får final state $sto''$. Hvis deref
 
 \tikzfigure{Figurer/TikZ/ForToWhileSimple.tex}{Det resulterende AST for en omskrivning af simpel for-løkke}{fortowhilesimple}{1.0}
 
-\subsubsection*{If statements}
+\subsubsubsection*{If statements}
 $If$ statement er en af de selektive kontrolstrukturer der er valgt til at kunne selektere eksekvering af kode. $If$ statementet tager et boolsk udtryk der afgør om dens krop skal eksekveres. Hvis det boolske udtryk evaluerer til $false$ springes kroppen over. Dette $if$ statement fungerer som man kender det i C. Nedenfor ses semantikken for $if$ statementet.
 
 \noindent For $[IF_\top]$ læses semantikken således: 
@@ -46,7 +46,7 @@ Hvis man i $Env$ eksekverer $St$ i $sto$ og får final state $sto'$, så får vi
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection*{Structs}
+\subsubsubsection*{Structs}
 For at kunne definere mere avancerede typer med tilhørende adfærd er structs blevet implementeret i syntaksen. Structs kan indholde felter af andre typer som man kender i C. Som en udvikling af C's struct er funktioner i struct ligeledes blevet udviklet, da det ønskes at kunne definere adfærd.
 
 Felter i structs kan tilgås i semantikken på to forskellige måder alt efter om det er en variabel eller et funktionskald. Nedenfor ses semantikken for at tilgå både et felt som er en variabel samt et funktionskald.

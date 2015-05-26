@@ -1,4 +1,8 @@
 \subsection{Code Generation}\label{ssec:codegen}
-Dette afsnit vil handle om hvordan compileren får modeleret kildekoden til \gls{il} som kan kompileres videre til maskinkode for en \gls{plc}. Koden der bliver genereret er speciel til Omron CP1H-X modellen og kan derfor ikke nødvendigvis køre på andre \gls{plc}'er.
+Efter de to analyser har gjort sine operationer på \gls{ast}'et er det tid til at generere target koden. Dette afsnit vil handle om hvordan compileren får modeleret kildekoden til \gls{il} som kan kompileres videre til maskinkode for en \gls{plc}. Koden der bliver genereret er speciel til Omron CP1H-X modellen og kan derfor ikke nødvendigvis køre på andre \gls{plc}'er.
 
-Det forventes at læseren nu har forstået hvordan \gls{ast} fungere og 
+Til dette afsnit forventes det at læseren nu har forstået hvordan \acrlong{ast} og visitor mønstret, da det er blevet beskrevet tidligere i kapitlet. 
+
+\cfix{korrektur}
+
+\bigskip

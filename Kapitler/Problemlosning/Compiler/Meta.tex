@@ -14,7 +14,7 @@ Programmet er nu repræsenteret i IL. Hvor det er muligt at konvertere sproget t
 
 \figur{Figurer/Billeder/Tombstone.png}{Tombstone diagram}{thombstone}{1.0}
 
-Før for mange detaljer omkring PLC++ compileren bliver beskrevet er det vigtigt at forstå den abstrakte opbygningen af en compiler. %Det er det næste afsnit vil omhandle.
+\noindent Før for mange detaljer omkring PLC++ compileren bliver beskrevet er det vigtigt at forstå den abstrakte opbygningen af en compiler. %Det er det næste afsnit vil omhandle.
 
 %\subsection{Opbyging af en compiler}
 En compiler består overordnet af tre faser, som kan ses i figur \ref{fig:compilerOpbygning}. Første fase består af \textit{syntax analysen} som omdanner kildekoden (PLC++) til \gls{ast}. Der kan læses mere omkring syntaks analysen i afsnit \ref{ssec:syntaxanalysis}. \textit{Contextual analysen} kontrollere om de konkrete udtryk er lovlige i henhold til den definerede semantik (se afsnit \ref{sec:Syntax}). Contextual analysen omdanner \gls{ast}'en til et dekoreret abstrakt syntaks træ, det kan der læses mere om i afsnit \ref{ssec:contextual}. Sidste del er \textit{code generation} der omdanner det dekorerede syntaks træ om til kode. Der kan læses mere omkring code generation i afsnit \ref{ssec:codegen}.

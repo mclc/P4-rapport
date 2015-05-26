@@ -119,7 +119,8 @@ $A$ & &       & &       & & \{$q_6$\} &       & & \{$q_9$\} &          & &     &
 
 \noindent På figur \ref{fig:sableccnfa} ses hvordan en \textit{port\_identifier} (defineret i kodeeksempel \ref{code:sableccportidentifier}) genkendes. Hvis der i programmet angives AQ\#7 arbejdes der med analoge output-port 7. I \gls{nfa}'en starter man i state \textit{s}, hvorefter der foretages et ikke-deterministisk valg om at gå videre til state  \textit{q\textunderscript{10}}. Derefter læses bogstavet A, som får maskinen til at gå til \textit{q\textunderscript{11}}. Efter et Q bliver state \textit{q\textunderscript{12}} sprunget over, da $\epsilon$ (den tomme streng) lader den gå videre til state \textit{q\textunderscript{13}}. Efter at have læst \# kommer den i det sidste state, \textit{f}, som er en accept state - og ordet er derved accepteret. \\
 
-
+\SCC{Kode/CFG/SabelUdsnit/Port.scc}{Definationen af port i tokens}{sableccportidentifier}
+\sfix{Mangler korrektur}
 
 \noindent Som tidligere nævnt, er dette ikke den konkrete grammatik, men opsætningen af denne i SableCC. Den korrekte grammatik, skrevet i \gls{ebnf} ses på grammatik \ref{gra:udsnit}. Den fulde kontekstfri grammatik findes i bilag \ref{bil:cfg}
 

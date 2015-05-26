@@ -1,11 +1,11 @@
 \label{sec:rapportstruktur}
 
-\mfix{Rapportstruktur skal laves færdig}
+\mfix{korrektur}
 
 \subsubsection*{Problemanalyse}
-Problemanalysen vil gennemgå de forskellige programmeringssprog til \gls{plc}'en. Ydermere vil \gls{plc}'ens mekaniske konstruktion kortfattet blive gennemgået. 
+Problemanalysen vil gennemgå \gls{plc}'ens anvendelsesområde og hvad den består af. De forskellige programmeringssprog til \gls{plc}'en og ligeledes \gls{plc}'ens mekaniske konstruktion. 
 
-Problemanalysen vil imidlertid have fokus på selve begrebsliggørelsen af \gls{plc}'en - de største producenter og de mest brugte programmeringssprog vil blive gennemgået, hvoraf de problemstillinger, som er blevet udledet fra diverse fora og egne betragtninger, vil blive belyst. Problemanalysen er inddelt i følgende afsnit:
+Problemanalysen vil imidlertid have fokus på selve begrebsliggørelsen af \gls{plc}'en - de største producenter og de mest brugte programmeringssprog, hvoraf de problemstillinger, som er blevet udledet fra diverse fora og egne betragtninger, vil blive belyst. Problemanalysen er inddelt i følgende afsnit:
 
 \begin{itemize_small}
     \item \textbf{Hardware} \\
@@ -13,37 +13,44 @@ Problemanalysen vil imidlertid have fokus på selve begrebsliggørelsen af \gls{
     \item \textbf{Software} \\
     Gennemgang af de mest populære programmeringssprog til \gls{plc}. I dette afsnit vil der ligeledes være fokus på Omron.
     \item \textbf{PLC begrænsninger} \\
-    Belysning af PLC'ernes mest relevante hardware begrænsninger og hvilke indflydelse disse har på udviklingen af programmer.
+    Belysning af PLC'ernes mest relevante hardware begrænsninger og hvilke indflydelse disse har på udviklingen af PLC programmer.
 \end{itemize_small}
 
 \subsubsection*{Problembeskrivelse}
 Problembeskrivelsen vil samle problemanalysens fremførte problemstillinger, hvilket vil lede op til den opstillede problemformulering.
 
 \subsubsection*{Problemløsning}
+Problemløsningen vil beskæftige sig med at løse de problemer der er opstillet i problemformuleringen og munde ud i et sprog defineret med en syntaks og tilhørende semantik, efterfulgt af en compiler der kan compilere sproget til en \gls{plc}.
 
+Problemløsningen vil indeholde følgende punkter
 \begin{itemize_small}
-    \item Programmeringsparadigmer\\
-    Afsnittet vil komme ind på 3 af de 4 hovedparadigmer og gennemgå det specielle ved dette som leder videre til valg af paradigme i kravsspecikationen.
-    \item Kravspecifikation\\
-    Kravsspecikationen vil belyse konkrete krav til implementationen af programmeringssproget PLC++. Herved vil der ledes over på en MoSCoW analyse der vil prioritere kravene til PLC++. Kravsspecikationen vil afsluttes med kriterier til sproget og en prioritering af disse.
-    \item Gramatik\\ Afsnittet indeholder forklaring af hvordan sproget beskrives vha. et kontekst frit gramatik.
-    \item Syntaks og semantik\\
-    Afsnittet indeholder den opstillede syntaks og semantik for PLC++.
-    \item Compilere\\
-    Afsnittet indeholder konkret teori og implementation af compileren i praksis.
+    \item \textbf{Programmeringsparadigmer}\\
+    Afsnittet vil komme ind på 3 af de 4 hovedparadigmer og gennemgå det specielle ved disse.
+    \item \textbf{Kravspecifikation}\\
+    Kravsspecikationen vil belyse krav til det sprog der skal løse de opstillede problemstillinger i problembeskrivelsen. Afsnittet indlededer med at vælge paradigme til udviklingen af et nyt sprog ved navn PLC++. Herefter vil det lede over i en MoSCoW analyse der har til formål prioritere kravene til den formodede løsning. Kravsspecikationen vil afsluttes med kriterier til sproget og en prioritering af disse.
+    \item \textbf{Gramatik}\\ Afsnittet specificerer hvordan man opstiller et sprog vha. en kontekst fri grammatik.
+    \item \textbf{Syntaks og semantik}\\
+    Afsnittet indeholder en komplet syntax og semantik specifikation over sproget PLC++. Ligeledes vil de vigtigste komponenter i sproget få en kortfattet gennemgang.
+    \item \textbf{Compilere}\\
+    Compilerafsnittet indeholder teori og implementationen af compileren til PLC++. Den overordnede struktur for afsnittet er bygget op omkring de tre faser i en compiler - Syntaks ananyse, context analyse og kode generering.
 \end{itemize_small}
 
 \subsubsection*{Diskussion}
-
+Diskutionen diskuterer eventuelle fordele samt ulemper ved de metoder der er blevet brugt, samt hvad der kunne have været gjort anderledes, til udvikling af PLC++ og den tilhørende compiler. 
 \subsubsection*{Konklusion}
+Konklusionen konkluderer på om den opstillede problemformulering er løst.
 
 \subsubsection*{Perspektivering}
+Perspektiveringen tager udgangspunkt i projektet og prøver at finde nye løsningsforslag samt eventuelle features, der kan have en gavnlig effekt på løsningen af problemformuleringen.
 
 \subsubsection*{Vigtige bilag}
 \begin{itemize_small}
-    \item Context-free Grammar
-    \item Semantik
-    \item CD
+    \item \textbf{Context-free Grammar}\\
+    Indeholder gramatikken udtrykt i EBNF
+    \item \textbf{Semantik}\\
+    Bilaget indeholder alle de semantiske regler for sproget
+    \item \textbf{CD}\\
+    Indhold af vedlagt CD
 \end{itemize_small}
 
 %Det fremførte data, som vil blive gennemgået i problemanalysen, er blevet indsamlet via troværdige websider og faglitteratur. Der er således ikke blevet foretaget nogen dybdegående dataindsamling, da selve problemanalyseringen ikke har været primære fokusområde på dette semester (jf. semesterbeskrivelse). 

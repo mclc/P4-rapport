@@ -1,30 +1,30 @@
-\subsubsection{Type Checking}
+\subsubsection{Type check}
     
-    Type checking er øvelsen hvor man kontrollere at man ikke prøver at udføre operation der ikke er lovlige ifølge grammatikken. I mange programmerings sprog kan man fx ikke gange strings med integers i de fleste programmerings sprog. Dette er en ren kontekstuel del af grammatikken og er derfor ikke en del af \gls{cfg}.
+Type checkeren er delen af compileren, der tjekker om alle operationer i kildekoden er lovlige. I mange programmeringssprog er det f.eks. ikke tilladt at gange strings med integers. Dette er en ren kontekstuel del af grammatikken, og er derfor ikke en del af \gls{cfg}.
     
-    Måden at gøre dette på er ved at visitoren besøger noderne i \gls{ast}'et depth first, hvor den samler information om en nodes eventuelle børn som den så bruger til at verificere at den forventede type stemmer overens med den aktuelle type. Dette kan ses i figur \ref{fig:typecheck}.
+Måden at gøre dette på er ved, at visitoren besøger noderne i \gls{ast}'et depth first, hvor den samler information om en nodernes eventuelle børn. Visitoren bruger disse informationer til at verificere, at typerne stemmer overens med det tilladte for en given operation. Dette kan ses i figur \ref{fig:typecheck}.
     
-    \tikzfigure{Figurer/TikZ/TypeChecking.tex}{Et eksempel på kontrol af typer for udtrykket: bool flag = 1 <= f}{typecheck}
+\tikzfigure{Figurer/TikZ/TypeChecking.tex}{Et eksempel på kontrol af typer for udtrykket: bool flag = 1 <= f}{typecheck}
     
-\noindent Fra figuren kan vi se hvordan at et declaration med en initializations værdi bliver udført bliver type checket. Først findes den forventet type som kommer fra erklæringen af variablen \enquote*{flag}. Bagefter finder vi den aktuelle type assignmentet ved at finde resultatet af udtrykket, som i dette tilfælde er et binær operator, som sammenligner to tal; en integer og en float. Denne kompiler køre under generaliserings princippet, hvilket vil sige at hvis tilfælde som dette opstår, vil den type der er mindst blive implicit omformet til den anden type, som set i figuren under BinaryOperation's noden. I noden bliver resultatet så evalueret til at være \enquote*{bool} som returneres til assignment noden som den aktuelle type.
+\noindent Fra figuren kan det ses hvordan en declaration, med en initialization værdi, bliver type checket. Først findes den forventede type, som kommer fra erklæringen af variablen \enquote*{flag}. Efterfølgende findes den aktuelle type af assignmentet, ved at finde resultatet af udtrykket. Resultatet af udtrykket er i dette tilfælde er et boolsk udtryk, som sammenligner to tal; en integer og en float. Denne compiler kører under generaliserings princippet, hvilket vil sige at, hvis et tilfælde som dette opstår, vil den type der er mindst blive implicit konverteret til den anden type, som ses i figuren under BinaryOperation's noden. I noden bliver resultatet evalueret til at være \enquote*{bool} som sammenlignes med assignment noden for at tjekke om operationen er gyldig.
     
-\subsubsection{Scope Checking}
-
-At scope checke betyder at kontrollere for at et stykke kode ikke forsøger at få fat i variabler som ikke er tilgængelig for den, dette kan for eksempel være lokale variabler i en anden metode. De præcise regler for et sprog kan variere med designet af sproget, men der er hovedsageligt to grund principper til hvordan scopet fungere; dynamisk og statisk
+\subsubsection{Scope check}
+Scope checkerens opgave er at tjekke, at et stykke kode ikke kan opnå adgang til variabler, der ikke er tilgængelige. Dette kan for eksempel være lokale variabler i en anden metode. De præcise regler for et sprog kan dog variere i forhold til designet af sproget. Der eksisterer dog to grund principper til hvordan scope fungerer; dynamisk eller statisk.
     
 \subsubsubsection{Dynamisk scope} 
-Dynamisk scope er en gammel og ikke så velset metode for at dele scopes ind var at man dynamisk satte referencen til sidste gang variablen blev brugt, dette betød at noget kode kunne blive uoverskueligt eftersom at deklarationen af variabler kan bliver gemt inden i funktioner, og man ender meget nemt i situationer hvor en funktion kommer til at overskrive en variable som dermed giver uventede resultater. 
+Dynamisk scope betyder at referencen til en variabel dynamisk bliver sat til sidste gang at variablen er blevet brugt i forhold til den nuværende call stack. Dermed søges der først i nuværende funktion, dernæst funktionen der kaldte den nuværende funktion. Det giver ulempen, at koden kan bliver uoverskuelig eftersom, at deklaration af variabler kan blive gemt i funktioner. Det er dermed relativt let, at en funktion kommer til at overskrive en variabel i brug af en anden funktion, hvilket dermed giver uventede resultater.
     
-\subsubsubsection{Statisk scope} 
-Statisk scope betyder derimod at man indeler sin kode i blokke hvor man altid vil tilgå den nærmeste variable med et givet navn. Normale regler for denne type scope giver den lov til at hente data fra det scope dette scope blev dannet i, men ikke den anden vej. Dette giver en træ ligende struktur hvor bladene kan søge mod roden for at finde metoder og variabler.
-
+\subsubsubsection{Statisk scope}
+Statisk scope betyder, at kode bliver inddelt i blokke, hvor referencer til variabler altid vil tilgå variabler i det nuværende eller parent scope. Det er dermed ikke muligt at gå den anden vej. Dette giver en træ lignende struktur for scopes, hvor de enkelte nodes kan søge mod roden for at finde de deklarerede symboler.
 
    % Det vil sige at en variable der er defineret i et scope bør være tilgængelig fra under scopes, men ikke de større scopes. Dette er selfølgeligt afhængigt af designet af sproget.
     
     %\tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{}{}
     
 \subsubsection{Symbol tabel}
-    Som nævnt flere gange i de forrige vil mange af kontrollerne der bliver udført i løbet af context analysen ikke fungere uden en symbol tabel, dette kapilel vil prøve at redegøre for hvad der et. Når man udvikler en kompiler til et sprog med brugerdefineret variabler, er det en fordel at kompileren har et fast sted hvor den kan slå op for at finde ud af om variablen er defineret, hvad type den har, og eventuelt hvad scope den er defineret i, på tværs af scopes. Dette kan gøres med en datastruktur som en symbol tabel, som set i tabel \ref{tab:symboltabel}.
+Symboltabellen er en tabel som compileren benytter til at holde symboler og deres informationer i kildekoden. Informationer inkluderet i symboltabellen kunne eksempelvis være hvilket scope symbolet er defineret i, hvilke navne samt hvilken type de har. Symboltabellen gør dermed scope checking og type checking muligt. Symboltabellen kan gemmes på forskellige måder, et eksempel er en datastruktur som vist i tabel \ref{tab:symboltabel}.
+    
+    %Som nævnt flere gange i de forrige vil mange af kontrollerne der bliver udført i løbet af context analysen ikke fungere uden en symbol tabel, dette kapitel vil prøve at redegøre for hvad der et. Når man udvikler en kompiler til et sprog med brugerdefineret variabler, er det en fordel at kompileren har et fast sted hvor den kan slå op for at finde ud af om variablen er defineret, hvad type den har, og eventuelt hvad scope den er defineret i, på tværs af scopes. Dette kan gøres med
     
 \PPP{Kode/SymTableExample.c}{Program brugt til at danne følgende symbol tabel}{tableprog}
 
@@ -41,14 +41,14 @@ Statisk scope betyder derimod at man indeler sin kode i blokke hvor man altid vi
     \label{tab:symboltabel}
     \end{table}
     
-\noindent I denne tabel kan man se hvordan man kan finde viden om hvad type og scope et symbol. Dette er én måde at implementere symbol tabellen; en usorteret liste der indeholder nogle informationer om hvert enkelt element. Den er forholdsvis ineffektiv løsning eftersom at det vil tage $O(n)$ for at finde et symbol, hvor $n$ er antallet af elementer i listen. En bedre løsning vil være at implementere strukturen som et balanceret træ eller et bibliotek.\\
-    
-\noindent Man kunne også ofre lidt effektivitet og i stedet dele tabellerne op i flere efter hvad scope man befinder sig i. Dette betyder at vi naturligt får et statisk scope, hvor man kun kan få adgang til elementer i scopet, og det er let at implementere så man også kan søge i den ydre blok hvis man har en reference til den.
-    
-    %\tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungerer i compileren til \sprognavn}{symtab}
+\noindent I tabellen kan det ses, hvordan det er muligt at finde informationer om type og scope ud fra et symbol. Dette er et eksempel på én måde at implementere symbol tabellen; en usorteret liste der indeholder informationer om hvert enkelt element. Metoden er forholdsvis ineffektiv eftersom at det vil tage $O(n)$ for at finde et symbol, hvor $n$ er antallet af elementer. En hurtigere løsning vil derfor kunne være, at implementere strukturen som et balanceret træ eller et bibliotek.\\
+
+\noindent Det er også muligt at nedprioritere effektiviteten og i stedet dele tabellerne op i flere efter hvilket scope tabellen indeholder symboler fra. Dette betyder at der naturligt opnås et statisk scope, hvor der kun er adgang til elementer i scopet og parent scope.
+
+%\tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungerer i compileren til \sprognavn}{symtab}
     
     %\mfix{Hvad sker der for figuren?}
     
-\noindent Ulempen ved at gøre det på denne måde er at fordi vi har flere tabeller bliver vi måske nød til at søge gennem flere for at finde et givet element hvis det ikke er erklæret i samme scope. 
+\noindent Ulempen ved denne metode er at ved flere tabeller er det måske nødvendigt at søge flere tabeller for at finde et givet element, hvis det ikke er erklæret i samme scope.
     
     %Tabellen bliver hovedsageligt brugt i forbindelse med type checking af et \gls{ast}, men bliver også brugt i andre faser af kompileringsprocessen til at skrive, læse og dele information til/fra tabellen omkring variabler, funktioner og andet. For eksempel kan man vælge at udvide et \gls{ast} med information der bliver brugt til optimering af objekt koden.

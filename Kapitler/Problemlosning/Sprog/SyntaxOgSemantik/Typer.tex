@@ -1,18 +1,18 @@
 \subsubsection{Typer}
-For at kunne håndtere data i PLC++ er datatyper nødvendige. Om det er data fra digitale eller analoge indgange der skal modelleres inden de skal bruges til output eller om det er intern beregning. Det er dog kun de mest betydende datatyper der omtales i dette afsnit.
+For at kunne håndtere data i PLC++ er datatyper nødvendige - om det er data fra digitale eller analoge indgange, der skal modelleres inden de bruges til output, eller om det er interne beregninger. Det er dog kun de vigtigste datatyper der omtales i dette afsnit.
 
-\subsubsubsection*{Bool}
-For at kunne håndtere digitale signaler i \gls{plc}'en er en boolsk datatype oplagt. Den boolske datatype repræsenterer værdien \textit{sand} eller \textit{falsk} ligesom digitale signaler. Denne type kan ikke konverteres til andre typer ligesom i \textit{C}, \textit{C++} og mange andre sprog. Alle boolske udtryk returnerer denne type. Bools repræsenteres vha. én bit i \gls{plc}'en (1 eller 0). 
+\subsubsubsection{Bool}
+For at kunne håndtere digitale signaler i \gls{plc}'en, er en boolsk datatype oplagt. Den boolske datatype repræsenterer værdien \textit{sand} eller \textit{falsk} ligesom digitale signaler. Denne type kan ikke konverteres til andre typer ligesom i blandt andet \textit{C} og \textit{C++}. \textit{Bools} repræsenteres med én bit i \gls{plc}'en (1 eller 0). 
 
-\subsubsubsection*{Int}
-For at kunne håndtere heltal er \textit{Int} et krav til PLC++. \textit{Int} er en signed integer på 16bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. \textit{Int} kan maksimalt holde værdien 2\textsuperscript{15}-1 = 32767 og minimalt holde -2\textsuperscript{15} = -32768. Dette er begrænset af at integers gemmes i hukommelsesblokke á 2 bytes.
+\subsubsubsection{Int}
+For at kunne håndtere heltal er \textit{Int} et krav til PLC++. \textit{Int} er en \textit{signed integer} på 16 bit. Det første bit er signbittet og bestemmer om værdien er positiv eller negativ. \textit{Int} kan maksimalt holde værdien 2\textsuperscript{15}-1, som svarer til 32767, og minimalt holde -2\textsuperscript{15} - eller -32768. Dette er begrænset af at \textit{integers} gemmes i hukommelsesblokke á 2 bytes.
 
-\subsubsubsection*{Float}
-Behovet for decimaltal findes også i \gls{plc}-verdenen, hvilket gør det nødvendigt at kunne repræsentere disse. Decimaltal gemmes i et 32 bits encoding, hvilket vil sige at disse optager 4 bytes af hukommelsen - dette følger IEEE754-standarden. Encoding fungerer sådan at den første bit bruges til at angive om tallet er positivt eller negativt, de næste 8 bruges til eksponenten hvorefter de sidste 23 bits bruges til mantissa. En illustration af dette ses på figur \ref{fig:FloatingRepresentation}
+\subsubsubsection{Float}
+Der er ligeledes et behov for decimaltal, hvilket gør det nødvendigt at kunne repræsentere disse. Decimaltal gemmes i en 32 bits encoding, hvilket vil sige at disse optager 4 bytes af hukommelsen - dette følger IEEE754-standarden. Encoding fungerer sådan at den første bit bruges til at angive om tallet er positivt eller negativt, de næste 8 bruges til eksponenten hvorefter de sidste 23 bits bruges til mantissa. En illustration af dette ses på figur \ref{fig:FloatingRepresentation}
 
 \figur{Figurer/FloatingRepresentation.png}{Repræsentation af decimaltal}{FloatingRepresentation}{0.75}
 
-Formlen som definerer hvordan denne repræsentation omdannes til et tal er:
+Formlen, som definerer hvordan denne repræsentation omdannes til et tal, er:
 
 \begin{align*}
 &(-1)^s \cdot (1.\text{f}) \cdot 2^{e-127} \\
@@ -25,9 +25,11 @@ Formlen som definerer hvordan denne repræsentation omdannes til et tal er:
 
 \noindent Da der i programmet ikke er forskel på størrelsen af allokerede hukommelsesområder baseret på typen af en variabel, er det nødvendigt altid at allokere 4 bytes, da dette er den største datatype. Det betyder at de resterende bits ved alle datatyper bliver udfyldt med nuller.
 
-\subsubsection*{Array}
-\textit{Array} datatypen er en datastruktur der kan holde n antal elementer i sekvens, hvor n angives på instansieringstidspunktet. Alle elementer i arrayet skal være i samme type og kan tilgås ved at skrive araryets navn efterfulgt af en integer \textit{i} indpakket i et sæt hårde parenteser, der returnerer det \textit{i.} element.
+\subsubsubsection{Array}
+\textit{Array} datatypen er en datastruktur, som kan holde \textit{n} antal elementer i sekvens, hvor n defineres på instansieringstidspunktet. Alle elementer i array'et skal være i samme type og kan tilgås ved at skrive array'ets navn efterfulgt af en \textit{integer} \textit{i} indpakket i et sæt hårde parenteser, der returnerer det \textit{i.} element.
 
-\subsubsection*{Port}
-\textit{Port} datatypen er adskilder sig fra de andre datatyper ved at være være et alias for port nummeret på \gls{plc}'en. Den kan bruges hvis en yderligere eller mere hensigtsmæssig navngivning ønskes til ind og udgangsporte på \gls{plc}'en.
-Af porte findes der digitale og analoge inputs samt digitale og analoge outputs. De digitale porte kan have den samme værdi som den boolske datatype, altså \textit{sand} eller \textit{falsk}. De Analoge datatyper holder en numerisk værdi fra 0 til 1000 som afspejler den analoge ports værdi i promille.
+\subsubsubsection{Port}
+\textit{Port} datatypen er adskiller sig fra de andre datatyper ved at være være et alias for portnummeret på \gls{plc}'en. Den kan bruges hvis en yderligere, eller mere hensigtsmæssig, navngivning ønskes til ind- og udgangsporte på \gls{plc}'en.
+Af porte findes der digitale og analoge input samt digitale og analoge output. De digitale porte kan have den samme værdi som den boolske datatype, altså \textit{true} eller \textit{false}. De analoge datatyper holder en numerisk værdi fra 0 til 1000, som afspejler den analoge ports værdi i promille.\\
+
+\noindent Når typerne er defineret, er det nu relevant at undersøge hvilke udtryk det er muligt at bruge i PLC++ - og hvordan disse opfører sig.

@@ -62,7 +62,9 @@ Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til
         \end{tabular}
     \caption{Transitionsfunktion for $M_1$}
     \label{tab:transfunk_m1}
-\end{table}\sfix{Mangler der noget her?}
+\end{table}
+
+\noindent Et af kendetegnene ved en \gls{dfa} er at ethvert input altid skal føre ét, og kun ét, sted hen - enten til sig selv eller et andet stadie. Dette resulterer også i at den tomme streng, $\epsilon$, ikke findes i alfabeter for \gls{dfa}'er. Disse regler er dog ikke gældende for en \gls{nfa}, som det ses på eksemplet i figur \ref{fig:regextonfa}, hvor $\epsilon$ betyder at vi kan gå i to forskellige stadier med samme input.
 
 \subsubsubsection{Regular Expressions}
 Regular expressions hænger tæt sammen med regular languages - ethvert sprog, som er regular, kan nemlig beskrives med en regular expression. Det er dog ikke her hovedvægten bliver lagt, da det er mere relevant at komme ind på regular expressions i programmeringssammenhæng. Her kan det bruges til at genkende "mønstre"\mbox{}, som er yderst relevant i forbindelse med scanneren. 

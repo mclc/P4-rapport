@@ -1,11 +1,11 @@
 \subsection{Grammatik}\label{sec:Gramatik}
-\noindent \gls{cfg} er en effektiv måde at beskrive et sprog med en særlig rekursiv syntaks. \gls{cfg} består af en række substitutions-regler hvor hver regel består af en variabel efterfulgt af en streng af variabler og terminaler. Terminaler er konkrete karakterer, hvor variabler kan være både karakterer og variabler. En hver \gls{cfg} starter men en startvariabel.
+\noindent \gls{cfg} er en effektiv måde at beskrive et sprog med en særlig rekursiv syntaks. \gls{cfg} består af en række substitutionsregler, hvor hver regel består af en variabel efterfulgt af en streng af variabler og terminaler. Terminaler er konkrete karakterer, hvor variabler kan være både karakterer og variabler. Enhver \gls{cfg} starter med en startvariabel.
 
-På kodeeksemplet ses et udklip af sprogets \gls{cfg}. Her kan man se at sprogets startvariabel er \textit{program} som ifølge den første regel kan være \textit{statement} efterfulgt af \textit{program}. Spørgsmålstegnet efter \textit{program} betyder at \textit{program} er valgfrit. Det vil sige man kan nøjes med \textit{statement} for at reglen er overholdt. Ifølge den anden regel kan \textit{program} også udtrykkes som \textit{function\_declaration} efterfulgt af \textit{program}. På samme måde som i første regel er denne variabel også valgfri.
+På kodeeksempel \ref{code:CFG_Variable_Example} ses et udklip af sprogets \gls{cfg}. Her kan man se at sprogets startvariabel er \textit{program} som ifølge den første regel kan være \textit{statement} efterfulgt af \textit{program}. Spørgsmålstegnet efter \textit{program} betyder at \textit{program} er valgfrit. Det vil sige man kan nøjes med \textit{statement} for at reglen er overholdt. Ifølge den anden regel kan \textit{program} også udtrykkes som \textit{function\_declaration} efterfulgt af \textit{program}. På samme måde som i første regel er denne variabel valgfri.
 
 \SCC{Kode/CFG/CFG_Variable_Example.scc}{Udklip af sprogets syntaks}{CFG_Variable_Example}
 
-\noindent På dette kodeeksempel ses variablen \textit{port\_identifier} kan være terminalerne \textit{I}, \textit{Q}, \textit{M}, \textit{AI}, \textit{AQ} efterfulgt af \textit{\#}.
+\noindent På dette kodeeksempel ses variablen \textit{port\_identifier}, som kan være terminalerne \textit{I}, \textit{Q}, \textit{AI}, \textit{AQ} efterfulgt af \textit{\#}.
 \SCC{Kode/CFG/CFG_Terminal_Example.scc}{port\_identifier}{CFG_Terminal_Example}
 
-\noindent Den fulde \gls{cfg} opskrevet i \gls{ebnf} og kan findes i bilag \ref{bil:cfg}
+\noindent Den fulde \gls{cfg} opskrevet i \gls{ebnf} findes i bilag \ref{bil:cfg}

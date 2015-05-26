@@ -1,0 +1,11 @@
+Helpers
+port_input = 'I';
+port_output = 'Q';
+port_analog_input = 'AI';
+port_analog_output = 'AQ';
+
+Tokens
+port_input_identifier = port_input '#';
+port_output_identifier = port_output '#';
+port_analog_input_identifier = port_analog_input '#';
+port_analog_output_identifier = port_analog_output '#';
