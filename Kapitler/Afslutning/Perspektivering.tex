@@ -2,20 +2,31 @@
 \label{sec:Perspektivering}
 \textit{Perspektiveringen gennemgår og belyser projektets muligheder for udvikling samt eventuelle idéer, som er fremkommet under udviklingsfasen. Der vil i perspektiveringen være eksempler på hvordan projektet vil kunne udvides, samt hvordan det kan videreføres til andre platforme.}
 
-
-
 \subsection*{Integrated Development Environment, IDE}
-Codesys, Omron og Siemens har alle hver deres \gls{ide}, som alle giver muligheden for at skrive \gls{il}, \gls{lad} samt \gls{st}.
-Hertil kunne det være smart, hvis man kunne implementere at der kunne skrives PLC++ direkte i producenternes \gls{ide}. Dette vil blandt andet give mulighed for at man ikke skulle kopiere den generede kode, over i producentens program, og derved ville man spare tid.
-\noindent Derudover kunne det tænkes at man kunne gøres således at \gls{ide}'en kunne skelne mellem de forskellige \gls{plc}'er, og derved lave de små justeringer, så det vil være muligt at skrive til alle forskellige producenters \gls{plc}'er.
-Dette kan dog skabe en problemstilling, i forhold til at \gls{plc}'er har forskellige størrelser på hukommelsesområdet, hvilket betyder at hver eneste gang producenten fremstiller en ny \gls{plc}, ville de skulle lave en form for konverter til den, eller sætte en standard for deres produktlinje.
-Derudover ville dette kunne have en indflydelse på, hvordan firmaer ville vælge producenten på grund af deres specifikationer på \gls{plc}en - fremfor deres software.
+En af ulemperne ved den nuværende implementation af PLC++, er at sproget skal kodes i en editor, som ikke er kompatibelt med sprogets syntaks. For førstegangs-programmøren ville det være en stor hjælp, hvis \gls{ide}’en understøtter moderne funktionaliteter såsom language markup, intelligent code-completion og en integreret debugger, som det eksempelvis kendes fra Microsofts Visual Studio. \\
+
+\noindent Det ville være oplagt at denne implementation blev lavet i én af de eksisterende \gls{ide}’er som \gls{plc}-producenterne stiller til rådighed. Dette kunne være Omron’s IDE, CX-Programmer, som dermed ville give mulighed for at konvertere direkte fra PLC++ til \gls{lad} - hvorved en manuel overførsel af target-sproget, til editoren, kunne spares. Denne funktionalitet blev tidligere fremvist i CODESYS’s \gls{ide}, som ydermere også understøttede realtime-konvertering mellem sprogene. 
 
 \subsection*{Kompatibilitet}
-Kompatibilitet mellem producenterne har aldrig været optimal, mest af alt fordi hver producent har deres små finjusteringer på instruktioner, samt hvordan de vælger at konvertere koden således at \gls{plc}'en forstår det.
-Hertil er der forskellige kompatibilitetsproblemer, i forhold til at producenterne har implementeret forskellige instruktioner, hvoraf nogle understøtter flere end andre.
-Her kunne det være smart, hvis man benyttede en fælles konvention eller standard, så en programmør ville kunne programmere til alle de forskellige modeller, uden at skulle lære et nyt sprog.
-Dette ville øge effektiviteten af en programmør væsentligt og dermed også produktionen, da programmøren kun behøver at lære ét programmeringssprog, hvorefter personen ville være i stand til at arbejde med alle producenter, som overholder standarden.
+Kompatibilitet på tværs af \gls{plc}-producenterne viste sig i problemanalysen, at være en aktuel problemstilling. I forhold til \gls{il}-instrukser, viste det sig at producenterne benyttede deres egne \gls{il}-instruktioner, til nogle af funktionerne. Senere i problemløsningen blev der også fremvist problemstillinger med hukommelseshåndteringen – denne diskussion blev ydermere beskrevet i diskussionsafsnittet. Problemstillingen bestod grundlæggende i, at de hardwaremæssige begrænsninger i hukommelsen, skal defineres i sproget, for at kunne afgøre hvilke adresseområder der er til rådighed – til eksempelvis allokering af variabler. 
+
+En potentiel løsning på dette problem, kunne være at tjekke for hvilken \gls{plc}-model brugeren ønsker at skrive koden til, og udfra dens specifikationer, definere sprogets hukommelsesområde. Denne grundstruktur kunne også videreføres til andre \gls{plc}-producenter – Siemens, Allan Bradly og Beckhoff. Det ville naturligvis medføre, at programmøren ikke skal tænke over kompatibilitetsproblemer, i forhold til hvilken \gls{plc}-producent og \gls{plc}-model der anvendes. 
+De små forskelle på \gls{il}-instruktionerne, ville ligeledes kræve et tjek på model og producent, for at afgøre, hvordan source-kode skal genereres til target-kode.
+
+
+
+%\subsection*{Integrated Development Environment, IDE}
+%Codesys, Omron og Siemens har alle hver deres \gls{ide}, som alle giver muligheden for at skrive \gls{il}, \gls{lad} samt \gls{st}.
+%Hertil kunne det være smart, hvis man kunne implementere at der kunne skrives PLC++ direkte i producenternes \gls{ide}. Dette vil blandt andet give mulighed for at man ikke skulle kopiere den generede kode, over i producentens program, og derved ville man spare tid.
+%\noindent Derudover kunne det tænkes at man kunne gøres således at \gls{ide}'en kunne skelne mellem de forskellige \gls{plc}'er, og derved lave de små justeringer, så det vil være muligt at skrive til alle forskellige producenters \gls{plc}'er.
+%Dette kan dog skabe en problemstilling, i forhold til at \gls{plc}'er har forskellige størrelser på hukommelsesområdet, hvilket betyder at hver eneste gang producenten fremstiller en ny \gls{plc}, ville de skulle lave en form for konverter til den, eller sætte en standard for deres produktlinje.
+%Derudover ville dette kunne have en indflydelse på, hvordan firmaer ville vælge producenten på grund af deres specifikationer på \gls{plc}en - fremfor deres software.
+
+%\subsection*{Kompatibilitet}
+%Kompatibilitet mellem producenterne har aldrig været optimal, mest af alt fordi hver producent har deres små finjusteringer på instruktioner, samt hvordan de vælger at konvertere koden således at \gls{plc}'en forstår det.
+%Hertil er der forskellige kompatibilitetsproblemer, i forhold til at producenterne har implementeret forskellige instruktioner, hvoraf nogle understøtter flere end andre.
+%Her kunne det være smart, hvis man benyttede en fælles konvention eller standard, så en programmør ville kunne programmere til alle de forskellige modeller, uden at skulle lære et nyt sprog.
+%Dette ville øge effektiviteten af en programmør væsentligt og dermed også produktionen, da programmøren kun behøver at lære ét programmeringssprog, hvorefter personen ville være i stand til at arbejde med alle producenter, som overholder standarden.
 
 
 
