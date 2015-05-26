@@ -2,14 +2,14 @@
 Scanneren som er den første del af compileren der bliver kørt har til opgave at læse kildekoden og dele den op i tokens, som er de mindste dele af et sprog. Keywords i et sprog er et eksempel på tokens som skal læses. Til at illustrere dette ses her et kodestykke fra sproget Port der bygger på dele af PLC++.
 
 % Q#0.0 = I#0.1  == I#0.2 && I#0.3 != true;
-\PPP{Kode/Port/Port.tex}{Eksempel på kodestykke på port}{port_sample}
+\PPP{Kode/Port/Port.tex}{Eksempel på kodestykke på Port}{port_sample}
 
 \noindent Alle tokens er defineret på følgende måde:
-\SCC{Kode/Port/Tokens.tex}{Tokens i Port}{port_tokens}
+\SCC{Kode/Port/Tokens.tex}{Tokens i Port}{port_tokens}\sfix{Fix kode mht. port}
 
-\noindent white\_space skal dog ignoreres af scanneren.
+\noindent Af ignorerede tokens er white\_space.
 
-\noindent En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens som parseren senere kan bruge. Et eksempel på en scanner til følgende tokens implementeret i Java kan ses i bilag \ref{bil:cd} eller i et udsnit i kodeeksempel \ref{code:scanner_java}.
+\noindent En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens som parseren senere kan bruge. Et eksempel på en scanner til følgende tokens implementeret i Java uden brug af værktøjer kan ses i bilag \ref{bil:cd} eller i et udsnit i kodeeksempel \ref{code:scanner_java}.
 
 \Java{Kode/Port/Scanner.java}{Udsnit af scanneren}{scanner_java}
 
@@ -18,7 +18,7 @@ Scanneren som er den første del af compileren der bliver kørt har til opgave a
 For at illustrere et eksempel på en kørsel af scanneren på kodeeksempel \ref{code:port_simple} er denne her tabel, der viser typen af den token og det konkrete indhold.
 
 % Q#0.0 = true;
-\PPP{Kode/Port/SimplePort.tex}{Eksempel på kodestykke på port}{port_simple}
+\PPP{Kode/Port/SimplePort.tex}{Eksempel på kodestykke fra sproget Port}{port_simple}
 
 \begin{table}[H]
 \centering

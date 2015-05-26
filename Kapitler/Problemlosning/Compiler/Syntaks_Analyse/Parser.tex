@@ -1,4 +1,4 @@
-\subsubsection{Parser}\wip
+\subsubsection{Parser}
 Parserens opgave er at få opbygget et abstrakt syntakstræ ud fra de tokens som scanneren har fundet frem til. Det er dermed også parserens opgave at tjekket at reglerne i forhold til rækkefølgen af keywords, identifiers osv. er overholdt. En sådan regel kunne være hvordan man udtrykker et assignment. For at forstå hvordan parseren fungerer er der først et kort afsnit omkring abstrakte syntakstræer.
 
 \subsubsubsection{Abstrakt syntakstræ}
@@ -8,30 +8,28 @@ Et abstrakt syntakstræ også forkortet AST er en træstruktur der er en repræs
 
 \tikzfigure{Figurer/TikZ/Tree.tex}{Eksempel på et \gls{ast}}{exampletree}
 
-\noindent Det er muligt at gennemløbe træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode\sfix{Dobbelttjek}. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
+\noindent Det er muligt at gennemløbe træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
 
 \subsubsubsection{Top down/buttom up}
 Konstruktionen af det abstrakte syntakstræ bliver udført af parseren. Der findes overordnet 2 forskellige metoder til at konstruere et abstrakt syntakstræ. Den ene metode er top down parsing, som konstruerer det abstrakte syntakstræ fra toppen af. Den anden metode er bottom up parsing der konstruerer fra bunden.
 
-For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav at kigge på flere tokens af gangen for at fælge den korrekte del af sproget. Dette kaldes også lookaheads. Hierarkiet på de forskellige typer af sprog kan ses i figur \sfix{Indsæt figur SPO-5 53}. Forskellen på de forskellige sprog er hvor mange lookaheads de benytter og om de benytter top down eller buttom up parsing.
-
-
-\sfix{Vi skal tjekke vores sprog om det er LR, LL, eller hvad det end er}
+For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav at kigge på flere tokens af gangen for at finde den korrekte del af sproget. Dette kaldes også lookaheads. Forskellen på de forskellige typer af sprog er hvor mange lookaheads de benytter og om de benytter top down eller buttom up parsing. Dette antydes af tallet efter sproget eks. LR(k), kan tage op til k lookaheads.
 
 \subsubsubsection{Tvetydig grammatik}
 
-\noindent En grammatik for et sprog kan også være tvetydig, hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en grammatik. Et eksempel på en tvetydig grammatik kunne være følgende:
+\noindent En grammatik for et sprog kan også være tvetydig, hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en grammatik. Et eksempel på en tvetydig grammatik kunne være gramatikken i kodestykke \ref{code:unambigity}.
 
-\sfix{Indsæt kode: expr = expr plus expr | number}
+\SCC{Kode/CFG/Ambiguity.scc}{Tvetydig grammatik}{unambigity}
+
+\noindent Grammatikken i kodestykke \ref{code:unambigity} definerer en simpel lommeregner der kun tager plus og gange, dog hvis der er mere end 1 operatore i udtrykket er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 * 3 + 3, som ses på figur \ref{fig:unambiguous}.
 
 \tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{Eksempel på parse tree for en tvetydig grammatik}{unambiguous}
 
+\noindent For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \ref{code:fixedunambigity}
+Dette tvinger altså parseren til at generere det abstrakte syntax træ som vist på figur \ref{fig:fixedunambiguous}.
 
-\noindent Grammatikken definerer en simpel lommeregner der kun tager plus, dog hvis der er mere end et plus er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 + 3 + 3: \sfix{Indsæt abstract syntax tree}
-
-\noindent For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \sfix{expr = expr plus factor | factor; factor = expr | number;}
-Dette tvinger altså parseren til at generere det abstrakte syntax træ på følgende måde:
-\sfix{Indsæt abstract syntax tree}
+\SCC{Kode/CFG/AmbiguityFixed.scc}{Ikke tvetydig grammatik}{fixedunambigity}
+\tikzfigure{Figurer/TikZ/AmbiguityExampleFixed.tex}{Eksempel på parse tree for en ikke tvetydig grammatik}{fixedunambiguous}
 
 \subsubsubsection{Finite automata}
 Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til at beskrive forskellige stadier et program kan gennemgå. Der skilnes mellem to forskellige automata - \gls{dfa} og \gls{nfa}. Da \gls{nfa} er en overbygning på \gls{dfa}, indledes afsnittet med en grundig forklaring og definition af \gls{dfa}, som der efterfølgende bygges videre på for at opnå det nødvendige teoretiske grundlag til implementation af en parser.\\
@@ -64,7 +62,7 @@ Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til
         \end{tabular}
     \caption{Transitionsfunktion for $M_1$}
     \label{tab:transfunk_m1}
-\end{table}
+\end{table}\sfix{Mangler der noget her?}
 
 \subsubsubsection{Regular Expressions}
 Regular expressions hænger tæt sammen med regular languages - ethvert sprog, som er regular, kan nemlig beskrives med en regular expression. Det er dog ikke her hovedvægten bliver lagt, da det er mere relevant at komme ind på regular expressions i programmeringssammenhæng. Her kan det bruges til at genkende "mønstre"\mbox{}, som er yderst relevant i forbindelse med scanneren. 

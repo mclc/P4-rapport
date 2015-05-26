@@ -24,12 +24,12 @@ Scope checkerens opgaver er at tjekke at de konkrete identifiers kan tilgås i d
 
 \noindent For at håndtere dynamisk scope køres først en præprocessor der indlæser funktioner, structs og globale variabler ind i symboltabellen. Dernæst køres scopecheckeren der tjekker hver gang der stødes på en identifier om den konkrete identifier eksisterer i det pågældende scope. Den håndterer også oprettelsen af lokale variabler, således det ikke er muligt at bruge en lokal variabel der ikke er blevet deklareret endnu (static scope).\\
 
-\noindent For at forhindre at alle funktioner, structs og globale variabler bliver registret to gange (både i præprocessoren og scopecheckeren) overrides case metoderne fra DeptFirstAdapteren og de bliver sat til at gøre ingenting.
+\noindent For at forhindre at alle funktioner, structs og globale variabler bliver registret to gange (både i præprocessoren og scopecheckeren) overrides case metoderne fra DepthFirstAdapteren og de bliver sat til at gøre ingenting.
 
 \subsubsubsection{Type checker}
 Type checkerens opgave er at tjekke at alle expressions er gyldige, eksempelvis at det ikke er tilladt at addere 2 boolske værdier. Derudover skal alle metodekald også tjekkes om de er gyldige, samt alle statements der har et krav om at have en specifik type af expr. Eksempelvis kræver et if-statement en boolsk datatype som condition.
 
-Expressions kan evalueres på en stack vha. DeptFirstAdapterens out metoder. Eksempelvis vil udtrykket 3 + (5 * 2) blive evalueret som vist på figur \ref{fig:stackExprEval}:
+Expressions kan evalueres på en stack vha. DepthFirstAdapteren out metoder. Eksempelvis vil udtrykket 3 + (5 * 2) blive evalueret som vist på figur \ref{fig:stackExprEval}:
 
 \figur{Figurer/Billeder/stack.png}{Evaluering af udtrykket 3 + (5 * 2) vha. en stack}{stackExprEval}{0.7}
 

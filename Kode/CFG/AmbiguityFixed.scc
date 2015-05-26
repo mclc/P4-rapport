@@ -1,0 +1,7 @@
+expr = 
+    expr plus factor 
+  | factor;
+  
+factor =
+   factor gange number
+ | number;

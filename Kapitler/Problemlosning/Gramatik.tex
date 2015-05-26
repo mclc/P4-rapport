@@ -1,6 +1,6 @@
-\section{Grammatik}\label{sec:Gramatik}
+\subsubsection{Grammatik}\label{sec:Gramatik}
 
-Der er nu blevet udarbejdet en kravspecifikation med hvilke dele sproget skal have og ikke have og sproget kan nu fastlægges. For at kunne definere et sprog entydigt er man nødt til at have en grammatik der tillader det. Til det benyttes der \gls{cfg}.\\
+Der er i kravspecifikation i afsnit \ref{sct:kravspec} blevet udarbejdet en række krav i forhold til hvilke elementer sproget skal have og ikke have og sproget kan derfor fastlægges. For at kunne definere et sprog entydigt er man nødt til at have en grammatik der tillader det. Til det benyttes der \gls{cfg}.\\
 
 \noindent \gls{cfg} er en effektiv måde at beskrive et sprog med en særlig rekursiv syntaks. \gls{cfg} består af en række substitutions-regler hvor hver regel består af en variabel efterfulgt af en streng af variabler og terminaler. Terminaler er konkrete karakterer, hvor variabler kan være både karakterer og variabler. En hver \gls{cfg} starter men en startvariabel.
 
@@ -11,4 +11,4 @@ På kodeeksemplet ses et udklip af sprogets \gls{cfg}. Her kan man se at sproget
 \noindent På dette kodeeksempel ses variablen \textit{port\_identifier} kan være terminalerne \textit{I}, \textit{Q}, \textit{M}, \textit{AI}, \textit{AQ} efterfulgt af \textit{\#}.
 \SCC{Kode/CFG/CFG_Terminal_Example.scc}{port\_identifier}{CFG_Terminal_Example}
 
-\noindent Den fulde \gls{cfg} kan findes i bilag \ref{bil:cfg}
+\noindent Den fulde \gls{cfg} opskrevet i \gls{ebnf} og kan findes i bilag \ref{bil:cfg}
