@@ -16,7 +16,7 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
 
 \noindent Fra eksemplet i tabel {\ref{tab:codegenExample} kan man se hvordan at koden finder deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast} der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitoren laver en \gls{dfs} hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator} visitoren har til standard \gls{dfs}.
 
-\tikzfigure{Figurer/TikZ/CodeGenExampleAST.tex}{\gls{ast} for samme stykke kode som i tabel \ref{tab:codegenExample}.}{codegenAST}
+\tikzfigure{Figurer/TikZ/CodeGenExampleAST.tex}{\gls{ast} for samme stykke kode som i tabel \ref{tab:codegenExample}}{codegenAST}
 
 \begin{table}[H]
     \centering\ttfamily
@@ -63,12 +63,12 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
 %\subsubsection{Implementation}
 Måden at kode generatoren blev implementeret er som før nævnt gennem et visitor mønster. Klassen hedder CodeGenerator og består at de funktioner visitor mønsteret diktere den skal have, og en funktion til at skrive resultatet til en fil; \textit{Emit}.
 
-\Java{Kode/CodeGeneratorEmit.java}{Emit funktionen fra CodeGenerator klassen}{emit}
+\Java{Kode/CodeGeneratorEmit.java}{Emit-funktionen fra CodeGenerator klassen}{emit}
 
 \noindent Emit funktionen som set i kodeeksempel \ref{code:emit} er relativ simpel, den åbner eller lukker ikke for nogle af sine text writers. Den skriver bare til en af dem afhængig af en boolean. Grunden til dette er blandt andet at CX-Programmer som blev brugt til videre kompilering af programmet gemmer en symbol tabel, som PLC++ udnytter til at forøge læsbarheden af den kompilerede kode ved at erstatte vilkårlige adresser med variable navne. 
 
-For at kunne bruge mange af de teknikker der allerede var udviklet til assembly compilere er det nødvendigt at have en stack. \gls{plc}en har en indebyggede stack som viste sig at være utilstrækkelig grundet at den ikke havde stackpointer, således at man ikke kunne tage de x'nd element. Derfor har PLC++ kompileren en indebygget stack, der bruger working memory området W400 - W512, som har en pointer således at man frit kan vælge fra stacken.
+For at kunne bruge mange af de teknikker der allerede var udviklet til assembly compilere er det nødvendigt at have en stack. \gls{plc}en har en indebyggede stack som viste sig at være utilstrækkelig grundet at den ikke havde stackpointer, således at man ikke kunne tage de x'nd element. Derfor har PLC++ compileren en indebygget stack, der bruger working memory området W400 - W512, som har en pointer således at man frit kan vælge fra stacken.
 
-\Java{Kode/Stack.java}{Push()-funkionen fra Stack klassen}{push}
+\Java{Kode/Stack.java}{Push()-funktionen fra Stack klassen}{push}
 
-\noindent Klassen Stack sørger for dette med standard funktionerne man ville forvente af en stack data struktur push og pop. Hvor push funktionen kan ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variable der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største data type der er til gængelig på 32 bit. Det giver noget data spild men tilgengæld er \textit{pop()} funktionen kun en decrement af pointeren og returnering af værdien og så håndterer modtageren værdien.
+\noindent Klassen \textit{Stack} sørger for dette med standard funktionerne man ville forvente af en stack data struktur push og pop. Hvor push funktionen kan ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variable der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største data type der er til gængelig på 32 bit. Det giver noget data spild men tilgengæld er \textit{pop()}-funktionen kun en decrement af pointeren og returnering af værdien og så håndterer modtageren værdien.

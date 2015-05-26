@@ -1,7 +1,4 @@
-\subsubsection{Grammatik}\label{sec:Gramatik}
-
-Der er i kravspecifikation i afsnit \ref{sct:kravspec} blevet udarbejdet en række krav i forhold til hvilke elementer sproget skal have og ikke have og sproget kan derfor fastlægges. For at kunne definere et sprog entydigt er man nødt til at have en grammatik der tillader det. Til det benyttes der \gls{cfg}.\\
-
+\subsection{Grammatik}\label{sec:Gramatik}
 \noindent \gls{cfg} er en effektiv måde at beskrive et sprog med en særlig rekursiv syntaks. \gls{cfg} består af en række substitutions-regler hvor hver regel består af en variabel efterfulgt af en streng af variabler og terminaler. Terminaler er konkrete karakterer, hvor variabler kan være både karakterer og variabler. En hver \gls{cfg} starter men en startvariabel.
 
 På kodeeksemplet ses et udklip af sprogets \gls{cfg}. Her kan man se at sprogets startvariabel er \textit{program} som ifølge den første regel kan være \textit{statement} efterfulgt af \textit{program}. Spørgsmålstegnet efter \textit{program} betyder at \textit{program} er valgfrit. Det vil sige man kan nøjes med \textit{statement} for at reglen er overholdt. Ifølge den anden regel kan \textit{program} også udtrykkes som \textit{function\_declaration} efterfulgt af \textit{program}. På samme måde som i første regel er denne variabel også valgfri.
