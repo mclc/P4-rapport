@@ -1,6 +1,3 @@
-\subsection{Contextual Analysis}\label{ssec:contextual}\sfix{Arbejder med denne lige nu}
-    Den kontekstuelle analyse består hovedsageligt af to dele; scope checking og type checking. Mere om dette om lidt
-    
-resulterer i fejlrapporter, der indikerer om type inkonsistensitet, og et \gls{ast} som er \enquote*{dekoreret} med værdier, der holder informationer om nodens type og hvilken variabel der er refereres til i symbol tabellen og ligende. % Til dette bruges symbol tabellen i høj grad da den kan fortælle om hvad type bruger defineret variabler og funktioner er.
-    
-    Måden det gøres er ved at iterere gennem \gls{ast}'et som blev gjort i syntax analyse afsnittet \ref{ssec:syntaxanalysis}. Der blev brugt et visitor mønster til at iterere gennem et \gls{ast}, det er så her double dispatch idéen som mønsteret løser kommer tilgode, for nu kan man meget let tilføje en ny handling der skal ske under interationen ved at tilføje en ny implementation af visitor interfacet.
+\subsection{Contextual Analysis}\label{ssec:contextual}
+Context analysens opgave er at definere strukturen af programmet og dermed kunne definere regler for hvad er er lovligt at kunne udføre.
+    Analysen består hovedsageligt af to dele; scope checking og type checking. 

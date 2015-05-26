@@ -14,7 +14,7 @@ For at opnå kode, som kan kompileres til en \gls{plc}, har det været nødvendi
     \label{tab:codegenExample}
 \end{table}
 
-\noindent Eksemplet i tabel {\ref{tab:codegenExample} viser hvordan koden finder deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast} der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitoren laver en \gls{dfs} hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator} visitoren har til standard \gls{dfs}.
+\noindent Eksemplet i tabel {\ref{tab:codegenExample} viser hvordan koden deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast}, der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitor'en laver en \gls{dfs}, hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator}-visitoren har.
 
 \tikzfigure{Figurer/TikZ/CodeGenExampleAST.tex}{\gls{ast} for samme stykke kode som i tabel \ref{tab:codegenExample}}{codegenAST}
 
@@ -36,11 +36,11 @@ For at opnå kode, som kan kompileres til en \gls{plc}, har det været nødvendi
     \label{tab:codegenIf}
 \end{table}
 
-\noindent Et ligende eksempel er når man compilere en if-else kæde som set i tabel \ref{tab:codegenIf}. Her bliver der byttet rundt på række følgen af \textit{Do something} og \textit{Do something else}, da man ellers skulle invertere resultatet fra betingelsen, i dette tilfælde \textit{true}, fordi instruktionen \textit{CJP} bliver kun udført hvis den modtager et lavt signal.
+\noindent Et ligende eksempel er når man compilerer en if-else kæde, som set i tabel \ref{tab:codegenIf}. Her bliver der byttet rundt på rækkefølgen af \textit{Do something} og \textit{Do something else}, da man ellers skulle invertere resultatet fra betingelsen, i dette tilfælde \textit{true}, fordi instruktionen \textit{CJP} kun bliver udført, hvis den modtager et lavt signal.
 
 \tikzfigure{Figurer/TikZ/CodeGenIfAST.tex}{\Gls{ast} for samme stykke kode som i tabel \ref{tab:codegenIf}. Detalier om hvad der sker med tokens inden i løkker er udeladt.}{codegenIfAST}
 
-\noindent En sidste metode der er interessant at tage fat i er genereringen af arrays, fordi \gls{plc}'er ikke har pointere på samme måde som man ville have dem i fx Assembly og C. Det betyder at PLC++ compileren bliver nød til at finde på et alternativ.
+\noindent En sidste metode, som er interessant at tage fat i, er genereringen af arrays, fordi \gls{plc}'er ikke har pointere på samme måde, som man ville have dem i eksempelvis Assembly og C. Det betyder at PLC++ compileren bliver nødt til at finde på et alternativ.
 
 \begin{table}[H]
     \centering\ttfamily
@@ -58,17 +58,17 @@ For at opnå kode, som kan kompileres til en \gls{plc}, har det været nødvendi
     \label{tab:codegenArray}
 \end{table}
 
-\noindent Arrays i programmet bliver håndteret ved at en mængde adresser bliver reserveret til dataen og et symbol bliver indsat der holder værdien af den første adresse af arrayet. Måden hvorpå værdierne i arrayet kan ses i tabel \ref{tab:codegenArray}. Dette forgår ved at den henter addressen på første element og hvor langt den skal gå fra den (linje 2-3), ligger dem sammen (linje 4) og bruger resultatet som en pointer til at hente værdien i arrayet (linje 6).
+\noindent Arrays i programmet bliver håndteret ved at en mængde adresser bliver reserveret til dataen et symbol bliver indsat, som holder værdien af den første adresse af arrayet. Måden hvorpå værdierne repræsenteres i arrayet, kan ses i tabel \ref{tab:codegenArray}. Dette forgår ved at den henter addressen på første element og hvor langt den skal gå fra den (linje 2-3), lægger dem sammen (linje 4) og bruger resultatet som en pointer til at hente værdien (linje 6).\\
 
 %\subsubsection{Implementation}
-Måden at kode generatoren blev implementeret er som før nævnt gennem et visitor mønster. Klassen hedder CodeGenerator og består at de funktioner visitor mønsteret diktere den skal have, og en funktion til at skrive resultatet til en fil; \textit{Emit}.
+Måden code generatoren er implementeret på, er som før nævnt gennem et visitor-mønster. Klassen hedder \textit{CodeGenerator} og består at funktioner til visitor-mønstret samt en funktion til at skrive resultatet til en fil; \textit{Emit}.
 
 \Java{Kode/CodeGeneratorEmit.java}{Emit-funktionen fra CodeGenerator klassen}{emit}
 
-\noindent Emit funktionen som set i kodeeksempel \ref{code:emit} er relativ simpel, den åbner eller lukker ikke for nogle af sine text writers. Den skriver bare til en af dem afhængig af en boolean. Grunden til dette er blandt andet at CX-Programmer som blev brugt til videre kompilering af programmet gemmer en symbol tabel, som PLC++ udnytter til at forøge læsbarheden af den kompilerede kode ved at erstatte vilkårlige adresser med variable navne. 
+\noindent \textit{Emit}-funktionen, som ses i kodeeksempel \ref{code:emit}, er relativt simpel. Den åbner eller lukker ikke for nogle af sine text writers, men skriver blot til dem ud fra en boolsk værdi. Grunden til dette er blandt andet at CX-Programmer, som bliver brugt til videre kompilering af programmet, gemmer en symboltabel, som PLC++ udnytter til at forøge læsbarheden af den kompilerede kode ved at erstatte vilkårlige adresser med variable navne. 
 
-For at kunne bruge mange af de teknikker der allerede var udviklet til assembly compilere er det nødvendigt at have en stack. \gls{plc}en har en indebyggede stack som viste sig at være utilstrækkelig grundet at den ikke havde stackpointer, således at man ikke kunne tage de x'nd element. Derfor har PLC++ compileren en indebygget stack, der bruger working memory området W400 - W512, som har en pointer således at man frit kan vælge fra stacken.
+For at kunne bruge mange af de teknikker, som allerede er udviklet til assembly-compilere, er det nødvendigt at have en stack. \gls{plc}'en har en indbygget stack, som viste sig at være utilstrækkelig, grundet manglende stackpointer, som betød at det ikke var muligt at tage det x. element. Derfor har PLC++ compileren en indebygget stack, der bruger working memory området W400 - W512, som har en pointer således at man frit kan vælge fra stacken.
 
 \Java{Kode/Stack.java}{Push()-funktionen fra Stack klassen}{push}
 
-\noindent Klassen \textit{Stack} sørger for dette med standard funktionerne man ville forvente af en stack data struktur push og pop. Hvor push funktionen kan ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variable der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største data type der er til gængelig på 32 bit. Det giver noget data spild men tilgengæld er \textit{pop()}-funktionen kun en decrement af pointeren og returnering af værdien og så håndterer modtageren værdien.
+\noindent Klassen \textit{Stack} sørger for dette med standardfunktionerne, som forventes af en stack-datastruktur; \textit{push()} og \textit{pop()}. \textit{Push()} ses i kodeeksempel \ref{code:push}. Her tager den hensyn til hvilken variabel, der bliver pushet til stacken, men i sidste ende kommer de alle til at være gemt som den største datatype, der er til gængelig på \gls{plc}'en. Det giver noget dataspild, men til gengæld er \textit{pop()}-funktionen kun en decrement af pointeren og returnering af værdien, hvorefter modtageren håndterer denne.

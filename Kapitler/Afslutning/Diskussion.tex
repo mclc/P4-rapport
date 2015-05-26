@@ -11,7 +11,7 @@ For at dette kunne lade sig gøre, var det vigtigt at der aktivt blev benyttet \
 
 \noindent De opstillede krav, som blev opstillet i MoSCoW-analysen, er der flere funktionaliteter, som ikke er færdig-implementeret. Det blev undervejs i implementationen, vurderet hvilke essentielle funktionaliteter sproget skulle have, for at kunne køre et simpelt program. Dette medførte, at mange af de egenskaber, som skulle bidrage til forøget abstraktionsniveau, heriblandt structs, enums, arrays og funktioner, blev revurderet løbende i udviklingsprocessen - hvorved structs og enums blev nedprioriteret. Det blev vurderet, at funktioner og array var mere essentielle for programmet; hvor funktioner skulle give programmøren mulighed for at organisere koden i mindre kodestrukturer. Arrays blev ligeledes anset for at være en essentiel del af et imperativt programmeringssprog. \\
 
-\noindent I forhold til datatyper, blev der argumenteret for implementationen af strings, port og timer. Strings og timer blev ikke implementeret grundet nedprioritering. Denne selektive beslutning blev truffet på baggrund af, at de fleste \gls{hmi}'er har deres egen \gls{ide}, hvor selve display-opsætningen bliver programmeret. Timer ville være påkrævet i en final-release, da timers ofte bliver anvendt til \gls{plc}-programmering. 
+\noindent I forhold til datatyper, blev der argumenteret for implementationen af strings, port og timer. Strings og timer blev ikke implementeret grundet nedprioritering. Denne beslutning blev truffet på baggrund af, at de fleste \gls{hmi}'er har deres egen \gls{ide}, hvor selve display-opsætningen bliver programmeret. Timer ville være påkrævet i en final-release, da timers ofte bliver anvendt til \gls{plc}-programmering. 
 Port var af højeste prioritet, da det er helt elementært for selve kommunikationen af både inputs og outputs på \gls{plc}'en. 
 
 \subsection*{Hukommelse}
@@ -32,7 +32,7 @@ En yderligere forbedring på hukommelseshåndtering, ville være og dekorerer \g
 \noindent Det blev valgt at variabler og funktioner ikke skulle anvende stacken. Denne beslutningen blev funderet af, at target-sproget, \gls{il}, understøttede instrukser til behandlingen af blandt andet funktionserklæringer og funktionskald. Brugen af \gls{il}-instrukser - fremfor stacken - øger programmets læsbarhed, hvilket var essentielt for den udarbejdede løsning. Imidlertid begrænsede det sproget, da rekursive funktionskald ikke ville muligt, grundet at variablerne - som blev allokeret i D-hukommelsesområdet - blot ville overskrive hinanden.
 \subsection*{Globale variabler}
 I den nuværende løsning bliver alle variabler erklæret globalt, da target-sproget, \gls{il}, ikke understøtter lokale variabel-erklæringer. Dette giver problemer i forhold til navngivningen af variabler, såsom ('I'), der ofte bruges til iterative kontrolstrukturer. Fremgår variablen - med samme navngivning - mere end én gang, bliver den forrige værdi overskrevet, hvilket absolut ikke er hensigtsmæssigt. 
-En potentiel løsning på dette problem ville være, at prefixe alle variabelnavne med funktionens navn.
+En potentiel løsning på dette problem ville være, at prefixe alle variabelnavne med funktionensnavne.
 
 
 
