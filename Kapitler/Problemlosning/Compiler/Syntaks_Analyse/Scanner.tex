@@ -1,24 +1,21 @@
 \subsubsection{Scanner}
-Scanneren som er den første del af compileren der bliver kørt har til opgave at læse kildekoden og dele den op i tokens, som er de mindste dele af et sprog. Keywords i et sprog er et eksempel på tokens som skal læses. Til at illustrere dette ses her et kodestykke fra sproget Port der bygger på dele af PLC++.
+Scanneren, som er den første del af compileren, som bliver kørt, har til opgave at læse kildekoden og dele den op i \textit{tokens}, som er de mindste dele af et sprog. \textit{Keywords} i et sprog er et eksempel på tokens, som skal læses. For at illustrere dette ses et kodestykke (\ref{code:port_sample}), som vises repræsentationen af porte i PLC++.
 
 % Q#0.0 = I#0.1  == I#0.2 && I#0.3 != true;
-\PPP{Kode/Port/Port.tex}{Eksempel på kodestykke på Port}{port_sample}
+\PPP{Kode/Port/Port.tex}{Eksempel på kode med porte}{port_sample}
 
 \noindent Alle tokens er defineret på følgende måde:
 \SCC{Kode/Port/Tokens.tex}{Tokens i sproget Port}{port_tokens}
 
-\noindent Af ignorerede tokens er white\_space.
-
-\noindent En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens som parseren senere kan bruge. Et eksempel på en scanner til følgende tokens implementeret i Java uden brug af værktøjer kan ses i bilag \ref{bil:cd} eller i et udsnit i kodeeksempel \ref{code:scanner_java}.
+\noindent En scanner indlæser de forskellige "ord"\mbox{}, og laver dem om til tokens, som parseren senere kan bruge. Et eksempel på en scanner til følgende tokens, implementeret i Java, uden brug af værktøjer, kan ses i bilag \ref{bil:cd} eller i et udsnit i kodeeksempel \ref{code:scanner_java}.
 
 \Java{Kode/Port/Scanner.java}{Udsnit af scanneren}{scanner_java}
 
-\noindent Som det kan ses er scanneren meget ens kode. Dette gør det attraktivt at automatisere udviklingen af scanneren. Afsnit \ref{ssec:toolsforcc} vil komme nærmere ind på hvilke værktøjer der kan bruges til at lave en scanner.
+\noindent Som det ses indeholder scanneren en del duplikeret kode. Dette gør det attraktivt at automatisere udviklingen af scanneren. Afsnit \ref{ssec:toolsforcc} vil komme nærmere ind på hvilke værktøjer, der kan bruges til at lave en scanner.
 
-For at illustrere et eksempel på en kørsel af scanneren på kodeeksempel \ref{code:port_simple} er denne her tabel, der viser typen af den token og det konkrete indhold.
+For at illustrere et eksempel på en kørsel af scanneren, ses det i tabel \ref{tab:tokensMT} hvordan tokens fra kodeeksempel \ref{code:port_simple} inddeles.
 
-% Q#0.0 = true;
-\PPP{Kode/Port/SimplePort.tex}{Eksempel på kodestykke fra sproget Port}{port_simple}
+\PPP{Kode/Port/SimplePort.tex}{Eksempel på kodestykke med assignment af port}{port_simple}
 
 \begin{table}[H]
 \centering
@@ -31,7 +28,7 @@ For at illustrere et eksempel på en kørsel af scanneren på kodeeksempel \ref{
 \label{tab:tokensMT}
 \end{table}
 
-\noindent Da input'et nu er scannet og opdelt i tokens, er det muligt at bygge et abstrakt syntakstræ. \cite{Sebesta_2013}
+\noindent Da input'et nu er scannet, og opdelt i tokens, er det muligt at bygge et \gls{ast}. \cite{Sebesta_2013}
 
 %For at illustrere dette, ses et lille kodestykke i sproget Mini Triangle i kodeeksempel \ref{code:minitriangleforscanner}.
 

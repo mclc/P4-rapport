@@ -1,21 +1,15 @@
 \subsubsection{Implementation}
 
-I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser samt SableCC generer både en parser og scanner. Derudover genererer SableCC også et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sct:visitorSableCC}).
+I afsnit \ref{ssec:toolsforcc} omtales flere forskellige værktøjer til generering af compilere (også kaldet CompilerCompilers). Det er blevet valgt at gøre brug af SableCC, da denne indeholder en del funktioner, som er nyttige for udarbejdelsen af PLC++. Blandt disse kan nævnes at det er en \gls{lalr}1-parser samt SableCC genererer både en parser og scanner. Derudover genererer SableCC også et \gls{ast} med indbyggede metoder til at gennemløbe træet ved hjælp af Visitor Mønsteret (yderligere forklaret i afsnit \ref{sct:visitorSableCC}).
 
-\noindent SableCC's konfigurationsfil kan indeholde Helpers, Tokens, Ignored Tokens, Productions og Abstract syntax tree, hvor helpers er en række hjælpe regulære udtryk der bruges i tokens. Dette kunne eks. være helperen digit der kan være alle tal mellem 0 og 9. Helperen digit bliver brugt til både integer\_literal og decimal\_literal, dermed undgår man at skrive det samme regulære udtryk flere gange.
+SableCC's konfigurationsfil kan indeholde Helpers, Tokens, Ignored Tokens, Productions og \gls{ast}, hvor helpers er en række hjælpe-regular expressions, som bruges i tokens. Dette kunne eksempelvis være hjælperen \textit{digit}, som kan være alle tal mellem 0 og 9. \textit{Digit} bliver brugt til både \textit{integer\_literal} og \textit{decimal\_literal}. Derved undgår man at skrive det samme regulære udtryk flere gange.
 
-\noindent Tokens indeholder de regulære udtryk for tokens som scanneren skal genkende. Tokens er alle mindre dele af et sprog, som bruges af parseren til \gls{ast}. Ved at bruge kommandoen \textit{--verbose} under eksekveringen af PLC++ compileren vil den printe alle tokens.\\
+Tokens indeholder de regulære udtryk for tokens, som scanneren skal genkende. Ved at bruge kommandoen \textit{--verbose} under eksekveringen af PLC++, vil compileren udskrive alle tokens.\\
 
-\noindent Ignored tokens definerer hvilke tokens parseren skal ignorere.
-
-\noindent Productions definerer alle reglerne for parseren. Produktionsreglerne definerer også hvordan reglerne skal mappes til det tilhørende \gls{ast}, hvis sådant et er defineret. Hvis intet \gls{ast} er blevet defineret laver SableCC sit eget \gls{ast} ud fra produktionsreglerne. Det er dog i de fleste tilfælde praktisk at lave sit eget \gls{ast}, grundet at simple matematiske operationer såsom multiplikation og addition kan lave et meget kompliceret \gls{ast}, da grammatikken ikke må være unambigius, og dermed skal addition og multiplikation placeres i 2 seperate regler hvor additions reglen referer til multiplikationsreglen. Dermed vil mange expressions have ekstra noder som der i teorien er unødvendige. Derudover er der også problematikken med dangling else, der ellers vil kunne resultere i at der findes 2 noder for alle statements, da produktionsreglen for statement bliver dubleret (dog med små tilretninger).\\ 
-
-\noindent Alle referencer i produktionsreglerne til \gls{ast} sker vha. akkolader. 
-
-\noindent Abstract syntax tree definerer som navnet antyder alle noder i SableCCs genererede \gls{ast}.
+\noindent \textit{Productions} definerer alle reglerne for parseren. Produktionsreglerne definerer også hvordan reglerne skal mappes til det tilhørende \gls{ast}, hvis et sådant er defineret. Hvis intet \gls{ast} er blevet defineret laver SableCC sit eget \gls{ast} ud fra produktionsreglerne. Det er dog i de fleste tilfælde praktisk at lave sit eget \gls{ast}, da simple matematiske operationer, såsom multiplikation og addition, kan lave et meget kompliceret \gls{ast}, da grammatikken ikke må være tvetydig, og dermed skal addition og multiplikation placeres i to seperate regler, hvor additionsreglen refererer til multiplikationsreglen. Dermed vil mange expressions have ekstra noder, som i teorien er unødvendige. Derudover er der også problematikken med dangling else, der ellers vil kunne resultere i at der findes to noder for alle statements, da produktionsreglen for statement bliver dubleret (dog med små tilretninger). Alle referencer i produktionsreglerne til \gls{ast} sker med akkolader. 
 
 \subsubsection*{Udsnit af SableCC gramatikken}
-Nedstående afsnit vil gå i dybden med dele af gramatikken. Det er dog værd at bemærke at dele af grammatikken er simplificeret til det pågældende eksempel (navnene på reglerne er dog ikke ændret).
+Følgende afsnit vil gå i dybden med dele af grammatikken. Det er dog værd at bemærke at dele af grammatikken er simplificeret til det pågældende eksempel - navnene på reglerne er dog ikke ændret.
 %Et udsnit af grammatikken anvendt til at generere parser/scanner til PLC++
 
 %Gramatikken SableCC bruger til at lave scanneren og parseren
@@ -27,17 +21,17 @@ Nedstående afsnit vil gå i dybden med dele af gramatikken. Det er dog værd at
 
 \SCC{Kode/CFG/SabelUdsnit/Helpers.scc}{Del af helper sektionen i config filen til SableCC}{cfghelpers}
 
-\noindent I kodeeksempel \ref{code:cfghelpers} ses helperen digit som bruges som en "hjælpe" regulært udtryk der kan bruges til definitionen af tokens.
+\noindent I kodeeksempel \ref{code:cfghelpers} ses \textit{digit}, som bruges som et hjælpe-regular expression, der kan bruges til definitionen af tokens.
 
 \SCC{Kode/CFG/SabelUdsnit/Tokens.scc}{Del af token sektionen i config filen til SableCC}{cfgtokens}
 
-\noindent I kodeeksempel \ref{code:cfgtokens} ses en række tokens som scanneren skal genkende. Herunder parenteser, og operatoren og eller operatoren samt while keywordet.
+\noindent I kodeeksempel \ref{code:cfgtokens} ses en række tokens, som scanneren skal genkende. Herunder parenteser, operatorer og \textit{while}-keywordet.
 
-\SCC{Kode/CFG/SabelUdsnit/Productions.scc}{Del af productions sektionen i config filen til SabelCC}{cfgproductions}
+\SCC{Kode/CFG/SabelUdsnit/Productions.scc}{Del af productions sektionen i config filen til SableCC}{cfgproductions}
 
-\noindent På kodeeksempel \ref{code:cfgproductions} er en del af produktionsreglen for et statement. Det kan ses på linje 2 at den tilhørende overklasse node i \gls{ast} der hedder statement (udtrykt i akkoladerne). Derudover vises hvordan et scope bliver defineret (linje 4-5) samt et while statement (linje 8-9). På linje 5 kan det derudover ses at scope refererer til statement.scope. med andre ord, superklassen på noden er statement og den konkrete node i \gls{ast} er scope. Her tager Noden ligeledes et array af statements med som parameter. SableCC genkender et array ved hjælp af hårde parenteser. Bemærk den specielle syntaks med statement.statement. Dette betyder at vi tager produktionsreglen statement og indikerer at SableCC skal omskrive til \gls{ast} noden.
+\noindent På kodeeksempel \ref{code:cfgproductions} er en del af produktionsreglen for et \textit{statement}. Det kan ses på linje 2 at den tilhørende overklasse node i \gls{ast}'et heddet statement (udtrykt i akkoladerne). Derudover vises hvordan et \textit{scope} bliver defineret (linje 4-5) samt et \textit{while} statement (linje 8-9). På linje 5 kan det derudover ses at scope refererer til \textit{statement.scope}. Med andre ord, superklassen på noden er \textit{statement} og den konkrete node i \gls{ast} er \textit{scope}. Her tager noden ligeledes et array af statements med som parameter. SableCC genkender et array ved hjælp af hårde parenteser. Bemærk den specielle syntaks med \textit{statement.statement} - dette betyder at vi tager produktionsreglen, \textit{statement}, og indikerer at SableCC skal omskrive til \gls{ast} noden.
 
-\noindent På linje 12-21 ses 2 expressions - herunder \textit{and} og \textit{or} expressions. For at specialisere precendence i SableCC er man nødt til at lave denne særlige konstruktion der gør sådan at and expression bliver prioriteret højere end or expression (En af ulemperne ved SableCC). Dette giver dog som standard et uhensigtsmæssigt \gls{ast}, da alle faktorer også bliver en separat node. Eksempelvis skal man for at lave en andExpr først have en factorOrExpr node og derefter en andAndExpr node. Derfor er det en fordel at lave et seperat \gls{ast} som kun indeholder en expr node. En meget lille del af expr noden i \gls{ast} kan ses på kodeeksempel \ref{code:sabelccast}. Her vises compareAndExpr og compareOrExpr. Som der referereres til i produktionsreglerne.
+På linje 12-21 ses 2 expressions - herunder \textit{and} og \textit{or} expressions. For at specialisere precendence i SableCC er man nødt til at lave denne særlige konstruktion, der gør at \textit{and expression} bliver prioriteret højere end \textit{or expression}, hvilket er en af ulemperne ved SableCC. Dette giver dog som standard et uhensigtsmæssigt \gls{ast}, da alle faktorer også bliver en separat node. Eksempelvis skal man for at lave en andExpr først have en factorOrExpr node og derefter en andAndExpr node. Derfor er det en fordel at lave et seperat \gls{ast}, som kun indeholder en \textit{expr}-node. En meget lille del af expr noden i \gls{ast} kan ses på kodeeksempel \ref{code:sabelccast}. Her vises \textit{compareAndExpr} og \textit{compareOrExpr}, som der refereres til i produktionsreglerne.
 
 \SCC{Kode/CFG/SabelUdsnit/AST.scc}{Del af abstrakt syntaks træ sektionen i config filen til SabelCC}{sabelccast}
 %På linje 1-2 ses definitionen for et \textit{while\_statement} - altså en løkke af typen while. Teksten i tuborgklammerne angiver navnet, som kan bruges til intern brug i programmet. Herefter fortæller grammatikken hvad et \textit{while\_statement} består af. Det første, \textit{while\_keyword}, er defineret på linje 4 som værende teksten "while"\mbox{}. Da det ikke er muligt at skrive keywords på samme måde som i \gls{bnf}, er det nødvendigt at definere alle i starten af konfigurationsfilen.
@@ -48,9 +42,9 @@ Nedstående afsnit vil gå i dybden med dele af gramatikken. Det er dog værd at
 
 \subsubsubsection{Dangling else problematik}
 \label{subsec:danglingelse}
-Et af det meget ofte forekommende problemer under skrivningen af gramatikken til et sprog er dangling else problematikken. Problemet er aktuelt i alle sprog der har mulighed for at lave if-statements uden klart at definere start og slut på det pågældende if-statement.
+Et velkendt problem ved formulering af grammatikken til et sprog, er \textit{dangling else}-problematikken. Problemet er aktuelt i alle sprog, som har mulighed for at lave if-statements uden klart at definere start og slut på det pågældende if-statement.
 
-Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; som kan parses på 2 forskellige måder ved en grammar specifikation som vist i kodeeksempel \ref{gra:dangProb} (Se de 2 forskellige måder i figur \ref{fig:danglingElseProblem}).
+Et konkret eksempel kunne være: \textit{if (expr) if (expr) statement; else statement;} som kan parses på to forskellige måder udfra den grammatik, som ses i  \ref{gra:dangProb} (Se de 2 forskellige måder i figur \ref{fig:danglingElseProblem}).
 
 \begin{Grammar}
  \begin{grammar}
@@ -63,11 +57,9 @@ Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; 
 
 \tikzfigure{Figurer/TikZ/DangelingElseAst2.tex}{2 forskellige \gls{ast} ud fra eksemplet if (expr) if (expr) statement; else statement; med grammatikken \ref{gra:dangProb}}{danglingElseProblem}
 
-\noindent Problematikken kan løses på flere måder. En af måderne er at tilføje et keyword/tegn der gør det muligt at afgøre hvilket else der hører til hvilket if. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje akkolader ved alle if og else statements, eller tilføje et begin og end keyword.
+\noindent Problemet kan løses på flere måder, hvor en af måderne er at tilføje et keyword/tegn, som gør det muligt at afgøre hvilket \textit{else} der hører til hvilket \textit{if}. En hurtig løsning vil derfor kunne være at tvinge brugeren til at tilføje akkolader ved alle \textit{if} og \textit{else} statements, eller tilføje et \textit{begin} og \textit{end} keyword.
 
-\noindent En anden løsning er at sørge for at alle statements inde i et if-statement er et if-else statement, således det kun er muligt at generere \gls{ast} på en måde. Dette giver dog meget dubleret kode, da if typisk ligger sammen med mange andre typer af statements og derfor skal alle disse statements skrives 2 gange.
-
-\noindent Et eksempel kan ses i kodeeksempel \ref{gra:dangFix}.
+En anden løsning er at sørge for at alle statements inde i et if-statement er et if-else statement, så det kun er muligt at generere \gls{ast} på én måde. Dette giver dog meget dubleret kode, da \textit{if} typisk ligger sammen med mange andre typer af statements og derfor skal alle disse statements skrives to gange. Et eksempel ses i kodeeksempel \ref{gra:dangFix}.
 
 \begin{Grammar}
  \begin{grammar}
@@ -85,10 +77,10 @@ Et konkret eksempel kunne være: if (expr) if (expr) statement; else statement; 
  \caption{Grammatik der løser problemet med dangling else}\label{gra:dangFix}
 \end{Grammar}
 
-\noindent PLC++ er implementeret med den sidstnævnte metode. Der er desuden lavet nogle tests i afsnit \ref{subsec:parser} for at sikre at der ikke er problemer med dangling else og at kildekoden genererer det ønskede \gls{ast} (tætteste if knytter sig til else statementet).
+\noindent PLC++ er implementeret med den sidstnævnte metode. Der er desuden lavet tests i afsnit \ref{subsec:parser}, som har til formål at sikre at problemet med dangling else løses på den forventede måde (tætteste \textit{if} knytter sig til \textit{else} statementet).
 
-\subsubsubsection{SableCC's implementation af lexer og parser}
-\noindent Når compileren skal læse kildekoden, for at få dette opsat til tokens, er der, som nævnt i afsnit \ref{ssec:syntaxanalysis} flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af state machines. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
+\subsubsubsection{SableCC's implementation af scanner og parser}
+\noindent Når compileren skal læse kildekoden for at få dette opsat til tokens, er der, som nævnt i afsnit \ref{ssec:syntaxanalysis}, flere måder at implementere det på. I compileren til PLC++ er det blevet implementeret ved hjælp af finite automata. Konkret genereres først en \gls{nfa}, som efterfølgende omdannes til en \gls{dfa}.
 
 \tikzfigure{Figurer/TikZ/SableCC_NFA.tex}{En NFA genereret af SableCC}{sableccnfa}
 
@@ -117,16 +109,14 @@ $A$ & &       & &       & & \{$q_6$\} &       & & \{$q_9$\} &          & &     &
     \label{tab:nfadelta}
 \end{table}
 
-\noindent På figur \ref{fig:sableccnfa} ses hvordan en \textit{port\_identifier} (defineret i kodeeksempel \ref{code:sableccportidentifier}) genkendes. Hvis der i programmet angives AQ\#7 arbejdes der med analoge output-port 7. I \gls{nfa}'en starter man i state \textit{s}, hvorefter der foretages et ikke-deterministisk valg om at gå videre til state  \textit{q\textunderscript{10}}. Derefter læses bogstavet A, som får maskinen til at gå til \textit{q\textunderscript{11}}. Efter et Q bliver state \textit{q\textunderscript{12}} sprunget over, da $\epsilon$ (den tomme streng) lader den gå videre til state \textit{q\textunderscript{13}}. Efter at have læst \# kommer den i det sidste state, \textit{f}, som er en accept state - og ordet er derved accepteret. \\
+\noindent På figur \ref{fig:sableccnfa} ses hvordan en \textit{port\_identifier} (defineret i kodeeksempel \ref{code:sableccportidentifier}) genkendes. Hvis der i programmet angives AQ\#7 arbejdes der med analoge output-port 7. I \gls{nfa}'en starter man i state \textit{s}, hvorefter der foretages et ikke-deterministisk valg om at gå videre til state  \textit{q\textunderscript{10}}. Derefter læses bogstavet A, som får maskinen til at gå til \textit{q\textunderscript{11}}. Efter et \textit{Q} bliver state \textit{q\textunderscript{12}} sprunget over, da $\epsilon$ (den tomme streng) lader den gå videre til state \textit{q\textunderscript{13}}. Efter at have læst \# kommer den i det sidste state, \textit{f}, som er en accept state - og ordet er derved accepteret. \\
 
 \SCC{Kode/CFG/SabelUdsnit/Port.scc}{Definationen af port i tokens}{sableccportidentifier}
 \sfix{Mangler korrektur}
 
-\noindent Som tidligere nævnt, er dette ikke den konkrete grammatik, men opsætningen af denne i SableCC. Den korrekte grammatik, skrevet i \gls{ebnf} ses på grammatik \ref{gra:udsnit}. Den fulde kontekstfri grammatik findes i bilag \ref{bil:cfg}
+\noindent Som tidligere nævnt, er dette ikke den konkrete grammatik, men opsætningen af denne i SableCC. Den korrekte grammatik, skrevet i \gls{ebnf} findes i bilag \ref{bil:cfg}\\
 
-\input{Kode/CFG/Udsnit.tex}
-
-\noindent Ud fra grammatikken kan SableCC generere et \gls{ast}. Der vil her blive givet et eksempel ved hjælp af dette udtrykket, som ses i kodeeksempel \ref{code:exprforast}
+\noindent Ud fra grammatikken kan SableCC generere et \gls{ast}. Der vil her blive givet et eksempel ved hjælp af udtrykket, som ses i kodeeksempel \ref{code:exprforast}
 
 \PPP{Kode/ExprForAST.c}{Udtryk der bruges til at bygge AST}{exprforast}
 
@@ -134,4 +124,4 @@ $A$ & &       & &       & & \{$q_6$\} &       & & \{$q_9$\} &          & &     &
 
 \tikzfigure{Figurer/TikZ/AST.tex}{AST fra PLC++}{astexample}
 
-\noindent Træet er nu bygget, og alt er klar til at gå videre til næste trin - at dekorere træet med typer i Context Analysis.
+\noindent \gls{ast}'en er nu genereret og alt er klar til at gå videre til næste trin - at dekorere det med typer i Context Analysis.

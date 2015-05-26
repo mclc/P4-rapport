@@ -43,12 +43,12 @@ Symboltabellen er en tabel som compileren benytter til at holde symboler og dere
     
 \noindent I tabellen kan det ses, hvordan det er muligt at finde informationer om type og scope ud fra et symbol. Dette er et eksempel på én måde at implementere symbol tabellen; en usorteret liste der indeholder informationer om hvert enkelt element. Metoden er forholdsvis ineffektiv eftersom at det vil tage $O(n)$ for at finde et symbol, hvor $n$ er antallet af elementer. En hurtigere løsning vil derfor kunne være, at implementere strukturen som et balanceret træ eller et bibliotek.\\
 
-\noindent Det er også muligt at nedprioritere effektiviteten og i stedet dele tabellerne op i flere efter hvilket scope tabellen indeholder symboler fra. Dette betyder at der naturligt opnås et statisk scope, hvor der kun er adgang til elementer i scopet og parent scope.
+\noindent Det er også muligt at nedprioritere effektiviteten og i stedet dele tabellerne op i flere tabeller, alt efter hvilket scope tabellen indeholder symboler fra. Dette betyder at der naturligt opnås et statisk scope, hvor der kun er adgang til elementer i scopet og parent scope.
 
 %\tikzfigure{Figurer/TikZ/SymbolTable.tex}{Flere symbol tabeller som de fungerer i compileren til \sprognavn}{symtab}
     
     %\mfix{Hvad sker der for figuren?}
     
-\noindent Ulempen ved denne metode er at ved flere tabeller er det måske nødvendigt at søge flere tabeller for at finde et givet element, hvis det ikke er erklæret i samme scope.
+\noindent Ulempen ved denne metode er, at ved flere tabeller er det nødvendigt at søge i flere tabeller, for at finde et givet symbol, hvis det ikke er erklæret i samme scope.
     
     %Tabellen bliver hovedsageligt brugt i forbindelse med type checking af et \gls{ast}, men bliver også brugt i andre faser af kompileringsprocessen til at skrive, læse og dele information til/fra tabellen omkring variabler, funktioner og andet. For eksempel kan man vælge at udvide et \gls{ast} med information der bliver brugt til optimering af objekt koden.

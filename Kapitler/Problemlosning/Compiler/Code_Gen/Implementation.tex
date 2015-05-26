@@ -1,5 +1,5 @@
 \subsubsection{Source til Target}
-For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør hvad kildekoden dikterer i følge semantikken, blev vi nød til at lave nogle interessante oversætninger som i løbet at dette afsnit vil blive belyst.
+For at opnå kode, som kan kompileres til en \gls{plc}, har det været nødvendigt at lave interessante oversættelse, som dette afsnit vil belyse.
 
 \begin{table}[H]
     \centering\ttfamily
@@ -10,11 +10,11 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
                     & + W404 W402 W402  &// Push(Pop() + Pop())\\
                     & MOVL W402 i       &// i = Pop()
     \end{tabular}
-    \caption{Eksemple på kode som compileren kunne generere.}
+    \caption{Eksempel på kode som compileren genererer}
     \label{tab:codegenExample}
 \end{table}
 
-\noindent Fra eksemplet i tabel {\ref{tab:codegenExample} kan man se hvordan at koden finder deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast} der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitoren laver en \gls{dfs} hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator} visitoren har til standard \gls{dfs}.
+\noindent Eksemplet i tabel {\ref{tab:codegenExample} viser hvordan koden finder deler udtrykket \textit{i = 1 + 3} op i flere dele. Alle disse dele stammer fra det \gls{ast} der blev genereret til dette stykke kode, og kan ses på figur \ref{fig:codegenAST}. En ting der er vigtigt at bemærke er at visitoren laver en \gls{dfs} hvilken normalt går fra venstre mod højre, men for at kunne tilskrive værdien af venstre udtryk af AAssignExpr til højre udtryk, bliver den højre først evalueret. Dette er én af de modifikationer som \textit{CodeGenerator} visitoren har til standard \gls{dfs}.
 
 \tikzfigure{Figurer/TikZ/CodeGenExampleAST.tex}{\gls{ast} for samme stykke kode som i tabel \ref{tab:codegenExample}}{codegenAST}
 
@@ -32,7 +32,7 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
         8&                      & // Udeladt: i = 1\\
         9&                      & JME \#1
     \end{tabular}
-    \caption{Eksemple på hvordan kode generatoren håndterer et if-else statement.}
+    \caption{Eksempel på hvordan kode generatoren håndterer et if-else statement.}
     \label{tab:codegenIf}
 \end{table}
 
@@ -54,7 +54,7 @@ For at komme frem til resultater som kunne kompilere på en \gls{plc}, og gør h
         6&            & MOVL @D24 W402    &// Push the value D24 points to\\
         7&            & MOVL W402 i       &// i = Pop()
     \end{tabular}
-    \caption{Eksemple på hvordan kode generatoren ville generere en værdi fra et array.}
+    \caption{Eksempel på hvordan kode generatoren ville generere en værdi fra et array.}
     \label{tab:codegenArray}
 \end{table}
 

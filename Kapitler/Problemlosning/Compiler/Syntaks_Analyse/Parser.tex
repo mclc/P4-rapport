@@ -1,40 +1,37 @@
 \subsubsection{Parser}
-Parserens opgave er at få opbygget et abstrakt syntakstræ ud fra de tokens som scanneren har fundet frem til. Det er dermed også parserens opgave at tjekket at reglerne i forhold til rækkefølgen af keywords, identifiers osv. er overholdt. En sådan regel kunne være hvordan man udtrykker et assignment. For at forstå hvordan parseren fungerer er der først et kort afsnit omkring abstrakte syntakstræer.
+Parserens opgave er at få opbygget et \gls{ast} ud fra de tokens, som scanneren har fundet frem til. Det er dermed også parserens opgave at tjekke at reglerne, i forhold til rækkefølgen af keywords, identifiers osv., er overholdt. En sådan regel kunne være hvordan man udtrykker et assignment. For at forstå hvordan parseren fungerer, er der først et kort afsnit om \gls{ast}.
 
-\subsubsubsection{Abstrakt syntakstræ}
-Et abstrakt syntakstræ også forkortet AST er en træstruktur der er en repræsentation at kildekoden. Noderne i træet er forskellige dele af sproget såsom iterative kontrolstrukturer, eller selektive kontrolstrukturer. Et eksempel på en node i træet kunne være et if-statement. Et if-else statement har 2 branches som koden kan udføres. Disse vil kunne blive repræsenteret som 2 seperate nodes, derudover vil betingelsen der skal testes kunne blive repræsenteres som 1 seperat node.
-
-\noindent Et eksempel på et abstract syntax tree kan ses i figur \ref{fig:exampletree}.
+\subsubsubsection{\gls{ast}}
+Et \gls{ast} er en træstruktur, der er en repræsentation at kildekoden. Noderne i træet er forskellige dele af sproget, såsom iterative kontrolstrukturer eller selektive kontrolstrukturer. Et eksempel på en node i træet kunne være et if-statement. Et if-else statement har to branches - disse vil kunne blive repræsenteret som to separate nodes. Derudover vil betingelsen, som skal testes, kunne repræsenteres som en separat node. Et eksempel på et \gls{ast} kan ses i figur \ref{fig:exampletree}.
 
 \tikzfigure{Figurer/TikZ/Tree.tex}{Eksempel på et \gls{ast}}{exampletree}
 
-\noindent Det er muligt at gennemløbe træet på forskellige måder. En af måderne er vha. visitor-mønstret som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er vha. metoder i alle træ noderne også kaldet den objektorienterede metode. Denne metode har en metode til hvert step i compileren i trænoderne. Den objektorienterede metode er i store sprog med  store abstracte syntakstræer upraktisk, da til hver trin er i mange forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde som ved visitor mønstret kan defineres generelt. Den objektorienterede metode har dog den fordel at det er hurtigere at implementere for mindre compilere, hvis det abstrakte syntakstræ bliver konstrueret uden brug af værktøjer.
+\noindent Det er muligt at gennemløbe træet på forskellige måder. En af måderne er ved hjælp af visitor-mønstret, som forklares nærmere i afsnit \ref{sct:visitorSableCC}. En anden måde er ved hjælp af metoder i alle noderne - også kaldet den objektorienterede metode. Denne strategi har en metode til hvert step i compileren i noderne. Den objektorienterede metode er i store sprog, med store \gls{ast}'er upraktisk, da hvert trin har flere forskellige klasser. Derudover er metoden også mindre egnet til gennemløb af træet, da dette ikke på samme måde, som ved visitor-mønstret, kan defineres generelt. Den objektorienterede metode har dog den fordel, at det er hurtigere at implementere for mindre compilere, hvis \gls{ast}'en bliver konstrueret uden brug af værktøjer.
 
-\subsubsubsection{Top down/buttom up}
-Konstruktionen af det abstrakte syntakstræ bliver udført af parseren. Der findes overordnet 2 forskellige metoder til at konstruere et abstrakt syntakstræ. Den ene metode er top down parsing, som konstruerer det abstrakte syntakstræ fra toppen af. Den anden metode er bottom up parsing der konstruerer fra bunden.
+\subsubsubsection{Top down/bottom up}
+Konstruktionen af \gls{ast}'et bliver udført af parseren. Der findes overordnet to forskellige metoder til at konstruere et \gls{ast}. Den ene metode er top down parsing, som konstruerer \gls{ast}'et fra toppen af. Den anden metode er bottom up parsing, som konstruerer fra bunden.
 
-For at konstruerere det abstrakte syntax træ er det i nogle tilfælde et krav at kigge på flere tokens af gangen for at finde den korrekte del af sproget. Dette kaldes også lookaheads. Forskellen på de forskellige typer af sprog er hvor mange lookaheads de benytter og om de benytter top down eller buttom up parsing. Dette antydes af tallet efter sproget eks. LR(k), kan tage op til k lookaheads.
+For at konstruere \gls{ast}'et er det i nogle tilfælde et krav at kigge på flere tokens ad gangen, for at finde den korrekte del af sproget. Dette kaldes også \textit{lookaheads}. Forskellen på de forskellige typer af sprog, er hvor mange \textit{lookaheads} de benytter, og om de benytter top down eller buttom up parsing.
 
 \subsubsubsection{Tvetydig grammatik}
 
-\noindent En grammatik for et sprog kan også være tvetydig, hvis det er muligt at fremstille 2 forskellige syntaks træer ud fra en grammatik. Et eksempel på en tvetydig grammatik kunne være gramatikken i kodestykke \ref{code:unambigity}.
+\noindent En grammatik for et sprog er tvetydigt hvis det er muligt at fremstille to forskellige \gls{ast}'er ud fra én grammatik. Et eksempel på en tvetydig grammatik ses i kodestykke \ref{code:unambigity}.
 
 \SCC{Kode/CFG/Ambiguity.scc}{Tvetydig grammatik}{unambigity}
 
-\noindent Grammatikken i kodestykke \ref{code:unambigity} definerer en simpel lommeregner der kun tager plus og gange, dog hvis der er mere end 1 operatore i udtrykket er det ikke defineret om grammatikken skal udføre udtrykket til venstre eller højre først. Dette vil derfor generere følgende to abstrakte syntax træer ud fra følgende udtryk 3 * 3 + 3, som ses på figur \ref{fig:unambiguous}.
+\noindent Grammatikken i kodestykke \ref{code:unambigity} definerer en simpel lommeregner, som kun tager addition og multiplikation. Hvis der er mere end én operator i udtrykket, er det ikke defineret i grammatikken om udtrykket til højre eller venstre skal udføres først. Dette vil derfor generere følgende to \gls{ast}'er, som ses på figur \ref{fig:unambiguous}, ud fra følgende udtryk $3 * 3 + 3$.
 
-\tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{Eksempel på parse tree for en tvetydig grammatik}{unambiguous}
+\tikzfigure{Figurer/TikZ/AmbiguityExample.tex}{Eksempel på \gls{ast} for en tvetydig grammatik}{unambiguous}
 
-\noindent For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel hvordan følgende problem kan løses vises i kode \ref{code:fixedunambigity}
-Dette tvinger altså parseren til at generere det abstrakte syntax træ som vist på figur \ref{fig:fixedunambiguous}.
+\noindent For at løse dette problem er det nødvendigt at definere rækkefølgen ved at tilføje en regel mere. Et eksempel på hvordan følgende problem kan løses, vises i kode \ref{code:fixedunambigity}. Dette tvinger altså parseren til at generere \gls{ast}'en, som vist på figur \ref{fig:fixedunambiguous}.
 
 \SCC{Kode/CFG/AmbiguityFixed.scc}{Ikke tvetydig grammatik}{fixedunambigity}
 \tikzfigure{Figurer/TikZ/AmbiguityExampleFixed.tex}{Eksempel på parse tree for en ikke tvetydig grammatik}{fixedunambiguous}
 
 \subsubsubsection{Finite automata}
-Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til at beskrive forskellige stadier et program kan gennemgå. Der skilnes mellem to forskellige automata - \gls{dfa} og \gls{nfa}. Da \gls{nfa} er en overbygning på \gls{dfa}, indledes afsnittet med en grundig forklaring og definition af \gls{dfa}, som der efterfølgende bygges videre på for at opnå det nødvendige teoretiske grundlag til implementation af en parser.\\
+Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til at beskrive forskellige tilstande et program kan gennemgå. Der skelnes mellem to forskellige automata - \gls{dfa} og \gls{nfa}. Da \gls{nfa} er en overbygning på \gls{dfa}, indledes afsnittet med en grundig forklaring og definition af \gls{dfa}, som der efterfølgende bygges videre på for at opnå det nødvendige teoretiske grundlag til implementation af en parser.\\
 
-\noindent \gls{dfa} er kendetegnet ved ikke at have nogen hukommelse om tidligere stadier, samt kun én mulighed for at gå til et andet stadie afhængig af det input den modtager.
+\noindent \gls{dfa} er kendetegnet ved ikke at have nogen hukommelse om tidligere tilstande, samt kun én mulighed for at gå til en anden tilstand afhængig af det input den modtager.
 
 \tikzfigure{Figurer/TikZ/SimpleDFA.tex}{En simpel DFA, kaldet $M_1$}{simpledfa}
 
@@ -45,8 +42,8 @@ Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til
         $Q = \{q_0, q_1\}$
     \item $\Sigma$ angiver alfabetet - altså, de tegn der er tilladt som input.\\
         $\Sigma = \{0, 1\}$
-    \item $\delta: Q \times \Sigma \rightarrow Q$ kaldes transitionsfunktionen, og angiver hvilket det næste stadie afhængigt af nuværende stadie og input. $\delta$ for $M_1$ ses på tabel \ref{tab:transfunk_m1}
-    \item $q_0 \in Q$ angiver startstadiet.\\
+    \item $\delta: Q \times \Sigma \rightarrow Q$ kaldes transitionsfunktionen, og angiver den næste tilstand, afhængig af nuværende tilstand og input. $\delta$ for $M_1$ ses på tabel \ref{tab:transfunk_m1}
+    \item $q_0 \in Q$ angiver starttilstanden.\\
         $q_0 = q_0$
     \item $F \subseteq Q$ angiver sættet af \textit{accept states}. Hvis en streng ender i et accept state, er strengen accepteret.\\
         $F = \{q_1\}$
@@ -64,22 +61,22 @@ Finite automata, på dansk også kaldet endelig tilstandsmaskine, kan bruges til
     \label{tab:transfunk_m1}
 \end{table}
 
-\noindent Et af kendetegnene ved en \gls{dfa} er at ethvert input altid skal føre ét, og kun ét, sted hen - enten til sig selv eller et andet stadie. Dette resulterer også i at den tomme streng, $\epsilon$, ikke findes i alfabeter for \gls{dfa}'er. Disse regler er dog ikke gældende for en \gls{nfa}, som det ses på eksemplet i figur \ref{fig:regextonfa}, hvor $\epsilon$ betyder at vi kan gå i to forskellige stadier med samme input.
+\noindent Et af kendetegnene ved en \gls{dfa}, er at ethvert input altid skal føre ét, og kun ét, sted hen - enten til sig selv eller en anden tilstand. Dette resulterer også i at den tomme streng, $\epsilon$, ikke findes i alfabeter for \gls{dfa}'er. Disse regler er dog ikke gældende for en \gls{nfa}, som det ses på eksemplet i figur \ref{fig:regextonfa}, hvor $\epsilon$ betyder at vi kan gå i to forskellige tilstande med samme input.
 
 \subsubsubsection{Regular Expressions}
-Regular expressions hænger tæt sammen med regular languages - ethvert sprog, som er regular, kan nemlig beskrives med en regular expression. Det er dog ikke her hovedvægten bliver lagt, da det er mere relevant at komme ind på regular expressions i programmeringssammenhæng. Her kan det bruges til at genkende "mønstre"\mbox{}, som er yderst relevant i forbindelse med scanneren. 
+Regular expressions hænger tæt sammen med regular languages - ethvert sprog, som er regulært, kan beskrives med en regular expression. Det er dog ikke her hovedvægten bliver lagt, da det er mere relevant at komme ind på regular expressions i programmeringssammenhæng. Her kan det bruges til at genkende "mønstre"\mbox{}, som er yderst relevant i forbindelse med scanneren. 
 
 Det smarte ved regular expressions er altså at disse mønstre kan skrives utroligt kompakt. Et eksempel kunne være 
 
 $$ \{w \in \{0, 1\}^* / w = 0^m\; 1\; 0^n, m,n \geq 0\} $$
 
-\noindent I dette eksempel vil ord som 1, 01, 10, 010, 0100, ... være indeholdt i dette sprog. En meget mere kompakt for af dette, kan skrives som regular expression vha. $ 0^* 1\; 0^* $, som siger at der skal være nul, en eller flere nuller efterfulgt af et enkelt et-tal og derefter nul, en eller flere nuller igen. Det er desuden også muligt at bruge $0^+$, hvilket betyder at der skal være en eller flere. Tages der udgangspunkt i eksemplet før, og ændrer det til $0^* 1\; 0^+$, vil det nu betyde at ord som 1 og 01 ikke er i sproget, da ordet skulle slutte med mindst ét nul. Det er også muligt at bruge operatorer som $\cup$ og $\cap$ til at sammensætte flere udtryk. Der vil blive taget udgangspunkt i dette eksempel
+\noindent I dette eksempel vil ord som 1, 01, 10, 010, 0100, ... være i dette sproget. En mere kompakt form af dette, kan skrives som regular expression ved hjælp af $ 0^* 1\; 0^* $, som siger at der skal være nul, en eller flere nuller efterfulgt af et enkelt et-tal og derefter nul, en eller flere nuller igen. Det er desuden også muligt at bruge $0^+$, hvilket betyder at der skal være en eller flere. Tages der udgangspunkt i eksemplet før, og ændrer det til $0^* 1\; 0^+$, vil det nu betyde at ord som 1 og 01 ikke er i sproget, da ordet skal slutte med mindst ét nul. Det er også muligt at bruge operatorer som $\cup$ og $\cap$ til at sammensætte flere udtryk. Der vil blive taget udgangspunkt i dette eksempel
 
-$$ \{w \in \{a, b\}^* / w \text{ starts with }b \text{ or end with }bb\} $$
+$$ \{w \in \{a, b\}^* / w \text{ starter med }b \text{ eller slutter på }bb\} $$
 
-\noindent hvilket kan omskrives til $b(a \cup b)^* \cup (a \cup b)^* bb$. Kort fortalt siger denne regular expression at der findes to muligheder. Mulighed siger at der først skal være ét b og derefter må a'er og b'er blandes på vilkårlige måder. Den anden mulighed er først a'er og b'er blandet - og derefter to b'er. Altså præcist hvad den anden definition beskrev.
+\noindent hvilket kan omskrives til $b(a \cup b)^* \cup (a \cup b)^* bb$. Kort fortalt siger denne regular expression at der findes to muligheder. Den først mulighed siger at der først skal være ét b og derefter må a'er og b'er blandes på vilkårlige måder. Den anden mulighed er først a'er og b'er blandet - og derefter to b'er. Altså præcist hvad den anden definition beskrev.
 
-Det sidste der kan beskrives om regular expressions, er at disse uden videre kan omdannes til en \gls{nfa} ved at følge en simpel algoritme. Algoritmen vil ikke blive forklaret yderligere, men et simpelt eksempel vil følge udfra $((a^*b) \cup aa)^*$. Den resulterende NFA ses på figur \ref{fig:regextonfa}
+Det sidste der kan fortælles om regular expressions, er at disse uden videre kan omdannes til en \gls{nfa} ved at følge en simpel algoritme. Algoritmen vil ikke blive forklaret yderligere, men et simpelt eksempel vil følge udfra $((a^*b) \cup aa)^*$. Den resulterende NFA ses på figur \ref{fig:regextonfa}
 
 \tikzfigure{Figurer/TikZ/RegexToNFA.tex}{Regular expression til NFA}{regextonfa}
 

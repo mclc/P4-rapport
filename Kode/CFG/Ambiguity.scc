@@ -1,4 +1,4 @@
 expr = 
-    expr plus expr 
-  | expr gange expr
+    expr + expr 
+  | expr * expr
   | number;

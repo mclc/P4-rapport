@@ -1,22 +1,20 @@
 \section{Compilere}
-Da vi nu har et veldefineret sprog med fuld syntaks og semantik, kan vi nu begynde at lave en compiler der kan omsætte det til maskinkode. Dette afsnit vil lave en overordnet gennemgang af PLC++ compileren opdelt i delene som beskrevet af \textcite{CraftingCompiler_2009}. 
-Afsnittet forventer at læseren kan læse og forstå tombstone diagrammer, og introducere tekniske termer som \acrlong{ast} og \acrlong{cfg}, som er essentielle for at forstå resten af afsnittet. 
+Da der nu er et veldefineret sprog med fuld syntaks og semantik, kan udviklingen af en compiler begynde. Dette afsnit vil indeholde en overordnet gennemgang af PLC++ compileren - opdelt i delene som beskrevet af \textcite{CraftingCompiler_2009}. 
+For afsnittet forventes det at læseren kan læse og forstå tombstone-diagrammer, \acrlong{ast} og \acrlong{cfg}, da disse er essentielle for forståelsen.
 
-Målet med afsnittet er at give læseren en idé om hvordan compileren er bygget op og hvordan teorien afspejler sig i implementeringen.
-
-\bigskip
+Målet med afsnittet er at give læseren en idé om hvordan compileren er bygget op og hvordan teorien afspejler sig i implementationen.\\
 
 \noindent Compilere er grundstenen i alt programmering, og store dele af datalogien, som kendes i dag. De tidlige udgaver af programmer og styresystemer blev skrevet i ren maskinkode - en disciplin som de færreste mennesker er i stand til at udføre. Derfor blev konceptet med høj-niveau sprog opfundet. Det vil sige at koden kan udtrykkes med bogstaver og ord, som er væsentligt mere læsbart for mennesker. Herefter transformerer et andet stykke software denne tekst om til maskinkode - dette kaldes en compiler. \\
 
-\noindent For at forstå compileringsprocessen af PLC++, er der lavet et tombstone diagram (figur \ref{fig:thombstone}). Den første fase består grundlæggende af selve kode-skrivningen af sproget PLC++ (Angivet som "Source Program" på figur \ref{fig:thombstone}). Programmet i sproget PLC++ bliver derefter oversat til \gls{il} med oversætteren kørende i Java Virtual Machine (Java Bytecode - compileret fra Java). Java Bytecode bliver interpreteret under kørslen til maskinkode for den konkrete platform der kører koden (i de fleste tilfælde x86 eller x86\_64).
+\noindent For at forstå compileringsprocessen af PLC++, er der lavet et tombstone diagram (figur \ref{fig:thombstone}). Den første fase består grundlæggende af selve kode-skrivningen af sproget PLC++ (Angivet som "Source Program" på figur \ref{fig:thombstone}). Programmet i sproget PLC++ bliver derefter oversat til \gls{il} med oversætteren kørende i Java Virtual Machine (Java Bytecode - kompileret fra Java). Java Bytecode bliver fortolket under kørslen til maskinkode for den konkrete platform, som kører koden (i de fleste tilfælde x86 eller x86\_64).
 
-Programmet er nu repræsenteret i IL. Hvor det er muligt at konvertere sproget til \gls{lad}. For at \gls{plc}’en kan køre programmet, bliver det compileret til maskinkode, hvilket håndteres af Omron’s CX-Programmer.
+Programmet er nu repræsenteret i IL, hvorefter det er muligt at konvertere sproget til \gls{lad}. For at \gls{plc}'en kan køre programmet, bliver det compileret til maskinkode, hvilket håndteres af Omron's CX-Programmer.
 
 \figur{Figurer/Billeder/Tombstone.png}{Tombstone diagram}{thombstone}{1.0}
 
-\noindent Før for mange detaljer omkring PLC++ compileren bliver beskrevet er det vigtigt at forstå den abstrakte opbygningen af en compiler. %Det er det næste afsnit vil omhandle.
+\noindent Før for mange detaljer omkring PLC++ compileren bliver beskrevet, er det vigtigt at forstå den abstrakte opbygningen af en compiler. %Det er det næste afsnit vil omhandle.
 
 %\subsection{Opbyging af en compiler}
-En compiler består overordnet af tre faser, som kan ses i figur \ref{fig:compilerOpbygning}. Første fase består af \textit{syntax analysen} som omdanner kildekoden (PLC++) til \gls{ast}. Der kan læses mere omkring syntaks analysen i afsnit \ref{ssec:syntaxanalysis}. \textit{Contextual analysen} kontrollere om de konkrete udtryk er lovlige i henhold til den definerede semantik (se afsnit \ref{sec:Syntax}). Contextual analysen omdanner \gls{ast}'en til et dekoreret abstrakt syntaks træ, det kan der læses mere om i afsnit \ref{ssec:contextual}. Sidste del er \textit{code generation} der omdanner det dekorerede syntaks træ om til kode. Der kan læses mere omkring code generation i afsnit \ref{ssec:codegen}.
+En compiler består overordnet af tre faser, som kan ses i figur \ref{fig:compilerOpbygning}. Første fase består af \textit{syntax analysen} som omdanner kildekoden (PLC++) til \gls{ast}. Der kan læses mere om syntaksanalysen i afsnit \ref{ssec:syntaxanalysis}. \textit{Contextual analysen} kontrollerer om de konkrete udtryk er lovlige i henhold til den definerede semantik (se afsnit \ref{sec:Syntax}). Contextual analysen omdanner \gls{ast}'en til et dekoreret \gls{ast} - det kan der læses mere om i afsnit \ref{ssec:contextual}. Sidste del er code generation, der omdanner det dekorerede \gls{ast} om til kode. Der kan læses mere om code generation i afsnit \ref{ssec:codegen}.
 
 \tikzfigure{Figurer/TikZ/CompilerOpbygning.tex}{Opbygningen af en compiler}{compilerOpbygning}{}

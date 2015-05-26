@@ -1,5 +1,5 @@
 \noindent \subsubsection{Statements}
-Sproget PLC++ består af en række forskellige statements. Statements som funktionskald, iterative og selektive kontrolstrukturer. Under dette afsnit vil de mest betydende statements blive gennemgået og forklaret med tilhørende semantik. Nedenfor ses den abstrakte syntax for statements i PLC++.
+Sproget PLC++ består af en række forskellige statements. Statements er eksempelvis funktionskald, iterative og selektive kontrolstrukturer. Under dette afsnit vil et udvalg af statements blive gennemgået og forklaret med tilhørende semantik. Nedenfor ses den abstrakte syntax for statements i PLC++, som anvendes i semantikken på grund af dens simplificering.
 
 \begin{Grammar}
  \begin{grammar}
@@ -9,11 +9,11 @@ Sproget PLC++ består af en række forskellige statements. Statements som funkti
 \end{Grammar}
 
 
-\subsubsubsection*{While-løkke}
-For at kunne iterere i sproget er der blevet valgt både while- og for-løkke som en del af sproget. Nedenfor ses semantikken for while-løkker. \\
+\subsubsubsection{While-løkke}
+For at kunne iterere i sproget, er der blevet valgt både while- og for-løkke som en del af sproget. Nedenfor ses semantikken for while-løkker. \\
 
 \noindent For $[WHILE_\top]$ læses semantikken således: 
-hvis man i $Env$ eksekverer $St$ i $sto$ og får final state $sto''$. Hvis derefter i $Env$ ekseverer $while(e) St$ i $sto''$ får final state $sto'$. Så får vi ved eksekvering af $while(e) St$ i $sto$ final state $sto'$ hvis $e$ evaluerer til $true$ i $Env$.
+Hvis man i $Env$ eksekverer $St$ i $sto$ og får state $sto''$, hvorefter man i $Env$ ekseverer $while(e) St$ i $sto''$ og får state $sto'$. Så får vi ved eksekvering af $while(e) St$ i $sto$ state $sto'$ hvis $e$ evaluerer til \textit{true} i $Env$. Hvis $e$ derimod evaluerer til \textit{false}, sker der intet med $sto$.
 
 \begin{align*}
 &[WHILE_\top] & &Env \vdash \langle St, sto \rangle \rightarrow sto^{\prime\prime}\\
@@ -22,41 +22,41 @@ hvis man i $Env$ eksekverer $St$ i $sto$ og får final state $sto''$. Hvis deref
 &[WHILE_\bot] & &Env \vdash \langle \text{while } (e)\; St,\; sto \rangle \rightarrow sto & &\text{if } Env \vdash e \rightarrow_e \bot\\\\
 \end{align*}
 
-\noindent I sproget findes også for-løkker. Disse er ikke beskrevet i semantikken, da disse på simpel vis bliver omskrevet til while-løkker inden code generation. I kodeeksempel \ref{code:fortowhile} ses hvordan en while-løkke, som er omskrevet fra en for-løkke, ser ud i konkret kode. Det tilsvarende \gls{ast} ses i figur \ref{fig:fortowhile}
+\noindent I sproget findes også for-løkker - disse er ikke beskrevet i semantikken, da de på simpel vis bliver omskrevet til while-løkker inden code generation. I kodeeksempel \ref{code:fortowhile} ses hvordan en while-løkke, som er omskrevet fra en for-løkke, ser ud i konkret kode. Det tilsvarende \gls{ast} ses i figur \ref{fig:fortowhile}
 
 \PPP{Kode/ForToWhile.ppp}{Omskrivning af for-løkker til while-løkker}{fortowhile}
 
 \tikzfigure{Figurer/TikZ/ForToWhile.tex}{AST for For til While}{fortowhile}{1.0}
 
-\noindent \textit{ASTSimplify}-klassen, som sørger for alle omskrivninger, indeholder desuden et tjek, hvor det tjekkes om der overhovedet er en condition i den pågældende for-løkke. Hvis ikke der er det, er det kun nødvendigt med en \textit{TrueExpr} - et eksempel på dette ses i kodeeksempel \ref{code:fortowhilesimple} og figur \ref{fig:fortowhilesimple}
+\noindent \textit{ASTSimplify}-klassen, som sørger for alle omskrivninger, indeholder desuden et tjek, hvor det tjekkes om der er en \textit{condition} i den pågældende for-løkke. Hvis ikke der er det, er det kun nødvendigt med en \textit{TrueExpr} - et eksempel på dette ses i kodeeksempel \ref{code:fortowhilesimple} og figur \ref{fig:fortowhilesimple}
 
 \PPP{Kode/ForToWhileSimple.ppp}{Omskrivning af simple for-løkker til while-løkker}{fortowhilesimple}
 
 \tikzfigure{Figurer/TikZ/ForToWhileSimple.tex}{Det resulterende AST for en omskrivning af simpel for-løkke}{fortowhilesimple}{1.0}
 
-\subsubsubsection*{If statements}
-$If$ statement er en af de selektive kontrolstrukturer der er valgt til at kunne selektere eksekvering af kode. $If$ statementet tager et boolsk udtryk der afgør om dens krop skal eksekveres. Hvis det boolske udtryk evaluerer til $false$ springes kroppen over. Dette $if$ statement fungerer som man kender det i C. Nedenfor ses semantikken for $if$ statementet.
+\subsubsubsection{If-statements}
+\textit{If}-statements er en af de selektive kontrolstrukturer. \textit{If}-statement'et tager et boolsk udtryk, som afgører om dens krop skal eksekveres. Hvis det boolske udtryk evaluerer til \textit{false}, springes kroppen over. Dette \textit{if}-statement fungerer, som man kender det i C. Nedenfor ses semantikken for \textit{if}-statements.
 
 \noindent For $[IF_\top]$ læses semantikken således: 
 
-Hvis man i $Env$ eksekverer $St$ i $sto$ og får final state $sto'$, så får vi $sto'$ ved eksekvering af udtrykkel $if(e)  St$ i $sto$, hvis $e$ evaluerer til $true$ i $Env$.
+Hvis man i $Env$ eksekverer $St$ i $sto$ og får state $sto'$, så fås $sto'$ ved eksekvering af udtrykkel $if(e)\; St$ i $sto$, hvis $e$ evaluerer til \textit{true} i $Env$.
 
 \begin{align*}
 &[IF_\top] & &\frac{Env \vdash \langle St, sto \rangle \rightarrow sto^\prime}{Env \vdash \langle \text{if } (e)\; St,\; sto \rangle \rightarrow sto^\prime} & &\text{if } Env \vdash e \rightarrow_e \top\\\\
 \end{align*}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsubsection*{Structs}
-For at kunne definere mere avancerede typer med tilhørende adfærd er structs blevet implementeret i syntaksen. Structs kan indholde felter af andre typer som man kender i C. Som en udvikling af C's struct er funktioner i struct ligeledes blevet udviklet, da det ønskes at kunne definere adfærd.
+\subsubsubsection{Structs}
+For at kunne definere mere avancerede typer, med tilhørende adfærd, er \textit{structs} en del af PLC++. \textit{Structs} kan indholde felter af andre typer, som man kender dem fra C. Som en udbyggelse af C's \textit{structs}, er funktioner i \textit{struct} blevet tilføjet, da det ønskes at kunne definere adfærd.
 
-Felter i structs kan tilgås i semantikken på to forskellige måder alt efter om det er en variabel eller et funktionskald. Nedenfor ses semantikken for at tilgå både et felt som er en variabel samt et funktionskald.
+Felter i \textit{structs} kan tilgås på to forskellige måder - alt efter om det er en variabel eller et funktionskald. Nedenfor ses semantikken for at tilgå både et felt, som er en variabel, og et funktionskald.
 
 For $[SVAR]$ læses semantikken således:
-Hvis $X$ evaluerer til $l$ i $env'_s$ og $env'_v$ så evaluerer $s.X$ til $l$ i $env_s$, $env_v$ og $sto$ hvor $env_s s$ er lige med $env'_S$, $env'_F$ og $env'_S$. 
+Hvis $X$ evaluerer til $l$ i $env'_s$ og $env'_v$ så evaluerer $s.X$ til $l$ i $env_s$, $env_v$ og $sto$, hvor $env_s s$ er lig med $env'_S$, $env'_F$ og $env'_S$. 
 
 
 For $[SFUNC]$ læses semantikken således: \textit{s.SF}
-Hvis $SF$ evaluerer til $St$, $env''_v$, $env''_F$ og $env''_S$ i $env'_s$ og $env'_F$ så evaluerer $s.SF$ til $St$, $env''_v$, $env''_F$ og $env''_S$ i $env_s$ og $env_F$ hvor $env_s s$ er $env'_S$, $env'_F$ og $env'_S$. 
+Hvis $SF$ evaluerer til $St$, $env''_v$, $env''_F$ og $env''_S$ i $env'_s$ og $env'_F$, så evaluerer $s.SF$ til $St$, $env''_v$, $env''_F$ og $env''_S$ i $env_s$ og $env_F$, hvor $env_s s$ er $env'_S$, $env'_F$ og $env'_S$. 
 
 
 \begin{align*}

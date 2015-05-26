@@ -1,20 +1,19 @@
 \subsubsection{Værktøjer til generering af compilere}
 \label{ssec:toolsforcc}
 
-Eftersom det at udvikle compilere er en mekanisk process der ofte er den del af datalogiens verden er der udviklet værktøjer til at hjælpe med dette. Disse compiler-compilere findes i mange udgaver der hver har sine fordele og ulemper, derfor vil dette afsnit handle om et udvalg af disse programmer.
+Eftersom det at udvikle compilere er en mekanisk process, som ofte er den del af datalogien, er der udviklet værktøjer til at hjælpe med dette. Disse compiler-compilere findes i mange udgaver, der hver har sine fordele og ulemper. Dette afsnit omhandle et udvalg af disse programmer.
 
 \subsubsection{JavaCC}
-JavaCC er et værktøj der generer en parser i Java. JavaCC kan håndtere sprog der er LL(k) hvilket står for leftmost derivation. Her er k antallet af lookaheads. Som standard bliver kun scanneren genereret af JavaCC, dog kan man ved hjælp af værktøjet JJTree også generere parseren med det abstrakte syntax træ.
+JavaCC er et værktøj, der genererer en parser i Java. JavaCC kan håndtere sprog der er LL(k), hvilket står for leftmost derivation. Her er \textit{k} antallet af lookaheads. Som standard genererer JavaCC kun scanneren, men ved hjælp af værktøjet JJTree, kan der også genereres et \gls{ast}.
 
 \subsubsection{ANTLR}
-ANTLR er et værktøj der genererer en LL(*) parser. Den kan også generere et abstrakt syntax tree. ANTLR tager en EBNF gramatik og generer ud fra denne parseren.
+ANTLR er et værktøj, der genererer en LL(*) parser. Den kan også generere et abstrakt syntax tree. ANTLR tager en \gls{ebnf} grammatik og genererer ud fra denne parseren.
 
 \subsubsection{SableCC}
-SableCC er et værktøj der generere en lexer og parser der har objekt orienteret interface for videre konstruktion af compliere. Som standard generere den parseren i Java, men der findes også versioner for C\# og C++.
+SableCC er et værktøj, der genererer en scanner og parser, der har objektorienteret interface for videre konstruktion af compilere. Som standard genererer den parseren i Java, men der findes også versioner for C\# og C++.
     
 %Den lexical analyse er baseret på deterministic finite automata (DFA), som gør at 
     
-\noindent Parseren er en \gls{lalr} parser. Hvis man bryder det ned betyder det at parseren kan kigge på næste symbol inden den beslutter sig for en fortolkning af den givne kode, den læser fra venstre mod højre, og dens resultat vil være den udledning af \gls{ast} der har flest udledninger til venstre.
-\noindent I forhold til andre parsere, så som JLex, har SableCC en streng opdeling mellem action code og den specificerede grammatikken. Dette gør det lettere at debugge problemer om det er med grammatikken eller action code.
-\noindent SableCC konfigurationsfil specialiserer tokens i regulære udtryk til lexer genereringen, mens parseren bliver specialiseret i EBNF, dog med tilføjelser til at specialisere det abstrakte syntaks træ.
-\noindent SableCC understøtter desuden automatisk oprettelse af et abstrakt syntaks træ, men også en defination af det i konfigurationsfilen.
+\noindent Parseren er en \gls{lalr} parser. Hvis man bryder det ned, betyder det at parseren kan kigge på næste symbol inden den beslutter sig for en fortolkning af den givne kode. Den læser fra venstre mod højre og dens resultat vil være den udledning af \gls{ast}'et, som har flest udledninger til venstre.
+
+I forhold til andre parsere, så som JLex, har SableCC en streng opdeling mellem action code og den specificerede grammatik. Dette gør det lettere at debugge problemer, ved at undersøge om det er grammatikken eller action code, der er problemet. SableCC konfigurationsfil specialiserer tokens i regulære udtryk til lexer genereringen, mens parseren bliver specialiseret i \gls{ebnf}, dog med tilføjelser til at specialisere \gls{ast}'en. SableCC understøtter desuden automatisk generering af et \gls{ast}, men også en definition af det i konfigurationsfilen.
