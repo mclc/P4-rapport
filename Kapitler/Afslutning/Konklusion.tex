@@ -1,37 +1,60 @@
 \chapter{Konklusion}
 \label{sec:konklusion}
 
-Efter at have fuldendt problemløsningen kan der konkluderes i hvilken grad problemformuleringen er løst. Problemformuleringen har lagt til grund for kravspecifikationen, som indeholder de udspecificerede funktionaliteter. Disse funktionaliteter er, ved hjælp af en \gls{moscow}-analyse, blevet tildelt en prioritet, så funktionerne kan klassificeres ud fra dens vigtighed i den samlede løsning.
+\textit{Efter at have fuldendt problemløsningen kan der konkluderes i hvilken grad problemformuleringen er løst. Problemformuleringen har lagt til grund for kravspecifikationen, som indeholder de udspecificerede funktionaliteter. Disse funktionaliteter er, ved hjælp af en \gls{moscow}-analyse, blevet tildelt en prioritet, så funktionerne kan klassificeres ud fra dens vigtighed i den samlede løsning. Det skal dog bemærkes, at konklusionen vil være baseret på egne iagttagelser og vurderinger.} \\
+
+\noindent For at simplificere konklusionen, vil problemformuleringen blive delt i tre. Den ene del af problemformuleringen baserede sig på forøget overblik til mellemstore projekter, den anden del fokuserede på selve eksekveringshastigheden, hvor den tredje del fokuserede på omstændigheden. \\
+
+\noindent For at kunne afgøre i hvilken grad, PLC++ forøger programmørens overblik, er ved at undersøge implementationsgraden af kriterierne, readability og writeability.
+
+Der blev derfor vurderet, at PLC++ skulle indeholde funktionaliteter som bidragede til en forøgelse af abstraktionsniveauet. Herunder ville loops, arrays, structs, funktioner og enums give programmøren en række værktøjer, som kan anvendes til at strukturer koden hensigtsmæssigt. Dette er ligeledes med til at forøge readability’en. Loops, arrays samt funktioner er færdig-implementeret, hvoraf structs er implementeret i grammatikken, scope- og typecheckeren. Enums er derimod kun implementeret i grammatikken. Disse manglende implementationer nedsætter naturligvis sprogets writeability, da selve sprogets funktionalitet er begrænset. Imidlertid vurderes de færdig-implementerede funktionaliteter, såsom funktioner og arrays, til at øge writeability’en markant. Evnen til at erklære funktioner, og genbruge disse, er en helt essentiel del af det imperative programmeringssprog. 
+
+Et konkret eksempel på PLC++’s evne til at forøge overblikket, er ved at sammenligne figur refxx og figur refxx. I figur refxx er det næsten umuligt at gennemskue programmets funktionalitet, hvor det modsat i figur refxx, viser tydelige separeringer mellem funktionerne. Brugen af akkolader er ligeledes med at øge programmets læsbarhed. Det skal dog bemærkes at programmet ikke kan anses som værende af et mellemstor-karakter, men i takt med at programmet bliver større og mere omstændigt – vil overblikket – og dermed readabilityen, blive forringet yderligere. Denne del af problemformuleringen kan derfor anses for værende delvist fuldendt. \\
+
+\noindent Undersøges 2. del af problemformuleringen, som bestod af eksekveringshastighed, blev der tidligere i problemanalysen redegjort for, at kode programmet i det imperative paradigme, er langt hurtigere end kode programmet i det objektorienteret paradigme. Imidlertid er der ikke blevet foretaget nogle fyldestgørende eksekveringshastigheds-test på PLC++, hvilket besværliggøre selve besvarelsen af problemformulerings-delen. Det kan dog formodes at eksekveringshastigheden er høj, da target-sproget er \gls{il}. Denne del af problemformuleringen kan anses for værende delvist fuldendt. \\\\
+
+\noindent Undersøges 3. og sidste del af den opstillede problemformulering, som omhandlede omstændighed – dvs. at sproget ikke måtte blive så omstændigt at industriteknikere ikke ønsker at skifte. 
+For at besvare denne del af problemformuleringen, ville det naturligvis kræve at sproget blev afprøvet af én eller flere industriteknikere. Imidlertid kan det konkluderes på baggrund af foregående afsnit, herunder refxx og refxx, som belyste at C-programmeringssproget var et godt begyndersprog. Mange syntes dog at pointeraritmetik var besværlig, hvilket er blevet simplificeret i PLC++, ved at benytte pass by value til alle variabler. På baggrund af denne iagttagelse, kan 3. del af problemformuleringen anses for værende delvist fuldendt. \\
+
+\noindent For at problemformuleringen kan anses for værende fuldendt, vil det kræve at de manglende funktionaliteter bliver færdig-implementeret, at der bliver udført test på både eksekveringshastigheden, og afslutningsvist, blev udført usability-test af industriteknikernes evne til at programmere i PLC++.
 
 
 
-Kriteriet writeability blev vurderet til at være meget vigtig da den primære motivation for et nyt sprog lå i at både LAD og IL har en relativt lav writability.
-Ved implementering af det imperative sprog og dets komponenter som while loops og structs kan delvist retfærdiggøre opfyldelsen af en høj writeability. Hvis man betragter while loopets ækvivalent i LAD eller IL vil mængden af kode blive reduceret væsentligt. Ved brugen af structs og dets mulighed for mindre abstraktioner over anlæg og ligeledes dublering af programdele kan der potentielt reduceres megen kode som også bidrager til en øgen writability. Set i dette perspektiv kan kriteriet høj writeability bestemt retfærdiggøres. 
-
-Readability er blevet vurderet til at være vigtigt. Om kravet er opfyldt afhænger af programstørelsen. Da kriterierne er på baggrund af problemformuleringen som er 
 
 
-Den samlede løsning vurderes ud fra hvilken grad kriterierne er opfyldt, hvilket belyses i afsnit \ref{subsec:il-pa}, hvor der påvises hvordan et eksempel i \gls{il} hurtig giver overblik, hvorimod \gls{lad} giver en mere indviklet oversigt. Bruger man det samme eksempel, og sammenligner \gls{il} med PLC++ (se bilag \ref{bil:fixedfee}, kan man se at koden er væsentlig mindre i PLC++.\\
+%\chapter{Konklusion}
+%\label{sec:konklusion}
+
+%\textit{Efter at have fuldendt problemløsningen kan der konkluderes i hvilken grad problemformuleringen er løst. Problemformuleringen har lagt til grund for kravspecifikationen, som indeholder de udspecificerede funktionaliteter. Disse funktionaliteter er, ved hjælp af en \gls{moscow}-analyse, blevet tildelt en prioritet, så funktionerne kan klassificeres ud fra dens vigtighed i den samlede løsning.\\}
 
 
-\noindent Herudover kan programmøren let få et overblik med sine egne funktionsnavne, hvorimod man i \gls{il} har en SBN og SBS blok, som giver en reference i form af et id til den blok, den henviser til.
-Derfor menes det at PLC++ giver et bedre overblik, samt en højere læsbarhed i form af at man ikke behøver at forholde sig til adressering af hukommelsesadresser.
-Dertil kunne det tænkes at programmøren har lettere ved at lære PLC++ fremfor \gls{il}, da det har en højere  læsbarhed samt at programmøren ikke skal lære instruktioner, hvilket derfor leder til en bedre indlæringskurve. 
+%Kriteriet writeability blev vurderet til at være meget vigtig.
+%Ved implementering af det imperative sprog og dets komponenter som while loops kan delvist retfærdiggøre opfyldelsen af en høj writeability. Hvis man betragter while-loopets ækvivalent i LAD eller IL, vil mængden af kode blive reduceret væsentligt. Set i dette perspektiv kan kriteriet høj writeability bestemt retfærdiggøres.\\ 
 
-Dette er en bred påstand, som ikke umiddelbart kan underbygges med evidens udover konkret at se på kompleksiteten mellem \gls{il} og PLC++.
-Det er dog langt fra alle industriteknikere som programmerer i \gls{il}. Mest af alt på grund af dets kompleksitet, som vist i kodeeksempel \ref{code:fixedfee-il}.
-Derimod kodes der i \gls{lad}, som førhen er blevet konkluderet som værende et sprog med dårligt overblik for programmøren.
-Når der konkluderes på \gls{lad}-programmering mod PLC++, er det vigtigt at man ser på hvilken målgruppe, der arbejdes med.
-Dette har tidligere været defineret som værende til industriteknikere, med jævn programmeringserfaring.
-Hvis man derudover kigger på mellemstore programmer, gør det sig gældende at \gls{lad}-programmering bliver meget uoverskueligt, og generelt er svær at rette i, hvorimod PLC++ giver et bedre overblik.\\
+%Readability er blevet vurderet til at være vigtigt. Om kravet er opfyldt et at konkludere på da folk har forskellige holdninger til god readability.  
+%Da kriteriernes vigtighed er vurderet på baggrund af problemformuleringen, som fokuserer på at holde overblikket ved mellemstore programmeringsopgaver kan det indsnævres til denne programstørelse. Som tidligere kan kriteriet delvist vurderet som opfyldt grundet brugen af funktioner. Funktioner kan indkapsle programdele og reducere kode hvorved større programmer kan simplificeres. Structs er ikke blevet implementeret og da structs potentielt set kan løse store abstraktionsmæssige udfordringer samt kodedubletter er meget readability gået tabt. Ud fra disse vinkler kan kravet readability vurderes som delvist opfyldt.\\
 
-\noindent Rettes blikket derimod mod små programmer, har \gls{lad}-programmering en klar fordel, da programmøren ikke behøver at definere standardfunktioner, som \textit{Run} og \textit{Init}, som det er nødvendigt i PLC++. Derimod er det let for programmøren at få et overblik med drag-and-drop systemet, som grafisk giver et indblik i hvad der sker når koden eksekveres.
 
-Dette vurderes som værende acceptabelt i forhold til at målet er specificeret til at være til mellemstore programmer.
-Ved helt store programmer kunne det tænkes at det objektorienterede paradigme ville være mere praktisk, i forhold til at man kan benytte nedarvning samt polymorfisme. Dette er en påstand som ikke er testet, da dette ikke er en del af den endelige løsning samt at problemformuleringen er defineret anderledes.\\
+%Den samlede løsning vurderes ud fra hvilken grad kriterierne er opfyldt, hvilket belyses i afsnit \ref{subsec:il-pa}, hvor der påvises hvordan et eksempel i \gls{il} hurtig giver overblik, hvorimod \gls{lad} giver en mere indviklet oversigt. Bruger man det samme eksempel, og sammenligner \gls{il} med PLC++ (se bilag \ref{bil:fixedfee}, kan man se at koden er væsentlig mindre i PLC++.\\
 
-\noindent Det må derfor erkendes, at problemformuleringen er delvist løst.
-Dette skyldes delvist at der ikke er testet på hvorvidt problemformuleringen er opfyldt i forhold til de opstillede krav i \gls{moscow}-analysen.
-Dertil er der foretaget afgrænsning af kriterierne fra \gls{moscow}-analysen, da det blev vurderet at arbejdsbyrden var for stor, i forhold til den mængde tid som var til rådighed i løbet af projektet.
-Afgrænsningen vurderes til at være fundamental, for at opnå et projekt som lever op til studieordningen, og samtidig er brugbart.
-For at kunne klassificere problemformuleringen som værende løst, ville det kræve at der bliver implementeret resterende funktioner fra \gls{moscow}-analysen, samt at der bliver udført test omkring hvorvidt programmeringssproget lever op til de opstillede krav.
+%\noindent Herudover kan programmøren let få et overblik med sine egne funktionsnavne, hvorimod man i \gls{il} har en SBN og SBS blok, som giver en reference i form af et id til den blok, den henviser til.
+%Derfor menes det at PLC++ giver et bedre overblik, samt en højere læsbarhed i form af at man ikke behøver at forholde sig til adressering af hukommelsesadresser.
+%Dertil kunne det tænkes at programmøren har lettere ved at lære PLC++ fremfor \gls{il}, da det har en højere  læsbarhed samt at programmøren ikke skal lære instruktioner, hvilket derfor leder til en bedre indlæringskurve. 
+
+%Dette er en bred påstand, som ikke umiddelbart kan underbygges med evidens udover konkret at se på kompleksiteten mellem \gls{il} og PLC++.
+%Det er dog langt fra alle industriteknikere som programmerer i \gls{il}. Mest af alt på grund af dets kompleksitet, som vist i kodeeksempel \ref{code:fixedfee-il}.
+%Derimod kodes der i \gls{lad}, som førhen er blevet konkluderet som værende et sprog med dårligt overblik for programmøren.
+%Når der konkluderes på \gls{lad}-programmering mod PLC++, er det vigtigt at man ser på hvilken målgruppe, der arbejdes med.
+%Dette har tidligere været defineret som værende til industriteknikere, med jævn programmeringserfaring.
+%Hvis man derudover kigger på mellemstore programmer, gør det sig gældende at \gls{lad}-programmering bliver meget uoverskueligt, og generelt er svær at rette i, hvorimod PLC++ giver et bedre overblik.\\
+
+%\noindent Rettes blikket derimod mod små programmer, har \gls{lad}-programmering en klar fordel, da programmøren ikke behøver at definere standardfunktioner, som \textit{Run} og \textit{Init}, som det er nødvendigt i PLC++. Derimod er det let for programmøren at få et overblik med drag-and-drop systemet, som grafisk giver et indblik i hvad der sker når koden eksekveres.
+
+%Dette vurderes som værende acceptabelt i forhold til at målet er specificeret til at være til mellemstore programmer.
+%Ved helt store programmer kunne det tænkes at det objektorienterede paradigme ville være mere praktisk, i forhold til at man kan benytte nedarvning samt polymorfisme. Dette er en påstand som ikke er testet, da dette ikke er en del af den endelige løsning samt at problemformuleringen er defineret anderledes.\\
+
+%\noindent Det må derfor erkendes, at problemformuleringen er delvist løst.
+%Dette skyldes delvist at der ikke er testet på hvorvidt problemformuleringen er opfyldt i forhold til de opstillede krav i \gls{moscow}-analysen.
+%Dertil er der foretaget afgrænsning af kriterierne fra \gls{moscow}-analysen, da det blev vurderet at arbejdsbyrden var for stor, i forhold til den mængde tid som var til rådighed i løbet af projektet.
+%Afgrænsningen vurderes til at være fundamental, for at opnå et projekt som lever op til studieordningen, og samtidig er brugbart.
+%For at kunne klassificere problemformuleringen som værende løst, ville det kræve at der bliver implementeret resterende funktioner fra \gls{moscow}-analysen, samt at der bliver udført test omkring hvorvidt programmeringssproget lever op til de opstillede krav.

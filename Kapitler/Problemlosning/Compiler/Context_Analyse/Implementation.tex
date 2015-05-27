@@ -30,7 +30,7 @@ Scope checkerens opgave er at tjekke at de konkrete identifiers findes og kan ti
 
 \noindent For at håndtere dynamisk scope køres først en præprocessor, der indlæser funktioner, structs og globale variabler i symboltabellen. Dernæst kører scopecheckeren, som tjekker hver  identifier for om den findes i det pågældende scope. Hvis identifieren forsøges erklæret selv om den allerede eksisterer i symboltabellen, rapporterer compileren om fejl. Scopecheckeren håndterer også oprettelsen af lokale variabler, således det ikke er muligt at bruge en lokal variabel, der ikke er blevet deklareret endnu, herunder \textit{static scope}.\\
 
-\noindent For at forhindre at alle funktioner, structs og globale variabler bliver registret to gange (både i præprocessoren og scopecheckeren) overrides case metoderne fra DepthFirstAdapteren for de tilsvarende funktioner, og de bliver sat til at udføre \textit{caseDefault}.
+\noindent For at forhindre at alle funktioner, \textit{structs} og globale variabler bliver registret to gange (både i præprocessoren og scopecheckeren) overrides case metoderne fra DepthFirstAdapteren for de tilsvarende funktioner, og de bliver sat til at udføre \textit{caseDefault}.
 
 \subsubsubsection{Type checker}
 Type checkerens opgave er at verificere, at typerne stemmer overens med det tilladte for en given operation. 
