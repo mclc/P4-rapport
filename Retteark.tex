@@ -1,0 +1,85 @@
+ % Typen af dokumentklassen
+\documentclass[a4paper,11pt,twoside]{report}
+
+\input{Preamble/Preamble.tex}
+
+% Setup af header og footer
+\fancypagestyle{retteark}{
+    % Nulstil header og footer
+    \fancyhead{}
+    \fancyfoot{}
+
+    % Setup header
+    % Left / Right - Even / Odd
+    \fancyhead[LO]{Retteark for rapport}          % Ulige sider
+    \fancyhead[RO]{SW402f15}          % Ulige sider
+
+}
+
+% Sætter pagestyle til plain - header og footer
+\pagestyle{retteark}
+
+\begin{document}
+
+\noindent Dette ark anvendes til at forklare/rette fejl, som er til stede i rapporten og kan skabe forvirring i forbindelse med rapportens indhold. Dette er opdelt kronologisk.\\
+
+\noindent \textbf{Tabel 4.12} (side 58)\\
+\noindent Indeholder fejl, hvor linje 2 og 3 skal byttes rundt. Den reviderede tabel findes her: 
+
+\begin{table}[H]
+    \centering\ttfamily
+    \begin{tabular}{l|l|l l}
+         &PLC++                 & IL \\\hline
+        1&if(true)\{            & SET W402.00       &// Push(true)\\
+        2&\} else \{            & LD W402.00        &// Start a new ladder\\
+        3&  i = 1;              & CJP \#0           &// Jump if true to JME \#0\\
+        4&  i = 0;              & // Udeladt: i = 0\\
+        5& \}                   & JMP \#1           &// Jump to JME \#1\\
+        6&                      & JME \#0           &\\
+        7&                      & LD P\_FirstCycle  &// Start a new ladder\\
+        8&                      & // Udeladt: i = 1\\
+        9&                      & JME \#1
+    \end{tabular}
+\end{table}
+
+\noindent \textbf{Grammatik B.1} (side 75)\\
+\noindent Indeholder en tastefejl i den nederste regel.
+
+\begin{grammar}
+   <$P_F$> ::= e, $P_F$ | e | $\epsilon$
+\end{grammar}
+
+\noindent skal derved laves om til 
+
+\begin{grammar}
+   <$P_A$> ::= e, $P_A$ | e | $\epsilon$
+\end{grammar}
+
+\noindent \textbf{Afsnit B.4.1} (side 76)\\
+\noindent Indeholder en tastefejl i regel $ASMD_{FF}$. Den korrekte udgave, samt den manglende regel $ASMD_{FI}$, ses nedenunder.
+
+\begin{align*}
+&[\text{ASMD}_{FF}]           &  &\frac{E \vdash e_1 : \text{Float} \enskip E \vdash e_2 : \text{Float}}{E \vdash e_1\; op \;e_2 : \text{Float}} & &[\text{ASMD}_{FI}]           &  &\frac{E \vdash e_1 : \text{Float} \enskip E \vdash e_2 : \text{Int}}{E \vdash e_1\; op \;e_2 : \text{Float}}\\    
+& & &\text{where}\; op \in \{+, -, *, /\} & & & &\text{where}\; op \in \{+, -, *, /\}\\\\
+\end{align*}
+
+\noindent \textbf{Afsnit B.4.3} (side 78)\\
+\noindent Indeholder en tastefejl ved regl $CPS$. Den rettede ses her
+
+\begin{align*}
+&[CPS] & &\frac{E \vdash x : T\quad E \vdash e : T}{E \vdash x\; op\; e : \text{ok}}\\
+& & &\text{where}\; op \in \{+=, -=, *=, /=, \%=\}
+\end{align*}
+
+\noindent \textbf{Afsnit B.5.2} (side 83)\\
+\noindent Transitionsreglen er defineret ukorrekt. Den korrekte er
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+$[SFUNC]$ & $\frac{SEnv^\prime\; \vdash SF \rightarrow sto^\prime}{SEnv \vdash\; s.SF \rightarrow sto^\prime}$ & where $env_S s = (env_V^\prime, env_F^\prime)$\\
+& & and $SEnv^\prime = (sto, env_V^\prime, env_S, env_F^\prime)$
+\end{tabular}
+\end{table}
+
+\end{document}

@@ -41,7 +41,7 @@ Expressions evalueres på en stack ved hjælp af \textit{DepthFirstAdapteren}'s 
 \noindent Dette gøres ved brug af out metoderne som beskrevet i afsnit \ref{sct:visitorSableCC}. Det parsede \gls{ast} kan ses på figur \ref{fig:evaluationAST}
 \tikzfigure{Figurer/TikZ/EvaluationOfSimpleMath.tex}{\gls{ast} for udtrykket 3 + (5 * 2)}{evaluationAST}
 
-Stacken vil indlæse de 3 første tal, multiplicere de 2 seneste tal og ligge på stacken. Til slut bliver det første tal adderet med resultatet fra multiplikationen af 5 og 2. Udtrykket kan dermed opstilles til 3 5 2 * +. Denne notation kaldes også omvendt polisk notation \cite{CraftingCompiler_2009} eller postfix notation.
+\noindent Stacken vil indlæse de 3 første tal, multiplicere de 2 seneste tal og ligge på stacken. Til slut bliver det første tal adderet med resultatet fra multiplikationen af 5 og 2. Udtrykket kan dermed opstilles til 3 5 2 * +. Denne notation kaldes også omvendt polisk notation \cite{CraftingCompiler_2009} eller postfix notation.
 
 I typecheckerens eksempel er det nødvendigt at registrere typen af tallene, hvorved man vil finde at true + 1 er et ugyldigt input, hvorimod 1 + 1 er gyldigt. Dette gøres på samme måde ved brug af stacken, bortset fra at der ligger et objekt på stacken, der indikerer typen for værdien. I kodeeksempel \ref{code:exprTypeEvaluator} ses et eksempel på hvordan konstanter bliver pushed til stacken, samt hvordan de 2 seneste værdier sammenlignes med større end operator.  
 

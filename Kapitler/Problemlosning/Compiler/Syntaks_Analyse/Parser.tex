@@ -76,7 +76,7 @@ $$ \{w \in \{a, b\}^* / w \text{ starter med }b \text{ eller slutter på }bb\} $
 
 \noindent hvilket kan omskrives til $b(a \cup b)^* \cup (a \cup b)^* bb$. Kort fortalt siger denne regular expression at der findes to muligheder. Den først mulighed siger at der først skal være ét b og derefter må a'er og b'er blandes på vilkårlige måder. Den anden mulighed er først a'er og b'er blandet - og derefter to b'er. Altså præcist hvad den anden definition beskrev.
 
-Det sidste der kan fortælles om regular expressions, er at disse uden videre kan omdannes til en \gls{nfa} ved at følge en simpel algoritme. Algoritmen vil ikke blive forklaret yderligere, men et simpelt eksempel vil følge udfra $((a^*b) \cup aa)^*$. Den resulterende NFA ses på figur \ref{fig:regextonfa}
+Det sidste der kan fortælles om regular expressions, er at disse uden videre kan omdannes til en \gls{nfa} ved at følge en simpel algoritme. Algoritmen vil ikke blive forklaret yderligere, men et simpelt eksempel vil følge udfra $((a^*b) \cup aa)^*$. \clearpage Den resulterende NFA ses på figur \ref{fig:regextonfa}
 
 \tikzfigure{Figurer/TikZ/RegexToNFA.tex}{Regular expression til NFA}{regextonfa}
 

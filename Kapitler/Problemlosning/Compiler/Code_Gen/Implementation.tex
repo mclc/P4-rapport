@@ -61,7 +61,7 @@ For at opnå kode, som kan kompileres til en \gls{plc}, har det været nødvendi
 \noindent Arrays i programmet bliver håndteret ved at en mængde adresser bliver reserveret til dataen et symbol bliver indsat, som holder værdien af den første adresse af arrayet. Måden hvorpå værdierne repræsenteres i arrayet, kan ses i tabel \ref{tab:codegenArray}. Dette forgår ved at den henter addressen på første element og hvor langt den skal gå fra den (linje 2-3), lægger dem sammen (linje 4) og bruger resultatet som en pointer til at hente værdien (linje 6).\\
 
 %\subsubsection{Implementation}
-Måden code generatoren er implementeret på, er som før nævnt gennem et visitor-mønster. Klassen hedder \textit{CodeGenerator} og består at funktioner til visitor-mønstret samt en funktion til at skrive resultatet til en fil; \textit{Emit}.
+\noindent Måden code generatoren er implementeret på, er som før nævnt gennem et visitor-mønster. Klassen hedder \textit{CodeGenerator} og består at funktioner til visitor-mønstret samt en funktion til at skrive resultatet til en fil; \textit{Emit}.
 
 \Java{Kode/CodeGeneratorEmit.java}{Emit-funktionen fra CodeGenerator klassen}{emit}
 
